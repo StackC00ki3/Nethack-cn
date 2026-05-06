@@ -1,0 +1,153 @@
+## Nethack-cn
+
+[![Build Status](https://github.com/StackC00ki3/nethack-cn/actions/workflows//nethack-vs-package.yml/badge.svg)](http://github.com/stackC00ki3/nethack-cn/releases)
+
+English README：[README_en.md](README_en.md)
+
+### 快速开始
+无需本地编译，可直接在[本项目 Release 页面](http://github.com/stackC00ki3/nethack-cn/releases)下载自动构建的汉化预览版
+
+### 路线图
+
+- [x] tty 界面 UTF-8 支持
+- [x] curses 界面 UTF-8 支持
+- [x] win32 界面 UTF-8 支持
+- [x] 合并来自 [SunnyYuer/NetHack-cn](https://github.com/SunnyYuer/NetHack-cn) 的翻译
+- [x] 使用 deepseek-v4-flash 完成初步 AI 翻译
+- [ ] 怪物翻译
+- [ ] 物品翻译
+- [ ] 许愿机制
+- [ ] 灭绝机制
+
+#### 人工审校
+- [x] allmain.c
+- [x] alloc.c
+- [ ] apply.c
+- [ ] artifact.c
+- [ ] attrib.c
+- [ ] ball.c
+- [ ] bones.c
+- [ ] botl.c
+- [ ] calendar.c
+- [ ] cfgfiles.c
+- [ ] cmd.c
+- [ ] coloratt.c
+- [ ] date.c
+- [ ] dbridge.c
+- [ ] decl.c
+- [ ] detect.c
+- [ ] dig.c
+- [ ] display.c
+- [ ] dlb.c
+- [ ] do.c
+- [ ] dog.c
+- [ ] dogmove.c
+- [ ] dokick.c
+- [ ] dothrow.c
+- [ ] do_name.c
+- [ ] do_wear.c
+- [ ] drawing.c
+- [ ] dungeon.c
+- [ ] earlyarg.c
+- [ ] eat.c
+- [ ] end.c
+- [ ] engrave.c
+- [ ] exper.c
+- [ ] explode.c
+- [ ] extralev.c
+- [ ] files.c
+- [ ] fountain.c
+- [ ] getpos.c
+- [ ] glyphs.c
+- [ ] hack.c
+- [ ] hacklib.c
+- [ ] iactions.c
+- [ ] insight.c
+- [ ] invent.c
+- [ ] isaac64.c
+- [ ] light.c
+- [ ] lock.c
+- [ ] mail.c
+- [ ] makemon.c
+- [ ] mcastu.c
+- [ ] mdlib.c
+- [ ] mhitm.c
+- [ ] mhitu.c
+- [ ] minion.c
+- [ ] mklev.c
+- [ ] mkmap.c
+- [ ] mkmaze.c
+- [ ] mkobj.c
+- [ ] mkroom.c
+- [ ] mon.c
+- [ ] mondata.c
+- [ ] monmove.c
+- [ ] monst.c
+- [ ] mplayer.c
+- [ ] mthrowu.c
+- [ ] muse.c
+- [ ] music.c
+- [ ] nhlobj.c
+- [ ] nhlsel.c
+- [ ] nhlua.c
+- [ ] nhmd4.c
+- [ ] objects.c
+- [ ] objnam.c
+- [ ] options.c
+- [ ] o_init.c
+- [ ] pager.c
+- [ ] pickup.c
+- [ ] pline.c
+- [ ] polyself.c
+- [ ] potion.c
+- [ ] pray.c
+- [ ] priest.c
+- [ ] quest.c
+- [ ] questpgr.c
+- [ ] read.c
+- [ ] rect.c
+- [ ] region.c
+- [ ] report.c
+- [ ] restore.c
+- [ ] rip.c
+- [ ] rnd.c
+- [ ] role.c
+- [ ] rumors.c
+- [ ] save.c
+- [ ] selvar.c
+- [ ] sfbase.c
+- [ ] sfstruct.c
+- [ ] shk.c
+- [ ] shknam.c
+- [ ] sit.c
+- [ ] sounds.c
+- [ ] spell.c
+- [ ] sp_lev.c
+- [ ] stairs.c
+- [ ] steal.c
+- [ ] steed.c
+- [ ] strutil.c
+- [ ] symbols.c
+- [ ] sys.c
+- [ ] teleport.c
+- [ ] tile.c
+- [ ] timeout.c
+- [ ] topten.c
+- [ ] track.c
+- [ ] trap.c
+- [ ] uhitm.c
+- [ ] utf8map.c
+- [ ] u_init.c
+- [ ] vault.c
+- [ ] version.c
+- [ ] vision.c
+- [ ] weapon.c
+- [ ] were.c
+- [ ] wield.c
+- [ ] windows.c
+- [ ] wizard.c
+- [ ] wizcmds.c
+- [ ] worm.c
+- [ ] worn.c
+- [ ] write.c
+- [ ] zap.c
