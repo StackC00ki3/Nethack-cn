@@ -81,7 +81,7 @@ initedog(struct monst *mtmp, boolean everything)
          * from a figurine or some other method in which it was created tame
          * using an() is safe unless it somehow becomes possible to tame a
          * unique monster */
-        livelog_printf(LL_CONDUCT, "obtained %s first pet (%s)",
+        livelog_printf(LL_CONDUCT, "获得了%s的第一只宠物（%s）",
                        uhis(), an(mon_pmname(mtmp)));
     }
     u.uconduct.pets++;
@@ -118,7 +118,7 @@ pick_familiar_pm(struct obj *otmp, boolean quietly)
             if (!quietly)
                 /* have just been given "You <do something with>
                    the figurine and it transforms." message */
-                pline("... 成为一堆尘土.");
+                pline("... 变成了一堆尘土.");
             return (struct permonst *) 0;
         }
     } else if (!rn2(3)) {
@@ -129,7 +129,7 @@ pick_familiar_pm(struct obj *otmp, boolean quietly)
 
         pm = rndmonst_adj(0, max);
         if (!pm && !quietly)
-            There("似乎没有什么可用做熟悉的.");
+            There("似乎没有什么可用作随从.");
     }
     return pm;
 }
@@ -159,8 +159,7 @@ make_familiar(struct obj *otmp, coordxy x, coordxy y, boolean quietly)
             if (!mtmp) {
                 /* monster has been genocided or target spot is occupied */
                 if (!quietly)
-                    pline_The(
-                           "小雕像扭曲然后粉碎了!");
+                    pline_The("小雕像扭曲然后碎裂了！");
                 break;
             } else if (mtmp->isminion) {
                 /* Fixup for figurine of an Angel:  makemon() is willing to
@@ -191,7 +190,7 @@ make_familiar(struct obj *otmp, coordxy x, coordxy y, boolean quietly)
             reallytame = FALSE; /* not tame after all */
             if (chance == 2) {  /* hostile (cursed figurine) */
                 if (!quietly)
-                    You("对此有一种不好的感觉.");
+                    You("对此有一种不祥的预感.");
                 mtmp->mpeaceful = 0;
                 set_malign(mtmp);
             }
@@ -831,8 +830,8 @@ keepdogs(
                 mdrop_special_objs(mtmp); /* drop Amulet */
             } else if (mtmp->meating || mtmp->mtrapped) {
                 if (canseemon(mtmp))
-                    pline_mon(mtmp, "%s is still %s.", Monnam(mtmp),
-                             mtmp->meating ? "eating" : "trapped");
+                    pline_mon(mtmp, "%s 还在%s。", Monnam(mtmp),
+                             mtmp->meating ? "吃东西" : "被陷阱困住");
                 stay_behind = TRUE;
             } else if (mon_has_amulet(mtmp)) {
                 if (canseemon(mtmp))
@@ -842,7 +841,7 @@ keepdogs(
             }
             if (stay_behind) {
                 if (mtmp->mleashed) {
-                    pline("%s 狗链突然变松了.",
+                    pline("%s 的皮带突然松了。",
                           humanoid(mtmp->data)
                               ? (mtmp->female ? "她的" : "他的")
                               : "它的");
@@ -877,7 +876,7 @@ keepdogs(
         } else if (mtmp->mleashed) {
             /* this can happen if your quest leader ejects you from the
                "home" level while a leashed pet isn't next to you */
-            pline("%s 狗链变松弛了.", s_suffix(Monnam(mtmp)));
+            pline("%s 的皮带变松了。", s_suffix(Monnam(mtmp)));
             m_unleash(mtmp, FALSE);
         }
     }
@@ -1167,8 +1166,8 @@ tamedog(
 
     /* worst case, at least it'll be peaceful. */
     if (givemsg && !mtmp->mpeaceful && canspotmon(mtmp)) {
-        pline_mon(mtmp, "%s seems %s.", Monnam(mtmp),
-              Hallucination ? "really chill" : "more amiable");
+        pline_mon(mtmp, "%s 看起来%s。", Monnam(mtmp),
+              Hallucination ? "非常冷静" : "更友善了");
         givemsg = FALSE; /* don't give another message below */
     }
     mtmp->mpeaceful = 1;
@@ -1202,11 +1201,11 @@ tamedog(
                 boolean big_corpse =
                     (obj->otyp == CORPSE && ismnum(obj->corpsenm)
                      && mons[obj->corpsenm].msize > mtmp->data->msize);
-                pline_mon(mtmp, "%s catches %s%s",
+                pline_mon(mtmp, "%s 抓住了%s%s",
                           Monnam(mtmp), the(xname(obj)),
-                         !big_corpse ? "." : ", or vice versa!");
+                         !big_corpse ? "。" : "，或者说反过来！");
             } else if (cansee(mtmp->mx, mtmp->my))
-                pline("%s。", Tobjnam(obj, "停下来"));
+                pline("%s 停住了。", Tobjnam(obj, "停下来"));
             /* dog_eat expects a floor object */
             place_object(obj, mtmp->mx, mtmp->my);
             (void) dog_eat(mtmp, obj, mtmp->mx, mtmp->my, FALSE);
@@ -1268,8 +1267,8 @@ tamedog(
     }
 
     if (givemsg && canspotmon(mtmp))
-        pline_mon(mtmp, "%s seems quite %s.", Monnam(mtmp),
-              Hallucination ? "approachable" : "friendly");
+        pline_mon(mtmp, "%s 看起来非常%s。", Monnam(mtmp),
+              Hallucination ? "平易近人" : "友好");
 
     newsym(mtmp->mx, mtmp->my);
     if (mtmp->wormno)
@@ -1316,11 +1315,11 @@ wary_dog(struct monst *mtmp, boolean was_dead)
             if (haseyes(gy.youmonst.data)) {
                 if (haseyes(mtmp->data))
                     pline_mon(mtmp,
-                             "%s %s to look you in the %s.", Monnam(mtmp),
-                             mtmp->mpeaceful ? "seems unable" : "refuses",
+                             "%s 似乎%s注视你的%s。", Monnam(mtmp),
+                             mtmp->mpeaceful ? "无法" : "拒绝",
                              body_part(EYE));
                 else
-                    pline_mon(mtmp, "%s avoids your gaze.", Monnam(mtmp));
+                    pline_mon(mtmp, "%s 避开了你的视线。", Monnam(mtmp));
             }
         }
     } else {
@@ -1332,8 +1331,8 @@ wary_dog(struct monst *mtmp, boolean was_dead)
 
     if (!mtmp->mtame) {
         if (!quietly && canspotmon(mtmp))
-            pline_mon(mtmp, "%s %s.", Monnam(mtmp),
-                  mtmp->mpeaceful ? "is no longer tame" : "has become feral");
+            pline_mon(mtmp, "%s %s。", Monnam(mtmp),
+                  mtmp->mpeaceful ? "不再驯服" : "变得野性");
         newsym(mtmp->mx, mtmp->my);
         /* a life-saved monster might be leashed;
            don't leave it that way if it's no longer tame */
