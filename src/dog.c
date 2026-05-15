@@ -129,7 +129,7 @@ pick_familiar_pm(struct obj *otmp, boolean quietly)
 
         pm = rndmonst_adj(0, max);
         if (!pm && !quietly)
-            There("似乎没有什么可用作随从.");
+            There("似乎没有可作为随从的生物.");
     }
     return pm;
 }
@@ -159,7 +159,7 @@ make_familiar(struct obj *otmp, coordxy x, coordxy y, boolean quietly)
             if (!mtmp) {
                 /* monster has been genocided or target spot is occupied */
                 if (!quietly)
-                    pline_The("小雕像扭曲然后碎裂了！");
+                    pline_The("小雕像颤动了一下然后碎成了碎片！");
                 break;
             } else if (mtmp->isminion) {
                 /* Fixup for figurine of an Angel:  makemon() is willing to
@@ -830,7 +830,7 @@ keepdogs(
                 mdrop_special_objs(mtmp); /* drop Amulet */
             } else if (mtmp->meating || mtmp->mtrapped) {
                 if (canseemon(mtmp))
-                    pline_mon(mtmp, "%s 还在%s。", Monnam(mtmp),
+                    pline_mon(mtmp, "%s还在%s.", Monnam(mtmp),
                              mtmp->meating ? "吃东西" : "被陷阱困住");
                 stay_behind = TRUE;
             } else if (mon_has_amulet(mtmp)) {
@@ -841,7 +841,7 @@ keepdogs(
             }
             if (stay_behind) {
                 if (mtmp->mleashed) {
-                    pline("%s 的皮带突然松了。",
+                    pline("%s的皮带突然松了.",
                           humanoid(mtmp->data)
                               ? (mtmp->female ? "她的" : "他的")
                               : "它的");
@@ -876,7 +876,7 @@ keepdogs(
         } else if (mtmp->mleashed) {
             /* this can happen if your quest leader ejects you from the
                "home" level while a leashed pet isn't next to you */
-            pline("%s 的皮带变松了。", s_suffix(Monnam(mtmp)));
+            pline("%s的狗链变松了.", s_suffix(Monnam(mtmp)));
             m_unleash(mtmp, FALSE);
         }
     }
@@ -1166,7 +1166,7 @@ tamedog(
 
     /* worst case, at least it'll be peaceful. */
     if (givemsg && !mtmp->mpeaceful && canspotmon(mtmp)) {
-        pline_mon(mtmp, "%s 看起来%s。", Monnam(mtmp),
+        pline_mon(mtmp, "%s看起来%s.", Monnam(mtmp),
               Hallucination ? "非常冷静" : "更友善了");
         givemsg = FALSE; /* don't give another message below */
     }
@@ -1201,11 +1201,11 @@ tamedog(
                 boolean big_corpse =
                     (obj->otyp == CORPSE && ismnum(obj->corpsenm)
                      && mons[obj->corpsenm].msize > mtmp->data->msize);
-                pline_mon(mtmp, "%s 抓住了%s%s",
+                pline_mon(mtmp, "%s抓住了%s%s",
                           Monnam(mtmp), the(xname(obj)),
-                         !big_corpse ? "。" : "，或者说反过来！");
+                         !big_corpse ? "." : "(或者应该反过来说)!");
             } else if (cansee(mtmp->mx, mtmp->my))
-                pline("%s 停住了。", Tobjnam(obj, "停下来"));
+                pline("%s.", Tobjnam(obj, "停下来"));
             /* dog_eat expects a floor object */
             place_object(obj, mtmp->mx, mtmp->my);
             (void) dog_eat(mtmp, obj, mtmp->mx, mtmp->my, FALSE);
@@ -1267,7 +1267,7 @@ tamedog(
     }
 
     if (givemsg && canspotmon(mtmp))
-        pline_mon(mtmp, "%s 看起来非常%s。", Monnam(mtmp),
+        pline_mon(mtmp, "%s看起来非常%s.", Monnam(mtmp),
               Hallucination ? "平易近人" : "友好");
 
     newsym(mtmp->mx, mtmp->my);
@@ -1315,11 +1315,11 @@ wary_dog(struct monst *mtmp, boolean was_dead)
             if (haseyes(gy.youmonst.data)) {
                 if (haseyes(mtmp->data))
                     pline_mon(mtmp,
-                             "%s 似乎%s注视你的%s。", Monnam(mtmp),
-                             mtmp->mpeaceful ? "无法" : "拒绝",
+                             "%s%s注视你的%s。", Monnam(mtmp),
+                             mtmp->mpeaceful ? "似乎无法" : "拒绝",
                              body_part(EYE));
                 else
-                    pline_mon(mtmp, "%s 避开了你的视线。", Monnam(mtmp));
+                    pline_mon(mtmp, "%s避开了你的视线.", Monnam(mtmp));
             }
         }
     } else {
@@ -1331,7 +1331,7 @@ wary_dog(struct monst *mtmp, boolean was_dead)
 
     if (!mtmp->mtame) {
         if (!quietly && canspotmon(mtmp))
-            pline_mon(mtmp, "%s %s。", Monnam(mtmp),
+            pline_mon(mtmp, "%s%s.", Monnam(mtmp),
                   mtmp->mpeaceful ? "不再驯服" : "变得野性");
         newsym(mtmp->mx, mtmp->my);
         /* a life-saved monster might be leashed;
