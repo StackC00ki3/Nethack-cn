@@ -56,7 +56,7 @@ kickdmg(struct monst *mon, boolean clumsy)
     specialdmg = special_dmgval(&gy.youmonst, mon, W_ARMF, (long *) 0);
 
     if (mon->data == &mons[PM_SHADE] && !specialdmg) {
-        pline_The("%s。", kick_passes_thru);
+        pline_The("%s.", kick_passes_thru);
         /* doesn't exercise skill or abuse alignment or frighten pet,
            and shades have no passive counterattack */
         return;
@@ -100,7 +100,7 @@ kickdmg(struct monst *mon, boolean clumsy)
         mdy = mon->my + u.dy;
         /* TODO: replace with mhurtle? */
         if (goodpos(mdx, mdy, mon, 0)) {
-            pline("%s 被踢得旋转起来。", Monnam(mon));
+            pline("%s被踢得踉跄后退.", Monnam(mon));
             if (m_in_out_region(mon, mdx, mdy)) {
                 remove_monster(mon->mx, mon->my);
                 newsym(mon->mx, mon->my);
@@ -153,7 +153,7 @@ kick_monster(struct monst *mon, coordxy x, coordxy y)
 
     if (Levitation && !rn2(3) && verysmall(mon->data)
         && !is_flyer(mon->data)) {
-        pline("飘浮在空中，你踢空了！");
+        pline("飘浮在空中, 你踢空了!");
         exercise(A_DEX, FALSE);
         (void) passive(mon, uarmf, FALSE, 1, AT_KICK, FALSE);
         return;
@@ -170,7 +170,7 @@ kick_monster(struct monst *mon, coordxy x, coordxy y)
             map_invisible(x, y);
         else
             newsym(x, y);
-        There("这里有%s。",
+        There("有%s.",
               canspotmon(mon) ? a_monnam(mon) : "隐藏的东西");
     }
 
@@ -205,10 +205,10 @@ kick_monster(struct monst *mon, coordxy x, coordxy y)
             if (mon->data == &mons[PM_SHADE] && !specialdmg) {
                 /* doesn't matter whether it would have hit or missed,
                    and shades have no passive counterattack */
-                Your("%s %s。", kick_passes_thru, mon_nam(mon));
+                Your("%s%s.", kick_passes_thru, mon_nam(mon));
                 break; /* skip any additional kicks */
             } else if (tmp > kickdieroll) {
-                You("踢了%s一下。", mon_nam(mon));
+                You("踢了%s一下.", mon_nam(mon));
                 sum = damageum(mon, uattk, specialdmg);
                 (void) passive(mon, uarmf, (sum != M_ATTK_MISS),
                                !(sum & M_ATTK_DEF_DIED), AT_KICK, FALSE);
@@ -237,7 +237,7 @@ kick_monster(struct monst *mon, coordxy x, coordxy y)
         if (!rn2((i < j / 10) ? 2 : (i < j / 5) ? 3 : 4)) {
             if (martial())
                 goto doit;
-            Your("笨拙的一踢没有造成任何伤害。");
+            Your("笨拙一踢没有造成任何伤害。");
             (void) passive(mon, uarmf, FALSE, 1, AT_KICK, FALSE);
             return;
         }
@@ -253,14 +253,14 @@ kick_monster(struct monst *mon, coordxy x, coordxy y)
     else if (uarm && objects[uarm->otyp].oc_bulky && ACURR(A_DEX) < rnd(25))
         clumsy = TRUE;
  doit:
-    You("踢了%s一下。", mon_nam(mon));
+    You("踢了%s一下.", mon_nam(mon));
     if (!rn2(clumsy ? 3 : 4) && (clumsy || !bigmonst(mon->data))
         && mon->mcansee && !mon->mtrapped && !thick_skinned(mon->data)
         && mon->data->mlet != S_EEL && haseyes(mon->data) && mon->mcanmove
         && !mon->mstun && !mon->mconf && !mon->msleeping
         && mon->data->mmove >= 12) {
         if (!nohands(mon->data) && !rn2(martial() ? 5 : 3)) {
-            pline("%s挡住了你%s踢击。", Monnam(mon),
+            pline("%s阻挡了你%s踢击.", Monnam(mon),
                   clumsy ? "笨拙的" : "");
             (void) passive(mon, uarmf, FALSE, 1, AT_KICK, FALSE);
             return;
@@ -268,7 +268,7 @@ kick_monster(struct monst *mon, coordxy x, coordxy y)
             maybe_mnexto(mon);
             if (mon->mx != x || mon->my != y) {
                 (void) unmap_invisible(x, y);
-                pline("%s %s，%s躲开了你的%s踢击。", Monnam(mon),
+                pline("%s%s了,%s躲开了你的%s踢击.", Monnam(mon),
                       (can_teleport(mon->data) && !noteleport_level(mon))
                           ? "瞬移"
                           : is_floater(mon->data)
@@ -302,7 +302,7 @@ ghitm(struct monst *mtmp, struct obj *gold)
     } else if (!mtmp->mcanmove) {
         /* too light to do real damage */
         if (canseemon(mtmp)) {
-            pline_The("%s无伤害地%s了%s一下。", xname(gold),
+            pline_The("%s无伤害地%s了%s一下.", xname(gold),
                       otense(gold, "打"), mon_nam(mtmp));
             msg_given = TRUE;
         }
@@ -318,7 +318,7 @@ ghitm(struct monst *mtmp, struct obj *gold)
             setmangry(mtmp, TRUE);
         /* greedy monsters catch gold */
         if (cansee(mtmp->mx, mtmp->my))
-            pline("%s%s抓起了金币。", Monnam(mtmp),
+            pline("%s%s抓起了金币.", Monnam(mtmp),
                   was_sleeping ? "苏醒并" : "");
         (void) mpickobj(mtmp, gold);
         gold = (struct obj *) 0; /* obj has been freed */
@@ -329,7 +329,7 @@ ghitm(struct monst *mtmp, struct obj *gold)
                 robbed -= value;
                 if (robbed < 0L)
                     robbed = 0L;
-                pline_The("这些金币%s弥补了%s最近的损失。",
+                pline_The("这些金币%s弥补了%s最近的损失.",
                           !robbed ? "" : "部分", mhis(mtmp));
                 ESHK(mtmp)->robbed = robbed;
                 if (!robbed)
@@ -338,7 +338,7 @@ ghitm(struct monst *mtmp, struct obj *gold)
                 SetVoice(mtmp, 0, 80, 0);
                 if (mtmp->mpeaceful) {
                     ESHK(mtmp)->credit += value;
-                    You("获得了 %ld %s 的信用。", ESHK(mtmp)->credit,
+                    You("获得了 %ld %s的信用.", ESHK(mtmp)->credit,
                         currency(ESHK(mtmp)->credit));
                 } else
                     verbalize("谢谢，人渣！");
@@ -346,9 +346,9 @@ ghitm(struct monst *mtmp, struct obj *gold)
         } else if (mtmp->ispriest) {
             SetVoice(mtmp, 0, 80, 0);
             if (mtmp->mpeaceful)
-                verbalize("感谢您的捐赠。");
+                verbalize("感谢您的捐赠.");
             else
-                verbalize("谢谢，人渣！");
+                verbalize("谢谢,人渣!");
         } else if (mtmp->isgd) {
             umoney = money_cnt(gi.invent);
             /* Some of these are iffy, because a hostile guard
@@ -357,12 +357,12 @@ ghitm(struct monst *mtmp, struct obj *gold)
                could try fighting, then weasel out of being
                killed by throwing his/her gold when losing. */
             SetVoice(mtmp, 0, 80, 0);
-            verbalize(umoney ? "放下剩下的金币，跟我走。"
+            verbalize(umoney ? "放下剩下的金币, 跟我走."
                       : hidden_gold(TRUE)
-                        ? "你还有藏起来的金币。现在就放下。"
+                        ? "你还有藏起来的金币. 赶快放下."
                         : mtmp->mpeaceful
-                          ? "我会处理这些的；请继续走。"
-                          : "我收下了；现在给我滚。");
+                          ? "我会处理这些的; 请继续走."
+                          : "我收下了; 现在给我滚.");
         } else if (is_mercenary(mtmp->data)) {
             boolean was_angry = !mtmp->mpeaceful;
             long goldreqd = 0L;
@@ -386,15 +386,15 @@ ghitm(struct monst *mtmp, struct obj *gold)
             if (!mtmp->mpeaceful) {
                 SetVoice(mtmp, 0, 80, 0);
                 if (goldreqd)
-                    verbalize("这点钱不够，懦夫！");
+                    verbalize("这点钱不够, 懦夫!");
                 else /* unbribable (watchman) */
-                    verbalize("我才不接受你这种人渣的贿赂！");
+                    verbalize("我才不接受你这种人渣的贿赂!");
             } else if (was_angry) {
                 SetVoice(mtmp, 0, 80, 0);
-                verbalize("这还差不多。现在给我滚！");
+                verbalize("这还差不多. 现在给我滚!");
             } else {
                 SetVoice(mtmp, 0, 80, 0);
-                verbalize("多谢打赏，%s。",
+                verbalize("多谢打赏, %s.",
                           flags.female ? "女士" : "老兄");
             }
         }
@@ -436,9 +436,9 @@ container_impact_dmg(
         otmp2 = otmp->nobj;
         if (objects[otmp->otyp].oc_material == GLASS
             && otmp->oclass != GEM_CLASS && !obj_resists(otmp, 33, 100)) {
-            result = "碎裂";
+            result = "破碎";
         } else if (otmp->otyp == EGG && !rn2(3)) {
-            result = "开裂";
+            result = "碎裂";
         }
         if (result) {
             if (otmp->otyp == MIRROR)
@@ -453,7 +453,7 @@ container_impact_dmg(
             } else {
                 Soundeffect(se_glass_shattering, 25);
             }
-            You_hear("一声沉闷的%s声。", result);
+            You_hear("一声低沉的%s声.", result);
             if (costly) {
                 if (frominv && !otmp->unpaid)
                     otmp->no_charge = 1;
@@ -475,10 +475,10 @@ container_impact_dmg(
         obj->owt = weight(obj);
     if (costly && loss) {
         if (!insider) {
-            You("造成了 %ld %s 的损失！", loss, currency(loss));
+            You("造成了价值 %ld %s的损失!", loss, currency(loss));
             make_angry_shk(shkp, x, y);
         } else {
-            You("破坏了%s价值 %ld %s 的物品。", shkname(shkp), loss,
+            You("破坏了%s价值 %ld %s的物品.", shkname(shkp), loss,
                 currency(loss));
         }
     }
