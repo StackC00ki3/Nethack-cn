@@ -237,7 +237,7 @@ kick_monster(struct monst *mon, coordxy x, coordxy y)
         if (!rn2((i < j / 10) ? 2 : (i < j / 5) ? 3 : 4)) {
             if (martial())
                 goto doit;
-            Your("笨拙一踢没有造成任何伤害。");
+            Your("笨拙一踢没有造成任何伤害.");
             (void) passive(mon, uarmf, FALSE, 1, AT_KICK, FALSE);
             return;
         }
@@ -1442,7 +1442,7 @@ dokick(void)
     (void) unmap_invisible(x, y);
     if ((is_pool(x, y) || gm.maploc->typ == LAVAWALL) ^ !!u.uinwater) {
         /* objects normally can't be removed from water by kicking */
-        You("把一些 %s 溅得到处都是。",
+        You("把一些%s溅得到处都是.",
             hliquid(is_pool(x, y) ? "水" : "岩浆"));
         /* pretend the kick is fast enough for lava not to burn */
         return ECMD_TIME;
