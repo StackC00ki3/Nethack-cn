@@ -191,10 +191,10 @@ flooreffects(
         if (((mtmp = m_at(x, y)) && mtmp->mtrapped)
             || (u.utrap && u_at(x,y))) {
             if (*verb && (cansee(x, y) || distu(x, y) == 0))
-                pline("%s巨石%s掉进坑里%s.",
+                pline("%s巨石%s%s进坑里.",
                       Blind ? "一块" : "那块",
-                      vtense((const char *) 0, verb),
-                      mtmp ? "" : "和你一起");
+                      mtmp ? "" : "和你一起",
+                      vtense((const char *) 0, verb));
             if (mtmp) {
                 if (!passes_walls(mtmp->data) && !throws_rocks(mtmp->data)) {
                     /* dieroll was rnd(20); 1: maximum chance to hit
@@ -248,7 +248,7 @@ flooreffects(
                             : "填满了坑");
             } else {
                 Soundeffect(se_boulder_drop, 100);
-                You_hear("一个巨石 %s。", verb);
+                You_hear("一个巨石%s.", verb);
             }
         }
         /*
