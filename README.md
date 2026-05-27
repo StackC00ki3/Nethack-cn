@@ -40,9 +40,9 @@ English README：[README_en.md](README_en.md)
 - [ ] display.c
 - [ ] dlb.c
 - [ ] do.c
-- [ ] dog.c
+- [x] dog.c
 - [ ] dogmove.c
-- [ ] dokick.c
+- [x] dokick.c
 - [ ] dothrow.c
 - [ ] do_name.c
 - [ ] do_wear.c
