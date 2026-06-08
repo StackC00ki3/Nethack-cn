@@ -1222,10 +1222,10 @@ init_dungeons(void)
         char tbuf[BUFSZ];
         Sprintf(tbuf, "无法打开地牢描述文件 - \"%s", DUNGEON_FILE);
 #ifdef DLBRSRC /* using a resource from the executable */
-        Strcat(tbuf, "\" resource!");
+        Strcat(tbuf, "\" 资源!");
 #else /* using a file or DLB file */
 #if defined(DLB)
-        Strcat(tbuf, "\" from ");
+        Strcat(tbuf, "\" 来自 ");
 #ifdef PREFIXES_IN_USE
         Strcat(tbuf, "\n\"");
         if (gf.fqn_prefix[DATAPREFIX])
@@ -1559,7 +1559,7 @@ earth_sense(void)
 
     for (otmp = svl.level.buriedobjlist; otmp; otmp = otmp->nobj)
         if (u_at(otmp->ox, otmp->oy)) {
-            You("感觉到你的%s下方有东西。", makeplural(body_part(FOOT)));
+            You("感觉到你的%s下方有东西.", makeplural(body_part(FOOT)));
             return;
         }
 }
@@ -1720,28 +1720,28 @@ ceiling(coordxy x, coordxy y)
      * see check_special_room()
      */
     if (*in_rooms(x, y, VAULT))
-        what = "vault's ceiling";
+        what = "金库的天花板";
     else if (*in_rooms(x, y, TEMPLE))
-        what = "temple's ceiling";
+        what = "神庙的天花板";
     else if (*in_rooms(x, y, SHOPBASE))
-        what = "shop's ceiling";
+        what = "商店的天花板";
     else if (Is_waterlevel(&u.uz))
         /* water plane has no surface; its air bubbles aren't below sky */
-        what = "water above";
+        what = "上方的水";
     else if (IS_AIR(lev->typ))
-        what = "sky";
+        what = "天空";
     else if (Is_firelevel(&u.uz))
-        what = "flames above";
+        what = "上方的火焰";
     else if (In_quest(&u.uz))
         /* just in case; try to avoid in caller if you can */
-        what = "expanse above";
+        what = "上方的开阔空间";
     else if (Underwater)
-        what = "water's surface";
+        what = "水面";
     else if ((IS_ROOM(lev->typ) && !Is_earthlevel(&u.uz))
              || IS_WALL(lev->typ) || IS_DOOR(lev->typ) || lev->typ == SDOOR)
-        what = "ceiling";
+        what = "天花板";
     else
-        what = "rock cavern";
+        what = "岩洞";
 
     return what;
 }
@@ -2241,15 +2241,15 @@ br_string(int type)
 {
     switch (type) {
     case BR_PORTAL:
-        return "Portal";
+        return "传送门";
     case BR_NO_END1:
-        return "Connection";
+        return "连接";
     case BR_NO_END2:
-        return "One way stair";
+        return "单向楼梯";
     case BR_STAIR:
-        return "Stair";
+        return "楼梯";
     }
-    return " (unknown)";
+    return " (未知)";
 }
 
 staticfn char
@@ -2309,14 +2309,14 @@ print_dungeon(boolean bymenu, schar *rlev, xint16 *rdgn)
         if (bymenu && In_endgame(&u.uz) && i != astral_level.dnum)
             continue;
         unplaced = unplaced_floater(dptr);
-        descr = unplaced ? "depth" : "level";
+        descr = unplaced ? "深度" : "层";
         nlev = dptr->num_dunlevs;
         if (nlev > 1)
-            Snprintf(buf, sizeof buf, "%s: %s %d to %d", dptr->dname,
-                     makeplural(descr), dptr->depth_start,
+            Snprintf(buf, sizeof buf, "%s: %s%d到%d", dptr->dname,
+                     descr, dptr->depth_start,
                      dptr->depth_start + nlev - 1);
         else
-            Snprintf(buf, sizeof buf, "%s: %s %d", dptr->dname,
+            Snprintf(buf, sizeof buf, "%s: %s%d", dptr->dname,
                      descr, dptr->depth_start);
 
         /* Most entrances are uninteresting. */
@@ -2344,7 +2344,7 @@ print_dungeon(boolean bymenu, schar *rlev, xint16 *rdgn)
             print_branch(win, i, last_level, slev->dlevel.dlevel, bymenu,
                          &lchoices);
 
-            Sprintf(buf, "%c %s：%d",
+            Sprintf(buf, "%c %s: %d",
                     chr_u_on_lvl(&slev->dlevel),
                     slev->proto, depth(&slev->dlevel));
             if (Is_stronghold(&slev->dlevel))
@@ -2386,7 +2386,7 @@ print_dungeon(boolean bymenu, schar *rlev, xint16 *rdgn)
         if (br->end1.dnum == svn.n_dgns) {
             if (first) {
                 putstr(win, 0, "");
-                putstr(win, 0, "Floating branches");
+                putstr(win, 0, "悬空分支");
                 first = FALSE;
             }
             Sprintf(buf, "   %s到%s", br_string(br->type),
@@ -2415,7 +2415,7 @@ print_dungeon(boolean bymenu, schar *rlev, xint16 *rdgn)
                 break;
 
         if (trap)
-            Sprintf(buf, "传送门在(%d,%d)，英雄在(%d,%d)",
+            Sprintf(buf, "传送门在(%d,%d), 英雄在(%d,%d)",
                     trap->tx, trap->ty, u.ux, u.uy);
 
         /* only report "no portal found" when actually expecting a portal */
@@ -2423,7 +2423,7 @@ print_dungeon(boolean bymenu, schar *rlev, xint16 *rdgn)
                  || Is_firelevel(&u.uz) || Is_airlevel(&u.uz)
                  || Is_qstart(&u.uz) || at_dgn_entrance("The Quest")
                  || Is_knox(&u.uz))
-            Strcpy(buf, "未找到传送门。");
+            Strcpy(buf, "未找到传送门.");
 
         /* only give output if we found a portal or expected one and didn't */
         if (*buf) {
@@ -2540,7 +2540,7 @@ query_annotation(d_level *lev)
                values will end up with one anyway; remove it */
             (void) trimspaces(lbuf);
         }
-        Snprintf(qbuf, sizeof qbuf, "What do you want to call %s?", lbuf);
+        Snprintf(qbuf, sizeof qbuf, "你想把%s称作什么?", lbuf);
         getlin(qbuf, nbuf);
     }
 
@@ -2782,17 +2782,17 @@ overview_stats(
         }
     }
 
-    Sprintf(hdrbuf, "常规，大小 %ld", (long) sizeof (mapseen));
+    Sprintf(hdrbuf, "常规, 大小 %ld", (long) sizeof (mapseen));
     Sprintf(buf, statsfmt, hdrbuf, ocount, osize);
     putstr(win, 0, buf);
     if (bcount) {
-        Sprintf(hdrbuf, "墓地, size %ld",
+        Sprintf(hdrbuf, "墓地, 大小 %ld",
                 (long) sizeof (struct cemetery));
         Sprintf(buf, statsfmt, hdrbuf, bcount, bsize);
         putstr(win, 0, buf);
     }
     if (acount) {
-        Sprintf(hdrbuf, "注释，文本");
+        Sprintf(hdrbuf, "注释, 文本");
         Sprintf(buf, statsfmt, hdrbuf, acount, asize);
         putstr(win, 0, buf);
     }
@@ -3368,19 +3368,20 @@ staticfn const char *
 seen_string(xint16 x, const char *obj)
 {
     /* players are computer scientists: 0, 1, 2, n */
+    nhUse(obj);
     switch (x) {
     case 0:
-        return "no";
+        return "没有";
     /* an() returns too much.  index/strchr is ok in this case */
     case 1:
-        return strchr(vowels, *obj) ? "an" : "a";
+        return "一个";
     case 2:
-        return "some";
+        return "一些";
     case 3:
-        return "many";
+        return "许多";
     }
 
-    return "(unknown)";
+    return "(未知)";
 }
 
 /* better br_string */
@@ -3393,16 +3394,16 @@ br_string2(branch *br)
 
     switch (br->type) {
     case BR_PORTAL:
-        return closed_portal ? "Sealed portal" : "Portal";
+        return closed_portal ? "封印的传送门" : "传送门";
     case BR_NO_END1:
-        return "Connection";
+        return "连接";
     case BR_NO_END2:
-        return br->end1_up ? "One way stairs up" : "One way stairs down";
+        return br->end1_up ? "向上的单向楼梯" : "向下的单向楼梯";
     case BR_STAIR:
-        return br->end1_up ? "Stairs up" : "Stairs down";
+        return br->end1_up ? "向上的楼梯" : "向下的楼梯";
     }
 
-    return "(unknown)";
+    return "(未知)";
 }
 
 /* get the name of an endgame level; topten.c does something similar */
@@ -3417,16 +3418,16 @@ endgamelevelname(char *outbuf, int indx)
         Strcpy(outbuf, "星界");
         break;
     case -4:
-        planename = "Water";
+        planename = "水之";
         break;
     case -3:
-        planename = "Fire";
+        planename = "火之";
         break;
     case -2:
-        planename = "Air";
+        planename = "气之";
         break;
     case -1:
-        planename = "Earth";
+        planename = "土之";
         break;
     }
     if (planename)
@@ -3442,10 +3443,10 @@ shop_string(int rtype)
 {
     extern const struct shclass shtypes[]; /* defined in shknam.c */
     int shoptype = rtype - SHOPBASE; /* convert room type to shop type */
-    const char *str = "shop?"; /* catchall */
+    const char *str = "商店?"; /* catchall */
 
     if (shoptype < 0) {
-        str = "untended shop";
+        str = "无人看管的商店";
     } else if (shtypes[shoptype].annotation) {
         str = shtypes[shoptype].annotation;
     } else if (shtypes[shoptype].name) {
@@ -3469,8 +3470,8 @@ tunesuffix(
         if (u.uevent.uheard_tune == 2)
             Sprintf(tmp, "音符 \"%s\"", svt.tune);
         else
-            Strcpy(tmp, "5- 音符曲调");
-        Snprintf(outbuf, bsz, " (play %s to open or close drawbridge)", tmp);
+            Strcpy(tmp, "5音符曲调");
+        Snprintf(outbuf, bsz, " (演奏%s来打开或关闭吊桥)", tmp);
     }
     return outbuf;
 }
@@ -3494,17 +3495,17 @@ tunesuffix(
 #define ADDNTOBUF(nam, var) \
     do {                                                                     \
         if (var)                                                             \
-            Sprintf(eos(buf), "%s%s %s%s", COMMA, seen_string((var), (nam)), \
-                    (nam), plur(var));                                       \
+            Sprintf(eos(buf), "%s%s%s", COMMA, seen_string((var), (nam)),   \
+                    (nam));                                                  \
     } while (0)
 /* ADD2NTOBUF: for "M temples and N altars"; seen_string() is safe to use
    multiple times within one expression; so is plur() */
 #define ADD2NTOBUF(nam, var, nam2, var2) \
     do {                                                                \
         if (var && var2) {                                              \
-            Sprintf(eos(buf), "%s%s %s%s and %s %s%s", COMMA,           \
-                    seen_string((var), (nam)), (nam), plur(var),        \
-                    seen_string((var2), (nam2)), (nam2), plur(var2));   \
+            Sprintf(eos(buf), "%s%s%s和%s%s", COMMA,                   \
+                    seen_string((var), (nam)), (nam),                  \
+                    seen_string((var2), (nam2)), (nam2));              \
         } else if (var) {                                               \
             ADDNTOBUF(nam, var);                                        \
         } else if (var2) {                                              \
@@ -3559,7 +3560,7 @@ print_mapseen(
         Sprintf(buf, "%s%s:", (final != -1) ? TAB : "",
                 endgamelevelname(tmpbuf, i));
     else
-        Sprintf(buf, "%s第 %d 层:", (final != -1) ? TAB : "", i);
+        Sprintf(buf, "%s第%d层:", (final != -1) ? TAB : "", i);
 
     /* wizmode prints out proto dungeon names for clarity */
     if (wizard) {
@@ -3570,9 +3571,9 @@ print_mapseen(
     }
     /* [perhaps print custom annotation on its own line when it's long] */
     if (mptr->custom)
-        Sprintf(eos(buf), " \" %s\"", mptr->custom);
+        Sprintf(eos(buf), " \"%s\"", mptr->custom);
     if (on_level(&u.uz, &mptr->lev))
-        Sprintf(eos(buf), " <-  你%s这里.",
+        Sprintf(eos(buf), " <- 你%s这里.",
                 (final <= 0 || (final == 1 && how == ASCENDED)) ? "在"
                   : (final == 1 && how == ESCAPED) ? "离开了"
                     : "在");
@@ -3595,10 +3596,10 @@ print_mapseen(
          */
         if (mptr->feat.nshop > 0) {
             if (mptr->feat.nshop > 1)
-                ADDNTOBUF("shop", mptr->feat.nshop);
+                ADDNTOBUF("商店", mptr->feat.nshop);
             else
                 Sprintf(eos(buf), "%s%s", COMMA,
-                        an(shop_string(mptr->feat.shoptype)));
+                        shop_string(mptr->feat.shoptype));
         }
         if (mptr->feat.naltar > 0 || mptr->feat.ntemple > 0) {
             unsigned atmp;
@@ -3608,8 +3609,8 @@ print_mapseen(
                possibly it being out of view in an irregularly shaped room);
                FIXME: if all temples present have been desecrated, we ought
                to say so */
-            ADD2NTOBUF("temple", mptr->feat.ntemple,
-                       "altar", mptr->feat.naltar);
+            ADD2NTOBUF("神庙", mptr->feat.ntemple,
+                       "祭坛", mptr->feat.naltar);
 
             /* only print out altar's god if they are all to your god */
             atmp = mptr->feat.msalign;              /*    0,  1,  2,  3 */
@@ -3617,21 +3618,21 @@ print_mapseen(
             if (Amask2align(atmp) == u.ualign.type) /* -128, -1,  0, +1 */
                 Sprintf(eos(buf), " 之 %s", align_gname(u.ualign.type));
         }
-        ADDNTOBUF("throne", mptr->feat.nthrone);
-        ADDNTOBUF("fountain", mptr->feat.nfount);
-        ADDNTOBUF("sink", mptr->feat.nsink);
-        ADDNTOBUF("grave", mptr->feat.ngrave);
-        ADDNTOBUF("tree", mptr->feat.ntree);
+        ADDNTOBUF("王座", mptr->feat.nthrone);
+        ADDNTOBUF("喷泉", mptr->feat.nfount);
+        ADDNTOBUF("水槽", mptr->feat.nsink);
+        ADDNTOBUF("坟墓", mptr->feat.ngrave);
+        ADDNTOBUF("树", mptr->feat.ntree);
 #if 0
-        ADDTOBUF("water", mptr->feat.water);
-        ADDTOBUF("lava", mptr->feat.lava);
-        ADDTOBUF("ice", mptr->feat.ice);
+        ADDTOBUF("水", mptr->feat.water);
+        ADDTOBUF("熔岩", mptr->feat.lava);
+        ADDTOBUF("冰", mptr->feat.ice);
 #endif
         /* capitalize afterwards */
         i = strlen(PREFIX);
         buf[i] = highc(buf[i]);
         /* capitalizing it makes it a sentence; terminate with '.' */
-        Strcat(buf, "死亡");
+        Strcat(buf, ".");
         add_menu_str(win, buf);
     }
 
@@ -3659,14 +3660,14 @@ print_mapseen(
            indicates that the fort's entrance has been seen (or mapped) */
         Sprintf(buf, "%s吕底人堡垒.", PREFIX);
     } else if (mptr->flags.castle) {
-        Snprintf(buf, sizeof buf, "%sThe castle%s.", PREFIX,
+        Snprintf(buf, sizeof buf, "%s城堡%s.", PREFIX,
                 tunesuffix(mptr, tmpbuf, sizeof tmpbuf));
     } else if (mptr->flags.valley) {
         Sprintf(buf, "%s死亡山谷.", PREFIX);
     } else if (mptr->flags.vibrating_square) {
-        Sprintf(buf, "%s通往摩洛克的圣所之门。", PREFIX);
+        Sprintf(buf, "%s通往摩洛克的圣所之门.", PREFIX);
     } else if (mptr->flags.msanctum) {
-        Sprintf(buf, "%s摩洛的密室.", PREFIX);
+        Sprintf(buf, "%s摩洛克的密室.", PREFIX);
     }
     if (*buf) {
         add_menu_str(win, buf);
@@ -3688,7 +3689,7 @@ print_mapseen(
          */
         if (mptr->br->end1_up && !In_endgame(&(mptr->br->end2)))
             Sprintf(eos(buf), ",  层数%d", depth(&(mptr->br->end2)));
-        Strcat(buf, "死亡");
+        Strcat(buf, ".");
         add_menu_str(win, buf);
     }
 
@@ -3712,7 +3713,7 @@ print_mapseen(
                 (void) strsubst(tmpbuf, " herself", " yourself");
                 (void) strsubst(tmpbuf, " his ", " your ");
                 (void) strsubst(tmpbuf, " her ", " your ");
-                Snprintf(buf, sizeof(buf), "%s%syou, %s%c", PREFIX, TAB,
+                Snprintf(buf, sizeof(buf), "%s%s你, %s%c", PREFIX, TAB,
                          tmpbuf, --kncnt ? ',' : '.');
                 add_menu_str(win, buf);
             }
