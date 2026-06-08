@@ -163,7 +163,7 @@ alreadynamed(struct monst *mtmp, char *monnambuf, char *usrbuf)
         boolean name_not_title = (has_mgivenname(mtmp)
                                   || type_is_pname(mtmp->data)
                                   || mtmp->isshk);
-        pline("%s宁可保留%s现有的%s。", upstart(monnambuf),
+        pline("%s宁可保留%s现有的%s.", upstart(monnambuf),
               is_rider(mtmp->data) ? "它的" : mhis(mtmp),
               name_not_title ? "名字" : "头衔");
         return TRUE;
@@ -179,7 +179,7 @@ alreadynamed(struct monst *mtmp, char *monnambuf, char *usrbuf)
                    && fuzzymatch(usrbuf, p + 4, " -_", TRUE))) {
         if (is_rider(mtmp->data)) {
             /* avoid gendered pronoun for riders */
-            pline("%s 已经被叫做那个名字了。", upstart(monnambuf));
+            pline("%s已经被叫做那个名字了.", upstart(monnambuf));
         } else {
             pline("%s已经被叫做%s了.",
                   upstart(strcpy(pronounbuf, mhe(mtmp))), monnambuf);
@@ -210,7 +210,7 @@ do_mgivenname(void)
     }
     cc.x = u.ux;
     cc.y = u.uy;
-    if (getpos(&cc, FALSE, "the monster you want to name") < 0
+    if (getpos(&cc, FALSE, "你想命名的怪物") < 0
         || !isok(cc.x, cc.y))
         return;
     cx = cc.x, cy = cc.y;
@@ -247,7 +247,7 @@ do_mgivenname(void)
         return;
     }
     /* special case similar to the one in lookat() */
-    Sprintf(qbuf, "你想命名%s为什么?",
+    Sprintf(qbuf, "你想将%s命名为什么?",
             distant_monnam(mtmp, ARTICLE_THE, monnambuf));
     /* use getlin() to get a name string from the player */
     if (!name_from_player(buf, qbuf,
@@ -270,12 +270,12 @@ do_mgivenname(void)
                     || mtmp->data->msound <= MS_ANIMAL)) {
         if (!alreadynamed(mtmp, monnambuf, buf)) {
             SetVoice(mtmp, 0, 80, 0);
-            verbalize("I'm %s, not %s.", shkname(mtmp), buf);
+            verbalize("我是%s, 不是%s.", shkname(mtmp), buf);
         }
     } else if (mtmp->ispriest || mtmp->isminion || mtmp->isshk
                || mtmp->data == &mons[PM_GHOST] || has_ebones(mtmp)) {
         if (!alreadynamed(mtmp, monnambuf, buf))
-            pline("%s不会接受这个名字%s.", upstart(monnambuf), buf);
+            pline("%s不会接受%s这个名字.", upstart(monnambuf), buf);
     } else {
         (void) christen_monst(mtmp, buf);
     }
@@ -295,13 +295,14 @@ do_oname(struct obj *obj)
 
     /* Do this now because there's no point in even asking for a name */
     if (obj->otyp == SPE_NOVEL) {
-        pline("%s 已经有一个出版的名字.", Ysimple_name2(obj));
+        pline("%s已经有一个正式名称.", Ysimple_name2(obj));
         return;
     }
 
-    Sprintf(qbuf, "你想要给%s命名为什么 ",
+    Sprintf(qbuf, "你想将%s",
             is_plural(obj) ? "这些" : "这个");
-    (void) safe_qbuf(qbuf, qbuf, "?", obj, xname, simpleonames, "item");
+    (void) safe_qbuf(qbuf, qbuf, "命名为什么?", obj, xname, simpleonames,
+                     "物品");
     /* use getlin() to get a name string from the player */
     if (!name_from_player(buf, qbuf, safe_oname(obj)))
         return;
@@ -319,7 +320,7 @@ do_oname(struct obj *obj)
     if (obj->oartifact) {
         /* this used to give "The artifact seems to resist the attempt."
            but resisting is definite, no "seems to" about it */
-        pline("%s 抵抗了这次尝试。",
+        pline("%s抵抗了这次尝试.",
               /* any artifact should always pass the has_oname() test
                  but be careful just in case */
               has_oname(obj) ? ONAME(obj) : "神器");
@@ -348,9 +349,9 @@ do_oname(struct obj *obj)
         do {
             wipeout_text(bufp, rnd_on_display_rng(2), (unsigned) 0);
         } while (!strcmp(buf, bufcpy));
-        pline("在刻字时，你的%s滑了一下。", body_part(HAND));
+        pline("在刻字时, 你的%s滑了一下.", body_part(HAND));
         display_nhwindow(WIN_MESSAGE, FALSE);
-        You("刻写：“%s”。", buf);
+        You("刻写:\"%s\".", buf);
         /* violate illiteracy conduct since hero attempted to write
            a valid artifact name */
         u.uconduct.literate++;
@@ -412,11 +413,11 @@ oname(
             /* violate illiteracy conduct since successfully wrote arti-name */
             if (!u.uconduct.literate++)
                 livelog_printf(LL_CONDUCT | LL_ARTIFACT,
-                               "became literate by naming %s",
+                               "通过命名%s变得识字",
                                bare_artifactname(obj));
             else
                 livelog_printf(LL_ARTIFACT,
-                               "chose %s to be named \"%s\"",
+                               "选择将%s命名为\"%s\"",
                                ansimpleoname(obj), bare_artifactname(obj));
         }
     }
@@ -564,12 +565,12 @@ docallcmd(void)
         do_mgivenname();
         break;
     case 'i': /* name an individual object in inventory */
-        obj = getobj("name", name_ok, GETOBJ_PROMPT);
+        obj = getobj("命名", name_ok, GETOBJ_PROMPT);
         if (obj)
             do_oname(obj);
         break;
     case 'o': /* name a type of object in inventory */
-        obj = getobj("call", call_ok, GETOBJ_NOFLAGS);
+        obj = getobj("称呼", call_ok, GETOBJ_NOFLAGS);
         if (obj) {
             /* behave as if examining it in inventory;
                this might set dknown if it was picked up
@@ -580,7 +581,7 @@ docallcmd(void)
                 You("将不会识别出另一个.");
 #if 0
             } else if (call_ok(obj) == GETOBJ_EXCLUDE) {
-                You("know those as well as you ever will.");
+                You("对那些的了解已经到头了.");
 #endif
             } else {
                 docall(obj);
@@ -648,8 +649,8 @@ docall(struct obj *obj)
         Sprintf(qbuf, "称一股%s液体为:",
                 OBJ_DESCR(objects[obj->otyp]));
     else
-        (void) safe_qbuf(qbuf, "Call ", ":", obj,
-                         docall_xname, simpleonames, "thing");
+        (void) safe_qbuf(qbuf, "将", "称呼为:", obj,
+                         docall_xname, simpleonames, "东西");
     /* pointer to old name */
     uname_p = &(objects[obj->otyp].oc_uname);
     /* use getlin() to get a name string from the player */
@@ -688,7 +689,7 @@ namefloorobj(void)
     /* "dot for under/over you" only makes sense when the cursor hasn't
        been moved off the hero's '@' yet, but there's no way to adjust
        the help text once getpos() has started */
-    Sprintf(buf, "地图上的东西( 或 '.'  在你%s)",
+    Sprintf(buf, "地图上的东西(或用'.'选择你%s的东西)",
             (u.uundetected && hides_under(gy.youmonst.data))
               ? "上面" : "下面");
     if (getpos(&cc, FALSE, buf) < 0 || cc.x <= 0)
@@ -703,8 +704,8 @@ namefloorobj(void)
     }
     if (!obj) {
         /* "under you" is safe here since there's no object to hide under */
-        There("似乎没有任何物体%s。",
-              u_at(cc.x, cc.y) ? "在您下方" : "那里");
+        There("似乎没有任何物体%s.",
+              u_at(cc.x, cc.y) ? "在你下方" : "在那里");
         return;
     }
     /* note well: 'obj' might be an instance of STRANGE_OBJECT if target
@@ -738,14 +739,14 @@ namefloorobj(void)
         unames[4] = roguename();
         /* silly */
         unames[5] = "Wibbly Wobbly";
-        pline("%s%s叫你\"%s.\"",
+        pline("%s%s叫你\"%s\".",
               The(buf), use_plural ? "决定" : "决定",
               unames[rn2_on_display_rng(SIZE(unames))]);
     } else if (call_ok(obj) == GETOBJ_EXCLUDE) {
-        pline("%s%s不能被指定一个类型名字.",
+        pline("%s%s不能被指定类型名称.",
               use_plural ? "那些" : "那个", buf);
     } else if (!obj->dknown) {
-        You("不是很了解%s %s 来命名%s.",
+        You("对%s%s了解不够, 无法命名%s.",
             use_plural ? "那些" : "那个", buf, use_plural ? "它们" : "它");
     } else {
         docall(obj);
@@ -964,7 +965,7 @@ x_monnam(
             Sprintf(eos(buf), "%s鬼魂", s_suffix(name));
             name_at_start = TRUE;
         } else if (called) {
-            Sprintf(eos(buf), "%s 叫做 %s", pm_name, name);
+            Sprintf(eos(buf), "%s叫做%s", pm_name, name);
             name_at_start = (boolean) type_is_pname(mdat);
         } else if (is_mplayer(mdat) && (bp = strstri(name, " the ")) != 0) {
             /* <name> the <adjective> <invisible> <saddled> <rank> */
@@ -1472,19 +1473,19 @@ rndcolor(void)
     int k = rn2(CLR_MAX);
 
     return Hallucination ? hcolor((char *) 0)
-                         : (k == NO_COLOR) ? "colorless"
+                         : (k == NO_COLOR) ? "无色"
                                            : c_obj_colors[k];
 }
 
 static NEARDATA const char *const hliquids[] = {
-    "yoghurt", "oobleck", "clotted blood", "diluted water", "purified water",
-    "instant coffee", "tea", "herbal infusion", "liquid rainbow",
-    "creamy foam", "mulled wine", "bouillon", "nectar", "grog", "flubber",
-    "ketchup", "slow light", "oil", "vinaigrette", "liquid crystal", "honey",
-    "caramel sauce", "ink", "aqueous humour", "milk substitute",
-    "fruit juice", "glowing lava", "gastric acid", "mineral water",
-    "cough syrup", "quicksilver", "sweet vitriol", "grey goo", "pink slime",
-    "cosmic latte", "bone oil", "custard", "lard", "vinegar", "creosote",
+    "酸奶", "欧不裂", "凝血", "稀释水", "纯净水",
+    "速溶咖啡", "茶", "草药浸液", "液态彩虹",
+    "奶油泡沫", "香料热酒", "清汤", "花蜜", "烈性酒", "橡皮泥",
+    "番茄酱", "缓慢光", "油", "油醋汁", "液态水晶", "蜂蜜",
+    "焦糖酱", "墨水", "房水", "代乳品",
+    "果汁", "发光熔岩", "胃酸", "矿泉水",
+    "止咳糖浆", "水银", "甜矾油", "灰色黏胶", "粉色史莱姆",
+    "宇宙拿铁", "骨油", "蛋奶冻", "猪油", "醋", "木馏油",
     /* "new coke (tm)", --better not */
 };
 

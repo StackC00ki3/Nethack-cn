@@ -82,7 +82,7 @@ English README：[README_en.md](README_en.md)
 - [x] dogmove.c
 - [x] dokick.c
 - [x] dothrow.c
-- [ ] do_name.c
+- [x] do_name.c
 - [ ] do_wear.c
 - [ ] drawing.c
 - [ ] dungeon.c
