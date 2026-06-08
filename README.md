@@ -83,7 +83,7 @@ English README：[README_en.md](README_en.md)
 - [x] dokick.c
 - [x] dothrow.c
 - [x] do_name.c
-- [ ] do_wear.c
+- [x] do_wear.c
 - [ ] drawing.c
 - [ ] dungeon.c
 - [ ] earlyarg.c
