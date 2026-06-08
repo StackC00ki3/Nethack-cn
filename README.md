@@ -68,7 +68,7 @@ English README：[README_en.md](README_en.md)
 - [x] botl.c
 - [x] calendar.c
 - [x] cfgfiles.c
-- [ ] cmd.c
+- [x] cmd.c
 - [x] coloratt.c
 - [x] date.c
 - [ ] dbridge.c

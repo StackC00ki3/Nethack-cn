@@ -154,10 +154,10 @@ static const char *readchar_queue = "";
 
 /* for rejecting attempts to use wizard mode commands
  * Also used in wizcmds.c  */
-const char unavailcmd[] = "Unavailable command '%s'.";
+const char unavailcmd[] = "命令 '%s' 不可用。";
 
 /* for rejecting #if !SHELL, !SUSPEND */
-static const char cmdnotavail[] = "'%s' command not available.";
+static const char cmdnotavail[] = "'%s' 命令不可用。";
 
 /* the #prevmsg command */
 staticfn int
@@ -532,8 +532,8 @@ doc_extcmd_flagstr(
     if (!efp) {
         char qbuf[QBUFSZ];
 
-        add_menu_str(menuwin, "[A] Command autocompletes");
-        Sprintf(qbuf, "[m] Command accepts '%s' prefix",
+        add_menu_str(menuwin, "[A] 命令支持自动补全");
+        Sprintf(qbuf, "[m] 命令接受 '%s' 前缀",
                 visctrl(cmd_from_func(do_reqmenu)));
         add_menu_str(menuwin, qbuf);
         return (char *) 0;
@@ -570,8 +570,8 @@ doextlist(void)
     int n, pass;
     int menumode = 0, menushown[2], onelist = 0;
     boolean redisplay = TRUE, search = FALSE;
-    static const char *const headings[] = { "Extended commands",
-                                      "Debugging Extended Commands" };
+    static const char *const headings[] = { "扩展命令",
+                                      "调试扩展命令" };
     int clr = NO_COLOR;
 
     searchbuf[0] = '\0';
@@ -581,7 +581,7 @@ doextlist(void)
         redisplay = FALSE;
         any = cg.zeroany;
         start_menu(menuwin, MENU_BEHAVE_STANDARD);
-        add_menu_str(menuwin, "Extended Commands List");
+        add_menu_str(menuwin, "扩展命令列表");
         add_menu_str(menuwin, "");
 
         Sprintf(buf, "切换到%s不会自动补全的命令",
@@ -650,10 +650,10 @@ doextlist(void)
                    doesn't apply during the current game */
                 if (!wizard && !discover
                     && (efp->flags & GENERALCMD) != 0 /* minor optimization */
-                    && strstri(cmd_desc, "extinct"))
+                    && strstri(cmd_desc, "绝种"))
                     cmd_desc = strsubst(strcpy(descbuf, cmd_desc),
-                                        " been genocided or become extinct",
-                                        " been genocided");
+                                        "或已绝种",
+                                        "");
                 /* if searching, skip this command if it doesn't match */
                 if (*searchbuf
                     /* first try case-insensitive substring match */
@@ -685,7 +685,7 @@ doextlist(void)
                 add_menu_str(menuwin, "");
         }
         if (*searchbuf && !n)
-            add_menu_str(menuwin, "no matches");
+            add_menu_str(menuwin, "没有匹配项");
         else
             (void) doc_extcmd_flagstr(menuwin, (struct ext_func_tab *) 0);
 
@@ -853,7 +853,7 @@ extcmd_via_menu(void)
             add_menu(win, &nul_glyphinfo, &any, any.a_char, 0,
                      ATR_NONE, clr, buf, MENU_ITEMFLAGS_NONE);
         }
-        Snprintf(prompt, sizeof(prompt), "Extended Command: %s", cbuf);
+        Snprintf(prompt, sizeof(prompt), "扩展命令: %s", cbuf);
         end_menu(win, prompt);
         n = select_menu(win, PICK_ONE, &pick_list);
         destroy_nhwindow(win);
@@ -894,7 +894,7 @@ domonability(void)
     char c = '\0';
 
     if (might_hide && webmaker(uptr)) {
-        c = yn_function("Hide [h] or spin a web [s]?",
+        c = yn_function("隐藏 [h] 或织网 [s]？",
                         hidespinchars, 'q', TRUE);
         if (c == 'q' || c == '\033')
             return ECMD_OK;
@@ -954,7 +954,7 @@ enter_explore_mode(void)
     if (discover) {
         You("已经是在探索模式中.");
     } else {
-        const char *oldmode = !wizard ? "normal game" : "debug mode";
+        const char *oldmode = !wizard ? "普通游戏" : "调试模式";
 
         if (!authorize_explore_mode()) {
             if (!wizard) {
@@ -969,7 +969,7 @@ enter_explore_mode(void)
         pline("当心！从探索模式将无法返回 %s,",
               oldmode);
         if (paranoid_query(ParanoidQuit,
-                           "Do you want to enter explore mode?")) {
+                           "你想进入探索模式吗？")) {
             discover = TRUE;
             wizard = FALSE;
             clear_nhwindow(WIN_MESSAGE);
@@ -992,7 +992,7 @@ makemap_prepost(boolean pre, boolean wiztower)
         makemap_remove_mons();
         rm_mapseen(ledger_no(&u.uz)); /* discard overview info for level */
         {
-            static const char Unachieve[] = "%s achievement revoked.";
+            static const char Unachieve[] = "%s 成就已撤销。";
 
             /* achievement tracking; if replacing a level that has a
                special prize, lose credit for previously finding it and
@@ -1070,17 +1070,17 @@ makemap_prepost(boolean pre, boolean wiztower)
    symbols and only the latter have easily accessible descriptions.
    Also used by wizcmds.c */
 const char *levltyp[MAX_TYPE + 2] = {
-    "stone", "vertical wall", "horizontal wall", "top-left corner wall",
-    "top-right corner wall", "bottom-left corner wall",
-    "bottom-right corner wall", "cross wall", "tee-up wall", "tee-down wall",
-    "tee-left wall", "tee-right wall", "drawbridge wall", "tree",
-    "secret door", "secret corridor", "pool", "moat", "water",
-    "drawbridge up", "lava pool", "lava wall", "iron bars", "door",
-    "corridor", "room", "stairs", "ladder", "fountain", "throne", "sink",
-    "grave", "altar", "ice", "drawbridge down", "air", "cloud",
+        "石头", "竖墙", "横墙", "左上角墙",
+        "右上角墙", "左下角墙",
+        "右下角墙", "十字墙", "上丁字墙", "下丁字墙",
+        "左丁字墙", "右丁字墙", "吊桥墙", "树",
+        "暗门", "秘密走廊", "水池", "护城河", "水",
+        "吊桥升起", "熔岩池", "熔岩墙", "铁栅栏", "门",
+        "走廊", "房间", "楼梯", "梯子", "喷泉", "王座", "水槽",
+        "坟墓", "祭坛", "冰", "吊桥放下", "空气", "云",
     /* not a real terrain type, but used for undiggable stone
        by wiz_map_levltyp() */
-    "unreachable/undiggable",
+        "不可到达/不可挖掘",
     /* padding in case the number of entries above is odd */
     ""
 };
@@ -1575,7 +1575,7 @@ int
 do_reqmenu(void)
 {
     if (iflags.menu_requested) {
-        Norep("Double %s prefix, canceled.",
+        Norep("重复的 %s 前缀, 已取消。",
               visctrl(cmd_from_func(do_reqmenu)));
         iflags.menu_requested = FALSE;
         return ECMD_CANCEL;
@@ -1590,7 +1590,7 @@ int
 do_rush(void)
 {
     if ((gd.domove_attempting & DOMOVE_RUSH)) {
-        Norep("Double rush prefix, canceled.");
+        Norep("重复的疾行前缀, 已取消。");
         svc.context.run = 0;
         gd.domove_attempting = 0;
         return ECMD_CANCEL;
@@ -1606,7 +1606,7 @@ int
 do_run(void)
 {
     if ((gd.domove_attempting & DOMOVE_RUSH)) {
-        Norep("Double run prefix, canceled.");
+        Norep("重复的奔跑前缀, 已取消。");
         svc.context.run = 0;
         gd.domove_attempting = 0;
         return ECMD_CANCEL;
@@ -1622,7 +1622,7 @@ int
 do_fight(void)
 {
     if (svc.context.forcefight) {
-        Norep("Double fight prefix, canceled.");
+        Norep("重复的强制攻击前缀, 已取消。");
         svc.context.forcefight = 0;
         gd.domove_attempting = 0;
         return ECMD_CANCEL;
@@ -1643,7 +1643,7 @@ do_repeat(void)
         struct _cmd_queue *repeat_copy;
 
         if (!cmdq_peek(CQ_REPEAT)) {
-            Norep("There is no command available to repeat.");
+            Norep("没有可重复的命令。");
             return ECMD_FAIL;
         }
         repeat_copy = cmdq_copy(CQ_REPEAT);
@@ -1665,395 +1665,395 @@ do_repeat(void)
    or control keystroke generally should not be; there are a few exceptions
    such as ^O/#overview and C/N/#name */
 struct ext_func_tab extcmdlist[] = {
-    { '#',    "#", "enter and perform an extended command",
+    { '#',    "#", "输入并执行扩展命令",
               doextcmd, IFBURIED | GENERALCMD | CMD_M_PREFIX, NULL },
-    { M('?'), "?", "list all extended commands",
+    { M('?'), "?", "列出所有扩展命令",
               doextlist, IFBURIED | AUTOCOMPLETE | GENERALCMD | CMD_M_PREFIX,
               NULL },
-    { M('a'), "adjust", "adjust inventory letters",
+    { M('a'), "adjust", "调整物品栏字母",
               doorganize, IFBURIED | AUTOCOMPLETE | GENERALCMD, NULL },
-    { M('A'), "annotate", "name current level",
+    { M('A'), "annotate", "为当前层添加备注",
               donamelevel, IFBURIED | AUTOCOMPLETE | GENERALCMD | CMD_M_PREFIX, NULL },
-    { 'a',    "apply", "apply (use) a tool (pick-axe, key, lamp...)",
+    { 'a',    "apply", "使用工具(鹤嘴锄, 钥匙, 灯等)",
               doapply, CMD_M_PREFIX, NULL },
-    { C('x'), "attributes", "show your attributes",
+    { C('x'), "attributes", "显示你的属性",
               doattributes, IFBURIED | GENERALCMD, NULL },
-    { '@',    "autopickup", "toggle the 'autopickup' option on/off",
+    { '@',    "autopickup", "切换 'autopickup' 选项",
               dotogglepickup, IFBURIED | GENERALCMD, NULL },
 #ifdef CRASHREPORT
-    { '\0',   "bugreport", "file a bug report",
+    { '\0',   "bugreport", "提交错误报告",
               dobugreport, GENERALCMD | NOFUZZERCMD, NULL },
 #endif
-    { 'C',    "call", "name a monster, specific object, or type of object",
+    { 'C',    "call", "命名怪物、特定物品或物品类型",
               docallcmd, IFBURIED | GENERALCMD, NULL },
-    { 'Z',    "cast", "zap (cast) a spell",
+    { 'Z',    "cast", "施放法术",
               docast, IFBURIED, NULL },
-    { M('c'), "chat", "talk to someone",
+    { M('c'), "chat", "与某人交谈",
               dotalk, IFBURIED | AUTOCOMPLETE, NULL },
-    { 'v',    "chronicle", "show journal of major events",
+    { 'v',    "chronicle", "显示重大事件日志",
               do_gamelog, IFBURIED | AUTOCOMPLETE | GENERALCMD, NULL },
-    { 'c',    "close", "close a door",
+    { 'c',    "close", "关门",
               doclose, 0, NULL },
-    { M('C'), "conduct", "list voluntary challenges you have maintained",
+    { M('C'), "conduct", "列出你保持的自愿挑战",
               doconduct, IFBURIED | AUTOCOMPLETE | GENERALCMD, NULL },
-    { '\0',   "debugfuzzer", "start the fuzz tester",
+    { '\0',   "debugfuzzer", "启动模糊测试器",
               wiz_fuzzer, IFBURIED | WIZMODECMD | NOFUZZERCMD, NULL },
-    { M('d'), "dip", "dip an object into something",
+    { M('d'), "dip", "将物品浸入某物",
               dodip, AUTOCOMPLETE | CMD_M_PREFIX, NULL },
-    { '>',    "down", "go down a staircase",
+    { '>',    "down", "下楼梯",
               /* allows 'm' prefix (for move without autopickup) but not the
                  g/G/F movement modifiers; not flagged as MOVEMENTCMD because
                  that would suppress it from dokeylist output */
               dodown, CMD_M_PREFIX, NULL },
-    { 'd',    "drop", "drop an item",
+    { 'd',    "drop", "丢下物品",
               dodrop, 0, NULL },
-    { 'D',    "droptype", "drop specific item types",
+    { 'D',    "droptype", "丢下指定类型的物品",
               doddrop, 0, NULL },
-    { 'e',    "eat", "eat something",
+    { 'e',    "eat", "吃东西",
               doeat, CMD_M_PREFIX, NULL },
-    { 'E',    "engrave", "engrave writing on the floor",
+    { 'E',    "engrave", "在地板上刻写文字",
               doengrave, 0, NULL },
-    { M('e'), "enhance", "advance or check weapon and spell skills",
+    { M('e'), "enhance", "提升或查看武器和法术技能",
               enhance_weapon_skill, IFBURIED | AUTOCOMPLETE | GENERALCMD, NULL },
     /* #exploremode should be flagged AUTOCOMPETE but that would negatively
        impact frequently used #enhance by making #e become ambiguous */
-    { M('X'), "exploremode", "enter explore (discovery) mode",
+    { M('X'), "exploremode", "进入探索(发现)模式",
               enter_explore_mode, IFBURIED | GENERALCMD | NOFUZZERCMD, NULL },
-    { 'F',    "fight", "prefix: force fight even if you don't see a monster",
+    { 'F',    "fight", "前缀: 即使看不到怪物也强制攻击",
               do_fight, PREFIXCMD, NULL },
-    { 'f',    "fire", "fire ammunition from quiver",
+    { 'f',    "fire", "发射箭袋中的弹药",
               dofire, 0, NULL },
-    { M('f'), "force", "force a lock",
+    { M('f'), "force", "强行开锁",
               doforce, AUTOCOMPLETE, NULL },
     { M('g'), "genocided",
-              "list monsters that have been genocided or become extinct",
+              "列出已被灭绝或已绝种的怪物",
               dogenocided,
               IFBURIED | AUTOCOMPLETE | GENERALCMD | CMD_M_PREFIX, NULL },
-    { ';',    "glance", "show what type of thing a map symbol corresponds to",
+    { ';',    "glance", "显示地图符号对应的事物类型",
               doquickwhatis, IFBURIED | GENERALCMD, NULL },
-    { '?',    "help", "give a help message",
+    { '?',    "help", "显示帮助信息",
               dohelp, IFBURIED | GENERALCMD, NULL },
-    { '\0',   "herecmdmenu", "show menu of commands you can do here",
+    { '\0',   "herecmdmenu", "显示当前位置可执行命令菜单",
               doherecmdmenu, IFBURIED | AUTOCOMPLETE | GENERALCMD, NULL },
-    { '\0',    "history", "show a summary of the game's development",
+    { '\0',    "history", "显示游戏开发历程摘要",
               dohistory, IFBURIED | AUTOCOMPLETE | GENERALCMD, NULL },
-    { 'i',    "inventory", "show your inventory",
+    { 'i',    "inventory", "显示你的物品栏",
               ddoinv, IFBURIED | GENERALCMD, NULL },
-    { 'I',    "inventtype", "show inventory of one specific item class",
+    { 'I',    "inventtype", "显示指定类别的物品栏",
               dotypeinv, IFBURIED | GENERALCMD, NULL },
-    { M('i'), "invoke", "invoke an object's special powers",
+    { M('i'), "invoke", "激活物品的特殊力量",
               doinvoke, IFBURIED | AUTOCOMPLETE, NULL },
-    { M('j'), "jump", "jump to another location",
+    { M('j'), "jump", "跳到另一个位置",
               dojump, AUTOCOMPLETE, NULL },
-    { C('d'), "kick", "kick something",
+    { C('d'), "kick", "踢某物",
               dokick, 0, NULL },
-    { '\\',   "known", "show what object types have been discovered",
+    { '\\',   "known", "显示已发现的物品类型",
               dodiscovered, IFBURIED | GENERALCMD | CMD_M_PREFIX, NULL },
-    { '`',    "knownclass", "show discovered types for one class of objects",
+    { '`',    "knownclass", "显示某一物品类别中已发现的类型",
               doclassdisco, IFBURIED | GENERALCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "levelchange", "change experience level",
+    { '\0',   "levelchange", "改变经验等级",
               wiz_level_change, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { '\0',   "lightsources", "show mobile light sources",
+    { '\0',   "lightsources", "显示移动光源",
               wiz_light_sources, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { ':',    "look", "look at what is here",
+    { ':',    "look", "查看这里有什么",
               dolook, IFBURIED, NULL },
-    { '\0',   "lookaround", "describe what you can see",
+    { '\0',   "lookaround", "描述你能看到的事物",
               dolookaround, IFBURIED | GENERALCMD, NULL },
-    { M('l'), "loot", "loot a box on the floor",
+    { M('l'), "loot", "搜刮地板上的箱子",
               doloot, AUTOCOMPLETE | CMD_M_PREFIX, NULL },
     { '\0',   "migratemons",
 #ifdef DEBUG_MIGRATING_MONS
-              "show migrating monsters and migrate N random ones",
+              "显示迁移中的怪物并随机迁移 N 个",
 #else
-              "show migrating monsters",
+              "显示迁移中的怪物",
 #endif
               wiz_migrate_mons, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { M('m'), "monster", "use monster's special ability",
+    { M('m'), "monster", "使用怪物的特殊能力",
               domonability, IFBURIED | AUTOCOMPLETE, NULL },
-    { M('n'), "name", "same as call; name a monster or object or object type",
+    { M('n'), "name", "同 call; 命名怪物、物品或物品类型",
               docallcmd, IFBURIED | AUTOCOMPLETE | GENERALCMD, NULL },
-    { M('o'), "offer", "offer a sacrifice to the gods",
+    { M('o'), "offer", "向诸神献祭",
               dosacrifice, AUTOCOMPLETE | CMD_M_PREFIX, NULL },
-    { 'o',    "open", "open a door",
+    { 'o',    "open", "开门",
               doopen, 0, NULL },
     /* 'm #options' runs doset() */
-    { 'O',    "options", "show option settings",
+    { 'O',    "options", "显示选项设置",
               doset_simple, IFBURIED | GENERALCMD | CMD_M_PREFIX, NULL },
     /* 'm #optionsfull' runs doset_simple() */
-    { '\0',   "optionsfull", "show all option settings, possibly change them",
+    { '\0',   "optionsfull", "显示所有选项设置并可修改",
               doset, IFBURIED | GENERALCMD | CMD_M_PREFIX, NULL },
     /* #overview used to need autocomplete and has retained that even
        after being assigned to ^O [old wizard mode ^O is now #wizwhere];
        'm' prefix displays overview as a menu where player can choose a
        level to supply with an annotation */
-    { C('o'), "overview", "show a summary of the explored dungeon",
+    { C('o'), "overview", "显示已探索地牢摘要",
               dooverview,
               IFBURIED | AUTOCOMPLETE | GENERALCMD | CMD_M_PREFIX, NULL },
     /* [should #panic actually autocomplete?] */
-    { '\0',   "panic", "test panic routine (fatal to game)",
+    { '\0',   "panic", "测试 panic 例程(会终止游戏)",
               wiz_panic, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { 'p',    "pay", "pay your shopping bill",
+    { 'p',    "pay", "支付购物账单",
               dopay, CMD_M_PREFIX, NULL },
-    { '|',    "perminv", "scroll persistent inventory display",
+    { '|',    "perminv", "滚动常驻物品栏显示",
               doperminv, IFBURIED | GENERALCMD | NOFUZZERCMD, NULL },
-    { ',',    "pickup", "pick up things at the current location",
+    { ',',    "pickup", "捡起当前位置的物品",
               dopickup, CMD_M_PREFIX, NULL },
-    { '\0',   "polyself", "polymorph self",
+    { '\0',   "polyself", "变形自己",
               wiz_polyself, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { M('p'), "pray", "pray to the gods for help",
+    { M('p'), "pray", "向诸神祈求帮助",
               dopray, IFBURIED | AUTOCOMPLETE, NULL },
-    { C('p'), "prevmsg", "view recent game messages",
+    { C('p'), "prevmsg", "查看最近的游戏消息",
               doprev_message, IFBURIED | GENERALCMD | CMD_INSANE, NULL },
-    { 'P',    "puton", "put on an accessory (ring, amulet, etc)",
+    { 'P',    "puton", "戴上饰品(戒指、护符等)",
               doputon, 0, NULL },
-    { 'q',    "quaff", "quaff (drink) something",
+    { 'q',    "quaff", "喝下某物",
               dodrink, CMD_M_PREFIX, NULL },
-    { '\0',   "quit", "exit without saving current game",
+    { '\0',   "quit", "不保存并退出当前游戏",
               done2, IFBURIED | AUTOCOMPLETE | GENERALCMD | NOFUZZERCMD,
               NULL },
-    { 'Q',    "quiver", "select ammunition for quiver",
+    { 'Q',    "quiver", "选择箭袋中的弹药",
               dowieldquiver, 0, NULL },
-    { 'r',    "read", "read a scroll or spellbook",
+    { 'r',    "read", "阅读卷轴或魔法书",
               doread, 0, NULL },
-    { C('r'), "redraw", "redraw screen",
+    { C('r'), "redraw", "重绘屏幕",
               doredraw, IFBURIED | GENERALCMD | CMD_INSANE, NULL },
-    { 'R',    "remove", "remove an accessory (ring, amulet, etc)",
+    { 'R',    "remove", "取下饰品(戒指、护符等)",
               doremring, 0, NULL },
-    { C('a'), "repeat", "repeat a previous command",
+    { C('a'), "repeat", "重复上一条命令",
               do_repeat, IFBURIED | GENERALCMD, NULL },
     /* "modify command" is a vague description for use as no-autopickup,
        no-attack movement as well as miscellaneous non-movement things;
        key2extcmddesc() constructs a more explicit two line description
        for display by the '&' command and expects to find "prefix:" as
        the start of the text here */
-    { 'm',    "reqmenu", "prefix: request menu or modify command",
+    { 'm',    "reqmenu", "前缀: 请求菜单或修饰命令",
               do_reqmenu, PREFIXCMD, NULL },
-    { C('_'), "retravel", "travel to previously selected travel location",
+    { C('_'), "retravel", "前往先前选定的旅行位置",
               dotravel_target, 0, NULL },
-    { M('R'), "ride", "mount or dismount a saddled steed",
+    { M('R'), "ride", "骑上或下乘已装鞍的坐骑",
               doride, AUTOCOMPLETE, NULL },
-    { M('r'), "rub", "rub a lamp or a stone",
+    { M('r'), "rub", "擦拭灯或石头",
               dorub, AUTOCOMPLETE, NULL },
-    { 'G',    "run", "prefix: run until something interesting is seen",
+    { 'G',    "run", "前缀: 奔跑直到看到有趣的事物",
               do_run, PREFIXCMD, NULL },
-    { 'g',    "rush", "prefix: rush until something interesting is seen",
+    { 'g',    "rush", "前缀: 疾行直到看到有趣的事物",
               do_rush, PREFIXCMD, NULL },
-    { 'S',    "save", "save the game and exit",
+    { 'S',    "save", "保存游戏并退出",
               dosave, IFBURIED | GENERALCMD | NOFUZZERCMD, NULL },
-    { '\0',   "saveoptions", "save the game configuration",
+    { '\0',   "saveoptions", "保存游戏配置",
               do_write_config_file,
               IFBURIED | GENERALCMD | NOFUZZERCMD, NULL },
-    { 's',    "search", "search for traps and secret doors",
+    { 's',    "search", "搜索陷阱和暗门",
               dosearch, IFBURIED | CMD_M_PREFIX, "searching" },
-    { '*',    "seeall", "show all equipment in use",
+    { '*',    "seeall", "显示正在使用的所有装备",
               doprinuse, IFBURIED | GENERALCMD | CMD_M_PREFIX, NULL },
-    { AMULET_SYM, "seeamulet", "show the amulet currently worn",
+    { AMULET_SYM, "seeamulet", "显示当前佩戴的护符",
               dopramulet, IFBURIED | GENERALCMD | CMD_M_PREFIX, NULL },
-    { ARMOR_SYM, "seearmor", "show the armor currently worn",
+    { ARMOR_SYM, "seearmor", "显示当前穿戴的盔甲",
               doprarm, IFBURIED | GENERALCMD | CMD_M_PREFIX, NULL },
-    { RING_SYM, "seerings", "show the ring(s) currently worn",
+    { RING_SYM, "seerings", "显示当前佩戴的戒指",
               doprring, IFBURIED | GENERALCMD | CMD_M_PREFIX, NULL },
-    { TOOL_SYM, "seetools", "show the tools currently in use",
+    { TOOL_SYM, "seetools", "显示当前正在使用的工具",
               doprtool, IFBURIED | GENERALCMD | CMD_M_PREFIX, NULL },
-    { WEAPON_SYM, "seeweapon", "show the weapon currently wielded",
+    { WEAPON_SYM, "seeweapon", "显示当前持握的武器",
               doprwep, IFBURIED | GENERALCMD | CMD_M_PREFIX, NULL },
     { '!',    "shell",
-              "leave game to enter a sub-shell ('exit' to come back)",
+              "离开游戏进入子 shell(输入 'exit' 返回)",
               dosh_core, (IFBURIED | GENERALCMD | NOFUZZERCMD
 #ifndef SHELL
                         | CMD_NOT_AVAILABLE
 #endif /* SHELL */
                         ), NULL },
     /* $ is like ),=,&c but is not included with *, so not called "seegold" */
-    { GOLD_SYM, "showgold", "show gold, possibly shop credit or debt",
+    { GOLD_SYM, "showgold", "显示金币, 可能包括商店信用或欠款",
               doprgold, IFBURIED | GENERALCMD | CMD_M_PREFIX, NULL },
-    { SPBOOK_SYM, "showspells", "list and reorder known spells",
+    { SPBOOK_SYM, "showspells", "列出并重新排序已知法术",
               dovspell, IFBURIED | GENERALCMD, NULL },
-    { '^',    "showtrap", "describe an adjacent, discovered trap",
+    { '^',    "showtrap", "描述相邻的已发现陷阱",
               doidtrap, IFBURIED | GENERALCMD, NULL },
-    { M('s'), "sit", "sit down",
+    { M('s'), "sit", "坐下",
               dosit, AUTOCOMPLETE, NULL },
-    { '\0',   "stats", "show memory statistics",
+    { '\0',   "stats", "显示内存统计",
               wiz_show_stats, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { C('z'), "suspend", "push game to background ('fg' to come back)",
+    { C('z'), "suspend", "将游戏转入后台(输入 'fg' 返回)",
               dosuspend_core, (IFBURIED | GENERALCMD | NOFUZZERCMD
 #ifndef SUSPEND
                                | CMD_NOT_AVAILABLE
 #endif /* SUSPEND */
                                ), NULL },
-    { 'x',    "swap", "swap wielded and secondary weapons",
+    { 'x',    "swap", "交换主武器和副武器",
               doswapweapon, 0, NULL },
-    { 'T',    "takeoff", "take off one piece of armor",
+    { 'T',    "takeoff", "脱下一件盔甲",
               dotakeoff, 0, NULL },
-    { 'A',    "takeoffall", "remove all armor",
+    { 'A',    "takeoffall", "脱下所有盔甲",
               doddoremarm, 0, NULL },
-    { C('t'), "teleport", "teleport around the level",
+    { C('t'), "teleport", "在本层内传送",
               dotelecmd, IFBURIED | CMD_M_PREFIX, NULL },
     /* \177 == <del> aka <delete> aka <rubout>; some terminals have an
        option to swap it with <backspace> so if there's a key labeled
        <delete> it may or may not actually invoke the #terrain command */
     { '\177', "terrain",
-              "view map without monsters or objects obstructing it",
+              "查看不受怪物或物品遮挡的地图",
               doterrain, IFBURIED | GENERALCMD | AUTOCOMPLETE, NULL },
     { '\0',   "therecmdmenu",
-              "menu of commands you can do from here to adjacent spot",
+              "显示从这里到相邻位置可执行的命令菜单",
               dotherecmdmenu, AUTOCOMPLETE | GENERALCMD | MOUSECMD, NULL },
-    { 't',    "throw", "throw something",
+    { 't',    "throw", "投掷某物",
               dothrow, 0, NULL },
-    { '\0',   "timeout", "look at timeout queue and hero's timed intrinsics",
+    { '\0',   "timeout", "查看计时队列和英雄的限时内在能力",
               wiz_timeout_queue, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { M('T'), "tip", "empty a container",
+    { M('T'), "tip", "倒空容器",
               dotip, AUTOCOMPLETE | CMD_M_PREFIX, NULL },
-    { '\0',   "toggle", "toggle boolean option",
+    { '\0',   "toggle", "切换布尔选项",
               dotoggleoption, IFBURIED | GENERALCMD | CMD_PARAM, NULL },
-    { '_',    "travel", "travel to a specific location on the map",
+    { '_',    "travel", "前往地图上的指定位置",
               dotravel, CMD_M_PREFIX, NULL },
-    { M('t'), "turn", "turn undead away",
+    { M('t'), "turn", "驱散亡灵",
               doturn, IFBURIED | AUTOCOMPLETE, NULL },
-    { 'X',    "twoweapon", "toggle two-weapon combat",
+    { 'X',    "twoweapon", "切换双持战斗",
               dotwoweapon, 0, NULL },
-    { M('u'), "untrap", "untrap something",
+    { M('u'), "untrap", "解除某物的陷阱",
               dountrap, AUTOCOMPLETE, NULL },
-    { '<',    "up", "go up a staircase",
+    { '<',    "up", "上楼梯",
               /* (see comment for dodown() above */
               doup, CMD_M_PREFIX, NULL },
-    { M('V'), "vanquished", "list vanquished monsters",
+    { M('V'), "vanquished", "列出已击败的怪物",
               dovanquished,
               IFBURIED | AUTOCOMPLETE | GENERALCMD | CMD_M_PREFIX, NULL },
     { M('v'), "version",
-              "list compile time options for this version of NetHack",
+              "列出此 NetHack 版本的编译时选项",
               doextversion, IFBURIED | AUTOCOMPLETE | GENERALCMD, NULL },
-    { 'V',    "versionshort", "show version and date+time program was built",
+    { 'V',    "versionshort", "显示版本和程序构建日期时间",
               doversion, IFBURIED | GENERALCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "vision", "show vision array",
+    { '\0',   "vision", "显示视野数组",
               wiz_show_vision, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { '.',    "wait", "rest one move while doing nothing",
+    { '.',    "wait", "什么也不做并休息一回合",
               donull, IFBURIED | CMD_M_PREFIX, "waiting" },
-    { 'W',    "wear", "wear a piece of armor",
+    { 'W',    "wear", "穿戴一件盔甲",
               dowear, 0, NULL },
-    { '&',    "whatdoes", "tell what a command does",
+    { '&',    "whatdoes", "说明命令的作用",
               dowhatdoes, IFBURIED | GENERALCMD, NULL },
-    { '/',    "whatis", "show what type of thing a symbol corresponds to",
+    { '/',    "whatis", "显示符号对应的事物类型",
               dowhatis, IFBURIED | GENERALCMD, NULL },
-    { 'w',    "wield", "wield (put in use) a weapon",
+    { 'w',    "wield", "持握(使用)武器",
               dowield, 0, NULL },
-    { M('w'), "wipe", "wipe off your face",
+    { M('w'), "wipe", "擦拭你的脸",
               dowipe, AUTOCOMPLETE, NULL },
-    { '\0',   "wizborn", "show stats of monsters created",
+    { '\0',   "wizborn", "显示已生成怪物统计",
               doborn, IFBURIED | WIZMODECMD, NULL },
 #ifdef DEBUG
-    { '\0',   "wizbury", "bury objs under and around you",
+    { '\0',   "wizbury", "掩埋你脚下和周围的物品",
               wiz_debug_cmd_bury, IFBURIED | AUTOCOMPLETE | WIZMODECMD,
               NULL },
 #endif
-    { '\0',   "wizcast", "cast any spell",
+    { '\0',   "wizcast", "施放任意法术",
               dowizcast, IFBURIED | WIZMODECMD, NULL },
-    { '\0',   "wizcustom", "show customized glyphs",
+    { '\0',   "wizcustom", "显示自定义字形",
               wiz_custom, IFBURIED | WIZMODECMD | NOFUZZERCMD, NULL },
-    { C('e'), "wizdetect", "reveal hidden things within a small radius",
+    { C('e'), "wizdetect", "揭示小范围内的隐藏事物",
               wiz_detect, IFBURIED | WIZMODECMD, NULL },
 #if (NH_DEVEL_STATUS != NH_STATUS_RELEASED) || defined(DEBUG)
-    { '\0',   "wizdispmacros", "validate the display macro ranges",
+    { '\0',   "wizdispmacros", "验证显示宏范围",
               wiz_display_macros, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
 #endif
-    { '\0',   "wizfliplevel", "flip the level",
+    { '\0',   "wizfliplevel", "翻转楼层",
               wiz_flip_level, IFBURIED | WIZMODECMD, NULL },
-    { C('g'), "wizgenesis", "create a monster",
+    { C('g'), "wizgenesis", "生成怪物",
               wiz_genesis, IFBURIED | WIZMODECMD, NULL },
-    { C('i'), "wizidentify", "identify all items in inventory",
+    { C('i'), "wizidentify", "鉴定物品栏中的所有物品",
               wiz_identify, IFBURIED | WIZMODECMD, NULL },
-    { '\0',   "wizintrinsic", "set an intrinsic",
+    { '\0',   "wizintrinsic", "设置内在能力",
               wiz_intrinsic, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { '\0',   "wizkill", "slay a monster",
+    { '\0',   "wizkill", "杀死怪物",
               wiz_kill, (IFBURIED | AUTOCOMPLETE | WIZMODECMD
                          | CMD_M_PREFIX | NOFUZZERCMD), NULL },
-    { C('v'), "wizlevelport", "teleport to another level",
+    { C('v'), "wizlevelport", "传送到另一层",
               wiz_level_tele, IFBURIED | WIZMODECMD | CMD_M_PREFIX, NULL },
-    { '\0',   "wizloaddes", "load and execute a des-file lua script",
+    { '\0',   "wizloaddes", "加载并执行 des 文件 Lua 脚本",
               wiz_load_splua, IFBURIED | WIZMODECMD | NOFUZZERCMD, NULL },
-    { '\0',   "wizloadlua", "load and execute a lua script",
+    { '\0',   "wizloadlua", "加载并执行 Lua 脚本",
               wiz_load_lua, IFBURIED | WIZMODECMD | NOFUZZERCMD, NULL },
 #if (NH_DEVEL_STATUS != NH_STATUS_RELEASED) || defined(DEBUG)
-    { '\0',   "wizobjprobs", "list object generation probabilities",
+    { '\0',   "wizobjprobs", "列出物品生成概率",
               wiz_objprobs, IFBURIED | WIZMODECMD, NULL },
 #endif
-    { '\0',   "wizmakemap", "recreate the current level",
+    { '\0',   "wizmakemap", "重新生成当前层",
               wiz_makemap, IFBURIED | WIZMODECMD, NULL },
-    { C('f'), "wizmap", "map the level",
+    { C('f'), "wizmap", "显示本层地图",
               wiz_map, IFBURIED | WIZMODECMD, NULL },
 #if (NH_DEVEL_STATUS != NH_STATUS_RELEASED) || defined(DEBUG)
-    { '\0',   "wizmondiff", "validate the difficulty ratings of monsters",
+    { '\0',   "wizmondiff", "验证怪物难度评级",
               wiz_mon_diff, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
 #endif
-    { '\0',   "wizrumorcheck", "verify rumor boundaries",
+    { '\0',   "wizrumorcheck", "验证谣言边界",
               wiz_rumor_check, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { '\0',   "wizseenv", "show map locations' seen vectors",
+    { '\0',   "wizseenv", "显示地图位置的已见向量",
               wiz_show_seenv, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { '\0', "wizshownhuuid", "show NHUUID for this game",
+    { '\0', "wizshownhuuid", "显示本局游戏的 NHUUID",
               wiz_show_nhuuid, AUTOCOMPLETE | WIZMODECMD, NULL },
-    { '\0',   "wizsmell", "smell monster",
+    { '\0',   "wizsmell", "嗅探怪物",
               wiz_smell, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { '\0',   "wiztelekinesis", "telekinesis",
+    { '\0',   "wiztelekinesis", "心灵遥控",
               wiz_telekinesis, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { '\0',   "wizwhere", "show locations of special levels",
+    { '\0',   "wizwhere", "显示特殊层的位置",
               wiz_where, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { C('w'), "wizwish", "wish for something",
+    { C('w'), "wizwish", "许愿获得某物",
               wiz_wish, IFBURIED | CMD_M_PREFIX | WIZMODECMD, NULL },
-    { '\0',   "wmode", "show wall modes",
+    { '\0',   "wmode", "显示墙体模式",
               wiz_show_wmodes, IFBURIED | AUTOCOMPLETE | WIZMODECMD, NULL },
-    { 'z',    "zap", "zap a wand",
+    { 'z',    "zap", "使用魔杖",
               dozap, 0, NULL },
     /* movement commands will be bound by reset_commands() */
     /* move or attack; accept m/g/G/F prefixes */
-    { '\0',   "movewest", "move west (screen left)",
+    { '\0',   "movewest", "向西移动(屏幕左方)",
               do_move_west, MOVEMENTCMD | CMD_MOVE_PREFIXES, NULL },
-    { '\0',   "movenorthwest", "move northwest (screen upper left)",
+    { '\0',   "movenorthwest", "向西北移动(屏幕左上方)",
               do_move_northwest, MOVEMENTCMD | CMD_MOVE_PREFIXES, NULL },
-    { '\0',   "movenorth", "move north (screen up)",
+    { '\0',   "movenorth", "向北移动(屏幕上方)",
               do_move_north, MOVEMENTCMD | CMD_MOVE_PREFIXES, NULL },
-    { '\0',   "movenortheast", "move northeast (screen upper right)",
+    { '\0',   "movenortheast", "向东北移动(屏幕右上方)",
               do_move_northeast, MOVEMENTCMD | CMD_MOVE_PREFIXES, NULL },
-    { '\0',   "moveeast", "move east (screen right)",
+    { '\0',   "moveeast", "向东移动(屏幕右方)",
               do_move_east, MOVEMENTCMD | CMD_MOVE_PREFIXES, NULL },
-    { '\0',   "movesoutheast", "move southeast (screen lower right)",
+    { '\0',   "movesoutheast", "向东南移动(屏幕右下方)",
               do_move_southeast, MOVEMENTCMD | CMD_MOVE_PREFIXES, NULL },
-    { '\0',   "movesouth", "move south (screen down)",
+    { '\0',   "movesouth", "向南移动(屏幕下方)",
               do_move_south, MOVEMENTCMD | CMD_MOVE_PREFIXES, NULL },
-    { '\0',   "movesouthwest", "move southwest (screen lower left)",
+    { '\0',   "movesouthwest", "向西南移动(屏幕左下方)",
               do_move_southwest, MOVEMENTCMD | CMD_MOVE_PREFIXES, NULL },
     /* rush; accept m prefix but not g/G/F */
-    { '\0',   "rushwest", "rush west (screen left)",
+    { '\0',   "rushwest", "向西疾行(屏幕左方)",
               do_rush_west, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "rushnorthwest", "rush northwest (screen upper left)",
+    { '\0',   "rushnorthwest", "向西北疾行(屏幕左上方)",
               do_rush_northwest, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "rushnorth", "rush north (screen up)",
+    { '\0',   "rushnorth", "向北疾行(屏幕上方)",
               do_rush_north, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "rushnortheast", "rush northeast (screen upper right)",
+    { '\0',   "rushnortheast", "向东北疾行(屏幕右上方)",
               do_rush_northeast, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "rusheast", "rush east (screen right)",
+    { '\0',   "rusheast", "向东疾行(屏幕右方)",
               do_rush_east, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "rushsoutheast", "rush southeast (screen lower right)",
+    { '\0',   "rushsoutheast", "向东南疾行(屏幕右下方)",
               do_rush_southeast, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "rushsouth", "rush south (screen down)",
+    { '\0',   "rushsouth", "向南疾行(屏幕下方)",
               do_rush_south, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "rushsouthwest", "rush southwest (screen lower left)",
+    { '\0',   "rushsouthwest", "向西南疾行(屏幕左下方)",
               do_rush_southwest, MOVEMENTCMD | CMD_M_PREFIX, NULL },
     /* run; accept m prefix but not g/G/F */
-    { '\0',   "runwest", "run west (screen left)",
+    { '\0',   "runwest", "向西奔跑(屏幕左方)",
               do_run_west, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "runnorthwest", "run northwest (screen upper left)",
+    { '\0',   "runnorthwest", "向西北奔跑(屏幕左上方)",
               do_run_northwest, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "runnorth", "run north (screen up)",
+    { '\0',   "runnorth", "向北奔跑(屏幕上方)",
               do_run_north, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "runnortheast", "run northeast (screen upper right)",
+    { '\0',   "runnortheast", "向东北奔跑(屏幕右上方)",
               do_run_northeast, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "runeast", "run east (screen right)",
+    { '\0',   "runeast", "向东奔跑(屏幕右方)",
               do_run_east, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "runsoutheast", "run southeast (screen lower right)",
+    { '\0',   "runsoutheast", "向东南奔跑(屏幕右下方)",
               do_run_southeast, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "runsouth", "run south (screen down)",
+    { '\0',   "runsouth", "向南奔跑(屏幕下方)",
               do_run_south, MOVEMENTCMD | CMD_M_PREFIX, NULL },
-    { '\0',   "runsouthwest", "run southwest (screen lower left)",
+    { '\0',   "runsouthwest", "向西南奔跑(屏幕左下方)",
               do_run_southwest, MOVEMENTCMD | CMD_M_PREFIX, NULL },
 
     /* internal commands: only used by game core, not available for user */
@@ -2088,9 +2088,9 @@ static const struct {
     const char *desc;
     boolean numpad;
 } misc_keys[] = {
-    { NHKF_ESC, "cancel current prompt or pending prefix", FALSE },
+    { NHKF_ESC, "取消当前提示或待处理前缀", FALSE },
     { NHKF_COUNT,
-      "Prefix: for digits when preceding a command with a count", TRUE },
+      "前缀: 在命令前输入次数数字", TRUE },
     { 0, (const char *) 0, FALSE }
 };
 
@@ -2272,7 +2272,7 @@ get_changed_key_binds(strbuf_t *sbuf)
         struct ext_func_tab *ec = &extcmdlist[i];
 
         if (ec->key && !keys[ec->key]) {
-            Sprintf(buf, "绑定=%s:无%s", key2txt(ec->key, buf2),
+            Sprintf(buf, "BIND=%s:nothing%s", key2txt(ec->key, buf2),
                     sbuf ? "\n" : "");
             if (sbuf)
                 strbuf_append(sbuf, buf);
@@ -2605,13 +2605,14 @@ key2extcmddesc(uchar key)
         /* special case: for reqmenu prefix (normally 'm'), replace
            "prefix: request menu or modify command (#reqmenu)"
            with two-line "movement prefix:...\nnon-movement prefix:..." */
-        if (!strncmpi(key2cmdbuf, "prefix:", 7) && !strcmpi(txt, "reqmenu"))
-            (void) strsubst(key2cmdbuf, "prefix:",
+        if (!strncmpi(key2cmdbuf, "前缀:", strlen("前缀:"))
+            && !strcmpi(txt, "reqmenu"))
+            (void) strsubst(key2cmdbuf, "前缀:",
                      /* relies on implicit concatenation of literal strings */
-                            "movement prefix:"
-                            " move without autopickup and without attacking"
+                            "移动前缀:"
+                            " 不自动捡拾且不攻击地移动"
                             "\n"
-                            "non-movement prefix:"); /* and rest of buf */
+                            "非移动前缀:"); /* and rest of buf */
 
         /* another special case: 'txt' for '#' is "#" and showing that as
            "perform an extended command (##)" looks silly; strip "(##)" off */
@@ -2626,7 +2627,7 @@ bind_mousebtn(int btn, const char *command)
     struct ext_func_tab *extcmd;
 
     if (btn < 1 || btn > NUM_MOUSE_BUTTONS) {
-        config_error_add("Wrong mouse button, valid are 1-%i",
+        config_error_add("鼠标按钮错误, 有效范围为 1-%i",
                          NUM_MOUSE_BUTTONS);
         return FALSE;
     }
@@ -2695,13 +2696,13 @@ bind_key(uchar key, const char *command, boolean user)
 
         if ((extcmd->flags & CMD_PARAM) != 0) {
             if (!p) {
-                config_error_add("'%s' requires a parameter", buf);
+                config_error_add("'%s' 需要一个参数", buf);
             } else {
                 struct Cmd_bind *bind = cmdbind_get(key);
                 int maxlen = min(30, strlen(p)) + 1;
 
                 if (maxlen <= 1) {
-                    config_error_add("Required parameter cannot be empty");
+                    config_error_add("必需参数不能为空");
                 } else {
                     bind->param = (char *) alloc(maxlen);
                     (void) strncpy(bind->param, p, maxlen);
@@ -2709,7 +2710,7 @@ bind_key(uchar key, const char *command, boolean user)
                 }
             }
         } else if (p && strlen(p) > 0)
-            config_error_add("'%s' does not take a parameter", buf);
+            config_error_add("'%s' 不接受参数", buf);
 
 #if 0 /* silently accept key binding for unavailable command (!SHELL,&c) */
         if ((extcmd->flags & CMD_NOT_AVAILABLE) != 0) {
@@ -2908,36 +2909,36 @@ dokeylist(void)
     for (extcmd = extcmdlist; extcmd->ef_txt; ++extcmd)
         if (spkey_gap || !keylist_func_has_key(extcmd, keys_used)) {
             Sprintf(buf, "%7s %s", "",
-                               "(also commands with no key assignment)");
+                               "(以及没有按键绑定的命令)");
             putstr(datawin, 0, buf);
             break;
         }
 
     /* directional keys */
     putstr(datawin, 0, "");
-    putstr(datawin, 0, "Directional keys:");
+    putstr(datawin, 0, "方向键:");
     show_direction_keys(datawin, '.', FALSE); /* '.'==self in direct'n grid */
 
     if (!iflags.num_pad) {
         putstr(datawin, 0, "");
         putstr(datawin, 0,
-     "Ctrl+<direction> will run in specified direction until something very");
-        Sprintf(buf, "%7s %s", "", "直到发现有趣的事物。");
+               "Ctrl+<方向> 会沿指定方向奔跑，直到发现");
+        Sprintf(buf, "%7s %s", "", "有趣的事物。");
         putstr(datawin, 0, buf);
-        Strcpy(buf, "上档键"); /* append the rest below */
+        Strcpy(buf, "Shift"); /* append the rest below */
     } else {
         /* num_pad */
         putstr(datawin, 0, "");
         Strcpy(buf, "Meta"); /* append the rest next */
     }
     Strcat(buf,
-          "+<direction> 会沿指定方向跑，直到你遇到");
+           "+<方向> 会沿指定方向行进，直到遇到");
     putstr(datawin, 0, buf);
     Sprintf(buf, "%7s %s", "", "一个障碍物。");
     putstr(datawin, 0, buf);
 
     putstr(datawin, 0, "");
-    putstr(datawin, 0, "Miscellaneous keys:");
+    putstr(datawin, 0, "杂项按键:");
     for (i = 0; misc_keys[i].desc; ++i) {
         if (misc_keys[i].numpad && !iflags.num_pad)
             continue;
@@ -2986,14 +2987,14 @@ dokeylist(void)
 
     if (keylist_putcmds(datawin, TRUE, GENERALCMD, IGNORECMD, keys_used)) {
         putstr(datawin, 0, "");
-        putstr(datawin, 0, "General commands:");
+        putstr(datawin, 0, "通用命令:");
         (void) keylist_putcmds(datawin, FALSE, GENERALCMD,
                                IGNORECMD, keys_used);
     }
 
     if (keylist_putcmds(datawin, TRUE, 0, GENERALCMD | IGNORECMD, keys_used)) {
         putstr(datawin, 0, "");
-        putstr(datawin, 0, "Game commands:");
+        putstr(datawin, 0, "游戏命令:");
         (void) keylist_putcmds(datawin, FALSE, 0,
                                GENERALCMD | IGNORECMD,
                                keys_used);
@@ -3002,7 +3003,7 @@ dokeylist(void)
     if (wizard && keylist_putcmds(datawin, TRUE,
                                   WIZMODECMD, INTERNALCMD, keys_used)) {
         putstr(datawin, 0, "");
-        putstr(datawin, 0, "Debug mode commands:");
+        putstr(datawin, 0, "调试模式命令:");
         (void) keylist_putcmds(datawin, FALSE,
                                WIZMODECMD, INTERNALCMD, keys_used);
     }
@@ -3286,7 +3287,7 @@ parseautocomplete(char *autocomplete, boolean condition)
     }
 
     /* not a real extended command */
-    raw_printf("Bad autocomplete: invalid extended command '%s'.",
+    raw_printf("自动补全设置错误: 无效的扩展命令 '%s'。",
                autocomplete);
     wait_synch();
 }
@@ -3487,7 +3488,7 @@ update_rest_on_space(void)
        description get shown by help menu's "Info on what a given key does"
        (which runs the '&' command) and "Full list of keyboard commands" */
     static const struct ext_func_tab restonspace = {
-        ' ', "wait", "rest one move via 'rest_on_space' option",
+        ' ', "wait", "通过 'rest_on_space' 选项休息一回合",
         donull, (IFBURIED | CMD_M_PREFIX), "waiting"
     };
     static const struct ext_func_tab *unrestonspace = 0;
@@ -3696,7 +3697,7 @@ rhack(int key)
                 char pfxidx = cmd_from_func(prefix_seen->ef_funct);
                 const char *which = (pfxidx != 0) ? visctrl(pfxidx)
                                     : (prefix_seen->ef_funct == do_reqmenu)
-                                      ? "move-no-pickup or request-menu"
+                                      ? "无捡拾移动或请求菜单"
                                       : prefix_seen->ef_txt;
 
                 /*
@@ -3707,7 +3708,7 @@ rhack(int key)
                  */
                 if (was_m_prefix) {
                     custompline(SUPPRESS_HISTORY,
-                          "The %s command does not accept '%s' prefix.",
+                          "%s 命令不接受 '%s' 前缀。",
                           tlist->ef_txt, which);
                 } else {
                     uchar ch = tlist->key;
@@ -3831,7 +3832,7 @@ rhack(int key)
     }
 
     if (bad_command) {
-        custompline(SUPPRESS_HISTORY, "Unknown command '%s'.", visctrl(key));
+        custompline(SUPPRESS_HISTORY, "未知命令 '%s'。", visctrl(key));
         cmdq_clear(CQ_CANNED);
         cmdq_clear(CQ_REPEAT);
         iflags.sanity_no_check = iflags.sanity_check; /* skip sanity check */
@@ -3985,7 +3986,7 @@ getdir(const char *s)
     if (gi.in_doagain || *readchar_queue) {
         dirsym = readchar();
     } else {
-        dirsym = yn_function((s && *s != '^') ? s : "In what direction?",
+        dirsym = yn_function((s && *s != '^') ? s : "朝哪个方向？",
                              (char *) 0, '\0', FALSE);
 
         /* for the fuzzer, usually force the result to be a valid direction,
@@ -4101,7 +4102,7 @@ getdir(const char *s)
                 did_help = help_dir((s && *s == '^') ? dirsym : '\0',
                                     gc.Cmd.spkeys[NHKF_ESC],
                                     help_requested ? (const char *) 0
-                                    : "Invalid direction key!");
+                                    : "无效的方向键!");
                 if (help_requested)
                     goto retry;
             }
@@ -4188,7 +4189,7 @@ help_dir(
      * Delivered via pline if 'cmdassist' is off, or instead of the
      * general message if it's on.
      */
-    dothat = "do that";
+    dothat = "执行那个";
     /* how = " at"; */ /* for "<action> at yourself"; not used for up/down */
 
     buf[0] = '\0';
@@ -4254,7 +4255,7 @@ help_dir(
             putstr(win, 0, explain);
             putstr(win, 0, "");
             putstr(win, 0,
-                  "To use that command, hold down the <Ctrl> key as a shift");
+                  "要使用该命令, 请按住 <Ctrl> 键作为修饰键");
             Sprintf(buf, "并按<%c> 键.", sym);
             putstr(win, 0, buf);
             putstr(win, 0, "");
@@ -4273,8 +4274,8 @@ help_dir(
            given but we include up and down for 'm'+invalid_direction;
            self is excluded as a viable direction for every prefix */
         putstr(win, 0, "");
-        putstr(win, 0, "          <  up");
-        putstr(win, 0, "          >  down");
+        putstr(win, 0, "          <  向上");
+        putstr(win, 0, "          >  向下");
         if (!prefixhandling) {
             int selfi = gc.Cmd.num_pad ? NHKF_GETDIR_SELF2 : NHKF_GETDIR_SELF;
 
@@ -4288,7 +4289,7 @@ help_dir(
         /* non-null msg means that this wasn't an explicit user request */
         putstr(win, 0, "");
         putstr(win, 0,
-               "(Suppress this message with !cmdassist in config file.)");
+               "(可在配置文件中用 !cmdassist 隐藏此消息。)");
     }
     display_nhwindow(win, FALSE);
     destroy_nhwindow(win);
@@ -4313,12 +4314,12 @@ const char *
 directionname(int dir)
 {
     static NEARDATA const char *const dirnames[N_DIRS_Z] = {
-        "west",      "northwest", "north",     "northeast", "east",
-        "southeast", "south",     "southwest", "down",      "up",
+        "西",       "西北", "北",   "东北", "东",
+        "东南",     "南",   "西南", "下",   "上",
     };
 
     if (dir < 0 || dir >= N_DIRS_Z)
-        return "invalid";
+        return "无效方向";
     return dirnames[dir];
 }
 
@@ -4449,11 +4450,11 @@ there_cmd_menu_self(winid win, coordxy x, coordxy y, int *act UNUSED)
         mcmd_addmenu(win, MCMD_QUAFF, buf), ++K;
     }
     if (IS_FOUNTAIN(typ) && can_reach_floor(FALSE))
-        mcmd_addmenu(win, MCMD_DIP, "Dip something into the fountain"), ++K;
+        mcmd_addmenu(win, MCMD_DIP, "将某物浸入喷泉"), ++K;
     if (IS_THRONE(typ))
-        mcmd_addmenu(win, MCMD_SIT, "Sit on the throne"), ++K;
+        mcmd_addmenu(win, MCMD_SIT, "坐上王座"), ++K;
     if (IS_ALTAR(typ))
-        mcmd_addmenu(win, MCMD_OFFER, "Sacrifice something on the altar"), ++K;
+        mcmd_addmenu(win, MCMD_OFFER, "在祭坛上献祭某物"), ++K;
 
     if (stway && stway->up) {
         Sprintf(buf, "上%s",
@@ -4466,7 +4467,7 @@ there_cmd_menu_self(winid win, coordxy x, coordxy y, int *act UNUSED)
         mcmd_addmenu(win, MCMD_DOWN, buf), ++K;
     }
     if (u.usteed) { /* another movement choice */
-        Sprintf(buf, "下乘骑的%s",
+        Sprintf(buf, "从%s身上下乘",
                 x_monnam(u.usteed, ARTICLE_THE, (char *) 0,
                          SUPPRESS_SADDLE, FALSE));
         mcmd_addmenu(win, MCMD_DISMOUNT, buf), ++K;
@@ -4483,14 +4484,14 @@ there_cmd_menu_self(winid win, coordxy x, coordxy y, int *act UNUSED)
     if (OBJ_AT(x, y)) {
         struct obj *otmp = svl.level.objects[x][y];
 
-        Sprintf(buf, "捡取%s", otmp->nexthere ? "物品" : doname(otmp));
+            Sprintf(buf, "捡起%s", otmp->nexthere ? "物品" : doname(otmp));
         mcmd_addmenu(win, MCMD_PICKUP, buf), ++K;
 
         if (Is_container(otmp)) {
             Sprintf(buf, "搜刮%s", doname(otmp));
             mcmd_addmenu(win, MCMD_LOOT, buf), ++K;
 
-            Sprintf(buf, "倾倒 %s", doname(otmp));
+            Sprintf(buf, "倾倒%s", doname(otmp));
             mcmd_addmenu(win, MCMD_TIP, buf), ++K;
         }
         if (otmp->oclass == FOOD_CLASS) {
@@ -4501,20 +4502,20 @@ there_cmd_menu_self(winid win, coordxy x, coordxy y, int *act UNUSED)
 
 
     if (gi.invent) {
-        mcmd_addmenu(win, MCMD_INVENTORY, "Inventory"), ++K;
-        mcmd_addmenu(win, MCMD_DROP, "Drop items"), ++K;
+        mcmd_addmenu(win, MCMD_INVENTORY, "物品栏"), ++K;
+        mcmd_addmenu(win, MCMD_DROP, "丢下物品"), ++K;
     }
-    mcmd_addmenu(win, MCMD_REST, "Rest one turn"), ++K;
-    mcmd_addmenu(win, MCMD_SEARCH, "Search around you"), ++K;
-    mcmd_addmenu(win, MCMD_LOOK_HERE, "Look at what is here"), ++K;
+    mcmd_addmenu(win, MCMD_REST, "休息一回合"), ++K;
+    mcmd_addmenu(win, MCMD_SEARCH, "搜索周围"), ++K;
+    mcmd_addmenu(win, MCMD_LOOK_HERE, "查看这里有什么"), ++K;
 
     if (num_spells() > 0)
-        mcmd_addmenu(win, MCMD_CAST_SPELL, "Cast a spell"), ++K;
+        mcmd_addmenu(win, MCMD_CAST_SPELL, "施放法术"), ++K;
 
     if ((ttmp = t_at(x, y)) != 0 && ttmp->tseen) {
         if (ttmp->ttyp != VIBRATING_SQUARE)
             mcmd_addmenu(win, MCMD_UNTRAP_HERE,
-                         "Attempt to disarm trap"), ++K;
+                         "尝试解除陷阱"), ++K;
     }
     return K;
 }
@@ -4541,40 +4542,40 @@ there_cmd_menu_next2u(
         int dm = levl[x][y].doormask;
 
         if ((dm & (D_CLOSED | D_LOCKED))) {
-            mcmd_addmenu(win, MCMD_OPEN_DOOR, "Open the door"), ++K;
+            mcmd_addmenu(win, MCMD_OPEN_DOOR, "打开门"), ++K;
             /* unfortunately there's no lknown flag for doors to
                remember the locked/unlocked state */
             key_or_pick = (carrying(SKELETON_KEY) || carrying(LOCK_PICK));
             card = (carrying(CREDIT_CARD) != 0);
             if (key_or_pick || card) {
-                Sprintf(buf, "%s解锁门",
-                        key_or_pick ? "上锁或者" : "");
+                Sprintf(buf, "%s门",
+                        key_or_pick ? "锁上或解锁" : "解锁");
                 mcmd_addmenu(win, MCMD_LOCK_DOOR, upstart(buf)), ++K;
             }
             /* unfortunately there's no tknown flag for doors (or chests)
                to remember whether a trap had been found */
             mcmd_addmenu(win, MCMD_UNTRAP_DOOR,
-                         "Search the door for a trap"), ++K;
+                         "搜索门上的陷阱"), ++K;
             /* [what about #force?] */
-            mcmd_addmenu(win, MCMD_KICK_DOOR, "Kick the door"), ++K;
+            mcmd_addmenu(win, MCMD_KICK_DOOR, "踢门"), ++K;
         } else if ((dm & D_ISOPEN) && (mod == CLICK_2)) {
-            mcmd_addmenu(win, MCMD_CLOSE_DOOR, "Close the door"), ++K;
+            mcmd_addmenu(win, MCMD_CLOSE_DOOR, "关门"), ++K;
         }
     }
 
     if (typ <= SCORR)
-        mcmd_addmenu(win, MCMD_SEARCH, "Search for secret doors"), ++K;
+        mcmd_addmenu(win, MCMD_SEARCH, "搜索暗门"), ++K;
 
     if ((ttmp = t_at(x, y)) != 0 && ttmp->tseen) {
-        mcmd_addmenu(win, MCMD_LOOK_TRAP, "Examine trap"), ++K;
+        mcmd_addmenu(win, MCMD_LOOK_TRAP, "检查陷阱"), ++K;
         if (ttmp->ttyp != VIBRATING_SQUARE)
             mcmd_addmenu(win, MCMD_UNTRAP_TRAP,
-                                 "Attempt to disarm trap"), ++K;
-        mcmd_addmenu(win, MCMD_MOVE_DIR, "Move on the trap"), ++K;
+                                 "尝试解除陷阱"), ++K;
+        mcmd_addmenu(win, MCMD_MOVE_DIR, "移动到陷阱上"), ++K;
     }
 
     if (levl[x][y].glyph == objnum_to_glyph(BOULDER))
-        mcmd_addmenu(win, MCMD_MOVE_DIR, "Push the boulder"), ++K;
+        mcmd_addmenu(win, MCMD_MOVE_DIR, "推动巨石"), ++K;
 
     mtmp = m_at(x, y);
     if (mtmp && !canspotmon(mtmp))
@@ -4584,15 +4585,15 @@ there_cmd_menu_next2u(
                               SUPPRESS_SADDLE, FALSE);
 
         if (!u.usteed) {
-            Sprintf(buf, "乘骑%s", mnam);
+            Sprintf(buf, "骑上%s", mnam);
             mcmd_addmenu(win, MCMD_RIDE, buf), ++K;
         }
-        Sprintf(buf, "拿下%s 的鞍", mnam);
+        Sprintf(buf, "取下%s的鞍", mnam);
         mcmd_addmenu(win, MCMD_REMOVE_SADDLE, buf), ++K;
     }
     if (mtmp && can_saddle(mtmp) && !which_armor(mtmp, W_SADDLE)
         && carrying(SADDLE)) {
-        Sprintf(buf, "把鞍放上%s", mon_nam(mtmp));
+        Sprintf(buf, "给%s装上鞍", mon_nam(mtmp));
         mcmd_addmenu(win, MCMD_APPLY_SADDLE, buf), ++K;
     }
     if (mtmp && (mtmp->mpeaceful || mtmp->mtame)) {
@@ -4610,7 +4611,7 @@ there_cmd_menu_next2u(
 
     if ((mtmp && !(mtmp->mpeaceful || mtmp->mtame))
         || glyph_is_invisible(glyph_at(x, y))) {
-        Sprintf(buf, "攻击 %s", mtmp ? mon_nam(mtmp) : "看不见的生物");
+        Sprintf(buf, "攻击%s", mtmp ? mon_nam(mtmp) : "看不见的生物");
         mcmd_addmenu(win, MCMD_ATTACK_NEXT2U, buf), ++K;
         /* attacking overrides any other automatic action */
         *act = MCMD_ATTACK_NEXT2U;
@@ -4628,9 +4629,9 @@ there_cmd_menu_far(winid win, coordxy x, coordxy y, int mod)
     if (mod == CLICK_1) {
         if (linedup(u.ux, u.uy, x, y, 1)
             && dist2(u.ux, u.uy, x, y) < 18*18)
-            mcmd_addmenu(win, MCMD_THROW_OBJ, "Throw something"), ++K;
+            mcmd_addmenu(win, MCMD_THROW_OBJ, "投掷某物"), ++K;
 
-        mcmd_addmenu(win, MCMD_TRAVEL, "Travel here"), ++K;
+        mcmd_addmenu(win, MCMD_TRAVEL, "前往这里"), ++K;
     }
     return K;
 }
@@ -4648,7 +4649,7 @@ there_cmd_menu_common(
         /* for self, only include "look at map symbol" if it isn't the
            ordinary hero symbol (steed, invisible w/o see invisible, ?) */
         if (!u_at(x, y) || Upolyd || glyph_at(x, y) != hero_glyph)
-            mcmd_addmenu(win, MCMD_LOOK_AT, "Look at map symbol"), ++K;
+            mcmd_addmenu(win, MCMD_LOOK_AT, "查看地图符号"), ++K;
     }
     return K;
 }
@@ -5330,8 +5331,8 @@ dotravel(void)
         }
         iflags.getloc_filter = gfilt;
     } else {
-        pline("你想走到哪里?");
-        if (getpos(&cc, TRUE, "the desired destination") < 0) {
+        pline("你想走到哪里？");
+        if (getpos(&cc, TRUE, "所需目的地") < 0) {
             /* user pressed ESC */
             iflags.getloc_travelmode = FALSE;
             return ECMD_CANCEL;
@@ -5430,19 +5431,19 @@ yn_function_menu(
 
         start_menu(win, MENU_BEHAVE_STANDARD);
         if (resp == rightleftchars) {
-            yn_func_menu_opt(win, 'r', "Right", def);
-            yn_func_menu_opt(win, 'l', "Left", def);
+            yn_func_menu_opt(win, 'r', "右", def);
+            yn_func_menu_opt(win, 'l', "左", def);
         } else if (resp == hidespinchars) {
-            yn_func_menu_opt(win, 'h', "Hide", def);
-            yn_func_menu_opt(win, 's', "Spin a web", def);
+            yn_func_menu_opt(win, 'h', "隐藏", def);
+            yn_func_menu_opt(win, 's', "织网", def);
         } else {
-            yn_func_menu_opt(win, 'y', "Yes", def);
-            yn_func_menu_opt(win, 'n', "No", def);
+            yn_func_menu_opt(win, 'y', "是", def);
+            yn_func_menu_opt(win, 'n', "否", def);
         }
         if (resp == ynaqchars)
-            yn_func_menu_opt(win, 'a', "All", def);
+            yn_func_menu_opt(win, 'a', "全部", def);
         if (resp == ynqchars || resp == ynaqchars || resp == hidespinchars)
-            yn_func_menu_opt(win, 'q', "Quit", def);
+            yn_func_menu_opt(win, 'q', "取消", def);
         end_menu(win, query);
         n = select_menu(win, PICK_ONE, &sel);
         destroy_nhwindow(win);
@@ -5634,7 +5635,7 @@ paranoid_ynq(
                 break;
             }
             /* we don't bother adding "or \"Quit\"" for the accept_q case */
-            promptprefix = "\"Yes\" or \"No\": ";
+            promptprefix = "\"yes\" 或 \"no\": ";
             /* for empty input, return value c will already be 'n' */
         } while (ParanoidConfirm && strcmpi(ans, "no") && --trylimit);
     } else if (accept_q) {
