@@ -86,15 +86,15 @@ lopt(char *arg,  /* command line token; beginning matches 'optname' */
     if (arg[1] != optname[1]) {
     loptbail:
         if (complain)
-            config_error_add("Unknown option: %.60s", origarg);
+            config_error_add("未知选项: %.60s", origarg);
         return (char *) 0;
     loptnotallowed:
         if (complain)
-            config_error_add("Value not allowed: %.60s", origarg);
+            config_error_add("不允许带值: %.60s", origarg);
         return (char *) 0;
     loptrequired:
         if (complain)
-            config_error_add("Missing required value: %.60s", origarg);
+            config_error_add("缺少必需值: %.60s", origarg);
         return (char *) 0;
     }
 
@@ -187,7 +187,7 @@ early_options(int *argc_p, char ***argv_p, char **hackdir_p)
         opt_terminate();
 #endif
 
-    config_error_init(FALSE, "command line", FALSE);
+    config_error_init(FALSE, "命令行", FALSE);
 
     /* treat "nethack ?" as a request for usage info; due to shell
        processing, player likely has to use "nethack \?" or "nethack '?'"
@@ -246,7 +246,7 @@ early_options(int *argc_p, char ***argv_p, char **hackdir_p)
                            (ArgValRequired | ArgNamOneLetter | ArgErrSilent),
                            "-directory", origarg, &argc, &argv);
                 if (!arg)
-                    error("Flag -d must be followed by a directory name.");
+                    error("标志 -d 后必须跟目录名.");
                 if (*arg != 'e') { /* avoid matching -decgraphics or -debug */
                     *hackdir_p = arg;
                     if (oldargc == argc)
@@ -323,7 +323,7 @@ early_options(int *argc_p, char ***argv_p, char **hackdir_p)
                 if (nextarg[0] != '-') {
                     (void) strncpy(svp.plname, nextarg, sizeof(svp.plname) - 1);
                 } else {
-                    raw_print("Player name expected after -u\n");
+                    raw_print("-u 后应提供玩家名称\n");
                 }
             }
 #endif
@@ -512,8 +512,8 @@ argcheck(int argc, char *argv[], enum earlyarg e_arg)
                     dump_version_info();
                     return 2; /* done */
                 } else if (!match_optname(extended_opt, "show", 4, FALSE)) {
-                    raw_printf("-%sversion can only be extended with"
-                               " -%sversion:copy or :dump or :show.\n",
+                    raw_printf("-%sversion 只能扩展为"
+                               " -%sversion:copy 或 :dump 或 :show.\n",
                                dashdash, dashdash);
                     /* exit after we've reported bad command line argument */
                     return 2;
