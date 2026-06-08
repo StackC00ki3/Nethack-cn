@@ -75,7 +75,7 @@ English README：[README_en.md](README_en.md)
 - [x] decl.c
 - [x] detect.c
 - [x] dig.c
-- [ ] display.c
+- [x] display.c
 - [ ] dlb.c
 - [ ] do.c
 - [x] dog.c
