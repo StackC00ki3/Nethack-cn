@@ -9,8 +9,8 @@ extern const char *const hu_stat[]; /* defined in eat.c */
 
 /* also used in insight.c */
 const char *const enc_stat[] = {
-    "",         "Burdened",  "Stressed",
-    "Strained", "Overtaxed", "Overloaded"
+    "",       "负重", "吃力",
+    "沉重",   "过载", "超载"
 };
 
 staticfn const char *rank(void);
@@ -87,7 +87,7 @@ do_statusline1(void)
             ACURR(A_DEX), ACURR(A_CON), ACURR(A_INT), ACURR(A_WIS),
             ACURR(A_CHA));
     Sprintf(nb = eos(nb), "%s",
-            (u.ualign.type == A_CHAOTIC) ? "  混乱"
+            (u.ualign.type == A_CHAOTIC) ? "  混沌"
               : (u.ualign.type == A_NEUTRAL) ? "  中立"
                 : "  守序");
 #ifdef SCORE_ON_BOTL
@@ -173,14 +173,14 @@ do_statusline2(void)
     if (Stoned)
         Strcpy(nb = eos(nb), "  石化");
     if (Slimed)
-        Strcpy(nb = eos(nb), "  污秽");
+        Strcpy(nb = eos(nb), "  黏液");
     if (Strangled)
-        Strcpy(nb = eos(nb), "  束缚");
+        Strcpy(nb = eos(nb), "  窒息");
     if (Sick) {
         if (u.usick_type & SICK_VOMITABLE)
             Strcpy(nb = eos(nb), "  食物中毒");
         if (u.usick_type & SICK_NONVOMITABLE)
-            Strcpy(nb = eos(nb), "  生病");
+            Strcpy(nb = eos(nb), "  重病");
     }
     if (u.uhs != NOT_HUNGRY)
         Sprintf(nb = eos(nb), " %s", hu_stat[u.uhs]);
@@ -198,7 +198,7 @@ do_statusline2(void)
         Strcpy(nb = eos(nb), "  幻觉");
     /* levitation and flying are mutually exclusive; riding is not */
     if (Levitation)
-        Strcpy(nb = eos(nb), "  飘浮");
+        Strcpy(nb = eos(nb), "  悬浮");
     if (Flying)
         Strcpy(nb = eos(nb), "  飞行");
     if (u.usteed)
@@ -702,25 +702,25 @@ staticfn void status_hilites_viewall(void);
  */
 static struct istat_s initblstats[MAXBLSTATS] = {
     INIT_BLSTAT("title", "%s", ANY_STR, MAXVALWIDTH, BL_TITLE),
-    INIT_BLSTAT("strength", " St:%s", ANY_INT, 10, BL_STR),
-    INIT_BLSTAT("dexterity", " Dx:%s", ANY_INT,  10, BL_DX),
-    INIT_BLSTAT("constitution", " Co:%s", ANY_INT, 10, BL_CO),
-    INIT_BLSTAT("intelligence", " In:%s", ANY_INT, 10, BL_IN),
-    INIT_BLSTAT("wisdom", " Wi:%s", ANY_INT, 10, BL_WI),
-    INIT_BLSTAT("charisma", " Ch:%s", ANY_INT, 10, BL_CH),
+    INIT_BLSTAT("strength", " 力:%s", ANY_INT, 10, BL_STR),
+    INIT_BLSTAT("dexterity", " 敏:%s", ANY_INT,  10, BL_DX),
+    INIT_BLSTAT("constitution", " 体:%s", ANY_INT, 10, BL_CO),
+    INIT_BLSTAT("intelligence", " 智:%s", ANY_INT, 10, BL_IN),
+    INIT_BLSTAT("wisdom", " 感:%s", ANY_INT, 10, BL_WI),
+    INIT_BLSTAT("charisma", " 魅:%s", ANY_INT, 10, BL_CH),
     INIT_BLSTAT("alignment", " %s", ANY_STR, 20, BL_ALIGN),
-    INIT_BLSTAT("score", " S:%s", ANY_LONG, 30, BL_SCORE),
+    INIT_BLSTAT("score", " 分:%s", ANY_LONG, 30, BL_SCORE),
     INIT_BLSTAT("carrying-capacity", " %s", ANY_INT, 20, BL_CAP),
     INIT_BLSTAT("gold", " %s", ANY_LONG, 40, BL_GOLD),
-    INIT_BLSTATP("power", " Pw:%s", ANY_INT, 10, BL_ENEMAX, BL_ENE),
+    INIT_BLSTATP("power", " 能:%s", ANY_INT, 10, BL_ENEMAX, BL_ENE),
     INIT_BLSTAT("power-max", "(%s)", ANY_INT, 10, BL_ENEMAX),
-    INIT_BLSTATP("experience-level", " Xp:%s", ANY_INT, 10, BL_EXP, BL_XP),
-    INIT_BLSTAT("armor-class", " AC:%s", ANY_INT, 10, BL_AC),
+    INIT_BLSTATP("experience-level", " 等:%s", ANY_INT, 10, BL_EXP, BL_XP),
+    INIT_BLSTAT("armor-class", " 护:%s", ANY_INT, 10, BL_AC),
     INIT_BLSTAT("HD", " HD:%s", ANY_INT, 10, BL_HD),
-    INIT_BLSTAT("time", " T:%s", ANY_LONG, 30, BL_TIME),
+    INIT_BLSTAT("time", " 回:%s", ANY_LONG, 30, BL_TIME),
     /* hunger used to be 'ANY_UINT'; see note below in bot_via_windowport() */
     INIT_BLSTAT("hunger", " %s", ANY_INT, 20, BL_HUNGER),
-    INIT_BLSTATP("hitpoints", " HP:%s", ANY_INT, 10, BL_HPMAX, BL_HP),
+    INIT_BLSTATP("hitpoints", " 命:%s", ANY_INT, 10, BL_HPMAX, BL_HP),
     INIT_BLSTAT("hitpoints-max", "(%s)", ANY_INT, 10, BL_HPMAX),
     INIT_BLSTAT("dungeon-level", "%s", ANY_STR, MAXVALWIDTH, BL_LEVELDESC),
     INIT_BLSTATP("experience", "/%s", ANY_LONG, 30, BL_EXP, BL_EXP),
@@ -851,7 +851,7 @@ struct condtests_t condtests[CONDITION_COUNT] = {
 /* condition indexing */
 int cond_idx[CONDITION_COUNT] = { 0 };
 
-static const char c_Wall[] = "Wall";
+static const char c_Wall[] = "墙";
 /*
  *  Terrain descriptions for flags.terrainstatus; simplified from
  *  def_syms[].name and indexed by iflags.terrain_typ; should be
@@ -861,7 +861,7 @@ static const char c_Wall[] = "Wall";
  *  others can only occur when hero has the Passes_walls ability.
  */
 const char *terrain_descr[] = {
-/* 0*/ "Stone",         /* stone */
+/* 0*/ "石头",          /* stone */
        c_Wall,          /* vwall */
        c_Wall,          /* hwall */
        c_Wall,          /* tlcorner */
@@ -873,31 +873,31 @@ const char *terrain_descr[] = {
        c_Wall,          /* tdwall */
 /*10*/ c_Wall,          /* tlwall */
        c_Wall,          /* trwall */
-       "Portcullis",    /* dbwall, closed drawbridge 'door' */
-       "Tree",
+       "吊闸",          /* dbwall, closed drawbridge 'door' */
+       "树",
        c_Wall,          /* sdoor: secret door */
-       "Stone",         /* scorr: secret corridor */
-       "Pool",          /* pool or non-moat water; can be boiled away */
-       "Moat",          /* water that can't be boiled away */
-       "Water",         /* water on Water level; can't be boiled or frozen */
-       "(gap)",         /* drawbridge_up; replaced by whatever is under */
-/*20*/ "Lava",          /* lavapool */
-       "LavaWall",      /* lava that extends to ceiling */
-       "Bars",          /* ironbars */
-       "Doorway",       /* doorless or broken door; diagonal movement is ok */
-       "Corridor",      /* replaced by "Floor" */
-       "Room",          /* also replaced by "Floor" */
-       "Stairs",
-       "Ladder",
-       "Fountain",
-       "Throne",
-/*30*/ "Sink",
-       "Grave",
-       "Altar",
-       "Ice",
-       "Bridge",        /* drawbridge_down, span across moat/ice/lava/floor */
-       "Air",           /* open air on Air level or bubble on Water level */
-       "Cloud",         /* [part of] a cloud or Air level */
+       "石头",          /* scorr: secret corridor */
+       "水池",          /* pool or non-moat water; can be boiled away */
+       "护城河",        /* water that can't be boiled away */
+       "水",            /* water on Water level; can't be boiled or frozen */
+       "(空隙)",        /* drawbridge_up; replaced by whatever is under */
+/*20*/ "熔岩",          /* lavapool */
+       "熔岩墙",        /* lava that extends to ceiling */
+       "铁栅栏",        /* ironbars */
+       "门口",          /* doorless or broken door; diagonal movement is ok */
+       "走廊",          /* replaced by "Floor" */
+       "房间",          /* also replaced by "Floor" */
+       "楼梯",
+       "梯子",
+       "喷泉",
+       "王座",
+/*30*/ "水槽",
+       "坟墓",
+       "祭坛",
+       "冰",
+       "吊桥",          /* drawbridge_down, span across moat/ice/lava/floor */
+       "空气",          /* open air on Air level or bubble on Water level */
+       "云",            /* [part of] a cloud or Air level */
        /*
         */
 /*37*/ "",              /* MAX_TYPE; skipped ratther than overloaded */
@@ -905,14 +905,14 @@ const char *terrain_descr[] = {
        /*
         * additional terrain names that aren't simple levl[][].typ values
         */
-/*39*/ "Floor",         /* substituted for room or corridor */
-/*40*/ "Ground",        /* 'room' on Earth level */
-       "Open-door",     /* open (not broken or doorless) */
-       "Shut-door",     /* closed or locked (or trapped) */
-       "Swamp",         /* Juiblex level */
-       "Submerged",     /* under water */
-       "Sea",           /* moat terrain on Medusa's level: "shallow sea" */
-       "WaterWall",     /* water that extends to the ceiling */
+/*39*/ "地板",          /* substituted for room or corridor */
+/*40*/ "地面",          /* 'room' on Earth level */
+       "开门",          /* open (not broken or doorless) */
+       "关门",          /* closed or locked (or trapped) */
+       "沼泽",          /* Juiblex level */
+       "水下",          /* under water */
+       "海",            /* moat terrain on Medusa's level: "shallow sea" */
+       "水墙",          /* water that extends to the ceiling */
 };
 
 /* cache-related */
@@ -1376,7 +1376,7 @@ boolean
 cond_menu(void)
 {
     static const char *const menutitle[2] = {
-        "alphabetically", "by ranking"
+        "按字母顺序", "按排序权重"
     };
     int i, res, idx = 0;
     int sequence[CONDITION_COUNT];
@@ -2856,7 +2856,7 @@ parse_status_hl2(char (*s)[QBUFSZ], boolean from_configfile)
         return TRUE;
     }
     if (fld == BL_FLUSH) {
-        config_error_add("Unknown status field '%s'", s[sidx]);
+        config_error_add("未知状态字段 '%s'", s[sidx]);
         return FALSE;
     }
     if (fld == BL_CONDITION)
@@ -2967,8 +2967,8 @@ parse_status_hl2(char (*s)[QBUFSZ], boolean from_configfile)
             txtval = TRUE;
         } else {
             config_error_add(has_ltgt_percentnumber(s[sidx])
-                 ? "Wrong format '%s', expected a threshold number or percent"
-                 : "Unknown behavior '%s'",
+                 ? "格式错误 '%s', 需要阈值数字或百分比"
+                 : "未知行为 '%s'",
                              s[sidx]);
             return FALSE;
         }
@@ -2990,14 +2990,14 @@ parse_status_hl2(char (*s)[QBUFSZ], boolean from_configfile)
             hilite.rel = LT_VALUE;
 
         if (initblstats[fld].anytype == ANY_STR && (percent || numeric)) {
-            config_error_add("Field '%s' does not support numeric values",
+            config_error_add("字段 '%s' 不支持数值",
                              initblstats[fld].fldname);
             return FALSE;
         }
 
         if (percent) {
             if (initblstats[fld].idxmax < 0) {
-                config_error_add("Cannot use percent with '%s'",
+                config_error_add("不能对 '%s' 使用百分比",
                                  initblstats[fld].fldname);
                 return FALSE;
             } else if ((hilite.value.a_int < -1)
@@ -3011,7 +3011,7 @@ parse_status_hl2(char (*s)[QBUFSZ], boolean from_configfile)
                            && hilite.value.a_int != LT_VALUE)
                        || (hilite.value.a_int > 101)) {
                 config_error_add(
-                           "hilite_status: invalid percentage value '%s%d%%'",
+                           "hilite_status: 无效百分比值 '%s%d%%'",
                                  (hilite.rel == LT_VALUE) ? "<"
                                    : (hilite.rel == LE_VALUE) ? "<="
                                      : (hilite.rel == GT_VALUE) ? ">"
@@ -3059,7 +3059,7 @@ parse_status_hl2(char (*s)[QBUFSZ], boolean from_configfile)
                 int c = match_str2clr(subfields[i], FALSE);
 
                 if (c >= CLR_MAX || coloridx != -1) {
-                    config_error_add("bad color '%d %d'", c, coloridx);
+                    config_error_add("错误颜色 '%d %d'", c, coloridx);
                     return FALSE;
                 }
                 coloridx = c;
@@ -3221,7 +3221,7 @@ str2conditionbitmask(char *str)
         unsigned long bm = match_str2conditionbitmask(subfields[i]);
 
         if (!bm) {
-            config_error_add("Unknown condition '%s'", subfields[i]);
+            config_error_add("未知状态条件 '%s'", subfields[i]);
             return 0UL;
         }
         conditions_bitmask |= bm;
@@ -3255,7 +3255,7 @@ parse_condition(char (*s)[QBUFSZ], int sidx)
 
     sidx++;
     if (!s[sidx][0]) {
-        config_error_add("Missing condition(s)");
+        config_error_add("缺少状态条件");
         return FALSE;
     }
     while (s[sidx][0]) {
@@ -3284,7 +3284,7 @@ parse_condition(char (*s)[QBUFSZ], int sidx)
         sidx++;
         how = s[sidx];
         if (!how || !*how) {
-            config_error_add("Missing color+attribute");
+            config_error_add("缺少颜色+属性");
             return FALSE;
         }
 
@@ -3331,7 +3331,7 @@ parse_condition(char (*s)[QBUFSZ], int sidx)
                 int k = match_str2clr(subfields[i], FALSE);
 
                 if (k >= CLR_MAX) {
-                    config_error_add("bad color %d", k);
+                    config_error_add("错误颜色 %d", k);
                     return FALSE;
                 }
                 coloridx = k;
@@ -3618,11 +3618,11 @@ status_hilite2str(struct hilite_s *hl)
         break;
     case BL_TH_UPDOWN:
         if (hl->rel == LT_VALUE)
-            Sprintf(behavebuf, "下降");
+            Sprintf(behavebuf, "down");
         else if (hl->rel == GT_VALUE)
-            Sprintf(behavebuf, "上升");
+            Sprintf(behavebuf, "up");
         else if (hl->rel == EQ_VALUE)
-            Sprintf(behavebuf, "变化");
+            Sprintf(behavebuf, "changed");
         else
             impossible("hl->behavior=updown, rel error");
         break;
@@ -3645,10 +3645,10 @@ status_hilite2str(struct hilite_s *hl)
             impossible("hl->behavior=condition, rel error");
         break;
     case BL_TH_ALWAYS_HILITE:
-        Sprintf(behavebuf, "总是");
+        Sprintf(behavebuf, "always");
         break;
     case BL_TH_CRITICALHP:
-        Sprintf(behavebuf, "临界HP");
+        Sprintf(behavebuf, "criticalhp");
         break;
     case BL_TH_NONE:
         break;
@@ -4117,10 +4117,10 @@ status_hilite_menu_add(int origfld)
             return FALSE;
         }
         Snprintf(colorqry, sizeof(colorqry),
-                "Choose a color for conditions %s:",
+                "为状态条件 %s 选择颜色:",
                 conditionbitmask2str(cond));
         Snprintf(attrqry, sizeof(attrqry),
-                "Choose attribute for conditions %s:",
+                "为状态条件 %s 选择属性:",
                 conditionbitmask2str(cond));
     } else if (behavior == BL_TH_TEXTMATCH) {
         char qry_buf[BUFSZ];
@@ -4462,8 +4462,8 @@ status_hilites_viewall(void)
     datawin = create_nhwindow(NHW_TEXT);
 
     while (hlstr) {
-        Sprintf(buf, "选项=高亮状态： %.*s",
-                (int) (BUFSZ - sizeof "选项=高亮状态： " - 1),
+        Sprintf(buf, "OPTIONS=hilite_status: %.*s",
+                (int) (BUFSZ - sizeof "OPTIONS=hilite_status: " - 1),
                 hlstr->str);
         putstr(datawin, 0, buf);
         hlstr = hlstr->next;
@@ -4485,8 +4485,8 @@ all_options_statushilites(strbuf_t *sbuf)
     hlstr = status_hilite_str;
 
     while (hlstr) {
-        Sprintf(buf, "选项=高亮状态: %.*s\n",
-                (int) (BUFSZ - sizeof "选项=高亮状态:  " - 1),
+        Sprintf(buf, "OPTIONS=hilite_status: %.*s\n",
+                (int) (BUFSZ - sizeof "OPTIONS=hilite_status:  " - 1),
                 hlstr->str);
         strbuf_append(sbuf, buf);
         hlstr = hlstr->next;

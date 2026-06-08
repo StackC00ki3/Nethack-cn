@@ -65,7 +65,7 @@ English README：[README_en.md](README_en.md)
 - [x] attrib.c
 - [x] ball.c
 - [x] bones.c
-- [ ] botl.c
+- [x] botl.c
 - [x] calendar.c
 - [ ] cfgfiles.c
 - [ ] cmd.c
