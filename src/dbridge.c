@@ -350,7 +350,7 @@ set_entity(
 staticfn const char *
 e_nam(struct entity *etmp)
 {
-    return is_u(etmp) ? "you" : mon_nam(etmp->emon);
+    return is_u(etmp) ? "你" : mon_nam(etmp->emon);
 }
 
 /*
@@ -365,7 +365,6 @@ E_phrase(struct entity *etmp, const char *verb)
     Strcpy(wholebuf, is_u(etmp) ? "你" : Monnam(etmp->emon));
     if (!verb || !*verb)
         return wholebuf;
-    Strcat(wholebuf, " ");
     if (is_u(etmp))
         Strcat(wholebuf, verb);
     else
@@ -460,8 +459,8 @@ e_died(
 
             if (DEADMONSTER(etmp->emon)) {
                 if (seeit)
-                    pline("不幸的是，对于%s，%s仍然被压碎着。",
-                          mon_nam(etmp->emon), mhe(etmp->emon));
+                    pline("不幸的是，%s仍然被压着。",
+                          mon_nam(etmp->emon));
             } else {
                 ; /* FIXME: still not dead?  What should we do now? */
             }
@@ -569,7 +568,7 @@ do_entity(struct entity *etmp)
 
     if (automiss(etmp) && e_survives_at(etmp, oldx, oldy)) {
         if (e_inview && (at_portcullis || IS_DRAWBRIDGE(crm->typ)))
-            pline_The("%s 穿过了%s!",
+            pline_The("%s穿过了%s！",
                       at_portcullis ? "吊闸" : "吊桥",
                       e_nam(etmp));
         if (is_u(etmp))
@@ -578,7 +577,7 @@ do_entity(struct entity *etmp)
     }
     if (e_missed(etmp, FALSE)) {
         if (at_portcullis) {
-            pline_The("吊闸没打到 %s!", e_nam(etmp));
+            pline_The("吊闸没打到%s！", e_nam(etmp));
         } else {
             debugpline1("The drawbridge misses %s!", e_nam(etmp));
         }
@@ -598,7 +597,7 @@ do_entity(struct entity *etmp)
                 Strcpy(svk.killer.name,
                        "被压碎在吊桥下");
             }
-            pline("%s压碎在吊桥下.",
+            pline("%s压碎在吊桥下。",
                   E_phrase(etmp, "被"));             /* no jump */
             e_died(etmp,
                    XKILL_NOCORPSE | (e_inview ? XKILL_GIVEMSG : XKILL_NOMSG),
@@ -614,7 +613,7 @@ do_entity(struct entity *etmp)
                 debugpline0("Jump succeeds!");
             } else {
                 if (e_inview) {
-                    pline("%s 下落的吊闸压碎!",
+                    pline("%s下落的吊闸压碎！",
                           E_phrase(etmp, "被"));
                 } else if (!Deaf) {
                     Soundeffect(se_crushing_sound, 100);
@@ -704,13 +703,13 @@ do_entity(struct entity *etmp)
 #endif
         if (e_inview) {
             if (is_u(etmp)) {
-                You("摔向关闭的吊闸!");
+                You("摔向关闭的吊闸！");
                 if (automiss(etmp))
-                    You("穿过了它!");
+                    You("穿过了它！");
                 else
                     pline_The("吊桥关闭了...");
             } else
-                pline("%s 在吊桥后面.",
+                pline("%s在吊桥后面。",
                       E_phrase(etmp, "消失"));
         }
         if (!e_survives_at(etmp, etmp->ex, etmp->ey)) {
@@ -725,12 +724,12 @@ do_entity(struct entity *etmp)
         if (is_pool(etmp->ex, etmp->ey) && !e_inview)
             if (!Deaf) {
                 Soundeffect(se_splash, 100);
-                You_hear("飞溅的声音.");
+                You_hear("飞溅的声音。");
             }
         if (e_survives_at(etmp, etmp->ex, etmp->ey)) {
             if (e_inview && !is_flyer(etmp->edata)
                 && !is_floater(etmp->edata))
-                pline("%s 下了桥.", E_phrase(etmp, "掉"));
+                pline("%s从桥上掉了下来。", E_phrase(etmp, (const char *) 0));
             return;
         }
         debugpline1("%s cannot survive on the drawbridge square",
@@ -741,10 +740,11 @@ do_entity(struct entity *etmp)
                 boolean lava = is_lava(etmp->ex, etmp->ey);
 
                 if (Hallucination)
-                    pline("%s %s 然后消失了.",
-                          E_phrase(etmp, "喝"), lava ? "熔岩" : "护城河");
+                    pline("%s喝下%s，然后消失了。",
+                          E_phrase(etmp, (const char *) 0),
+                          lava ? "熔岩" : "护城河");
                 else
-                    pline("%s 进了%s.", E_phrase(etmp, "掉"),
+                    pline("%s进了%s。", E_phrase(etmp, "掉"),
                           lava ? hliquid("熔岩") : "护城河");
             }
         svk.killer.format = NO_KILLER_PREFIX;
@@ -785,14 +785,14 @@ close_drawbridge(coordxy x, coordxy y)
     y2 = y;
     get_wall_for_db(&x2, &y2);
     if (cansee(x, y) || cansee(x2, y2)) {
-        You_see("一个吊桥升上%s!",
+        You_see("一座吊桥%s！",
                 (((u.ux == x || u.uy == y) && !Underwater)
                  || distu(x2, y2) < distu(x, y))
-                    ? "来"
-                    : "去");
+                    ? "升起来了"
+                    : "升上去了");
     } else { /* "5 gears turn" for castle drawbridge tune */
         Soundeffect(se_chains_rattling_gears_turning, 75);
-        You_hear("链条卡嗒卡嗒和齿轮转动的声音.");
+        You_hear("链条卡嗒作响、齿轮转动的声音。");
     }
     lev1->typ = DRAWBRIDGE_UP;
     lev2 = &levl[x2][y2];
@@ -815,7 +815,7 @@ close_drawbridge(coordxy x, coordxy y)
     do_entity(&(go.occupants[1]));
     if (OBJ_AT(x, y) && !Deaf) {
         Soundeffect(se_smashing_and_crushing, 75);
-        You_hear("撞击声和压碎声.");
+        You_hear("撞击声和压碎声。");
     }
     (void) revive_nasty(x, y, (char *) 0);
     (void) revive_nasty(x2, y2, (char *) 0);
@@ -850,11 +850,11 @@ open_drawbridge(coordxy x, coordxy y)
     y2 = y;
     get_wall_for_db(&x2, &y2);
     if (cansee(x, y) || cansee(x2, y2)) {
-        You_see("一个吊桥降下%s!",
-                (distu(x2, y2) < distu(x, y)) ? "去" : "来");
+        You_see("一座吊桥%s！",
+                (distu(x2, y2) < distu(x, y)) ? "降下去了" : "降下来了");
     } else { /* "5 gears turn" for castle drawbridge tune */
         Soundeffect(se_gears_turning_chains_rattling, 100);
-        You_hear("齿轮转动和链条卡嗒卡嗒的声音.");
+        You_hear("齿轮转动、链条卡嗒作响的声音。");
     }
     lev1->typ = DRAWBRIDGE_DOWN;
     lev2 = &levl[x2][y2];
@@ -910,13 +910,13 @@ destroy_drawbridge(coordxy x, coordxy y)
         Soundeffect(se_loud_splash, 100);  /* Deaf-aware */
         if (lev1->typ == DRAWBRIDGE_UP) {
             if (cansee(x2, y2) || u_at(x2, y2))
-                pline_The("吊桥的吊闸掉进了%s!",
+                pline_The("吊桥的吊闸掉进了%s！",
                           lava ? hliquid("熔岩") : "护城河");
             else
                 You_hear("一声响亮的*扑通*！");  /* Deaf-aware */
         } else {
             if (cansee(x, y) || u_at(x, y))
-                pline_The("吊桥倒塌进了%s!",
+                pline_The("吊桥倒塌进了%s！",
                           lava ? hliquid("熔岩") : "护城河");
             else
                 You_hear("一声响亮的*哗啦*声！");  /* Deaf-aware */
@@ -925,15 +925,15 @@ destroy_drawbridge(coordxy x, coordxy y)
         lev1->drawbridgemask = 0;
         if ((otmp2 = sobj_at(BOULDER, x, y)) != 0) {
             obj_extract_self(otmp2);
-            (void) flooreffects(otmp2, x, y, "fall");
+            (void) flooreffects(otmp2, x, y, "落");
         }
     } else {
         /* no moat beneath */
         Soundeffect(se_loud_crash, 100);  /* Deaf-aware */
         if (cansee(x, y) || u_at(x, y))
-            pline_The("吊桥碎裂了!");
+            pline_The("吊桥碎裂了！");
         else
-            You_hear("很大的* 粉碎* 声!");  /* Deaf-aware */
+            You_hear("一声巨大的*轰隆*！");  /* Deaf-aware */
         lev1->typ = ((lev1->drawbridgemask & DB_ICE) ? ICE : ROOM);
         lev1->icedpool = ((lev1->drawbridgemask & DB_ICE) ? ICED_MOAT : 0);
     }
@@ -969,7 +969,7 @@ destroy_drawbridge(coordxy x, coordxy y)
         e_inview = e_canseemon(etmp2);
         if (!automiss(etmp2)) {
             if (e_inview)
-                pline("%s 飞溅的残骸炸成碎片.",
+                pline("%s飞溅的残骸炸成碎片。",
                       E_phrase(etmp2, "被"));
             svk.killer.format = KILLED_BY_AN;
             Strcpy(svk.killer.name, "爆炸的吊桥");
@@ -991,10 +991,10 @@ destroy_drawbridge(coordxy x, coordxy y)
         } else {
             if (e_inview) {
                 if (!is_u(etmp1) && Hallucination)
-                    pline("%s 卷入了一些重金属!",
-                          E_phrase(etmp1, "被"));
+                    pline("%s卷入了一些重金属！",
+                          E_phrase(etmp1, (const char *) 0));
                 else
-                    pline("%s 一大块金属击中!",
+                    pline("%s一大块金属击中！",
                           E_phrase(etmp1, "被"));
             } else {
                 if (!Deaf && !is_u(etmp1) && !is_pool(x, y)) {
