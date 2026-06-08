@@ -180,11 +180,10 @@ do_write_config_file(void)
         wait_synch();
         pline("某些设置未保存！");
         wait_synch();
-        pline("All manual customization and comments are removed"
-              " from the file!");
+        pline("所有手动定制和注释都会从文件中移除!");
         wait_synch();
     }
-#define overwrite_prompt "Overwrite config file %.*s?"
+#define overwrite_prompt "覆盖配置文件 %.*s?"
     Sprintf(tmp, overwrite_prompt,
             (int) (BUFSZ - sizeof overwrite_prompt - 2), configfile);
 #undef overwrite_prompt
@@ -258,7 +257,7 @@ fopen_config_file(const char *filename, int src)
              * control (but SYSCF_FILE is not under the player's
              * control so it's OK).
              */
-            raw_printf("Access to %s denied (%d).", configfile, errno);
+            raw_printf("拒绝访问 %s (%d)。", configfile, errno);
             wait_synch();
             /* fall through to standard names */
         } else
@@ -268,7 +267,7 @@ fopen_config_file(const char *filename, int src)
 #if defined(UNIX) || defined(VMS)
         } else {
             /* access() above probably caught most problems for UNIX */
-            raw_printf("Couldn't open requested config file %s (%d).",
+            raw_printf("无法打开请求的配置文件 %s (%d)。",
                        configfile, errno);
             wait_synch();
 #endif
@@ -362,7 +361,7 @@ fopen_config_file(const char *filename, int src)
         if ((details = strerror(errno)) == 0)
 #endif
             details = "";
-        raw_printf("Couldn't open default config file %s %s(%d).",
+        raw_printf("无法打开默认配置文件 %s %s(%d)。",
                    configfile, details, errno);
         wait_synch();
     }
@@ -428,7 +427,7 @@ get_uchars(char *bufp,       /* current pointer */
 
         default:
  gi_error:
-            raw_printf("Syntax error in %s", name);
+            raw_printf("%s 中存在语法错误", name);
             wait_synch();
             return count;
         }
@@ -558,7 +557,7 @@ handle_config_section(char *buf)
             free(gc.config_section_current), gc.config_section_current = 0;
         /* is_config_section() removed brackets from 'sect' */
         if (!gc.config_section_chosen) {
-            config_error_add("Section \"[%s]\" without CHOOSE", sect);
+            config_error_add("小节 \"[%s]\" 缺少 CHOOSE", sect);
             return TRUE;
         }
         if (*sect) { /* got a section name */
@@ -934,7 +933,7 @@ cnf_line_SEDUCE(char *bufp)
     /* allow anyone to disable it but can only enable it in sysconf
        or as a no-op for the user when sysconf hasn't disabled it */
     if (!in_sysconf && !sysopt.seduce && n != 0) {
-        config_error_add("Illegal value in SEDUCE");
+        config_error_add("SEDUCE 中有非法值");
         n = 0;
     }
     sysopt.seduce = n;
@@ -958,7 +957,7 @@ cnf_line_MAXPLAYERS(char *bufp)
 
     /* XXX to get more than 25, need to rewrite all lock code */
     if (n < 0 || n > 25) {
-        config_error_add("Illegal value in MAXPLAYERS (maximum is 25)");
+        config_error_add("MAXPLAYERS 中有非法值(最大为 25)");
         n = 5;
     }
     sysopt.maxplayers = n;
@@ -971,7 +970,7 @@ cnf_line_PERSMAX(char *bufp)
     int n = atoi(bufp);
 
     if (n < 1) {
-        config_error_add("Illegal value in PERSMAX (minimum is 1)");
+        config_error_add("PERSMAX 中有非法值(最小为 1)");
         n = 0;
     }
     sysopt.persmax = n;
@@ -984,7 +983,7 @@ cnf_line_PERS_IS_UID(char *bufp)
     int n = atoi(bufp);
 
     if (n != 0 && n != 1) {
-        config_error_add("Illegal value in PERS_IS_UID (must be 0 or 1)");
+        config_error_add("PERS_IS_UID 中有非法值(必须是 0 或 1)");
         n = 0;
     }
     sysopt.pers_is_uid = n;
@@ -997,7 +996,7 @@ cnf_line_ENTRYMAX(char *bufp)
     int n = atoi(bufp);
 
     if (n < 10) {
-        config_error_add("Illegal value in ENTRYMAX (minimum is 10)");
+        config_error_add("ENTRYMAX 中有非法值(最小为 10)");
         n = 10;
     }
     sysopt.entrymax = n;
@@ -1010,7 +1009,7 @@ cnf_line_POINTSMIN(char *bufp)
     int n = atoi(bufp);
 
     if (n < 1) {
-        config_error_add("Illegal value in POINTSMIN (minimum is 1)");
+        config_error_add("POINTSMIN 中有非法值(最小为 1)");
         n = 100;
     }
     sysopt.pointsmin = n;
@@ -1023,8 +1022,8 @@ cnf_line_MAX_STATUENAME_RANK(char *bufp)
     int n = atoi(bufp);
 
     if (n < 1) {
-        config_error_add("Illegal value in MAX_STATUENAME_RANK"
-                         " (minimum is 1)");
+        config_error_add("MAX_STATUENAME_RANK 中有非法值"
+                         "(最小为 1)");
         n = 10;
     }
     sysopt.tt_oname_maxrank = n;
@@ -1040,8 +1039,8 @@ cnf_line_LIVELOG(char *bufp)
     long L = strtol(bufp, NULL, 0);
 
     if (L < 0L || L > 0xffffL) {
-        config_error_add("Illegal value for LIVELOG"
-                         " (must be between 0 and 0xFFFF).");
+        config_error_add("LIVELOG 有非法值"
+                         "(必须在 0 和 0xFFFF 之间)。");
         return 0;
     }
     sysopt.livelog = L;
@@ -1055,7 +1054,7 @@ cnf_line_PANICTRACE_LIBC(char *bufp)
 
 #if defined(PANICTRACE) && defined(PANICTRACE_LIBC)
     if (n < 0 || n > 2) {
-        config_error_add("Illegal value in PANICTRACE_LIBC (not 0,1,2)");
+        config_error_add("PANICTRACE_LIBC 中有非法值(不是 0, 1, 2)");
         n = 0;
     }
 #endif
@@ -1070,7 +1069,7 @@ cnf_line_PANICTRACE_GDB(char *bufp)
 
 #if defined(PANICTRACE)
     if (n < 0 || n > 2) {
-        config_error_add("Illegal value in PANICTRACE_GDB (not 0,1,2)");
+        config_error_add("PANICTRACE_GDB 中有非法值(不是 0, 1, 2)");
         n = 0;
     }
 #endif
@@ -1083,7 +1082,7 @@ cnf_line_GDBPATH(char *bufp)
 {
 #if defined(PANICTRACE) && !defined(VMS)
     if (!file_exists(bufp)) {
-        config_error_add("File specified in GDBPATH does not exist");
+        config_error_add("GDBPATH 指定的文件不存在");
         return FALSE;
     }
 #endif
@@ -1098,7 +1097,7 @@ cnf_line_GREPPATH(char *bufp)
 {
 #if defined(PANICTRACE) && !defined(VMS)
     if (!file_exists(bufp)) {
-        config_error_add("File specified in GREPPATH does not exist");
+        config_error_add("GREPPATH 指定的文件不存在");
         return FALSE;
     }
 #endif
@@ -1123,7 +1122,7 @@ cnf_line_ACCESSIBILITY(char *bufp)
     int n = atoi(bufp);
 
     if (n < 0 || n > 1) {
-        config_error_add("Illegal value in ACCESSIBILITY (not 0,1)");
+        config_error_add("ACCESSIBILITY 中有非法值(不是 0, 1)");
         n = 0;
     }
     sysopt.accessibility = n;
@@ -1137,14 +1136,14 @@ cnf_line_PORTABLE_DEVICE_PATHS(char *bufp)
     int n = atoi(bufp);
 
     if (n < 0 || n > 1) {
-        config_error_add("Illegal value in PORTABLE_DEVICE_PATHS"
-                         " (not 0 or 1)");
+        config_error_add("PORTABLE_DEVICE_PATHS 中有非法值"
+                         "(不是 0 或 1)");
         n = 0;
     }
     sysopt.portable_device_paths = n;
 #else   /* Windows-only directive encountered by non-Windows config */
     nhUse(bufp);
-    config_error_add("PORTABLE_DEVICE_PATHS is not supported");
+    config_error_add("不支持 PORTABLE_DEVICE_PATHS");
 #endif
     return TRUE;
 }
@@ -1411,7 +1410,7 @@ parse_config_line(char *origbuf)
     bufp = find_optparam(buf);
     if (!bufp) {
         if (!ignore_statement_errors)
-            config_error_add("Not a config statement, missing '='");
+            config_error_add("不是配置语句, 缺少 '='");
         return FALSE;
     }
     /* skip past '=', then space between it and value, if any */
@@ -1434,7 +1433,7 @@ parse_config_line(char *origbuf)
     }
 
     if (!ignore_errors_on_unmatched)
-        config_error_add("Unknown config statement");
+        config_error_add("未知配置语句");
     return FALSE;
 }
 
@@ -1576,7 +1575,7 @@ config_erradd(const char *buf)
 
     config_error_data->num_errors++;
     if (!config_error_data->origline_shown && !config_error_data->secure) {
-        pline("\\n%s", config_error_data->origline);
+        pline("\n%s", config_error_data->origline);
         config_error_data->origline_shown = TRUE;
     }
     if (config_error_data->line_num > 0 && !config_error_data->secure) {
@@ -1705,7 +1704,7 @@ parse_conf_buf(struct _cnf_parser_state *p, boolean (*proc)(char *arg))
                    missing a newline; process it anyway  */
                 p->ep = eos(p->inbuf);
             } else {
-                config_error_add("Line too long, skipping");
+                config_error_add("行过长, 已跳过");
                 p->skip = TRUE; /* discard next fgets */
             }
         } else {
@@ -1791,7 +1790,7 @@ parse_conf_buf(struct _cnf_parser_state *p, boolean (*proc)(char *arg))
                 if (section) {
                     gc.config_section_chosen = dupstr(section);
                 } else {
-                    config_error_add("No config section to choose");
+                    config_error_add("没有可选择的配置小节");
                     p->rv = FALSE;
                 }
                 free(p->buf), p->buf = (char *) 0;
@@ -2063,7 +2062,7 @@ assure_syscf_file(void)
     if (gd.deferred_showpaths)
         do_deferred_showpaths(1); /* does not return */
 #endif
-    raw_printf("Unable to open SYSCF_FILE.\n");
+    raw_printf("无法打开 SYSCF_FILE。\n");
     exit(EXIT_FAILURE);
 }
 

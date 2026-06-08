@@ -67,7 +67,7 @@ English README：[README_en.md](README_en.md)
 - [x] bones.c
 - [x] botl.c
 - [x] calendar.c
-- [ ] cfgfiles.c
+- [x] cfgfiles.c
 - [ ] cmd.c
 - [x] coloratt.c
 - [x] date.c
