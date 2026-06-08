@@ -74,7 +74,7 @@ English README：[README_en.md](README_en.md)
 - [x] dbridge.c
 - [x] decl.c
 - [x] detect.c
-- [ ] dig.c
+- [x] dig.c
 - [ ] display.c
 - [ ] dlb.c
 - [ ] do.c
