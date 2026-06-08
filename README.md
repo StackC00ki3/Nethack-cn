@@ -73,7 +73,7 @@ English README：[README_en.md](README_en.md)
 - [x] date.c
 - [x] dbridge.c
 - [x] decl.c
-- [ ] detect.c
+- [x] detect.c
 - [ ] dig.c
 - [ ] display.c
 - [ ] dlb.c
