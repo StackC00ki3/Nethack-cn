@@ -14,39 +14,39 @@ const char * const nhcb_name[NUM_NHCB] = {
 
 int nhcb_counts[NUM_NHCB] = DUMMY;
 NEARDATA const struct c_color_names c_color_names = {
-    "black",  "amber", "golden", "light blue", "red",   "green",
-    "silver", "blue",  "purple", "white",      "orange"
+    "黑色", "琥珀色", "金色", "浅蓝色", "红色", "绿色",
+    "银色", "蓝色",   "紫色", "白色",   "橙色"
 };
 const char *c_obj_colors[] = {
-    "black",          /* CLR_BLACK */
-    "red",            /* CLR_RED */
-    "green",          /* CLR_GREEN */
-    "brown",          /* CLR_BROWN */
-    "blue",           /* CLR_BLUE */
-    "magenta",        /* CLR_MAGENTA */
-    "cyan",           /* CLR_CYAN */
-    "gray",           /* CLR_GRAY */
-    "transparent",    /* no_color */
-    "orange",         /* CLR_ORANGE */
-    "bright green",   /* CLR_BRIGHT_GREEN */
-    "yellow",         /* CLR_YELLOW */
-    "bright blue",    /* CLR_BRIGHT_BLUE */
-    "bright magenta", /* CLR_BRIGHT_MAGENTA */
-    "bright cyan",    /* CLR_BRIGHT_CYAN */
-    "white",          /* CLR_WHITE */
+    "黑色",       /* CLR_BLACK */
+    "红色",       /* CLR_RED */
+    "绿色",       /* CLR_GREEN */
+    "棕色",       /* CLR_BROWN */
+    "蓝色",       /* CLR_BLUE */
+    "品红色",     /* CLR_MAGENTA */
+    "青色",       /* CLR_CYAN */
+    "灰色",       /* CLR_GRAY */
+    "透明",       /* no_color */
+    "橙色",       /* CLR_ORANGE */
+    "亮绿色",     /* CLR_BRIGHT_GREEN */
+    "黄色",       /* CLR_YELLOW */
+    "亮蓝色",     /* CLR_BRIGHT_BLUE */
+    "亮品红色",   /* CLR_BRIGHT_MAGENTA */
+    "亮青色",     /* CLR_BRIGHT_CYAN */
+    "白色",       /* CLR_WHITE */
 };
 
 const struct c_common_strings c_common_strings =
-    { "无事发生.",
-      "看上去无事发生.",
-      "你已经试了够多次了!",
-      "%s这个挺蠢的.",
-      "突然打了个哆嗦.",
-      "有什么",
-      "有什么",
-      "你现在可以移动了.",
-      "算了.",
-      "视线瞬间又清晰了.",
+    { "无事发生。",
+      "看起来无事发生。",
+      "你已经试了够多次了！",
+      "%s这种事很蠢。",
+      "颤抖了一下。",
+      "某物",
+      "某物",
+      "你又能动了。",
+      "算了。",
+      "视线很快恢复清晰。",
       { "", "你的" },
       { "怪物", "你" }
 };
@@ -87,12 +87,12 @@ NEARDATA struct instance_flags iflags;
 NEARDATA struct accessibility_data a11y;
 /* NOTE: the order of these words exactly corresponds to the
    order of oc_material values #define'd in objclass.h. */
-const char *materialnm[] = { "mysterious", "liquid",  "wax",        "organic",
-                             "flesh",      "paper",   "cloth",      "leather",
-                             "wooden",     "bone",    "dragonhide", "iron",
-                             "metal",      "copper",  "silver",     "gold",
-                             "platinum",   "mithril", "plastic",    "glass",
-                             "gemstone",   "stone" };
+const char *materialnm[] = { "神秘", "液体",   "蜡",     "有机",
+                             "血肉", "纸",     "布",     "皮革",
+                             "木制", "骨制",   "龙皮",   "铁",
+                             "金属", "铜",     "银",     "金",
+                             "铂金", "秘银",   "塑料",   "玻璃",
+                             "宝石", "石制" };
 const char quitchars[] = " \r\n\033";
 const int shield_static[SHIELD_COUNT] = {
     S_ss1, S_ss2, S_ss3, S_ss2, S_ss1, S_ss2, S_ss4, /* 7 per row */

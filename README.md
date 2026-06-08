@@ -72,7 +72,7 @@ English README：[README_en.md](README_en.md)
 - [x] coloratt.c
 - [x] date.c
 - [x] dbridge.c
-- [ ] decl.c
+- [x] decl.c
 - [ ] detect.c
 - [ ] dig.c
 - [ ] display.c
