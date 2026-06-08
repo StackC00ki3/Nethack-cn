@@ -77,7 +77,7 @@ English README：[README_en.md](README_en.md)
 - [x] dig.c
 - [x] display.c
 - [x] dlb.c
-- [ ] do.c
+- [x] do.c
 - [x] dog.c
 - [ ] dogmove.c
 - [x] dokick.c
