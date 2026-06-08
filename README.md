@@ -79,7 +79,7 @@ English README：[README_en.md](README_en.md)
 - [x] dlb.c
 - [x] do.c
 - [x] dog.c
-- [ ] dogmove.c
+- [x] dogmove.c
 - [x] dokick.c
 - [ ] dothrow.c
 - [ ] do_name.c

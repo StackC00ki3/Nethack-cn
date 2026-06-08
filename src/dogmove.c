@@ -284,13 +284,13 @@ dog_eat(struct monst *mtmp,
                result won't be printed */
             obj_name = distant_name(obj, doname);
             if (tunnels(mtmp->data))
-                pline_mon(mtmp, "%s digs in.", noit_Monnam(mtmp));
+                pline_mon(mtmp, "%s埋头大吃.", noit_Monnam(mtmp));
             else
-                pline_mon(mtmp, "%s %s %s.", noit_Monnam(mtmp),
-                      devour ? "devours" : "eats", obj_name);
+                pline_mon(mtmp, "%s%s%s.", noit_Monnam(mtmp),
+                      devour ? "吞食了" : "吃了", obj_name);
         } else if (seeobj) {
             obj_name = distant_name(obj, doname);
-            pline("它 %s%s.", devour ? "吞食" : "吃食", obj_name);
+            pline("它%s%s.", devour ? "吞食了" : "吃了", obj_name);
         }
     }
     if (obj->unpaid) {
@@ -306,7 +306,7 @@ dog_eat(struct monst *mtmp,
         if (canseemon(mtmp)) {
             obj_name = distant_name(obj, doname); /* (see above) */
             if (flags.verbose)
-                pline("%s 厌恶地吐出了 %s！",
+                pline("%s厌恶地吐出了%s!",
                       Monnam(mtmp), obj_name);
         }
     } else {
@@ -333,7 +333,7 @@ dog_eat(struct monst *mtmp,
             /* edible item owned by shop has been thrown or kicked
                by hero and caught by tame or food-tameable monst */
             oprice = unpaid_cost(obj, COST_CONTENTS);
-            pline("那个%s 会花费你 %ld %s.", objnambuf, oprice,
+            pline("那个%s会花费你%ld %s.", objnambuf, oprice,
                   currency(oprice));
             /* m_consume_obj() -> delobj() -> obfree() will handle the shop
                billing update */
@@ -348,11 +348,11 @@ staticfn void
 dog_starve(struct monst *mtmp)
 {
     if (mtmp->mleashed && mtmp != u.usteed)
-        Your("皮带松了。");
+        Your("牵绳松了.");
     else if (cansee(mtmp->mx, mtmp->my))
-        pline_mon(mtmp, "%s starves.", Monnam(mtmp));
+        pline_mon(mtmp, "%s饿死了.", Monnam(mtmp));
     else
-        You_feel("%s了一会儿。",
+        You_feel("%s了一会儿.",
                     Hallucination ? "沮丧" : "悲伤");
     mondied(mtmp);
 }
@@ -378,11 +378,11 @@ dog_hunger(struct monst *mtmp, struct edog *edog)
                 return TRUE;
             }
             if (cansee(mtmp->mx, mtmp->my))
-                pline_mon(mtmp, "%s is confused from hunger.", Monnam(mtmp));
+                pline_mon(mtmp, "%s饿得糊涂了.", Monnam(mtmp));
             else if (couldsee(mtmp->mx, mtmp->my))
                 beg(mtmp);
             else
-                You_feel("担心 %s.", y_monnam(mtmp));
+                You_feel("担心%s.", y_monnam(mtmp));
             stop_occupation();
         } else if (svm.moves > edog->hungrytime + DOG_STARVE
                    || DEADMONSTER(mtmp)) {
@@ -457,7 +457,7 @@ dog_invent(struct monst *mtmp, struct edog *edog, int udist)
                             char *otmpname = distant_name(otmp, doname);
 
                             if (flags.verbose)
-                                pline_xy(omx, omy, "%s picks up %s.",
+                                pline_xy(omx, omy, "%s捡起了%s.",
                                       Monnam(mtmp), otmpname);
                         }
                         obj_extract_self(otmp);
@@ -1056,7 +1056,7 @@ dog_move(
     if (!Conflict && !mtmp->mconf
         && mtmp == u.ustuck && !sticks(gy.youmonst.data)) {
         unstuck(mtmp); /* swallowed case handled above */
-        You("get released!");
+        You("被放开了!");
     }
 #endif
     allowflags = mon_allowflags(mtmp);
@@ -1279,7 +1279,7 @@ dog_move(
 
         if (mfp.info[chi] & ALLOW_U) {
             if (mtmp->mleashed) { /* play it safe */
-                pline_mon(mtmp, "%s breaks loose of %s leash!",
+                pline_mon(mtmp, "%s挣脱了%s的牵绳!",
                          Monnam(mtmp), mhis(mtmp));
                 m_unleash(mtmp, FALSE);
             }
@@ -1304,10 +1304,10 @@ dog_move(
                                ? vobj_at(nix, niy) : 0;
             const char *what = o ? distant_name(o, doname) : something;
 
-            pline_mon(mtmp, "%s %s reluctantly %s %s.", noit_Monnam(mtmp),
-                  vtense((char *) 0, locomotion(mtmp->data, "step")),
-                  (is_flyer(mtmp->data) || is_floater(mtmp->data)) ? "over"
-                                                                   : "onto",
+            pline_mon(mtmp, "%s勉强%s%s%s.", noit_Monnam(mtmp),
+                  vtense((char *) 0, locomotion(mtmp->data, "踏")),
+                  (is_flyer(mtmp->data) || is_floater(mtmp->data)) ? "越过"
+                                                                   : "踏上",
                   what);
         }
         mon_track_add(mtmp, omx, omy);
@@ -1525,16 +1525,16 @@ quickmimic(struct monst *mtmp)
         if (was_leashed
             && (M_AP_TYPE(mtmp) != M_AP_MONSTER
                 || !mnum_leashable(mtmp->mappearance))) {
-            Your("牵绳松了。");
+            Your("牵绳松了.");
             m_unleash(mtmp, FALSE);
         }
         if (glyph_at(mtmp->mx, mtmp->my) != prev_glyph)
-            You("%s %s %s 在 %s 原来的地方！",
+            You("%s%s%s在%s原来的地方!",
                 seeloc ? "看见" : "感觉到",
                 (what != something) ? an(what) : what,
                 seeloc ? "出现" : "已经出现", buf);
         else
-            You("感觉到 %s 感觉有点 %s 样。", buf, what);
+            You("感觉到%s有点像%s.", buf, what);
 
         display_nhwindow(WIN_MAP, TRUE);
     }
