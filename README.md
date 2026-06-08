@@ -81,7 +81,7 @@ English README：[README_en.md](README_en.md)
 - [x] dog.c
 - [x] dogmove.c
 - [x] dokick.c
-- [ ] dothrow.c
+- [x] dothrow.c
 - [ ] do_name.c
 - [ ] do_wear.c
 - [ ] drawing.c
