@@ -100,7 +100,7 @@ English README：[README_en.md](README_en.md)
 - [x] hack.c
 - [x] hacklib.c
 - [x] iactions.c
-- [ ] insight.c
+- [x] insight.c
 - [ ] invent.c
 - [ ] isaac64.c
 - [ ] light.c
