@@ -95,7 +95,7 @@ English README：[README_en.md](README_en.md)
 - [x] extralev.c
 - [x] files.c
 - [x] fountain.c
-- [ ] getpos.c
+- [x] getpos.c
 - [ ] glyphs.c
 - [ ] hack.c
 - [ ] hacklib.c
