@@ -96,7 +96,7 @@ English README：[README_en.md](README_en.md)
 - [x] files.c
 - [x] fountain.c
 - [x] getpos.c
-- [ ] glyphs.c
+- [x] glyphs.c
 - [ ] hack.c
 - [ ] hacklib.c
 - [ ] iactions.c

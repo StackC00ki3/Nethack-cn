@@ -84,8 +84,7 @@ to_custom_symset_entry_callback(
             static int glyphnag = 0;
 
             if (!glyphnag++)
-                config_error_add("Unimplemented customization feature,"
-                                 " ignoring for now");
+                config_error_add("未实现的自定义功能, 暂时忽略");
         }
     }
 #endif
@@ -97,8 +96,7 @@ to_custom_symset_entry_callback(
             static int colornag = 0;
 
             if (!colornag++)
-                config_error_add("Unimplemented customization feature,"
-                                 " ignoring for now");
+                config_error_add("未实现的自定义功能, 暂时忽略");
         }
     }
 }
@@ -1096,11 +1094,11 @@ parse_id(
                     Strcat(buf[0], buf3);
                     Strcat(buf[0], buf4);
                 } else if (glyph_is_invisible(glyph)) {
-                    Strcpy(buf[0], "G_不可见");
+                    Strcpy(buf[0], "G_invisible");
                 } else if (glyph_is_nothing(glyph)) {
-                    Strcpy(buf[0], "G_无");
+                    Strcpy(buf[0], "G_nothing");
                 } else if (glyph_is_unexplored(glyph)) {
-                    Strcpy(buf[0], "G_未探索");
+                    Strcpy(buf[0], "G_unexplored");
                 } else if (glyph_is_warning(glyph)) {
                     j = glyph - GLYPH_WARNING_OFF;
                     Snprintf(buf[0], sizeof buf[0], "G_%s%d", "warning", j);
