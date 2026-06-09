@@ -658,7 +658,7 @@ create_levelfile(int lev, char errbuf[])
             svl.level_info[lev].flags |= LFILE_EXISTS;
         else if (errbuf) /* failure explanation */
             Sprintf(errbuf,
-                    "Cannot create file \"%s\" for level %d (errno %d).",
+                    "无法创建文件\"%s\"用于第%d层(errno %d).",
                     gl.lock, lev, errno);
 #if defined(MSDOS) || defined(WIN32)
         if (nhfp->fd >= 0)
@@ -704,7 +704,7 @@ open_levelfile(int lev, char errbuf[])
            might end up being too big for nethack's BUFSZ */
         if (nhfp->fd < 0 && errbuf)
             Sprintf(errbuf,
-                    "Cannot open file \"%s\" for level %d (errno %d).",
+                    "无法打开文件\"%s\"用于第%d层(errno %d).",
                     gl.lock, lev, errno);
 #if defined(MSDOS) || defined(WIN32)
         if (nhfp->fd >= 0)
@@ -891,7 +891,7 @@ create_bonesfile(d_level *lev, char **bonesid, char errbuf[])
 #endif
         }
         if (failed && errbuf)  /* failure explanation */
-            Sprintf(errbuf, "Cannot create bones \"%s\", id %s (errno %d).",
+            Sprintf(errbuf, "无法创建遗骨文件\"%s\", 标识%s(errno %d).",
                     gl.lock, *bonesid, errno);
     }
 #if defined(VMS) && !defined(SECURE)
@@ -933,7 +933,7 @@ commit_bonesfile(d_level *lev)
     ret = rename(tempname, fq_bones);
 #endif
     if (wizard && ret != 0)
-        pline("couldn't rename %s to %s.", tempname, fq_bones);
+        pline("无法将%s重命名为%s.", tempname, fq_bones);
 }
 
 NHFILE *
@@ -1574,8 +1574,8 @@ redirect(
 #endif
             details = "";
         (void) fprintf(stderr,
-                       "freopen of %s for %scompress failed; (%d) %s\n",
-                       filename, uncomp ? "un" : "", errno, details);
+                       "重定向%s用于%s失败; (%d) %s\n",
+                       filename, uncomp ? "解压" : "压缩", errno, details);
         nh_terminate(EXIT_FAILURE);
     }
 }
@@ -1695,13 +1695,14 @@ docompress_file(const char *filename, boolean uncomp)
         (void) setuid(getuid());
         (void) execv(args[0], (char *const *) args);
         perror((char *) 0);
-        (void) fprintf(stderr, "Exec to %scompress %s failed.\n",
-                       uncomp ? "un" : "", filename);
+        (void) fprintf(stderr, "执行%s处理%s失败.\n",
+                       uncomp ? "解压" : "压缩", filename);
         free((genericptr_t) cfn);
         nh_terminate(EXIT_FAILURE);
     } else if (f == -1) {
         perror((char *) 0);
-        pline("Fork to %scompress %s failed.", uncomp ? "un" : "", filename);
+        pline("创建子进程执行%s%s失败.",
+              uncomp ? "解压" : "压缩", filename);
         free((genericptr_t) cfn);
         return;
     }
@@ -1724,8 +1725,8 @@ docompress_file(const char *filename, boolean uncomp)
             Sprintf(numbuf, "(%d)", errno);
             details = numbuf;
         }
-        raw_printf("Wait when %scompressing %s failed; %s.",
-                   uncomp ? "un" : "", filename, details);
+        raw_printf("等待%s处理%s时失败: %s.",
+                   uncomp ? "解压" : "压缩", filename, details);
     }
     (void) signal(SIGINT, (SIG_RET_TYPE) done1);
     if (wizard)
@@ -1748,7 +1749,7 @@ docompress_file(const char *filename, boolean uncomp)
     } else {
         /* (un)compress failed; remove the new, bad file */
         if (uncomp) {
-            raw_printf("Unable to uncompress %s", filename);
+            raw_printf("无法解压%s", filename);
             (void) unlink(filename);
         } else {
             /* no message needed for compress case; life will go on */
@@ -1858,13 +1859,13 @@ docompress_file(const char *filename, boolean uncomp)
 
         uncompressedfile = fopen(filename, RDBMODE);
         if (!uncompressedfile) {
-            pline("Error in zlib docompress_file %s", filename);
+            pline("zlib压缩%s时出错.", filename);
             return;
         }
         compressedfile = gzopen(cfn, "wb");
         if (compressedfile == NULL) {
             if (errno == 0) {
-                pline("zlib failed to allocate memory");
+                pline("zlib无法分配内存.");
             } else {
                 panic("Error in docompress_file %d", errno);
             }
@@ -1880,8 +1881,8 @@ docompress_file(const char *filename, boolean uncomp)
         while (1) {
             len = fread(buf, 1, sizeof(buf), uncompressedfile);
             if (ferror(uncompressedfile)) {
-                pline("Failure reading uncompressed file");
-                pline("Can't compress %s.", filename);
+                pline("读取未压缩文件失败.");
+                pline("无法压缩%s.", filename);
                 fclose(uncompressedfile);
                 gzclose(compressedfile);
                 (void) unlink(cfn);
@@ -1895,8 +1896,8 @@ docompress_file(const char *filename, boolean uncomp)
 
             len2 = gzwrite(compressedfile, buf, len);
             if (len2 == 0) {
-                pline("Failure writing compressed file");
-                pline("Can't compress %s.", filename);
+                pline("写入压缩文件失败.");
+                pline("无法压缩%s.", filename);
                 fclose(uncompressedfile);
                 gzclose(compressedfile);
                 (void) unlink(cfn);
@@ -1923,7 +1924,7 @@ docompress_file(const char *filename, boolean uncomp)
         compressedfile = gzopen(cfn, "rb");
         if (compressedfile == NULL) {
             if (errno == 0) {
-                pline("zlib failed to allocate memory");
+                pline("zlib无法分配内存.");
             } else if (errno != ENOENT) {
                 panic("Error in zlib docompress_file %s, %d", filename,
                       errno);
@@ -1935,7 +1936,7 @@ docompress_file(const char *filename, boolean uncomp)
         }
         uncompressedfile = fopen(filename, WRBMODE);
         if (!uncompressedfile) {
-            pline("Error in zlib docompress file uncompress %s", filename);
+            pline("zlib解压%s时出错.", filename);
             gzclose(compressedfile);
 #ifdef SFCTOOL
             free(cfn);
@@ -1948,8 +1949,8 @@ docompress_file(const char *filename, boolean uncomp)
         while (1) {
             len = gzread(compressedfile, buf, sizeof(buf));
             if (len == (unsigned) -1) {
-                pline("Failure reading compressed file");
-                pline("Can't uncompress %s.", filename);
+                pline("读取压缩文件失败.");
+                pline("无法解压%s.", filename);
                 fclose(uncompressedfile);
                 gzclose(compressedfile);
                 (void) unlink(filename);
@@ -1963,8 +1964,8 @@ docompress_file(const char *filename, boolean uncomp)
 
             fwrite(buf, 1, len, uncompressedfile);
             if (ferror(uncompressedfile)) {
-                pline("Failure writing uncompressed file");
-                pline("Can't uncompress %s.", filename);
+                pline("写入未压缩文件失败.");
+                pline("无法解压%s.", filename);
                 fclose(uncompressedfile);
                 gzclose(compressedfile);
                 (void) unlink(filename);
@@ -1998,17 +1999,17 @@ static struct sfstatus_to_msg {
     int sfstatus;
     const char *msg;
 } sf2msg[] = {
-    { SF_UPTODATE, "everything matches" },
-    { SF_OUTDATED, "outdated savefile" },
+    { SF_UPTODATE, "完全匹配" },
+    { SF_OUTDATED, "过期的存档文件" },
     { SF_CRITICAL_BYTE_COUNT_MISMATCH,
-        "savefile critical byte-count mismatch" },
-    { SF_DM_IL32LLP64_ON_ILP32LL64, "Windows x64 savefile on x86" },
-    { SF_DM_I32LP64_ON_ILP32LL64, "Unix 64 savefile on x86" },
-    { SF_DM_ILP32LL64_ON_I32LP64, "x86 savefile on Unix 64" },
-    { SF_DM_ILP32LL64_ON_IL32LLP64, "x86 savefile on Windows x64" },
-    { SF_DM_I32LP64_ON_IL32LLP64, "Unix 64 savefile on Windows x64" },
-    { SF_DM_IL32LLP64_ON_I32LP64, "Windows x64 savefile on Unix 64" },
-    { SF_DM_MISMATCH, "generic savefile mismatch" },
+        "存档文件关键字节数不匹配" },
+    { SF_DM_IL32LLP64_ON_ILP32LL64, "x86平台上的Windows x64存档文件" },
+    { SF_DM_I32LP64_ON_ILP32LL64, "x86平台上的Unix 64位存档文件" },
+    { SF_DM_ILP32LL64_ON_I32LP64, "Unix 64位平台上的x86存档文件" },
+    { SF_DM_ILP32LL64_ON_IL32LLP64, "Windows x64平台上的x86存档文件" },
+    { SF_DM_I32LP64_ON_IL32LLP64, "Windows x64平台上的Unix 64位存档文件" },
+    { SF_DM_IL32LLP64_ON_I32LP64, "Unix 64位平台上的Windows x64存档文件" },
+    { SF_DM_MISMATCH, "通用存档文件不匹配" },
 };
 
 staticfn NHFILE *
@@ -2034,9 +2035,8 @@ problematic_savefile(int sfstatus, const char *savefilenm)
     default:
         for (i = 0; i < SIZE(sf2msg); ++i) {
             if (sf2msg[i].sfstatus == sfstatus) {
-                raw_printf("\n%s is %s %s\n",
+                raw_printf("\n%s是%s\n",
                            savefilenm,
-                           (sfstatus == SF_OUTDATED) ? "an" : "a",
                            sf2msg[i].msg);
                 break;
             }
@@ -2276,8 +2276,8 @@ lock_file(const char *filename, int whichprefix,
 #ifdef USE_FCNTL
     lockfd = open(filename, O_RDWR);
     if (lockfd == -1) {
-        HUP raw_printf("Cannot open file %s. "
-                       " Is NetHack installed correctly?",
+        HUP raw_printf("无法打开文件%s. "
+                       "NetHack是否已正确安装?",
                        filename);
         gn.nesting--;
         return FALSE;
@@ -2301,13 +2301,13 @@ lock_file(const char *filename, int whichprefix,
 
 #ifdef USE_FCNTL
         if (retryct--) {
-            HUP raw_printf("Waiting for release of fcntl lock on %s. "
-                           " (%d retries left.)",
+            HUP raw_printf("正在等待%s上的fcntl锁释放. "
+                           "(剩余%d次重试.)",
                            filename, retryct);
             sleep(1);
         } else {
-            HUP raw_print("I give up.  Sorry.");
-            HUP raw_printf("Some other process has an unnatural grip on %s.",
+            HUP raw_print("我放弃了. 抱歉.");
+            HUP raw_printf("有其他进程异常占用了%s.",
                            filename);
             gn.nesting--;
             return FALSE;
@@ -2318,16 +2318,16 @@ lock_file(const char *filename, int whichprefix,
         switch (errnosv) { /* George Barbanis */
         case EEXIST:
             if (retryct--) {
-                HUP raw_printf("Waiting for access to %s. "
-                               " (%d retries left).",
+                HUP raw_printf("正在等待访问%s. "
+                               "(剩余%d次重试).",
                                filename, retryct);
 #if defined(SYSV) || defined(ULTRIX) || defined(VMS)
                 (void)
 #endif
                     sleep(1);
             } else {
-                HUP raw_print("I give up.  Sorry.");
-                HUP raw_printf("Perhaps there is an old %s around?",
+                HUP raw_print("我放弃了. 抱歉.");
+                HUP raw_printf("也许附近有旧的%s?",
                                lockname);
                 gn.nesting--;
                 return FALSE;
@@ -2335,17 +2335,17 @@ lock_file(const char *filename, int whichprefix,
 
             break;
         case ENOENT:
-            HUP raw_printf("Can't find file %s to lock!", filename);
+            HUP raw_printf("找不到要锁定的文件%s!", filename);
             gn.nesting--;
             return FALSE;
         case EACCES:
-            HUP raw_printf("No write permission to lock %s!", filename);
+            HUP raw_printf("没有写入权限来锁定%s!", filename);
             gn.nesting--;
             return FALSE;
 #ifdef VMS /* c__translate(vmsfiles.c) */
         case EPERM:
             /* could be misleading, but usually right */
-            HUP raw_printf("Can't lock %s due to directory protection.",
+            HUP raw_printf("由于目录保护, 无法锁定%s.",
                            filename);
             gn.nesting--;
             return FALSE;
@@ -2353,14 +2353,13 @@ lock_file(const char *filename, int whichprefix,
         case EROFS:
             /* take a wild guess at the underlying cause */
             HUP perror(lockname);
-            HUP raw_printf("Cannot lock %s.", filename);
-            HUP raw_printf("(Perhaps you are running NetHack from"
-                           " inside the distribution package?).");
+            HUP raw_printf("无法锁定%s.", filename);
+            HUP raw_printf("(也许你正在发行包内部运行NetHack?).");
             gn.nesting--;
             return FALSE;
         default:
             HUP perror(lockname);
-            HUP raw_printf("Cannot lock %s for unknown reason (%d).",
+            HUP raw_printf("无法锁定%s, 未知原因(%d).",
                            filename, errnosv);
             gn.nesting--;
             return FALSE;
@@ -2390,13 +2389,13 @@ lock_file(const char *filename, int whichprefix,
 #endif
 #endif
         if (OPENFAILURE(gl.lockptr)) {
-            raw_printf("Waiting for access to %s.  (%d retries left).",
+            raw_printf("正在等待访问%s. (剩余%d次重试).",
                        filename, retryct);
             Delay(50);
         }
     }
     if (!retryct) {
-        raw_printf("I give up.  Sorry.");
+        raw_printf("我放弃了. 抱歉.");
         gn.nesting--;
         return FALSE;
     }
@@ -2425,7 +2424,7 @@ unlock_file(const char *filename)
         sflock.l_type = F_UNLCK;
         if (lockfd >= 0) {
             if (fcntl(lockfd, F_SETLK, &sflock) == -1)
-                HUP raw_printf("Can't remove fcntl lock on %s.", filename);
+                HUP raw_printf("无法移除%s上的fcntl锁.", filename);
             (void) close(lockfd), lockfd = -1;
         }
 #else
@@ -2436,7 +2435,7 @@ unlock_file(const char *filename)
 
 #if defined(UNIX) || defined(VMS)
         if (unlink(lockname) < 0)
-            HUP raw_printf("Can't unlink %s.", lockname);
+            HUP raw_printf("无法解除%s的链接.", lockname);
 #ifdef NO_FILE_LINKS
         (void) nhclose(lockfd), lockfd = -1;
 #endif
@@ -2484,7 +2483,7 @@ fopen_wizkit_file(void)
          * place a file name may be wholly under the player's
          * control
          */
-        raw_printf("Access to %s denied (%d).", gw.wizkit, errno);
+        raw_printf("访问%s被拒绝(%d).", gw.wizkit, errno);
         wait_synch();
         /* fall through to standard names */
     } else
@@ -2494,7 +2493,7 @@ fopen_wizkit_file(void)
 #if defined(UNIX) || defined(VMS)
     } else {
         /* access() above probably caught most problems for UNIX */
-        raw_printf("Couldn't open requested wizkit file %s (%d).", gw.wizkit,
+        raw_printf("无法打开请求的wizkit文件%s(%d).", gw.wizkit,
                    errno);
         wait_synch();
 #endif
@@ -2523,7 +2522,7 @@ fopen_wizkit_file(void)
     else if (errno != ENOENT) {
         /* e.g., problems when setuid NetHack can't search home
          * directory restricted to user */
-        raw_printf("Couldn't open default gw.wizkit file %s (%d).",
+        raw_printf("无法打开默认wizkit文件%s(%d).",
                    tmp_wizkit, errno);
         wait_synch();
     }
@@ -2574,7 +2573,7 @@ proc_wizkit_line(char *buf)
         }
     } else {
         /* .60 limits output line width to 79 chars */
-        config_error_add("Bad wizkit item: \"%.60s\"", buf);
+        config_error_add("错误的wizkit物品: \"%.60s\"", buf);
         return FALSE;
     }
     return TRUE;
@@ -2666,9 +2665,9 @@ read_sym_file(int which_set)
         return 1;
     }
     if (!gc.chosen_symset_end)
-        config_error_add("Missing finish for symset \"%s\"",
+        config_error_add("symset \"%s\"缺少finish",
                          gs.symset[which_set].name ? gs.symset[which_set].name
-                                                : "unknown");
+                                                : "未知");
     config_error_done();
     return 1;
 }
@@ -2697,8 +2696,8 @@ check_recordfile(const char *dir UNUSED_if_not_OS2_CODEVIEW)
     if (fd >= 0) {
 #ifdef VMS /* must be stream-lf to use UPDATE_RECORD_IN_PLACE */
         if (!file_is_stmlf(fd)) {
-            raw_printf("Warning: scoreboard file '%s'"
-                       " is not in stream_lf format",
+            raw_printf("警告: 记分板文件'%s'"
+                       "不是stream_lf格式",
                        fq_record);
             wait_synch();
         }
@@ -2711,7 +2710,7 @@ check_recordfile(const char *dir UNUSED_if_not_OS2_CODEVIEW)
         (void) chmod(fq_record, FCMASK | 007);
 #endif /* VMS && !SECURE */
     } else {
-        raw_printf("Warning: cannot write scoreboard file '%s'", fq_record);
+        raw_printf("警告: 无法写入记分板文件'%s'", fq_record);
         wait_synch();
     }
 #endif /* !UNIX && !VMS */
@@ -2745,13 +2744,13 @@ check_recordfile(const char *dir UNUSED_if_not_OS2_CODEVIEW)
                 (void) nhclose(fd);
             } else {
                 /* explanation for failure other than missing file */
-                Sprintf(buf, "error   \"%s\", (errno %d).",
+                Sprintf(buf, "错误   \"%s\", (errno %d).",
                         fq_record, errno);
                 paniclog("scorefile", buf);
             }
             return;
         }
-        Sprintf(buf, "missing \"%s\", creating new scorefile.",
+        Sprintf(buf, "缺少\"%s\", 正在创建新记分文件.",
                 fq_record);
         paniclog("scorefile", buf);
     }
@@ -2768,7 +2767,7 @@ check_recordfile(const char *dir UNUSED_if_not_OS2_CODEVIEW)
         fd = open(fq_record, O_CREAT | O_RDWR, S_IREAD | S_IWRITE);
 #endif
         if (fd <= 0) {
-            raw_printf("Warning: cannot write record '%s'", tmp);
+            raw_printf("警告: 无法写入记录'%s'", tmp);
             wait_synch();
         } else {
             (void) nhclose(fd);
@@ -2917,18 +2916,18 @@ recover_savefile(void)
     }
     if (read(gnhfp->fd, (genericptr_t) &hpid, sizeof hpid) != sizeof hpid) {
         raw_printf("\n%s\n%s\n",
-                   "Checkpoint data incompletely written"
-                   " or subsequently clobbered.",
-                   "Recovery impossible.");
+                   "检查点数据写入不完整"
+                   "或之后被破坏.",
+                   "无法恢复.");
         close_nhfile(gnhfp);
         return FALSE;
     }
     if (read(gnhfp->fd, (genericptr_t) &savelev, sizeof(savelev))
         != sizeof(savelev)) {
         raw_printf("\n%s %s %s\n",
-                   "Checkpointing was not in effect for",
+                   "检查点未对",
                    gl.lock,
-                   "-- recovery impossible.");
+                   "生效--无法恢复.");
         close_nhfile(gnhfp);
         return FALSE;
     }
@@ -2947,7 +2946,7 @@ recover_savefile(void)
             != sizeof pltmpsiz) || (pltmpsiz > PL_NSIZ_PLUS)
         || (read(gnhfp->fd, (genericptr_t) &tmpplbuf, pltmpsiz)
             != pltmpsiz)) {
-        raw_printf("\nError reading %s -- can't recover.\n", gl.lock);
+        raw_printf("\n读取%s出错--无法恢复.\n", gl.lock);
         close_nhfile(gnhfp);
         return FALSE;
     }
@@ -2974,7 +2973,7 @@ recover_savefile(void)
     set_savefile_name(TRUE);
     snhfp = create_savefile();
     if (!snhfp) {
-        raw_printf("\nCannot recover savefile %s.\n", gs.SAVEF);
+        raw_printf("\n无法恢复存档文件%s.\n", gs.SAVEF);
         close_nhfile(gnhfp);
         return FALSE;
     }
@@ -3066,7 +3065,7 @@ recover_savefile(void)
     }
  cleanup:
     if (savewrite_failure) {
-        raw_printf("\nError writing %s; recovery failed (%s).\n",
+        raw_printf("\n写入%s出错; 恢复失败(%s).\n",
                    gs.SAVEF, savewrite_failure);
         close_nhfile(gnhfp);
         close_nhfile(snhfp);
@@ -3169,7 +3168,7 @@ debugcore(const char *filename, boolean wildcards)
 
 #ifndef SFCTOOL
 
-#define SYSCONFFILE "system configuration file"
+#define SYSCONFFILE "系统配置文件"
 
 void
 reveal_paths(int code)
@@ -3195,10 +3194,10 @@ reveal_paths(int code)
 #ifdef PREFIXES_IN_USE
     int i, maxlen = 0;
 
-    raw_print("Variable playground locations:");
+    raw_print("可变游戏目录位置:");
     for (i = 0; i < PREFIX_COUNT; i++)
         raw_printf("    [%-10s]=\"%s\"", fqn_prefix_names[i],
-                   gf.fqn_prefix[i] ? gf.fqn_prefix[i] : "not set");
+                   gf.fqn_prefix[i] ? gf.fqn_prefix[i] : "未设置");
 #endif
 
     /* sysconf file */
@@ -3206,13 +3205,13 @@ reveal_paths(int code)
 #ifdef SYSCF
 #ifdef PREFIXES_IN_USE
     cstrp = fqn_prefix_names[SYSCONFPREFIX];
-    maxlen = BUFSZ - sizeof " (in )";
+    maxlen = BUFSZ - sizeof " (在中)";
     if (cstrp && (int) strlen(cstrp) < maxlen)
-        Sprintf(buf, " (in %s)", cstrp);
+        Sprintf(buf, " (在%s中)", cstrp);
 #else
     buf[0] = '\0';
 #endif
-    raw_printf("%s %s%s:", s_suffix(gamename),
+    raw_printf("%s%s%s:", s_suffix(gamename),
                SYSCONFFILE, buf);
 #ifdef SYSCF_FILE
     filep = SYSCF_FILE;
@@ -3226,12 +3225,12 @@ reveal_paths(int code)
     }
     raw_printf("    \"%s\"", filep);
     if (code == 1) {
-        raw_printf("NOTE: The %s above is missing or inaccessible!",
+        raw_printf("注意: 上面的%s缺失或无法访问!",
                    SYSCONFFILE);
         skip_sysopt = TRUE;
     }
 #else /* !SYSCF */
-    raw_printf("No system configuration file.");
+    raw_printf("没有系统配置文件.");
 #endif /* ?SYSCF */
 
     /* symbols file */
@@ -3244,17 +3243,17 @@ reveal_paths(int code)
 #else
     cstrp = fqn_prefix_names[HACKPREFIX];
 #endif /* WIN32 */
-    maxlen = BUFSZ - sizeof " (in )";
+    maxlen = BUFSZ - sizeof " (在中)";
     if (cstrp && (int) strlen(cstrp) < maxlen)
-        Sprintf(buf, " (in %s)", cstrp);
+        Sprintf(buf, " (在%s中)", cstrp);
 #endif /* PREFIXES_IN_USE */
-    raw_printf("The loadable symbols file%s:", buf);
+    raw_printf("可加载符号文件%s:", buf);
 #endif /* UNIX */
 
 #ifdef UNIX
     envp = getcwd(cwdbuf, PATH_MAX);
     if (envp) {
-        raw_print("The loadable symbols file:");
+        raw_print("可加载符号文件:");
         raw_printf("    \"%s/%s\"", envp, SYMBOLS);
     }
 #else /* UNIX */
@@ -3276,12 +3275,12 @@ reveal_paths(int code)
     buf[0] = '\0';
 #ifdef PREFIXES_IN_USE
     cstrp = fqn_prefix_names[DATAPREFIX];
-    maxlen = BUFSZ - sizeof " (in )";
+    maxlen = BUFSZ - sizeof " (在中)";
     if (cstrp && (int) strlen(cstrp) < maxlen)
-        Sprintf(buf, " (in %s)", cstrp);
+        Sprintf(buf, " (在%s中)", cstrp);
 #endif
 #ifdef DLB
-    raw_printf("Basic data files%s are collected inside:", buf);
+    raw_printf("基础数据文件%s被收集在:", buf);
     filep = DLBFILE;
 #ifdef VERSION_IN_DLB_FILENAME
     Strcpy(buf, build_dlb_filename((const char *) 0));
@@ -3297,23 +3296,23 @@ reveal_paths(int code)
     raw_printf("    \"%s\"", filep);
 #endif
 #else /* !DLB */
-    raw_printf("Basic data files%s are in many separate files.", buf);
+    raw_printf("基础数据文件%s位于许多独立文件中.", buf);
 #endif /* ?DLB */
 
     /* dumplog */
 
     fqn = (char *) 0;
 #ifndef DUMPLOG
-    nodumpreason = "not supported";
+    nodumpreason = "不支持";
 #else
-    nodumpreason = "disabled";
+    nodumpreason = "已禁用";
 #ifdef SYSCF
     if (!skip_sysopt) {
         fqn = sysopt.dumplogfile;
         if (!fqn)
-            nodumpreason = "DUMPLOGFILE is not set in " SYSCONFFILE;
+            nodumpreason = "DUMPLOGFILE未在" SYSCONFFILE "中设置";
     } else {
-        nodumpreason = SYSCONFFILE " is missing; no DUMPLOGFILE setting";
+        nodumpreason = SYSCONFFILE "缺失; 没有DUMPLOGFILE设置";
     }
 #else  /* !SYSCF */
 #ifdef DUMPLOG_FILE
@@ -3321,12 +3320,12 @@ reveal_paths(int code)
 #endif
 #endif /* ?SYSCF */
     if (fqn && *fqn) {
-        raw_print("Your end-of-game disclosure file:");
+        raw_print("你的游戏结束公开信息文件:");
         (void) dump_fmtstr(fqn, buf, FALSE);
         buf[sizeof buf - sizeof "    \"\""] = '\0';
         raw_printf("    \"%s\"", buf);
     } else {
-        raw_printf("No end-of-game disclosure file (%s).", nodumpreason);
+        raw_printf("没有游戏结束公开信息文件(%s).", nodumpreason);
     }
 #endif /* ?DUMPLOG */
 
@@ -3340,7 +3339,7 @@ reveal_paths(int code)
                got set TRUE in a sysconf file other than the one containing
                the executable; disregard it */
             if (strlen(pd) > 0) {
-                raw_printf("portable_device_paths (set in sysconf):");
+                raw_printf("portable_device_paths(在sysconf中设置):");
                 raw_printf("    \"%s\"", pd);
             }
         }
@@ -3353,11 +3352,11 @@ reveal_paths(int code)
     buf[0] = '\0';
 #ifdef PREFIXES_IN_USE
     cstrp = fqn_prefix_names[CONFIGPREFIX];
-    maxlen = BUFSZ - sizeof " (in )";
+    maxlen = BUFSZ - sizeof " (在中)";
     if (cstrp && (int) strlen(cstrp) < maxlen)
-        Sprintf(buf, " (in %s)", cstrp);
+        Sprintf(buf, " (在%s中)", cstrp);
 #endif /* PREFIXES_IN_USE */
-    raw_printf("Your personal configuration file%s:", buf);
+    raw_printf("你的个人配置文件%s:", buf);
 
 #ifdef UNIX
     buf[0] = '\0';
@@ -3480,7 +3479,7 @@ read_tribute(const char *tribsection, const char *tribtitle,
 
     int scope = 0;
     int linect = 0, passagecnt = 0, targetpassage = 0;
-    const char *badtranslation = "an incomprehensible foreign translation";
+    const char *badtranslation = "难以理解的外文译本";
     boolean matchedsection = FALSE, matchedtitle = FALSE;
     winid tribwin = WIN_ERR;
     boolean grasped = FALSE;
@@ -3492,7 +3491,7 @@ read_tribute(const char *tribsection, const char *tribtitle,
     /* check for mandatories */
     if (!tribsection || !tribtitle) {
         if (!nowin_buf)
-            pline("It's %s of \"%s\"!", badtranslation, tribtitle);
+            pline("这是%s: \"%s\"!", badtranslation, tribtitle);
         return grasped;
     }
 
@@ -3503,7 +3502,7 @@ read_tribute(const char *tribsection, const char *tribtitle,
     if (!fp) {
         /* this is actually an error - cannot open tribute file! */
         if (!nowin_buf)
-            You_feel("too overwhelmed to continue!");
+            You_feel("过于震撼, 无法继续!");
         return grasped;
     }
 
@@ -3629,9 +3628,9 @@ read_tribute(const char *tribsection, const char *tribtitle,
                 if (strchr(lastline, '['))
                     mungspaces(lastline); /* to remove leading spaces */
                 else /* construct one if necessary */
-                    Sprintf(lastline, "[%s, by Terry Pratchett]", tribtitle);
+                    Sprintf(lastline, "[%s, Terry Pratchett著]", tribtitle);
                 if ((p = strrchr(lastline, ']')) != 0)
-                    Sprintf(p, "; passage #%d]", targetpassage);
+                    Sprintf(p, "; 第%d段]", targetpassage);
                 putmsghistory(lastline, FALSE);
                 grasped = TRUE;
             }
@@ -3639,7 +3638,7 @@ read_tribute(const char *tribsection, const char *tribtitle,
         }
         if (!grasped)
             /* multi-line window, problem */
-            pline("It seems to be %s of \"%s\"!", badtranslation, tribtitle);
+            pline("这似乎是%s: \"%s\"!", badtranslation, tribtitle);
     }
     return grasped;
 }
@@ -3675,7 +3674,7 @@ livelog_add(long ll_type, const char *str)
 
     if (lock_file(LIVELOGFILE, SCOREPREFIX, 10)) {
         if (!(livelogfile = fopen_datafile(LIVELOGFILE, "a", SCOREPREFIX))) {
-            pline("Cannot open live log file!");
+            pline("无法打开实时日志文件!");
             unlock_file(LIVELOGFILE);
             return;
         }

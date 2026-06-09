@@ -93,7 +93,7 @@ English README：[README_en.md](README_en.md)
 - [x] exper.c
 - [x] explode.c
 - [x] extralev.c
-- [ ] files.c
+- [x] files.c
 - [ ] fountain.c
 - [ ] getpos.c
 - [ ] glyphs.c
