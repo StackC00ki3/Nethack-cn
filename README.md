@@ -90,7 +90,7 @@ English README：[README_en.md](README_en.md)
 - [x] eat.c
 - [x] end.c
 - [x] engrave.c
-- [ ] exper.c
+- [x] exper.c
 - [ ] explode.c
 - [ ] extralev.c
 - [ ] files.c
