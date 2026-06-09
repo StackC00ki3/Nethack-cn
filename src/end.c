@@ -43,21 +43,21 @@ staticfn void bel_copy1(char **, char *);
  */
 static NEARDATA const char *deaths[] = {
     /* the array of death */
-    "died", "choked", "poisoned", "starvation", "drowning", "burning",
-    "dissolving under the heat and pressure", "crushed", "turned to stone",
-    "turned into slime", "genocided", "panic", "trickery", "quit",
-    "escaped", "ascended"
+    "死亡", "噎死", "中毒", "饥饿", "溺水", "燃烧",
+    "在高温高压下溶解", "被压碎", "石化",
+    "变成黏液", "被灭绝", "程序恐慌", "欺骗", "退出",
+    "逃脱", "升天"
 };
 
 static NEARDATA const char *ends[] = {
     /* "when you %s" */
-    "died", "choked", "were poisoned",
-    "starved", "drowned", "burned",
-    "dissolved in the lava",
-    "were crushed", "turned to stone",
-    "turned into slime", "were genocided",
-    "panicked", "were tricked", "quit",
-    "escaped", "ascended"
+    "死去", "噎死", "中毒",
+    "饿死", "溺死", "烧死",
+    "溶解在熔岩中",
+    "被压碎", "变成石头",
+    "变成黏液", "被灭绝",
+    "因程序恐慌结束", "被骗", "退出",
+    "逃脱", "升天"
 };
 
 static boolean Schroedingers_cat = FALSE;
@@ -92,11 +92,11 @@ done2(void)
     boolean abandon_tutorial = FALSE;
 
     if (In_tutorial(&u.uz)
-        && y_n("Switch from the tutorial back to regular play?") == 'y')
+        && y_n("从教程切回普通游戏吗?") == 'y')
         abandon_tutorial = TRUE;
 
     if (abandon_tutorial || !paranoid_query(
-            ParanoidQuit, "Really quit without saving?")) {
+            ParanoidQuit, "真的不保存并退出吗?")) {
 #ifndef NO_SIGNAL
         (void) signal(SIGINT, (SIG_RET_TYPE) done1);
 #endif
@@ -112,7 +112,7 @@ done2(void)
 
         if (abandon_tutorial)
             schedule_goto(&u.ucamefrom, UTOTYPE_ATSTAIRS,
-                          "Resuming regular play.", (char *) 0);
+                          "返回普通游戏.", (char *) 0);
         return ECMD_OK;
     }
 
@@ -211,7 +211,7 @@ done_in_by(struct monst *mtmp, int how)
 #else
     if (mptr == &mons[PM_GHOST] && has_mgivenname(mtmp)) {
 #endif
-        Strcat(buf, "the ");
+        /* Chinese names do not need an article before named ghosts. */
         svk.killer.format = KILLED_BY;
     }
     (void) monhealthdescr(mtmp, TRUE, eos(buf));
@@ -263,8 +263,8 @@ done_in_by(struct monst *mtmp, int how)
             Sprintf(eos(buf), " 的%s", MGIVENNAME(mtmp));
     } else if (mtmp->isshk) {
         const char *shknm = shkname(mtmp),
-                   *honorific = shkname_is_pname(mtmp) ? ""
-                                   : mtmp->female ? "Ms. " : "Mr. ";
+                    *honorific = shkname_is_pname(mtmp) ? ""
+                                   : mtmp->female ? "女士 " : "先生 ";
 
         Sprintf(eos(buf), "%s%s 店主", honorific, shknm);
         svk.killer.format = KILLED_BY;
@@ -522,7 +522,7 @@ dump_plines(void)
     char buf[BUFSZ], **strp;
 
     Strcpy(buf, " "); /* one space for indentation */
-    putstr(0, 0, "Latest messages:");
+    putstr(0, 0, "最近消息:");
     for (i = 0, j = (int) gs.saved_pline_index; i < DUMPLOG_MSG_COUNT;
          ++i, j = (j + 1) % DUMPLOG_MSG_COUNT) {
         strp = &gs.saved_plines[j];
@@ -561,11 +561,11 @@ dump_everything(
 
     /* game start and end date+time to disambiguate version date+time */
     Strcpy(datetimebuf, yyyymmddhhmmss(ubirthday));
-    Sprintf(pbuf, "Game began %4.4s-%2.2s-%2.2s %2.2s:%2.2s:%2.2s",
+    Sprintf(pbuf, "游戏开始于 %4.4s-%2.2s-%2.2s %2.2s:%2.2s:%2.2s",
             &datetimebuf[0], &datetimebuf[4], &datetimebuf[6],
             &datetimebuf[8], &datetimebuf[10], &datetimebuf[12]);
     Strcpy(datetimebuf, yyyymmddhhmmss(when));
-    Sprintf(eos(pbuf), ", ended %4.4s-%2.2s-%2.2s %2.2s:%2.2s:%2.2s.",
+    Sprintf(eos(pbuf), ", 结束于 %4.4s-%2.2s-%2.2s %2.2s:%2.2s:%2.2s.",
             &datetimebuf[0], &datetimebuf[4], &datetimebuf[6],
             &datetimebuf[8], &datetimebuf[10], &datetimebuf[12]);
     putstr(0, 0, pbuf);
@@ -588,7 +588,7 @@ dump_everything(
 
     dump_plines();
     putstr(0, 0, "");
-    putstr(0, 0, "Inventory:");
+    putstr(0, 0, "物品栏:");
     (void) display_inventory((char *) 0, TRUE);
     container_contents(gi.invent, TRUE, TRUE, FALSE);
     enlightenment((BASICENLIGHTENMENT | MAGICENLIGHTENMENT),
@@ -644,7 +644,7 @@ disclose(int how, boolean taken)
 
     if (!done_stopprint) {
         ask = should_query_disclose_option('a', &defquery);
-        c = ask ? yn_function("Do you want to see your attributes?", ynqchars,
+        c = ask ? yn_function("你想查看你的属性吗?", ynqchars,
                               defquery, TRUE)
                 : defquery;
         if (c == 'y')
@@ -669,7 +669,7 @@ disclose(int how, boolean taken)
         if (should_query_disclose_option('c', &defquery)) {
             int acnt = count_achievements();
 
-            Sprintf(qbuf, "你想看你的行为%s吗？",
+            Sprintf(qbuf, "你想查看你的行为%s吗?",
                     /* this was distinguishing between one achievement and
                        multiple achievements, but "conduct and achievement"
                        looked strange if multiple conducts got shown (which
@@ -689,7 +689,7 @@ disclose(int how, boolean taken)
 
     if (!done_stopprint) {
         ask = should_query_disclose_option('o', &defquery);
-        c = ask ? yn_function("Do you want to see the dungeon overview?",
+        c = ask ? yn_function("你想查看地下城概览吗?",
                               ynqchars, defquery, TRUE)
                 : defquery;
         if (c == 'y')
@@ -724,7 +724,7 @@ savelife(int how)
     if ((Sick & TIMEOUT) == 1L) {
         make_sick(0L, (char *) 0, FALSE, SICK_ALL);
     }
-    gn.nomovemsg = "You survived that attempt on your life.";
+    gn.nomovemsg = "你在这次致命威胁中幸存了下来.";
     svc.context.move = 0;
 
     gm.multi = -1; /* can't move again during the current turn */
@@ -732,8 +732,8 @@ savelife(int how)
        again (perhaps due to zap rebound); this text will be appended to
           "killed by <something>, while "
        in high scores entry, if any, and in logfile (but not on tombstone) */
-    gm.multi_reason = Role_if(PM_TOURIST) ? "being toyed with by Fate"
-                                          : "attempting to cheat Death";
+    gm.multi_reason = Role_if(PM_TOURIST) ? "被命运玩弄"
+                                          : "试图欺骗死亡";
 
     if (u.utrap && u.utraptype == TT_LAVA)
         reset_utrap(FALSE);
@@ -748,7 +748,7 @@ savelife(int how)
         expels(u.ustuck, u.ustuck->data, TRUE);
     } else if (u.ustuck) {
         if (Upolyd && sticks(gy.youmonst.data))
-            You("释放%s。", mon_nam(u.ustuck));
+            You("释放%s.", mon_nam(u.ustuck));
         else
             pline("%s放开了你.", Monnam(u.ustuck));
         unstuck(u.ustuck);
@@ -1027,7 +1027,7 @@ done(int how)
             svk.killer.name[0] = '\0';
         }
         if (wizard) {
-            You("似乎是个非常狡猾的巫师。");
+            You("似乎是个非常狡猾的巫师.");
             svk.killer.format = KILLED_BY_AN; /* reset to 0 */
             return;
         }
@@ -1082,10 +1082,10 @@ done(int how)
         pline("但是等等...");
         /* assumes that only one type of item confers LifeSaved property */
         makeknown(AMULET_OF_LIFE_SAVING);
-        Your("勋章 %s！", !Blind ? "开始发光" : "感觉温暖");
+        Your("勋章%s!", !Blind ? "开始发光" : "感觉温暖");
         if (how == CHOKING)
             You("呕吐 ...");
-        You_feel("好多了！");
+        You_feel("好多了!");
         pline_The("挂饰化为了尘埃!");
         if (uamul)
             useup(uamul);
@@ -1093,11 +1093,11 @@ done(int how)
         (void) adjattrib(A_CON, -1, TRUE);
         savelife(how);
         if (how == GENOCIDED) {
-            pline("不幸的是，你仍然被种族灭绝了...");
+            pline("不幸的是, 你仍然被种族灭绝了...");
         } else {
             char killbuf[BUFSZ];
             formatkiller(killbuf, BUFSZ, how, FALSE);
-            livelog_printf(LL_LIFESAVE, "averted death (%s)", killbuf);
+            livelog_printf(LL_LIFESAVE, "避免死亡(%s)", killbuf);
             survive = TRUE;
         }
     }
@@ -1109,8 +1109,8 @@ done(int how)
            accept it more than once if there's no user supplying it */
         && !(program_state.done_hup && gd.done_seq++ == gh.hero_seq)
 #endif
-        && !paranoid_query(ParanoidDie, "Die?")) {
-        pline("好吧，那你就别%s了。", (how == CHOKING) ? "噎死" : "死掉");
+        && !paranoid_query(ParanoidDie, "死掉吗?")) {
+        pline("好吧, 那你就别%s了.", (how == CHOKING) ? "噎死" : "死掉");
         iflags.last_msg = PLNMSG_OK_DONT_DIE;
         savelife(how);
         survive = TRUE;
@@ -1184,7 +1184,7 @@ really_done(int how)
      * smiling... :-)  -3.
      */
     if (svm.moves <= 1 && how < PANICKED && !done_stopprint)
-        pline("不要经过起点。  不要领取 200 %s。", currency(200L));
+        pline("不要经过起点.  不要领取 200 %s.", currency(200L));
 
     if (have_windows)
         wait_synch(); /* flush screen output */
@@ -1361,7 +1361,7 @@ really_done(int how)
     }
 
     if (bones_ok) {
-        if (!wizard || paranoid_query(ParanoidBones, "Save bones?"))
+        if (!wizard || paranoid_query(ParanoidBones, "保存遗骨文件吗?"))
             savebones(how, endtime, corpse);
         /* corpse may be invalid pointer now so
             ensure that it isn't used again */
@@ -1415,7 +1415,7 @@ really_done(int how)
         /* don't bother counting to see whether it should be plural */
     }
 
-    Sprintf(pbuf, "%s %s the %s...", Goodbye(), svp.plname,
+    Sprintf(pbuf, "%s, %s, %s...", Goodbye(), svp.plname,
             (how != ASCENDED)
                 ? (const char *) ((flags.female && gu.urole.name.f)
                     ? gu.urole.name.f
@@ -1472,9 +1472,9 @@ really_done(int how)
         } else {
             Strcat(pbuf, " ");
         }
-        Sprintf(eos(pbuf), "%s带着%ld点%s,",
+        Sprintf(eos(pbuf), "%s, 带着%ld点%s,",
                 (how == ASCENDED) ? "得到了回报"
-                                  : "从地牢中逃脱",
+                                   : "从地牢中逃脱",
                 u.urexp, plur(u.urexp));
         dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
 
@@ -1523,15 +1523,15 @@ really_done(int how)
         if (u.uz.dnum == 0 && u.uz.dlevel <= 0) {
             /* level teleported out of the dungeon; `how' is DIED,
                due to falling or to "arriving at heaven prematurely" */
-            Sprintf(pbuf, "你在地下城的界限之外 %s",
+            Sprintf(pbuf, "你在地下城的界限之外%s",
                     (u.uz.dlevel < 0) ? "去世" : ends[how]);
         } else {
             /* more conventional demise */
             const char *where = svd.dungeons[u.uz.dnum].dname;
 
             if (Is_astralevel(&u.uz))
-                where = "The Astral Plane";
-            Sprintf(pbuf, "你%s在%s", ends[how], where);
+                where = "星界位面";
+            Sprintf(pbuf, "你在%s%s", where, ends[how]); /*修改语序:You %s in %s*/
             if (!In_endgame(&u.uz) && !single_level_branch(&u.uz))
                 Sprintf(eos(pbuf), ", 地牢第 %d 层, ",
                         In_quest(&u.uz) ? dunlev(&u.uz) : depth(&u.uz));
@@ -1541,12 +1541,13 @@ really_done(int how)
         dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
     }
 
-    Sprintf(pbuf, "以及 %ld 块%s 金币，历经 %ld 步%s。", umoney,
+    Sprintf(pbuf, "以及 %ld 块%s 金币, 历经 %ld 步%s.", umoney,
             plur(umoney), svm.moves, plur(svm.moves));
     dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
     Sprintf(pbuf,
-            "你是%d级，最大生命值为%d点%s，当你%s时。",
-            u.ulevel, u.uhpmax, plur(u.uhpmax), ends[how]);
+            "当你%s时, 你是%d级, 最大生命值为%d点%s.",
+            ends[how],
+            u.ulevel, u.uhpmax, plur(u.uhpmax));
     dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
     dump_forward_putstr(endwin, 0, "", done_stopprint);
     if (!done_stopprint)
@@ -1677,7 +1678,7 @@ nh_terminate(int status)
 
     l_nhcore_call(NHCORE_GAME_EXIT);
 #ifdef MACOS9
-    getreturn("to exit");
+    getreturn("退出");
 #endif
     /* don't bother to try to release memory if we're in panic mode, to
        avoid trouble in case that happens to be due to memory problems */
