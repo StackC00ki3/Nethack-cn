@@ -94,7 +94,7 @@ English README：[README_en.md](README_en.md)
 - [x] explode.c
 - [x] extralev.c
 - [x] files.c
-- [ ] fountain.c
+- [x] fountain.c
 - [ ] getpos.c
 - [ ] glyphs.c
 - [ ] hack.c
