@@ -99,7 +99,7 @@ English README：[README_en.md](README_en.md)
 - [x] glyphs.c
 - [x] hack.c
 - [x] hacklib.c
-- [ ] iactions.c
+- [x] iactions.c
 - [ ] insight.c
 - [ ] invent.c
 - [ ] isaac64.c
