@@ -218,9 +218,9 @@ void
 cant_reach_floor(coordxy x, coordxy y, boolean up,
                  boolean check_pit, boolean wand_engraving)
 {
-    pline("%s够不到%s。",
+    pline("%s够不到%s.",
           wand_engraving
-              ? "魔杖不再有任何动静，且魔杖的尖端"
+              ? "魔杖不再有任何动静, 且魔杖的尖端"
               : "你",
           up  ? ceiling(x, y)
               : (check_pit && can_reach_floor(FALSE)) ? "坑底"
@@ -329,7 +329,7 @@ read_engr_at(coordxy x, coordxy y)
         case DUST:
             if (!Blind) {
                 sensed = 1;
-                pline("%s写在%s 里.", Something,
+                pline("%s写在%s里.", Something,
                       is_ice(x, y) ? "霜" : "灰尘");
             }
             break;
@@ -337,20 +337,20 @@ read_engr_at(coordxy x, coordxy y)
         case HEADSTONE:
             if (!Blind || can_reach_floor(TRUE)) {
                 sensed = 1;
-                pline("%s被刻在%s 上.", Something, eloc);
+                pline("%s被刻在%s上.", Something, eloc);
             }
             break;
         case BURN:
             if (!Blind || can_reach_floor(TRUE)) {
                 sensed = 1;
-                pline("一些本文已经%s在%s 里.",
+                pline("一些文字已经%s在%s里.",
                       is_ice(x, y) ? "融" : "烧", eloc);
             }
             break;
         case MARK:
             if (!Blind) {
                 sensed = 1;
-                pline("这里有一些涂鸦在%s 上.", eloc);
+                pline("这里有一些涂鸦在%s上.", eloc);
             }
             break;
         case ENGR_BLOOD:
@@ -506,7 +506,7 @@ u_can_engrave(void)
 
     if (u.uswallow) {
         if (is_animal(u.ustuck->data)) {
-            pline("你想写什么?  \"Jonah was here\"?");
+            pline("你想写什么?  \"约拿到此一游\"?");
             return FALSE;
         } else if (is_whirly(u.ustuck->data)) {
             cant_reach_floor(u.ux, u.uy, FALSE, FALSE, FALSE);
@@ -515,14 +515,14 @@ u_can_engrave(void)
         /* Note: for amorphous engulfers, writing attempt is allowed here
            but yields the 'jello' result in doengrave() */
     } else if (is_lava(u.ux, u.uy)) {
-        You_cant("在%s上写字！", surface(u.ux, u.uy));
+        You_cant("在%s上写字!", surface(u.ux, u.uy));
         return FALSE;
     } else if (is_pool(u.ux, u.uy) || IS_FOUNTAIN(levtyp)) {
-        You_cant("在%s上写！", surface(u.ux, u.uy));
+        You_cant("在%s上写!", surface(u.ux, u.uy));
         return FALSE;
     } else if (IS_AIR(levtyp)) {
         /* airlevel or inside bubble on waterlevel */
-        You_cant("在%s里写字！",
+        You_cant("在%s里写字!",
                  (levtyp == CLOUD) ? "云气" : "稀薄空气");
         return FALSE;
     } else if (!ACCESSIBLE(levtyp)) {
@@ -667,7 +667,7 @@ doengrave_sfx_item_WAN(struct _doengrave_ctx *de)
     case WAN_MAKE_INVISIBLE:
         if (de->oep && de->oep->engr_type != HEADSTONE) {
             if (!Blind)
-                pline_The("%s上的刻字消失了！",
+                pline_The("%s上的刻字消失了!",
                           surface(u.ux, u.uy));
             de->dengr = TRUE;
         }
@@ -675,7 +675,7 @@ doengrave_sfx_item_WAN(struct _doengrave_ctx *de)
     case WAN_TELEPORTATION:
         if (de->oep && de->oep->engr_type != HEADSTONE) {
             if (!Blind)
-                pline_The("%s上的刻字消失了！",
+                pline_The("%s上的刻字消失了!",
                           surface(u.ux, u.uy));
             de->teleengr = TRUE;
         }
@@ -691,17 +691,17 @@ doengrave_sfx_item_WAN(struct _doengrave_ctx *de)
         }
         Strcpy(de->post_engr_text,
                (Blind && !Deaf)
-               ? "你听到了钻孔声！"    /* Deaf-aware */
-               : Blind
-                  ? "你感到震动。"
-                  : IS_GRAVE(levl[u.ux][u.uy].typ)
-                     ? "碎片从墓碑上飞出。"
-                     : de->frosted
-                        ? "冰屑从冰面飞起！"
-                        : (svl.level.locations[u.ux][u.uy].typ
-                          == DRAWBRIDGE_DOWN)
-                           ? "木屑从桥上飞起。"
-                           : "碎石从地面飞起。");
+                ? "你听到了钻孔声!"    /* Deaf-aware */
+                : Blind
+                   ? "你感到震动."
+                   : IS_GRAVE(levl[u.ux][u.uy].typ)
+                      ? "碎片从墓碑上飞出."
+                      : de->frosted
+                         ? "冰屑从冰面飞起!"
+                         : (svl.level.locations[u.ux][u.uy].typ
+                           == DRAWBRIDGE_DOWN)
+                            ? "木屑从桥上飞起."
+                            : "碎石从地面飞起.");
         break;
         /* type = BURN wands */
     case WAN_FIRE:
@@ -709,27 +709,27 @@ doengrave_sfx_item_WAN(struct _doengrave_ctx *de)
         de->type = BURN;
         if (!objects[de->otmp->otyp].oc_name_known) {
             if (flags.verbose)
-                pline("这个%s是一把闪电魔杖!", xname(de->otmp));
+                pline("这个%s是一把火焰魔杖!", xname(de->otmp));
             de->doknown = TRUE;
         }
-        Strcpy(de->post_engr_text, Blind ? "你感到魔杖热了起来。"
-                                         : "火焰从魔杖中飞出。");
+        Strcpy(de->post_engr_text, Blind ? "你感到魔杖热了起来."
+                                         : "火焰从魔杖中飞出.");
         break;
     case WAN_LIGHTNING:
         de->ptext = TRUE;
         de->type = BURN;
         if (!objects[de->otmp->otyp].oc_name_known) {
             if (flags.verbose)
-                pline("这根%s是一根闪电魔杖！", xname(de->otmp));
+                pline("这根%s是一根闪电魔杖!", xname(de->otmp));
             de->doknown = TRUE;
         }
         if (!Blind) {
-            Strcpy(de->post_engr_text, "闪电从魔杖中呈弧形射出。");
+            Strcpy(de->post_engr_text, "闪电从魔杖中呈弧形射出.");
             de->doblind = TRUE;
         } else {
             Strcpy(de->post_engr_text, !Deaf
-                   ? "你听到噼啪声！"     /* Deaf-aware */
-                   : "你的头发竖起来了！");
+                   ? "你听到噼啪声!"     /* Deaf-aware */
+                   : "你的头发竖起来了!");
         }
         break;
         /* type = MARK wands */
@@ -811,7 +811,7 @@ doengrave_sfx_item(struct _doengrave_ctx *de)
                     de->zapwand = TRUE;
                 /* empty wand just doesn't write */
                 else
-                    pline_The("魔杖磨损过度，无法刻写。");
+                    pline_The("魔杖磨损过度, 无法刻写.");
             }
         }
         break;
@@ -823,10 +823,10 @@ doengrave_sfx_item(struct _doengrave_ctx *de)
             /* if non-blade or welded or too dull, engraving type stays set
                to DUST; feedback for that is only given for bladed weapons */
             if (welded(de->otmp))
-                pline("%s 只能刮擦 %s。",
+                pline("%s只能刮擦%s.",
                       Yname2(de->otmp), surface(u.ux, u.uy));
             else if ((int) de->otmp->spe <= -3)
-                pline("%s太钝，无法刻字。",
+                pline("%s太钝, 无法刻字.",
                       Yobjnam2(de->otmp, "是"));
             else
                 de->type = ENGRAVE;
@@ -836,14 +836,14 @@ doengrave_sfx_item(struct _doengrave_ctx *de)
     case TOOL_CLASS:
         if (de->otmp == ublindf) {
             pline(
-                "用那个刻东西有点困难，你不觉得吗？");
+                "用那个刻东西有点困难, 你不觉得吗?");
             de->ret = ECMD_FAIL;
             return FALSE;
         }
         switch (de->otmp->otyp) {
         case MAGIC_MARKER:
             if (de->otmp->spe <= 0)
-                Your("标记笔已经干涸了。");
+                Your("标记笔已经干涸了.");
             else
                 de->type = MARK;
             break;
@@ -857,13 +857,13 @@ doengrave_sfx_item(struct _doengrave_ctx *de)
                     if (is_wet_towel(de->otmp))
                         dry_a_towel(de->otmp, -1, TRUE);
                     if (!Blind)
-                        You("抹掉了这里的消息。");
+                        You("抹掉了这里的消息.");
                     else
-                        pline("%s %s。", Yobjnam2(de->otmp, "变得"),
+                        pline("%s %s.", Yobjnam2(de->otmp, "变得"),
                               de->frosted ? "冰冷的" : "布满灰尘的");
                     de->dengr = TRUE;
                 } else {
-                    pline("%s无法擦除这个雕刻。",
+                    pline("%s无法擦除这个雕刻.",
                           Yname2(de->otmp));
                 }
             } else {
@@ -880,7 +880,7 @@ doengrave_sfx_item(struct _doengrave_ctx *de)
         /* this used to be ``if (wizard)'' and fall through to ILLOBJ_CLASS
            for normal play, but splash of venom isn't "illegal" because it
            could occur in normal play via wizard mode bones */
-        pline("你在写一封毒笔信吗？");
+        pline("你在写一封毒笔信吗?");
         break;
 
     case ILLOBJ_CLASS:
@@ -897,29 +897,29 @@ doengrave_ctx_verb(struct _doengrave_ctx *de)
 {
     switch (de->type) {
     default:
-        de->everb = de->adding ? "add to the weird writing on"
-                               : "write strangely on";
+        de->everb = de->adding ? "添加奇怪字迹到"
+                               : "奇怪地写到";
         break;
     case DUST:
-        de->everb = de->adding ? "add to the writing in" : "write in";
-        de->eloc = de->frosted ? "frost" : "dust";
+        de->everb = de->adding ? "添加字迹到" : "写到";
+        de->eloc = de->frosted ? "霜" : "灰尘";
         break;
     case HEADSTONE:
-        de->everb = de->adding ? "add to the epitaph on" : "engrave on";
+        de->everb = de->adding ? "添加墓志铭到" : "刻到";
         break;
     case ENGRAVE:
-        de->everb = de->adding ? "add to the engraving in" : "engrave in";
+        de->everb = de->adding ? "添加刻字到" : "刻到";
         break;
     case BURN:
-        de->everb = de->adding ? (de->frosted ? "add to the text melted into"
-                                  : "add to the text burned into")
-                       : (de->frosted ? "melt into" : "burn into");
+        de->everb = de->adding ? (de->frosted ? "添加融入的文字到"
+                                  : "添加烧入的文字到")
+                       : (de->frosted ? "融入" : "烧入");
         break;
     case MARK:
-        de->everb = de->adding ? "add to the graffiti on" : "scribble on";
+        de->everb = de->adding ? "添加涂鸦到" : "涂写到";
         break;
     case ENGR_BLOOD:
-        de->everb = de->adding ? "add to the scrawl on" : "scrawl on";
+        de->everb = de->adding ? "添加血字到" : "用血潦草写到";
         break;
     }
 }
@@ -974,7 +974,7 @@ doengrave(void)
      * Edited by GAN 10/20/86 so as not to change weapon wielded.
      */
 
-    de->otmp = getobj("write with", stylus_ok, GETOBJ_PROMPT);
+    de->otmp = getobj("写字用", stylus_ok, GETOBJ_PROMPT);
     if (!de->otmp) {/* otmp == &hands_obj if fingers */
         de->ret = ECMD_CANCEL;
         goto doengr_exit;
@@ -1005,7 +1005,7 @@ doengrave(void)
             cant_reach_floor(u.ux, u.uy, FALSE, TRUE, FALSE);
             goto doengr_exit;
         } else {
-            You("你挥动魔杖，指向下方的 %s。",
+            You("挥动魔杖, 指向下方的%s.",
                 surface(u.ux, u.uy));
             initial_msg_given = TRUE;
         }
@@ -1076,7 +1076,7 @@ doengrave(void)
         tmp_ep = engr_at(u.ux, u.uy);
         if (!Blind) {
             if (tmp_ep != 0) {
-                pline_The("现在刻字显示为：\"%s\"。", de->buf);
+                pline_The("现在刻字显示为: \"%s\".", de->buf);
                 tmp_ep->eread = 1;
                 tmp_ep->erevealed = 1;
                 de->disprefresh = TRUE;
@@ -1085,11 +1085,11 @@ doengrave(void)
         de->ptext = FALSE;
     }
     if (de->zapwand && (de->otmp->spe < 0)) {
-        pline("%s %s化为了尘土。", The(xname(de->otmp)),
-              Blind ? "" : "剧烈发光，然后 ");
+        pline("%s %s化为了尘土.", The(xname(de->otmp)),
+              Blind ? "" : "剧烈发光, 然后 ");
         if (!IS_GRAVE(levl[u.ux][u.uy].typ))
             You(
-    "你用你的灰尘在%s上写字是徒劳的。",
+    "你用自己的灰尘在%s上写字是徒劳的.",
                 de->frosted ? "霜" : "灰尘");
         useup(de->otmp);
         de->otmp = 0; /* wand is now gone */
@@ -1117,7 +1117,7 @@ doengrave(void)
         } else if (de->type == de->oep->engr_type
                    && (!Blind || de->oep->engr_type == BURN
                        || de->oep->engr_type == ENGRAVE)) {
-            c = yn_function("Do you want to add to the current engraving?",
+            c = yn_function("你想在当前刻字上添加内容吗?",
                             ynqchars, 'y', TRUE);
             if (c == 'q') {
                 pline1(Never_mind);
@@ -1130,7 +1130,7 @@ doengrave(void)
                 || de->oep->engr_type == ENGR_BLOOD
                 || de->oep->engr_type == MARK) {
                 if (!Blind) {
-                    You("你抹去了此处%s的信息。",
+                    You("抹去了此处%s的信息.",
                         (de->oep->engr_type == DUST)
                             ? (de->frosted
                                 ? "写在霜上"
@@ -1147,7 +1147,7 @@ doengrave(void)
                 }
             } else if (de->type == DUST || de->type == MARK
                        || de->type == ENGR_BLOOD) {
-                You("无法抹去%s此处%s的信息。",
+                You("无法抹去%s此处%s的信息.",
                     (de->oep->engr_type == BURN)
                         ? (de->frosted ? "融化在" : "烧在")
                         : "刻在",
@@ -1156,7 +1156,7 @@ doengrave(void)
                 goto doengr_exit;
             } else if (de->type != de->oep->engr_type || c == 'n') {
                 if (!Blind || can_reach_floor(TRUE))
-                    You("将覆盖当前的信息。");
+                    You("将覆盖当前的信息.");
                 de->eow = TRUE;
             }
         } else if (de->oep
@@ -1173,19 +1173,18 @@ doengrave(void)
 
     /* Tell adventurer what is going on */
     if (de->otmp != &hands_obj)
-        You("%s在%s上用%s%s。", de->everb, de->eloc,
+        You("用%s%s%s%s.",
             /* since doname() yields "N items" when quantity is more than
                one, match that by using "1 of" rather than "one of" when
                informing the player that the stack will be split */
             (de->type == ENGRAVE && de->otmp->quan > 1L) ? "1个 " : "",
-            doname(de->otmp));
+            doname(de->otmp), de->everb, de->eloc);
     else
-        You("你%s了%s，用你的%s。",
-            de->everb, de->eloc, body_part(FINGERTIP));
+        You("用你的%s%s%s.",
+            body_part(FINGERTIP), de->everb, de->eloc);
 
     /* Prompt for engraving! */
-    Sprintf(de->qbuf, "你想在这里 %s 这个 %s 吗？",
-            de->everb, de->eloc);
+    Sprintf(de->qbuf, "你想在这里%s%s什么?", de->everb, de->eloc);
     getlin(de->qbuf, de->ebuf);
     /* convert tabs to spaces and condense consecutive spaces to one */
     mungspaces(de->ebuf);
@@ -1199,7 +1198,7 @@ doengrave(void)
     if (de->len == 0 || strchr(de->ebuf, '\033')) {
         if (de->zapwand) {
             if (!Blind)
-                pline("%s，然后%s。", Tobjnam(de->otmp, "发光"),
+                pline("%s, 然后%s.", Tobjnam(de->otmp, "发光"),
                       otense(de->otmp, "消退"));
             de->ret = ECMD_TIME;
             goto doengr_exit;
@@ -1212,7 +1211,7 @@ doengrave(void)
     /* A single `x' is the traditional signature of an illiterate person */
     if (de->len != 1 || (!strchr(de->ebuf, 'x') && !strchr(de->ebuf, 'X')))
         if (!u.uconduct.literate++)
-            livelog_printf(LL_CONDUCT, "became literate by engraving \"%s\"",
+            livelog_printf(LL_CONDUCT, "通过刻写\"%s\"变得识字",
                            de->ebuf);
 
     /* Mix up engraving if surface or state of mind is unsound.
@@ -1241,12 +1240,12 @@ doengrave(void)
     svc.context.engraving.pos.x = u.ux;
     svc.context.engraving.pos.y = u.uy;
     svc.context.engraving.actionct = 0;
-    set_occupation(engrave, "engraving", 0);
+    set_occupation(engrave, "刻写", 0);
 
     if (de->post_engr_text[0])
         pline("%s", de->post_engr_text);
     if (de->doblind && !resists_blnd(&gy.youmonst)) {
-        You("被闪光致盲了！");
+        You("被闪光致盲了!");
         make_blinded((long) rnd(50), FALSE);
         if (!Blind)
             Your1(vision_clears);
@@ -1285,7 +1284,7 @@ engrave(void)
 
     if (svc.context.engraving.pos.x != u.ux
         || svc.context.engraving.pos.y != u.uy) { /* teleported? */
-        You("无法继续刻字。");
+        You("无法继续刻字.");
         return 0;
     }
     /* Stylus might have been taken out of inventory and destroyed somehow.
@@ -1298,7 +1297,7 @@ engrave(void)
                 break;
         }
         if (!stylus) {
-            You("无法继续雕刻。");
+            You("无法继续雕刻.");
             return 0;
         }
     }
@@ -1344,7 +1343,7 @@ engrave(void)
            not welded to the hero's hand(s) */
         if (stylus->quan > 1L) {
             if (firsttime)
-                pline("其中一把%s变钝了。", yname(stylus));
+                pline("其中一把%s变钝了.", yname(stylus));
             stylus = svc.context.engraving.stylus = splitobj(stylus, 1L);
             /* if stack is wielded or quivered, the split-off one isn't */
             stylus->owornmask = 0L;
@@ -1352,7 +1351,7 @@ engrave(void)
         } else {
             /* normal case: stylus->quan==1 */
             if (firsttime)
-                pline("%s变钝了。", Yname2(stylus));
+                pline("%s变钝了.", Yname2(stylus));
         }
         /* Dull the weapon at a rate of -1 enchantment per 2 characters,
          * rounding down.
@@ -1382,8 +1381,8 @@ engrave(void)
         }
         if (splitstack) {
             obj_extract_self(stylus);
-            stylus = hold_another_object(stylus, "You drop one %s!",
-                                         doname(stylus), (char *) NULL);
+            stylus = hold_another_object(stylus, "你掉落了一个%s!",
+                                          doname(stylus), (char *) NULL);
             nhUse(stylus);
         } else if (dulled && stylus->known) {
             /* reflect change in stylus->spe; not needed for splitstack
@@ -1403,32 +1402,32 @@ engrave(void)
         update_inventory();
         if (stylus->spe == 0) {
             /* can't engrave any further; truncate the string */
-            Your("标记笔干了。");
+            Your("标记笔干了.");
             truncate = TRUE;
         }
     }
 
     switch (svc.context.engraving.type) {
     default:
-        finishverb = "your weird engraving";
+        finishverb = "你的奇怪刻字";
         break;
     case DUST:
-        finishverb = is_ice(u.ux, u.uy) ? "writing in the frost"
-                     : "writing in the dust";
+        finishverb = is_ice(u.ux, u.uy) ? "霜中的字迹"
+                     : "灰尘中的字迹";
         break;
     case HEADSTONE:
     case ENGRAVE:
-        finishverb = "engraving";
+        finishverb = "刻字";
         break;
     case BURN:
-        finishverb = is_ice(u.ux, u.uy) ? "melting your message into the ice"
-                     : "burning your message into the floor";
+        finishverb = is_ice(u.ux, u.uy) ? "把信息融入冰面"
+                     : "把信息烧入地面";
         break;
     case MARK:
-        finishverb = "defacing the dungeon";
+        finishverb = "涂污地下城";
         break;
     case ENGR_BLOOD:
-        finishverb = "scrawling";
+        finishverb = "潦草书写";
     }
 
     /* actions that happen at the end of every engraving action go here */
@@ -1440,7 +1439,7 @@ engrave(void)
 
     space_left = (int) (sizeof buf - strlen(buf) - 1U);
     if (endc - svc.context.engraving.nextc > space_left) {
-        You("你写不下了。");
+        You("写不下了.");
         endc = svc.context.engraving.nextc + space_left;
         truncate = TRUE;
     }
@@ -1449,7 +1448,7 @@ engrave(void)
      * can't go any further. */
     if (truncate && *endc != '\0') {
         *endc = '\0';
-        You("只能写下“%s”。", svc.context.engraving.text);
+        You("只能写下\"%s\".", svc.context.engraving.text);
     } else {
         /* input was not truncated; stylus may still have worn out on the last
          * character, though */
@@ -1478,10 +1477,10 @@ engrave(void)
         if (truncate) {
             /* Now that "You are only able to write 'foo'" also prints at the
              * end of engraving, this might be redundant. */
-            You("不能再写更多了。");
+            You("不能再写更多了.");
         } else if (!firsttime) {
             /* only print this if engraving took multiple actions */
-            You("完成了 %s.", finishverb);
+            You("完成了%s.", finishverb);
         }
         svc.context.engraving.text[0] = '\0';
         svc.context.engraving.nextc = (char *) 0;
