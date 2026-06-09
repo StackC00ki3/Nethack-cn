@@ -87,7 +87,7 @@ English README：[README_en.md](README_en.md)
 - [x] drawing.c
 - [x] dungeon.c
 - [x] earlyarg.c
-- [ ] eat.c
+- [x] eat.c
 - [ ] end.c
 - [ ] engrave.c
 - [ ] exper.c
