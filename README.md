@@ -97,7 +97,7 @@ English README：[README_en.md](README_en.md)
 - [x] fountain.c
 - [x] getpos.c
 - [x] glyphs.c
-- [ ] hack.c
+- [x] hack.c
 - [ ] hacklib.c
 - [ ] iactions.c
 - [ ] insight.c
@@ -257,6 +257,22 @@ English README：[README_en.md](README_en.md)
 功能: 给字符串加 `"s"` 后缀
 
 **处理方案**: 直接返回 `s`
+
+##### ing_suffix(const char \*s)
+
+位置: [hacklib.c](src/hacklib.c)
+
+功能: 给英文动词加 `"ing"` 后缀。
+
+**处理方案**: 中文消息不要依赖该函数拼接现在分词，改用完整中文短语或重排格式串。
+
+##### u_locomotion(const char \*def)
+
+位置: [hack.c](src/hack.c)
+
+功能: 根据玩家当前状态返回移动方式动词，例如普通移动、漂浮或飞行。
+
+**处理方案**: 调用处可传入中文默认动词；漂浮和飞行分支返回中文动词，涉及语序时改写为完整中文句式。
 
 ##### vtense(const char \*subj, const char \*verb)
 
