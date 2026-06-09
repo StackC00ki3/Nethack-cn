@@ -98,7 +98,7 @@ English README：[README_en.md](README_en.md)
 - [x] getpos.c
 - [x] glyphs.c
 - [x] hack.c
-- [ ] hacklib.c
+- [x] hacklib.c
 - [ ] iactions.c
 - [ ] insight.c
 - [ ] invent.c
@@ -264,7 +264,7 @@ English README：[README_en.md](README_en.md)
 
 功能: 给英文动词加 `"ing"` 后缀。
 
-**处理方案**: 中文消息不要依赖该函数拼接现在分词，改用完整中文短语或重排格式串。
+**处理方案**: 直接返回 `s`；调用处需要“正在/进行”等语义时改用完整中文短语或重排格式串。
 
 ##### u_locomotion(const char \*def)
 
