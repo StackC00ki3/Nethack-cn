@@ -146,7 +146,7 @@ English README：[README_en.md](README_en.md)
 - [x] rect.c (无需翻译)
 - [x] region.c
 - [x] report.c
-- [ ] restore.c
+- [x] restore.c
 - [ ] rip.c
 - [x] rnd.c (无需翻译)
 - [ ] role.c

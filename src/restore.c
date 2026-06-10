@@ -630,7 +630,7 @@ restgamestate(NHFILE *nhfp)
 #endif
     if (u.uhp <= 0 && (!Upolyd || u.mh <= 0)) {
         u.ux = u.uy = 0; /* affects pline() [hence You()] */
-        You("你不够健康,无法在恢复中存活.");
+        You("不够健康, 无法在恢复中存活.");
         /* wiz1_level.dlevel is used by mklev.c to see if lots of stuff is
          * uninitialized, so we only have to set it and not the other stuff.
          */
@@ -1034,7 +1034,7 @@ rest_levl(NHFILE *nhfp)
 void
 trickery(char *reason)
 {
-    pline("奇怪，这张地图和我记忆中的不一样.");
+    pline("奇怪, 这张地图和我记忆中的不一样.");
     pline("肯定有人在搞什么鬼把戏...");
     pline("此局游戏作废.");
     Strcpy(svk.killer.name, reason ? reason : "");
