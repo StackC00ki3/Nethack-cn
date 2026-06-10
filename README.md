@@ -129,7 +129,7 @@ English README：[README_en.md](README_en.md)
 - [x] nhlsel.c
 - [x] nhlua.c
 - [x] nhmd4.c
-- [ ] objects.c
+- [x] objects.c
 - [ ] objnam.c
 - [ ] options.c
 - [ ] o_init.c
