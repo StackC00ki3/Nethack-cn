@@ -122,7 +122,7 @@ English README：[README_en.md](README_en.md)
 - [x] monmove.c
 - [x] monst.c
 - [x] mplayer.c
-- [ ] mthrowu.c
+- [x] mthrowu.c
 - [ ] muse.c
 - [ ] music.c
 - [ ] nhlobj.c
