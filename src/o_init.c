@@ -598,10 +598,10 @@ sortloot_descr(int otyp, char *outbuf)
 /* also used in options.c (optfn_sortdiscoveries) */
 static const char disco_order_let[] = "osca";
 static const char *const disco_orders_descr[] = {
-    "by order of discovery within each class",
-    "sortloot order (by class with some sub-class groupings)",
-    "alphabetical within each class",
-    "alphabetical across all classes",
+    "按每个类别内的发现顺序",
+    "按sortloot顺序(按类别及部分子类别分组)",
+    "按每个类别内的字母顺序",
+    "按所有类别的字母顺序",
     (char *) 0
 };
 
@@ -635,11 +635,11 @@ choose_disco_sort(
            chosen sort will stick and also apply to '\' usage */
         add_menu_str(tmpwin, "");
         add_menu_str(tmpwin,
-                     "Note: full alphabetical and alphabetical within class");
+                     "注意: 全部按字母排序与类别内按字母排序");
         add_menu_str(tmpwin,
-                     "      are equivalent for single class discovery, but");
+                     "      对单类别发现物等价, 但");
         add_menu_str(tmpwin,
-                    "      will matter for future use of total discoveries.");
+                    "      会影响之后查看全部发现物.");
     }
     end_menu(tmpwin, "发现的排序");
 
@@ -671,7 +671,7 @@ disco_typename(int otyp)
                                   non-magic so pre-discovered, only applies
                                   to magic harp and will only be seen if
                                   magic harp has been 'called' something) */
-                               : "harp");
+                               : "竖琴");
 
         if (!actualn) { /* won't happen; used to pacify static analyzer */
             ;
@@ -785,7 +785,7 @@ dodiscovered(void) /* free after Robert Viduya */
     sortindx = strchr(disco_order_let, flags.discosort) - disco_order_let;
 
     tmpwin = create_nhwindow(NHW_TEXT);
-    Sprintf(buf, "发现物，%s", disco_orders_descr[sortindx]);
+    Sprintf(buf, "发现物, %s", disco_orders_descr[sortindx]);
     putstr(tmpwin, 0, buf);
     putstr(tmpwin, 0, "");
 
@@ -804,7 +804,7 @@ dodiscovered(void) /* free after Robert Viduya */
             || (objects[uidx].oc_encountered && uidx != AMULET_OF_YENDOR)) {
             if (!dis++)
                 putstr(tmpwin, iflags.menu_headings.attr,
-                       "Unique items or Relics");
+                       "独特物品或遗物");
             ++uniq_ct;
             disco_fmt_uniq(uidx, buf);
             putstr(tmpwin, 0, buf);
@@ -862,7 +862,7 @@ dodiscovered(void) /* free after Robert Viduya */
                classes, we normally don't need a header; but it we showed
                any unique items or any artifacts then we do need one */
             if ((uniq_ct || arti_ct) && alphabetized && !alphabyclass)
-                putstr(tmpwin, iflags.menu_headings.attr, "Discovered items");
+                putstr(tmpwin, iflags.menu_headings.attr, "已发现物品");
             disco_output_sorted(tmpwin, sorted_lines, sorted_ct, lootsort);
         }
         display_nhwindow(tmpwin, TRUE);
@@ -891,10 +891,10 @@ int
 doclassdisco(void)
 {
     static NEARDATA const char
-        prompt[] = "View discoveries for which sort of objects?",
-        havent_discovered_any[] = "haven't discovered any %s yet.",
-        unique_items[] = "unique items or relics",
-        artifact_items[] = "artifacts";
+        prompt[] = "查看哪类物品的发现记录?",
+        havent_discovered_any[] = "还没有发现任何%s.",
+        unique_items[] = "独特物品或遗物",
+        artifact_items[] = "神器";
     winid tmpwin = WIN_ERR;
     menu_item *pick_list = 0;
     anything any;
@@ -990,7 +990,7 @@ doclassdisco(void)
 
     /* there might not be anything for us to do... */
     if (!discosyms[0]) {
-        You(havent_discovered_any, "items");
+        You(havent_discovered_any, "物品");
         if (tmpwin != WIN_ERR)
             destroy_nhwindow(tmpwin);
         return ECMD_OK;
@@ -1066,7 +1066,7 @@ doclassdisco(void)
            but requires at least one artifact discovery for other styles
            [could fix that by forcing the 'a' choice into the pick-class
            menu when running in wizard mode] */
-        if (wizard && y_n("Dump information about all artifacts?") == 'y') {
+        if (wizard && y_n("转储所有神器的信息?") == 'y') {
             dump_artifact_info(tmpwin);
             ct = NROFARTIFACTS; /* non-zero vs zero is what matters below */
             break;
