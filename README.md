@@ -124,7 +124,7 @@ English README：[README_en.md](README_en.md)
 - [x] mplayer.c
 - [x] mthrowu.c
 - [x] muse.c
-- [ ] music.c
+- [x] music.c
 - [ ] nhlobj.c
 - [ ] nhlsel.c
 - [x] nhlua.c
