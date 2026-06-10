@@ -192,6 +192,9 @@ query_classes(
     ilets[iletct] = '\0';
 
     if (iletct > 1) {
+        const char *action_cn = !strcmp(action, "pick up") ? "捡起"
+            : !strcmp(action, "take out") ? "取出"
+            : !strcmp(action, "put in") ? "放入" : action;
         const char *where = 0;
         char sym, oc_of_sym, *p;
 
@@ -199,8 +202,7 @@ query_classes(
         oclasses[oclassct = 0] = '\0';
         *one_at_a_time = *everything = FALSE;
         not_everything = filtered = FALSE;
-        Sprintf(qbuf, "你想对什么东西进行%s? [%s]", action,
-                ilets);
+        Sprintf(qbuf, "你想%s什么类型的物品? [%s]", action_cn, ilets);
         getlin(qbuf, inbuf);
         if (*inbuf == '\033')
             return FALSE;
@@ -778,7 +780,7 @@ pickup(int what) /* should be a long */
             for (i = 0; i < n; i++)
                 pick_list[i].count = count;
         } else {
-            n = query_objlist("Pick up what?", objchain_p,
+            n = query_objlist("捡起什么?", objchain_p,
                               (traverse_how | FEEL_COCKATRICE),
                               &pick_list, PICK_ANY, all_but_uchain);
         }
@@ -835,7 +837,7 @@ pickup(int what) /* should be a long */
                     goto pickupdone;
                 if (selective)
                     traverse_how |= INVORDER_SORT;
-                n = query_objlist("Pick up what?", objchain_p, traverse_how,
+                n = query_objlist("捡起什么?", objchain_p, traverse_how,
                                   &pick_list, PICK_ANY,
                                   (via_menu == -2) ? allow_all
                                                    : allow_category);
@@ -856,7 +858,7 @@ pickup(int what) /* should be a long */
             if (!all_of_a_type) {
                 char qbuf[BUFSZ];
 
-                (void) safe_qbuf(qbuf, "Pick up ", "?", obj, doname,
+                (void) safe_qbuf(qbuf, "捡起", "?", obj, doname,
                                  ansimpleoname, something);
                 switch ((obj->quan < 2L) ? ynaq(qbuf) : ynNaq(qbuf)) {
                 case 'q':
@@ -1190,7 +1192,7 @@ query_objlist(const char *qstr,        /* query string */
                 continue;
             }
             if (engulfer_minvent && curr->owornmask != 0L) {
-                You_cant("捡起%s。", ysimple_name(curr));
+                You_cant("捡起%s.", ysimple_name(curr));
                 continue;
             }
             if (mi->count == -1L || mi->count > curr->quan)
@@ -1469,7 +1471,7 @@ query_category(
                    just "y" to accept (and "no" rather than "n" to decline;
                    accepts "quit" and ESC without converting them to 'n') */
                 switch (paranoid_ynq(ParanoidConfirm,
-                                     "Really autoselect All?", TRUE)) {
+                                     "真的自动选择全部吗?", TRUE)) {
                 case 'y':
                     /* yes => honor Auto-select All */
                     break;
@@ -1505,7 +1507,7 @@ query_category(
         free((genericptr_t) *pick_list), *pick_list = 0;
         /* the menu entry description is "Auto-select every relevant item"
            [not sure whether issuing a message here is a good idea...] */
-        pline("没有选中任何相关物品。");
+        pline("没有选中任何相关物品.");
     }
  query_done:
     destroy_nhwindow(win);
@@ -1585,7 +1587,7 @@ carry_count(struct obj *obj,            /* object to pick up... */
     int wt, iw, ow, oow;
     long qq, savequan, umoney;
     unsigned saveowt;
-    const char *verb, *prefx1, *prefx2, *suffx;
+    const char *verb;
     char obj_nambuf[BUFSZ], where[BUFSZ];
 
     savequan = obj->quan;
@@ -1670,10 +1672,10 @@ carry_count(struct obj *obj,            /* object to pick up... */
         Strcpy(obj_nambuf, doname(obj));
         if (container) {
             Sprintf(where, "在%s里面", the(xname(container)));
-            verb = "carry";
+            verb = "携带";
         } else {
             Strcpy(where, "躺在这儿");
-            verb = telekinesis ? "acquire" : "lift";
+            verb = telekinesis ? "获得" : "拿起";
         }
     } else {
         /* lint suppression */
@@ -1683,25 +1685,22 @@ carry_count(struct obj *obj,            /* object to pick up... */
     /* we can carry qq of them */
     if (qq > 0) {
         if (qq < count)
-            You("只能%s %s %s %s.", verb,
+            You("只能%s%s%s%s.", verb,
                 (qq == 1L) ? "一个" : "一些", obj_nambuf, where);
         *wt_after = wt;
         return qq;
     }
 
     if (!container)
-        Strcpy(where, "在这儿"); /* slightly shorter form */
+        Strcpy(where, "在这里"); /* slightly shorter form */
     if (gi.invent || umoney) {
-        prefx1 = "you cannot ";
-        prefx2 = "";
-        suffx = " any more";
+        There("%s%s%s, 但你不能再%s了.", otense(obj, "有"),
+              obj_nambuf, where, verb);
     } else {
-        prefx1 = (obj->quan == 1L) ? "it " : "even one ";
-        prefx2 = "is too heavy for you to ";
-        suffx = "";
+        There("%s%s%s, 但%s太重了, 你%s不了.", otense(obj, "有"),
+              obj_nambuf, where, (obj->quan == 1L) ? "它" : "哪怕一个",
+              verb);
     }
-    There("%s %s %s, 但%s%s%s%s.", otense(obj, "有"), obj_nambuf, where,
-          prefx1, prefx2, verb, suffx);
 
     /* *wt_after = iw; */
     return 0L;
@@ -1718,7 +1717,7 @@ lift_object(
     int result, old_wt, new_wt, prev_encumbr, next_encumbr;
 
     if (obj->otyp == BOULDER && Sokoban) {
-        You("无法把你的%s围抱着这个%s.", body_part(HAND),
+        You("无法用你的%s抱住这个%s.", body_part(HAND),
             xname(obj));
         return -1;
     }
@@ -1735,7 +1734,7 @@ lift_object(
            [this was using simpleonames(obj) for shortest description, but
            that's suboptimal for loadstones because it omits user-assigned
            type name which is something of interest for gray stones] */
-        You("携带了太多的东西不能拾取%s%s.",
+        You("携带的东西太多, 不能再捡起%s%s.",
             (obj->quan == 1L) ? "另一个" : "更多的", xname(obj));
         return -1;
     }
@@ -1753,10 +1752,10 @@ lift_object(
            we aren't limited by the 52 item limit for it, but caller and
            "grandcaller" aren't prepared to skip stuff and then pickup
            just gold, so the best we can do here is vary the message */
-        Your("背包不能容纳更多的东西了%s.",
+        Your("背包不能再容纳物品了%s.",
              /* floor follows by nexthere, otherwise container so by nobj */
              nxtobj(obj, GOLD_PIECE, (boolean) (obj->where == OBJ_FLOOR))
-                 ? " (除了金币)" : "");
+                  ? " (金币除外)" : "");
         result = -1; /* nothing lifted */
     } else {
         result = 1;
@@ -1777,8 +1776,8 @@ lift_object(
                         : (next_encumbr >= HVY_ENCUMBER) ? nearloadpfx
                           : (next_encumbr >= MOD_ENCUMBER) ? moderateloadpfx
                             : slightloadpfx,
-                        !container ? "提起" : "移除");
-                (void) safe_qbuf(qbuf, qbuf, ".  Continue?", obj, doname,
+                        !container ? "拿起" : "取出");
+                (void) safe_qbuf(qbuf, qbuf, ". 继续吗?", obj, doname,
                                  ansimpleoname, something);
                 obj->quan = savequan;
                 switch (ynq(qbuf)) {
@@ -1828,7 +1827,7 @@ pickup_object(
         return 0;
     } else if (obj->where == OBJ_MINVENT && obj->owornmask != 0L
                && engulfing_u(obj->ocarry)) {
-        You_cant("不能捡起%s。", ysimple_name(obj));
+        You_cant("捡起%s.", ysimple_name(obj));
         return 0;
     } else if (obj->oartifact && !touch_artifact(obj, &gy.youmonst)) {
         return 0;
@@ -1858,9 +1857,10 @@ pickup_object(
         } else if (!obj->spe && !obj->cursed) {
             obj->spe = 1;
         } else {
-            pline_The("卷轴%s %s为尘土当你%s %s起来.", plur(obj->quan),
-                      otense(obj, "化"), telekinesis ? "举起" : "捡起",
-                      (obj->quan == 1L) ? "它" : "它们");
+            pline_The("卷轴%s在你%s%s时%s为尘土.", plur(obj->quan),
+                      telekinesis ? "举起" : "捡起",
+                      (obj->quan == 1L) ? "它" : "它们",
+                      otense(obj, "化"));
             trycall(obj);
             useupf(obj, obj->quan);
             return 1; /* tried to pick something up and failed, but
@@ -1887,7 +1887,7 @@ pickup_object(
 
     if (uwep && uwep == obj)
         gm.mrg_to_wielded = TRUE;
-    pickup_prinv(obj, count, "lifting");
+    pickup_prinv(obj, count, "拿起");
     if (obj->ghostly)
         fix_ghostly_obj(obj);
     gm.mrg_to_wielded = FALSE;
@@ -2007,7 +2007,7 @@ encumber_msg(void)
     } else if (go.oldcap > newcap) {
         switch (newcap) {
         case 0:
-            Your("行动现在畅通无阻。");
+            Your("行动现在畅通无阻.");
             break;
         case 1:
             Your("移动速度因你的负担而仅轻微地变慢.");
@@ -2049,7 +2049,7 @@ able_to_loot(
     coordxy x, coordxy y,
     boolean looting) /* loot vs tip */
 {
-    const char *verb = looting ? "loot" : "tip";
+    const char *verb = looting ? "搜刮" : "倾倒";
     struct trap *t = t_at(x, y);
 
     if (!can_reach_floor(t && is_pit(t->ttyp))) {
@@ -2061,7 +2061,7 @@ able_to_loot(
     } else if ((is_pool(x, y) && (looting || !Underwater)) || is_lava(x, y)) {
         /* at present, can't loot in water even when Underwater;
            can tip underwater, but not when over--or stuck in--lava */
-        You("无法 %s 位于 %s 深处的物品。", verb,
+        You("无法%s位于%s深处的物品.", verb,
             hliquid(is_lava(x, y) ? "熔岩" : "水"));
         return FALSE;
     } else if (nolimbs(gy.youmonst.data)) {
@@ -2106,8 +2106,8 @@ do_loot_cont(
 
 #if 0
         if (ccount < 2 && (svl.level.objects[cobj->ox][cobj->oy] == cobj))
-            pline("%s locked.",
-                  cobj->lknown ? "It is" : "Hmmm, it turns out to be");
+            pline("%s锁着的.",
+                  cobj->lknown ? "它是" : "嗯, 它原来是");
         else
 #endif
         if (cobj->lknown)
@@ -2189,7 +2189,6 @@ doloot_core(void)
     int timepassed = 0;
     coord cc;
     boolean underfoot = TRUE;
-    const char *dont_find_anything = "don't find anything";
     struct monst *mtmp;
     int prev_inquiry = 0;
     boolean prev_loot = FALSE;
@@ -2203,7 +2202,7 @@ doloot_core(void)
         return ECMD_OK;
     }
     if (nohands(gy.youmonst.data)) {
-        You("没有手！"); /* not `body_part(HAND)' */
+        You("没有手!"); /* not `body_part(HAND)' */
         return ECMD_OK;
     }
     if (Confusion) {
@@ -2302,14 +2301,14 @@ doloot_core(void)
  lootmon:
     if (c != 'y' && (mon_beside(u.ux, u.uy) || iflags.menu_requested)) {
         boolean looted_mon = FALSE;
-        if (!get_adjacent_loc("Loot in what direction?",
-                              "Invalid loot location", u.ux, u.uy, &cc))
+        if (!get_adjacent_loc("朝哪个方向搜刮?",
+                              "无效的搜刮位置", u.ux, u.uy, &cc))
             return ECMD_OK;
         underfoot = u_at(cc.x, cc.y);
         if (underfoot && container_at(cc.x, cc.y, FALSE))
             goto lootcont;
         if (u.dz < 0) {
-            You("%s东西在%s上来搜刮.", dont_find_anything,
+            You("没有在%s上找到可搜刮的东西.",
                 ceiling(cc.x, cc.y));
             return ECMD_TIME;
         }
@@ -2332,21 +2331,22 @@ doloot_core(void)
         if (!looted_mon) {
             if (!underfoot && container_at(cc.x, cc.y, FALSE)) {
                 if (mtmp) {
-                    You_cant("无法掠夺%s的任何东西，因为有%s挡路。",
-                             prev_inquiry ? "别处" : "那里", mon_nam(mtmp));
+                    You_cant("%s搜刮任何东西, 因为%s挡路.",
+                             prev_inquiry ? "再在那里" : "在那里",
+                             mon_nam(mtmp));
                     return (timepassed ? ECMD_TIME : ECMD_OK);
                 } else {
                     You("必须在一旁才能搜刮.");
                 }
             } else {
-                You("%s %s%s里搜刮。", dont_find_anything,
-                    (prev_inquiry || prev_loot) ? "别的" : "",
-                    !underfoot ? "那" : "这");
+                You("没有在%s找到%s可供搜刮的东西.",
+                    !underfoot ? "那里" : "这里",
+                    (prev_inquiry || prev_loot) ? "别的" : "");
                 return (timepassed ? ECMD_TIME : ECMD_OK);
             }
         }
     } else if (c != 'y' && c != 'n') {
-        You("%s %s 可供搜刮。", dont_find_anything,
+        You("没有在%s找到可供搜刮的东西.",
             underfoot ? "这里" : "那里");
     }
     return (timepassed ? ECMD_TIME : ECMD_OK);
@@ -2366,7 +2366,7 @@ reverse_loot(void)
         for (n = inv_cnt(TRUE), otmp = gi.invent; otmp;
              --n, otmp = otmp->nobj)
             if (!rn2(n + 1)) {
-                prinv("You find old loot:", otmp, 0L);
+                prinv("你找到旧战利品:", otmp, 0L);
                 return TRUE;
             }
         return FALSE;
@@ -2408,7 +2408,7 @@ reverse_loot(void)
 
         if (coffers) {
             SetVoice((struct monst *) 0, 0, 80, 0);
-            verbalize("Thank you for your contribution to reduce the debt.");
+            verbalize("感谢你为减少债务所作的贡献.");
             freeinv(goldob);
             (void) add_to_container(coffers, goldob);
             coffers->owt = weight(coffers);
@@ -2425,7 +2425,7 @@ reverse_loot(void)
             if (!rn2(10))
                 levl[x][y].looted = T_LOOTED;
         } else {
-            You("丢下 %s.", doname(goldob));
+            You("丢下%s.", doname(goldob));
             dropx(goldob);
         }
     }
@@ -2449,7 +2449,7 @@ loot_mon(struct monst *mtmp, int *passed_info, boolean *prev_loot)
     if (mtmp && mtmp != u.usteed && (otmp = which_armor(mtmp, W_SADDLE))) {
         if (passed_info)
             *passed_info = 1;
-        Sprintf(qbuf, "你想从%s 取下马鞍吗?",
+        Sprintf(qbuf, "你想从%s取下马鞍吗?",
                 x_monnam(mtmp, ARTICLE_THE, (char *) 0,
                          SUPPRESS_SADDLE, FALSE));
         if ((c = yn_function(qbuf, ynqchars, 'n', TRUE)) == 'y') {
@@ -2458,7 +2458,7 @@ loot_mon(struct monst *mtmp, int *passed_info, boolean *prev_loot)
                 return 0;
             }
             if (otmp->cursed) {
-                You("没办法.  鞍似乎是粘在%s上.",
+                You("没办法. 马鞍似乎是粘在%s上.",
                     x_monnam(mtmp, ARTICLE_THE, (char *) 0,
                              SUPPRESS_SADDLE, FALSE));
                 /* the attempt costs you time */
@@ -2466,9 +2466,9 @@ loot_mon(struct monst *mtmp, int *passed_info, boolean *prev_loot)
             }
             extract_from_minvent(mtmp, otmp, TRUE, FALSE);
             if (flags.verbose)
-                You("把 %s 从 %s 上取下。",
+                You("把%s从%s上取下.",
                     thesimpleoname(otmp), mon_nam(mtmp));
-            otmp = hold_another_object(otmp, "You drop %s!", doname(otmp),
+            otmp = hold_another_object(otmp, "你丢下%s!", doname(otmp),
                                        (const char *) 0);
             nhUse(otmp);
             timepassed = rnd(3);
@@ -2578,12 +2578,12 @@ in_container(struct obj *obj)
         pline("那将是一个有趣的拓扑学练习.");
         return 0;
     } else if (obj->owornmask & (W_ARMOR | W_ACCESSORY)) {
-        Norep("You cannot %s %s you are wearing.",
-              Icebox ? "refrigerate" : "stash", something);
+        Norep("你不能%s正穿戴着的%s.",
+              Icebox ? "冷藏" : "藏匿", something);
         return 0;
     } else if ((obj->otyp == LOADSTONE) && obj->cursed) {
         set_bknown(obj, 1);
-        pline_The("石头%s不会离开你的身体。", plur(obj->quan));
+        pline_The("石头%s不会离开你的身体.", plur(obj->quan));
         return 0;
     } else if (obj->otyp == AMULET_OF_YENDOR
                || obj->otyp == CANDELABRUM_OF_INVOCATION
@@ -2666,8 +2666,8 @@ in_container(struct obj *obj)
         livelog_printf(LL_ACHIEVE, "just blew up %s bag of holding", uhis());
         /* explicitly mention what item is triggering the explosion */
         urgent_pline(
-              "As you put %s inside, you are blasted by a magical explosion!",
-                     doname(obj));
+              "当你把%s放进去时, 你被魔法爆炸轰中!",
+                      doname(obj));
         /* did not actually insert obj yet */
         if (was_unpaid)
             addtobill(obj, FALSE, FALSE, TRUE);
@@ -2702,7 +2702,7 @@ in_container(struct obj *obj)
 
     if (gc.current_container) {
         Strcpy(buf, the(xname(gc.current_container)));
-        You("把%s 放入%s.", doname(obj), buf);
+        You("把%s放入%s.", doname(obj), buf);
 
         /* gold in container always needs to be added to credit */
         if (floor_container && obj->oclass == COIN_CLASS)
@@ -2775,7 +2775,7 @@ out_container(struct obj *obj)
         pick_pick(obj); /* shopkeeper feedback */
 
     otmp = addinv(obj);
-    pickup_prinv(otmp, count, "removing");
+    pickup_prinv(otmp, count, "取出");
 
     if (is_gold) {
         bot(); /* update character's gold piece count immediately */
@@ -2814,9 +2814,9 @@ mbag_item_gone(boolean held, struct obj *item, boolean silent)
 
     if (!silent) {
         if (item->dknown)
-            pline("%s %s 消失了!", Doname2(item), otense(item, "已经"));
+            pline("%s%s消失了!", Doname2(item), otense(item, "已经"));
         else
-            You("你%s%s消失了！", Blind ? "注意到" : "看到", doname(item));
+            You("%s%s消失了!", Blind ? "注意到" : "看到", doname(item));
     }
 
     if (*u.ushops && (shkp = shop_keeper(*u.ushops)) != 0) {
@@ -2857,7 +2857,7 @@ observe_quantum_cat(struct obj *box, boolean makecat, boolean givemsg)
             set_malign(livecat);
             if (givemsg) {
                 if (!canspotmon(livecat))
-                    You("觉得%s蹭到了你的%s。", something,
+                    You("觉得%s蹭到了你的%s.", something,
                         body_part(FOOT));
                 else
                     pline("盒子里面的%s还活着!",
@@ -2918,17 +2918,17 @@ staticfn void
 explain_container_prompt(boolean more_containers)
 {
     static const char *const explaintext[] = {
-        "Container actions:",
+        "容器操作:",
         "",
-        " : -- Look: examine contents",
-        " o -- Out: take things out",
-        " i -- In: put things in",
-        " b -- Both: first take things out, then put things in",
-        " r -- Reversed: put things in, then take things out",
-        " s -- Stash: put one item in", "",
-        " n -- Next: loot next selected container",
-        " q -- Quit: finished",
-        " ? -- Help: display this text.",
+        " : -- 查看: 检查内容物",
+        " o -- 取出: 从容器中取出物品",
+        " i -- 放入: 把物品放入容器",
+        " b -- 两者: 先取出物品, 再放入物品",
+        " r -- 反向: 先放入物品, 再取出物品",
+        " s -- 藏匿: 放入一件物品", "",
+        " n -- 下一个: 搜刮下一个选中的容器",
+        " q -- 退出: 完成操作",
+        " ? -- 帮助: 显示这段说明.",
         "", 0
     };
     const char *const *txtpp;
@@ -2950,10 +2950,10 @@ boolean
 u_handsy(void)
 {
     if (nohands(gy.youmonst.data)) {
-        You("没有手！"); /* not `body_part(HAND)' */
+        You("没有手!"); /* not `body_part(HAND)' */
         return FALSE;
     } else if (!freehand()) {
-        You("没有空闲的%s。", body_part(HAND));
+        You("没有空闲的%s.", body_part(HAND));
         return FALSE;
     }
     return TRUE;
@@ -3001,7 +3001,7 @@ use_container(
             update_inventory();
     }
     if (obj->olocked) {
-        pline("%s被锁住了。", Tobjnam(obj, "被"));
+        pline("%s被锁住了.", Tobjnam(obj, "被"));
         if (held)
             You("必须把它放下来开锁.");
         return ECMD_OK;
@@ -3037,7 +3037,7 @@ use_container(
     if (cursed_mbag
         && (loss = boh_loss(gc.current_container, held)) != 0) {
         used = ECMD_TIME;
-        You("因丢失商品需支付 %ld %s。", loss, currency(loss));
+        You("因丢失商品需支付 %ld %s.", loss, currency(loss));
         gc.current_container->owt = weight(gc.current_container);
     }
     /* might put something in if carrying anything other than just the
@@ -3081,12 +3081,13 @@ use_container(
     for (;;) { /* repeats iff '?' or ':' gets chosen */
         outmaybe = (outokay || !gc.current_container->cknown);
         if (!outmaybe)
-            (void) safe_qbuf(qbuf, (char *) 0, " is empty.  Do what with it?",
+            (void) safe_qbuf(qbuf, (char *) 0,
+                             "是空的. 要怎么处理它?",
                              gc.current_container, Yname2, Ysimple_name2,
-                             "This");
+                             "这个");
         else
-            (void) safe_qbuf(qbuf, "Do what with ", "?", gc.current_container,
-                             yname, ysimple_name, "it");
+            (void) safe_qbuf(qbuf, "要怎么处理", "?",
+                             gc.current_container, yname, ysimple_name, "它");
         /* ask player about what to do with this container */
         if (flags.menu_style == MENU_PARTIAL
             || flags.menu_style == MENU_FULL) {
@@ -3109,11 +3110,11 @@ use_container(
             Strcat(inokay ? pbuf : xbuf, "rs");  /* reversed, stash */
             Strcat(pbuf, " ");                   /* separator */
             Strcat(more_containers ? pbuf : xbuf, "n"); /* next container */
-            Strcat(pbuf, "退出");                   /* quit */
+            Strcat(pbuf, "q");                   /* quit */
             if (iflags.cmdassist)
                 /* this unintentionally allows user to answer with 'o' or
                    'r'; fortunately, those are already valid choices here */
-                Strcat(pbuf, " 或 ?"); /* help */
+                Strcat(pbuf, " or ?"); /* help */
             else
                 Strcat(xbuf, "?");
             if (*xbuf)
@@ -3275,7 +3276,7 @@ menu_loot(int retry, boolean put_in)
     boolean all_categories = TRUE, loot_everything = FALSE, autopick = FALSE;
     char buf[BUFSZ];
     boolean loot_justpicked = FALSE;
-    const char *action = put_in ? "Put in" : "Take out";
+    const char *action = put_in ? "放入" : "取出";
     struct obj *otmp, *otmp2;
     menu_item *pick_list;
     int mflags, res;
@@ -3448,7 +3449,7 @@ in_or_out_menu(
     if (inokay) {
         any.a_int = 5; /* 'r' */
         Sprintf(buf, "%s放入, 然后取出",
-                outokay ? "反向；" : "");
+                outokay ? "反向; " : "");
         add_menu(win, &nul_glyphinfo, &any, menuselector[any.a_int], 0,
                  ATR_NONE, clr, buf, MENU_ITEMFLAGS_NONE);
         any.a_int = 6; /* 's' */
@@ -3611,9 +3612,9 @@ dotip(void)
                     nobj = cobj->nexthere;
                     if (!Is_container(cobj))
                         continue;
-                    c = ynq(safe_qbuf(qbuf, "There is ", " here, tip it?",
+                    c = ynq(safe_qbuf(qbuf, "这里有", ", 要倾倒它吗?",
                                       cobj,
-                                      doname, ansimpleoname, "container"));
+                                      doname, ansimpleoname, "一个容器"));
                     if (c == 'q')
                         return ECMD_OK;
                     if (c == 'n')
@@ -3640,30 +3641,30 @@ dotip(void)
     /* assorted other cases */
     if (Is_candle(cobj) && cobj->lamplit) {
         /* note "wax" even for tallow candles to avoid giving away info */
-        spillage = "wax";
+        spillage = "蜡";
     } else if ((cobj->otyp == POT_OIL && cobj->lamplit)
                || (cobj->otyp == OIL_LAMP && cobj->age != 0L)
                || (cobj->otyp == MAGIC_LAMP && cobj->spe != 0)) {
-        spillage = "oil";
+        spillage = "油";
         /* todo: reduce potion's remaining burn timer or oil lamp's fuel */
     } else if (cobj->otyp == CAN_OF_GREASE && cobj->spe > 0) {
         /* charged consumed below */
-        spillage = "grease";
+        spillage = "油脂";
     } else if (cobj->otyp == FOOD_RATION || cobj->otyp == CRAM_RATION
                || cobj->otyp == LEMBAS_WAFER) {
-        spillage = "crumbs";
+        spillage = "碎屑";
     } else if (cobj->oclass == VENOM_CLASS) {
-        spillage = "venom";
+        spillage = "毒液";
     }
     if (spillage) {
         buf[0] = '\0';
         if (is_pool(u.ux, u.uy))
-            Sprintf(buf, " 然后逐渐%s了", vtense(spillage, "消散"));
+            Sprintf(buf, ", 然后逐渐%s了", vtense(spillage, "消散"));
         else if (is_lava(u.ux, u.uy))
-            Sprintf(buf, " 然后立即%s掉了",
+            Sprintf(buf, ", 然后立即%s了",
                     vtense(spillage, "燃烧"));
         pline("一些%s%s到%s上%s.", spillage,
-              vtense(spillage, "掉"), surface(u.ux, u.uy), buf);
+              vtense(spillage, "掉落"), surface(u.ux, u.uy), buf);
         /* shop usage message comes after the spill message */
         if (cobj->otyp == CAN_OF_GREASE && cobj->spe > 0) {
             consume_obj_charge(cobj, TRUE);
@@ -3673,7 +3674,7 @@ dotip(void)
     }
     /* anything not covered yet */
     if (cobj->oclass == POTION_CLASS) /* can't pour potions... */
-        pline_The("%s %s密封牢固的.", xname(cobj), otense(cobj, "是"));
+        pline_The("%s%s密封得很牢.", xname(cobj), otense(cobj, "被"));
     else if (uarmh && cobj == uarmh)
         return tiphat() ? ECMD_TIME : ECMD_OK;
     else if (cobj->otyp == STATUE)
@@ -3753,8 +3754,8 @@ tipcontainer(struct obj *box) /* or bag */
          * "ObjK drops to the floor.", "ObjL drops to the floor.", &c.
          */
         if (targetbox)
-            pline("%s 滚进 %s.",
-                  box->cobj->nobj ? "物体" : "一个物体",
+            pline("%s滚进%s.",
+                  box->cobj->nobj ? "物品" : "一个物品",
                   the(xname(targetbox)));
         else
             pline("%s出来%c",
@@ -3786,8 +3787,8 @@ tipcontainer(struct obj *box) /* or bag */
                                    uhis());
                     /* explicitly mention what item is triggering explosion */
                     urgent_pline(
-                   "As %s %s inside, you are blasted by a magical explosion!",
-                                 doname(otmp), otense(otmp, "tumble"));
+                   "当%s%s进去时, 你被魔法爆炸轰中!",
+                                 doname(otmp), otense(otmp, "滚入"));
 
                     /* if putting one bag of holding into another, first
                        blow up the one going in, then (below) blow up the
@@ -3819,7 +3820,7 @@ tipcontainer(struct obj *box) /* or bag */
                 if (altarizing) {
                     doaltarobj(otmp);
                 } else if (!terse) {
-                    pline("%s%s%s上。", Doname2(otmp),
+                    pline("%s%s%s上.", Doname2(otmp),
                           otense(otmp, "掉到"), surface(ox, oy));
                 } else {
                     pline("%s%c", doname(otmp), nobj ? ',' : '.');
@@ -3835,7 +3836,7 @@ tipcontainer(struct obj *box) /* or bag */
                 iflags.suppress_price--; /* reset */
         }
         if (loss) /* magic bag lost some shop goods */
-            You("因丢失商品欠 %ld %s。", loss, currency(loss));
+            You("因丢失商品欠 %ld %s.", loss, currency(loss));
         box->owt = weight(box); /* mbag_item_gone() doesn't update this */
         if (targetbox)
             targetbox->owt = weight(targetbox);
@@ -3894,7 +3895,7 @@ tipcontainer_gettarget(
 
     if (n_conts < 1 || !u_handsy()) {
         if (n_conts >= 1)
-            pline("Tipping contents to floor only...");
+            pline("只会把内容倾倒到地板上...");
         *cancelled = FALSE;
         return (struct obj *) 0;
     }
