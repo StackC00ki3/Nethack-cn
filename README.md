@@ -133,7 +133,7 @@ English README：[README_en.md](README_en.md)
 - [x] objnam.c
 - [x] options.c
 - [x] o_init.c
-- [ ] pager.c
+- [x] pager.c
 - [ ] pickup.c
 - [ ] pline.c
 - [ ] polyself.c
