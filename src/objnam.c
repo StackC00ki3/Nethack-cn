@@ -678,7 +678,7 @@ xname_flags(
         else if (nn)
             Strcpy(buf, actualn);
         else if (un)
-            xcalled(buf, BUFSZ - PREFIX, "amulet", un);
+            xcalled(buf, BUFSZ - PREFIX, "护身符", un);
         else
             Sprintf(buf, "%s护身符", dn);
         break;
@@ -707,10 +707,11 @@ xname_flags(
         ConcUpdate(buf);
 
         if (typ == FIGURINE && omndx != NON_PM) {
-            char anbuf[10]; /* [4] would be enough: 'a','n',' ','\0' */
             const char *pm_name = obj_pmname(obj);
 
-            ConcatF2(buf, 0, " of %s%s", just_an(anbuf, pm_name), pm_name);
+            /*修改语序: 中文小雕像名直接用“怪物名+小雕像”*/
+            Strcpy(buf, pm_name);
+            Concat(buf, 0, actualn);
         } else if (is_wet_towel(obj)) {
             if (wizard)
                 ConcatF1(buf, 0, " (%d)", obj->spe);
@@ -778,13 +779,13 @@ xname_flags(
                appropriate and omitted by xname(); shrink_glob() wants
                it but uses Yname2() -> yname() -> xname() rather than
                doname() so we've added an external flag to request it */
-            Concat(buf, 0, "partly eaten ");
+            Concat(buf, 0, "部分食用的");
         }
         if (obj->globby) { /* 5.0 added "medium" to replace no-prefix */
-            ConcatF2(buf, 0, "%s %s", (obj->owt <= 100) ? "small"
-                                      : (obj->owt <= 300) ? "medium"
-                                        : (obj->owt <= 500) ? "large"
-                                          : "very large",
+            ConcatF2(buf, 0, "%s%s", (obj->owt <= 100) ? "小块"
+                                     : (obj->owt <= 300) ? "中块"
+                                       : (obj->owt <= 500) ? "大块"
+                                         : "超大块",
                      actualn);
             break;
         }
@@ -799,18 +800,14 @@ xname_flags(
         break;
     case ROCK_CLASS:
         if (typ == STATUE && omndx != NON_PM) {
-            char anbuf[10];
             const char *statue_pmname = obj_pmname(obj);
 
-            Snprintf(buf, bufspaceleft, "%s%s of %s%s",
+            /*修改语序: 中文雕像名不使用英文冠词和“of”结构*/
+            Snprintf(buf, bufspaceleft, "%s%s%s",
                      (Role_if(PM_ARCHEOLOGIST)
-                      && (obj->spe & CORPSTAT_HISTORIC) != 0) ? "historic "
+                      && (obj->spe & CORPSTAT_HISTORIC) != 0) ? "有历史意义的"
                        : "",
-                     actualn,
-                     type_is_pname(&mons[omndx]) ? ""
-                       : the_unique_pm(&mons[omndx]) ? "the "
-                         : just_an(anbuf, statue_pmname),
-                     statue_pmname);
+                     statue_pmname, actualn);
         } else if (typ == BOULDER && obj->next_boulder == 1) {
             /* sometimes caller wants "next boulder" rather than just
                "boulder" (when pushing against a pile of more than one);
@@ -983,17 +980,17 @@ xname_flags(
         switch (obj->otyp) {
         case T_SHIRT:
         case ALCHEMY_SMOCK:
-            ConcatF1(buf, 0, " with text \"%s\"",
+            ConcatF1(buf, 0, " 写着\"%s\"",
                      (obj->otyp == T_SHIRT) ? tshirt_text(obj, tmpbuf)
                                             : apron_text(obj, tmpbuf));
             break;
         case CANDY_BAR:
             lbl = candy_wrapper_text(obj);
             if (*lbl)
-                ConcatF1(buf, 0, " labeled \"%s\"", lbl);
+                ConcatF1(buf, 0, " 标签写着\"%s\"", lbl);
             break;
         case HAWAIIAN_SHIRT:
-            ConcatF1(buf, 0, " with %s motif",
+            ConcatF1(buf, 0, " 有%s图案",
                      an(hawaiian_motif(obj, tmpbuf)));
             break;
         default:
@@ -1002,7 +999,7 @@ xname_flags(
     }
 
     if (has_oname(obj) && dknown) {
-        Concat(buf, 0, " named ");
+        Concat(buf, 0, " 名为");
 
         /* jump directly here if obj passes the has-personal-name test */
  nameit:
@@ -1382,24 +1379,24 @@ doname_base(
            everything out if no merges occur */
         long itemcount = count_contents(obj, FALSE, FALSE, TRUE, FALSE);
 
-        ConcatF2(bp, 0, " containing %ld item%s", itemcount, plur(itemcount));
+        ConcatF1(bp, 0, " (内含%ld件物品)", itemcount);
     }
 
     switch (is_weptool(obj) ? WEAPON_CLASS : obj->oclass) {
     case AMULET_CLASS:
         if (obj->owornmask & W_AMUL)
-            Concat(bp, 0, " (being worn)");
+            Concat(bp, 0, " (佩戴中)");
         break;
     case ARMOR_CLASS:
         if (obj->owornmask & W_ARMOR) {
             Concat(bp, 0,
-                   (obj == uskin) ? " (embedded in your skin)"
+                   (obj == uskin) ? " (嵌入你的皮肤)"
                    /* in case of perm_invent update while Wear/Takeoff
                       is in progress; check doffing() before donning()
                       because donning() returns True for both cases */
-                   : doffing(obj) ? " (being doffed)"
-                     : donning(obj) ? " (being donned)"
-                       : " (being worn)");
+                   : doffing(obj) ? " (脱下中)"
+                     : donning(obj) ? " (穿戴中)"
+                       : " (穿戴中)");
             /* we just added a parenthesized phrase, but the right paren
                might be absent if the appended string got truncated */
             if (bp_eos[-1] == ')') {
@@ -1409,14 +1406,14 @@ doname_base(
                 if (obj == uarmg && Glib) /* just appended "(something)",
                                            * replace paren, changing that
                                            * to be "(something; slippery)" */
-                    Concat(bp,  1, "; slippery)");
+                    Concat(bp,  1, "; 滑溜)");
             }
             if (bp_eos[-1] == ')') {
                 /* there could be light-emitting artifact gloves someday,
                    so add 'lit' separately from 'slippery' rather than via
                    'else if' after uarmg+Glib */
                 if (!Blind && obj->lamplit && artifact_light(obj))
-                    ConcatF1(bp, 1, ", %s lit)", arti_light_description(obj));
+                    ConcatF1(bp, 1, ", %s发光)", arti_light_description(obj));
             }
         }
         FALLTHROUGH;
@@ -1431,14 +1428,14 @@ doname_base(
         break;
     case TOOL_CLASS:
         if (obj->owornmask & (W_TOOL | W_SADDLE)) { /* blindfold */
-            Concat(bp, 0, " (being worn)");
+            Concat(bp, 0, " (佩戴中)");
             break;
         }
         if (obj->otyp == LEASH && obj->leashmon != 0) {
             struct monst *mlsh = find_mid(obj->leashmon, FM_FMON);
 
             if (mlsh && !DEADMONSTER(mlsh)) {
-                ConcatF1(bp, 0, " (attached to %s)", noit_mon_nam(mlsh));
+                ConcatF1(bp, 0, " (拴在%s身上)", noit_mon_nam(mlsh));
             } else {
                 if (mlsh) /*&& DEADMONSTER(mlsh)*/
                     impossible("leashed %s #%u is dead",
@@ -1451,12 +1448,8 @@ doname_base(
             break;
         }
         if (obj->otyp == CANDELABRUM_OF_INVOCATION) {
-            char suffix[20]; /* longest value is "s attached" */
-
-            /* separately formatted suffix avoids need for ConcatF3() */
-            Sprintf(suffix, "%s%s", plur(obj->spe),
-                    !obj->lamplit ? " 已插上" : ", 已点燃");
-            ConcatF2(bp, 0, " (%d of 7 candle%s)", obj->spe, suffix);
+            ConcatF2(bp, 0, " (7支蜡烛中已插上%d支%s)", obj->spe,
+                     !obj->lamplit ? "" : ", 已点燃");
             break;
         } else if (obj->otyp == OIL_LAMP || obj->otyp == MAGIC_LAMP
                    || obj->otyp == BRASS_LANTERN || Is_candle(obj)) {
@@ -1480,7 +1473,7 @@ doname_base(
                     Strcat(prefix, "部分使用的");
             }
             if (obj->lamplit)
-                Concat(bp, 0, " (lit)");
+                Concat(bp, 0, " (点燃)");
             break;
         }
         if (objects[obj->otyp].oc_charged)
@@ -1493,14 +1486,14 @@ doname_base(
         break;
     case POTION_CLASS:
         if (obj->otyp == POT_OIL && obj->lamplit)
-            Concat(bp, 0, " (lit)");
+            Concat(bp, 0, " (点燃)");
         break;
     case RING_CLASS:
  ring:  /* normal rings reach here 'naturally'; meat ring jumps here */
         if (obj->owornmask & W_RINGR)
-            Concat(bp, 0, " (on right ");
+            Concat(bp, 0, " (戴在右");
         if (obj->owornmask & W_RINGL)
-            Concat(bp, 0, " (on left ");
+            Concat(bp, 0, " (戴在左");
         if (obj->owornmask & W_RING) /* either left or right */
             ConcatF1(bp, 0,"%s)", body_part(HAND));
         if (known && objects[obj->otyp].oc_charged) {
@@ -1530,14 +1523,14 @@ doname_base(
         } else if (obj->otyp == EGG) {
 #if 0 /* corpses don't tell if they're stale either */
             if (known && stale_egg(obj))
-                Strcat(prefix, "stale ");
+                Strcat(prefix, "不新鲜的");
 #endif
             if (ismnum(omndx)
                 && (known || (svm.mvitals[omndx].mvflags & MV_KNOWS_EGG))) {
                 Strcat(prefix, mons[omndx].pmnames[NEUTRAL]);
                 Strcat(prefix, " ");
                 if (obj->spe == 1)
-                    Concat(bp, 0, " (laid by you)");
+                    Concat(bp, 0, " (由你产下)");
             }
         } else if (obj->otyp == MEAT_RING) {
             goto ring;
@@ -1547,8 +1540,8 @@ doname_base(
     case CHAIN_CLASS:
         add_erosion_words(obj, prefix);
         if (obj->owornmask & (W_BALL | W_CHAIN))
-            ConcatF1(bp, 0, " (%s to you)",
-                     (obj->owornmask & W_BALL) ? "chained" : "attached");
+            ConcatF1(bp, 0, " (%s)",
+                     (obj->owornmask & W_BALL) ? "锁在你身上" : "连在你身上");
         break;
     }
 
@@ -1561,7 +1554,7 @@ doname_base(
 
         ConcatF1(bp, 0, " (%s)",
                  (cgend != CORPSTAT_RANDOM) ? genders[mgend].adj
-                                            : "unspecified gender");
+                                            : "未指定性别");
     }
 
     if ((obj->owornmask & W_WEP) && !gm.mrg_to_wielded) {
@@ -1579,7 +1572,7 @@ doname_base(
                  ? (is_ammo(obj) || is_missile(obj))
                  : !is_weptool(obj)))
             && !twoweap_primary) {
-            Concat(bp, 0, " (wielded)");
+            Concat(bp, 0, " (挥舞中)");
         } else {
             const char *hand_s = body_part(HAND);
             char *obufp, handsbuf[40];
@@ -1588,16 +1581,16 @@ doname_base(
                 hand_s = strcpy(handsbuf, obufp = makeplural(hand_s));
                 releaseobuf(obufp);
             } else { /* "right hand" or "left hand" */
-                Sprintf(handsbuf, "%s %s",
+                Sprintf(handsbuf, "%s%s",
                         URIGHTY ? "右" : "左", hand_s);
                 hand_s = handsbuf;
             }
             /* note: Sting's glow message, if added, will insert text
                in front of "(weapon in hand)"'s closing paren */
-            ConcatF2(bp, 0, " (%s %s)",
-                     tethered ? "tethered to"
-                     : twoweap_primary ? "wielded in"
-                       : "weapon in",
+            ConcatF2(bp, 0, " (%s%s)",
+                     tethered ? "拴在"
+                     : twoweap_primary ? "挥舞于"
+                       : "武器在",
                      hand_s);
 
             /* we just added a parenthesized phrase, but the right paren
@@ -1606,24 +1599,23 @@ doname_base(
                 if (gw.warn_obj_cnt && obj == uwep
                     && (EWarn_of_mon & W_WEP) != 0L)
                     /* we know bp[] ends with ')'; overwrite that */
-                    ConcatF2(bp, 1, ", %s %s)",
+                    ConcatF2(bp, 1, ", %s%s)",
                              glow_verb(gw.warn_obj_cnt, TRUE),
                              glow_color(obj->oartifact));
                 else if (obj->lamplit && artifact_light(obj))
                     /* as above, overwrite known closing paren */
-                    ConcatF1(bp, 1, ", %s lit)",
+                    ConcatF1(bp, 1, ", %s发光)",
                              arti_light_description(obj));
             }
         }
     }
     if (obj->owornmask & W_SWAPWEP) {
         if (u.twoweap)
-            ConcatF2(bp, 0, " (wielded in %s %s)",
-                     URIGHTY ? "left" : "right", body_part(HAND));
+            ConcatF2(bp, 0, " (挥舞于%s%s)",
+                     URIGHTY ? "左" : "右", body_part(HAND));
         else
             /* TODO: rephrase this when obj isn't a weapon or weptool */
-            ConcatF1(bp, 0, " (alternate weapon%s; not wielded)",
-                     plur(obj->quan));
+            Concat(bp, 0, " (备用武器; 未挥舞)");
     }
     if (obj->owornmask & W_QUIVER) {
         int Qtyp;
@@ -1646,9 +1638,9 @@ doname_base(
             break;
         }
         ConcatF1(bp, 0, " (%s)",
-                 (Qtyp == 1) ? "in quiver"
-                 : (Qtyp == 2) ? "in quiver pouch"
-                   : "at the ready");
+                 (Qtyp == 1) ? "在箭袋中"
+                 : (Qtyp == 2) ? "在箭袋小袋中"
+                   : "准备就绪");
     }
 
     /* treat 'restoring' like suppress_price because shopkeeper and
@@ -1664,7 +1656,7 @@ doname_base(
         /* separately formatted suffix avoids need for ConcatF3() */
         Sprintf(pricebuf, "%ld %s", quotedprice, currency(quotedprice));
         ConcatF2(bp, 0, " (%s, %s)",
-                 obj->unpaid ? "unpaid" : "contents", pricebuf);
+                 obj->unpaid ? "未付款" : "内容物", pricebuf);
 
         record_price_quote(obj->otyp, quotedprice / obj->quan, TRUE);
     } else if (with_price) { /* on floor or in container on floor */
@@ -1676,9 +1668,9 @@ doname_base(
 
             Sprintf(pricebuf, "%ld %s", price, currency(price));
             ConcatF2(bp, 0, " (%s, %s)",
-                     nochrg ? "contents" : "for sale", pricebuf);
+                     nochrg ? "内容物" : "出售中", pricebuf);
         } else if (nochrg > 0) {
-            Concat(bp, 0, " (no charge)");
+            Concat(bp, 0, " (免费)");
         } else if (iflags.pricequotes && !objects[obj->otyp].oc_name_known) {
             append_price_quote(bp, &bp_eos, obj->otyp);
         }
@@ -1703,9 +1695,9 @@ doname_base(
     if (wizard && iflags.wizweight) {
         /* wizard mode user has asked to see object weights */
         if (with_price && bp_eos[-1] == ')')
-            ConcatF1(bp, 1, ", %u aum)", obj->owt);
+            ConcatF1(bp, 1, ", %u 重量单位)", obj->owt);
         else
-            ConcatF1(bp, 0, " (%u aum)", obj->owt);
+            ConcatF1(bp, 0, " (%u 重量单位)", obj->owt);
 
         /* ConcatF1(bp) updates bp_eos and bpspaceleft but we're done
            with them now; add a fake use so compiler won't complain
@@ -1854,7 +1846,7 @@ corpse_xname(
     if (glob) {
         mnam = OBJ_NAME(objects[otmp->otyp]); /* "glob of <monster>" */
     } else if (omndx == NON_PM) { /* paranoia */
-        mnam = "thing";
+        mnam = "东西";
     } else {
         mnam = obj_pmname(otmp);
         if (the_unique_pm(&mons[omndx]) || type_is_pname(&mons[omndx])) {
@@ -1908,7 +1900,6 @@ corpse_xname(
         Strcat(nambuf, "尸体");
         /* makeplural(nambuf) => append "s" to "corpse" */
         if (otmp->quan > 1L && !ignore_quan) {
-            Strcat(nambuf, "s");
             any_prefix = FALSE; /* avoid "a newt corpses" */
         }
     }
@@ -1993,7 +1984,7 @@ killer_xname(struct obj *obj)
            devnull tournament, suppress player supplied fruit names because
            those can be used to fake other objects and dungeon features */
         buf = nextobuf();
-        Sprintf(buf, "致命的粘液霉菌%s", plur(obj->quan));
+        Sprintf(buf, "致命的粘液霉菌");
     } else {
         buf = xname(obj);
     }
@@ -2290,7 +2281,7 @@ Doname2(struct obj *obj)
 char *
 paydoname(struct obj *obj)
 {
-    static const char and_contents[] = " and its contents";
+    static const char and_contents[] = "及其内容物";
     char *p;
     unsigned save_cknown = obj->cknown;
     boolean save_wizweight = iflags.wizweight;
@@ -2315,7 +2306,7 @@ paydoname(struct obj *obj)
                 p += 2;
             else if (!strncmp(p, "an ", 3))
                 p += 3;
-            p = strprepend(p, obj->unpaid ? "an unpaid " : "your ");
+            p = strprepend(p, obj->unpaid ? "未付款的" : "你的");
         }
 
         if (!obj->cknown) {
@@ -2324,7 +2315,7 @@ paydoname(struct obj *obj)
                     < BUFSZ - PREFIX)
                     Strcat(p, and_contents);
             } else {
-                p = strprepend(p, "the contents of ");
+                p = strprepend(p, "内容物: ");
             }
         }
     }
@@ -5040,7 +5031,7 @@ readobjnam(char *bp, struct obj *no_wish)
                 rn1cnt = 6 - d.gsize;
             if (d.cnt > rn1cnt
                 && (!wizard || program_state.wizkit_wishing
-                    || y_n("Override glob weight limit?") != 'y'))
+                    || y_n("覆盖团块重量限制?") != 'y'))
                 d.cnt = rn1cnt;
             d.otmp->owt *= (unsigned) d.cnt;
         }
@@ -5452,18 +5443,18 @@ suit_simple_name(struct obj *suit)
 
     if (suit) {
         if (Is_dragon_mail(suit))
-            return "dragon mail"; /* <color> dragon scale mail */
+            return "龙鳞甲"; /* <color> dragon scale mail */
         else if (Is_dragon_scales(suit))
-            return "dragon scales";
+            return "龙鳞";
         suitnm = OBJ_NAME(objects[suit->otyp]);
         esuitp = eos((char *) suitnm);
         if (strlen(suitnm) > 5 && !strcmp(esuitp - 5, " mail"))
-            return "mail"; /* most suits fall into this category */
+            return "甲"; /* most suits fall into this category */
         else if (strlen(suitnm) > 7 && !strcmp(esuitp - 7, " jacket"))
-            return "jacket"; /* leather jacket */
+            return "夹克"; /* leather jacket */
     }
     /* "suit" is lame but "armor" is ambiguous and "body armor" is absurd */
-    return "suit";
+    return "盔甲";
 }
 
 const char *
@@ -5472,18 +5463,18 @@ cloak_simple_name(struct obj *cloak)
     if (cloak) {
         switch (cloak->otyp) {
         case ROBE:
-            return "robe";
+            return "长袍";
         case MUMMY_WRAPPING:
-            return "wrapping";
+            return "裹布";
         case ALCHEMY_SMOCK:
             return (objects[cloak->otyp].oc_name_known && cloak->dknown)
-                       ? "smock"
-                       : "apron";
+                       ? "罩衫"
+                       : "围裙";
         default:
             break;
         }
     }
-    return "cloak";
+    return "斗篷";
 }
 
 /* helm vs hat for messages */
@@ -5502,7 +5493,7 @@ helm_simple_name(struct obj *helmet)
      *      fedora, cornuthaum, dunce cap       -> hat
      *      all other types of helmets          -> helm
      */
-    return !hard_helmet(helmet) ? "hat" : "helm";
+    return !hard_helmet(helmet) ? "帽子" : "头盔";
 }
 
 /* gloves vs gauntlets; depends upon discovery state */
@@ -5528,7 +5519,7 @@ gloves_simple_name(struct obj *gloves)
 const char *
 boots_simple_name(struct obj *boots)
 {
-    static const char shoes[] = "shoes";
+    static const char shoes[] = "鞋";
 
     if (boots && boots->dknown) {
         int otyp = boots->otyp;
@@ -5540,7 +5531,7 @@ boots_simple_name(struct obj *boots)
             || (objects[otyp].oc_name_known && strstri(actualn, shoes)))
             return shoes;
     }
-    return "boots";
+    return "靴子";
 }
 
 /* simplified shield for messages */
@@ -5550,7 +5541,7 @@ shield_simple_name(struct obj *shield)
     if (shield) {
         /* xname() describes unknown (unseen) reflection as smooth */
         if (shield->otyp == SHIELD_OF_REFLECTION)
-            return shield->dknown ? "silver shield" : "smooth shield";
+            return shield->dknown ? "银盾" : "平滑的盾";
         /*
          * We might distinguish between wooden vs metallic or
          * light vs heavy to give small benefit to spell casters.
@@ -5570,14 +5561,14 @@ shield_simple_name(struct obj *shield)
                : "light shield";
 #endif
     }
-    return "shield";
+    return "盾牌";
 }
 
 /* for completeness */
 const char *
 shirt_simple_name(struct obj *shirt UNUSED)
 {
-    return "shirt";
+    return "衬衫";
 }
 
 const char *
@@ -5585,11 +5576,11 @@ mimic_obj_name(struct monst *mtmp)
 {
     if (M_AP_TYPE(mtmp) == M_AP_OBJECT) {
         if (mtmp->mappearance == GOLD_PIECE)
-            return "gold";
+            return "金币";
         if (mtmp->mappearance != STRANGE_OBJECT)
             return simple_typename(mtmp->mappearance);
     }
-    return "whatcha-may-callit";
+    return "某个东西";
 }
 
 /*

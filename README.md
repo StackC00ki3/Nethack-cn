@@ -130,7 +130,7 @@ English README：[README_en.md](README_en.md)
 - [x] nhlua.c
 - [x] nhmd4.c
 - [x] objects.c
-- [ ] objnam.c
+- [x] objnam.c
 - [ ] options.c
 - [ ] o_init.c
 - [ ] pager.c
