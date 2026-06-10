@@ -109,7 +109,7 @@ English README：[README_en.md](README_en.md)
 - [x] makemon.c
 - [x] mcastu.c
 - [x] mdlib.c
-- [ ] mhitm.c
+- [x] mhitm.c
 - [ ] mhitu.c
 - [ ] minion.c
 - [ ] mklev.c
