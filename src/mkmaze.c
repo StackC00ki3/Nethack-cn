@@ -711,7 +711,7 @@ check_ransacked(const char *s)
 }
 
 #define ORC_LEADER 1
-static const char *const orcfruit[] = { "paddle cactus", "dwarven root" };
+static const char *const orcfruit[] = { "桨仙人掌", "矮人根" };
 
 staticfn void
 migrate_orc(struct monst *mtmp, unsigned long mflags)
@@ -1510,7 +1510,7 @@ fumaroles(void)
         }
     }
     if (snd && !Deaf)
-        Norep("You hear a %swhoosh!", loud ? "loud " : "");  /* Deaf-aware */
+        Norep("你听见%s嗖的一声!", loud ? "响亮的" : "");  /* Deaf-aware */
 }
 
 /*
@@ -1716,7 +1716,7 @@ water_friction(void)
         eff = TRUE;
     }
     if (eff)
-        pline("水的湍流影响了你的行动.");
+        pline("水的湍流影响了你的移动.");
 }
 
 void
@@ -1991,7 +1991,7 @@ mv_bubble(struct bubble *b, coordxy dx, coordxy dy, boolean ini)
             b->x = gbxmax - b->bm[0] + 1;
         }
         if ((int) (b->y + b->bm[1] - 1) > gbymax) {
-            pline("气泡 ymax：y = %d, ymax = %d", b->y + b->bm[1] - 1,
+            pline("气泡 ymax: y = %d, ymax = %d", b->y + b->bm[1] - 1,
                   gbymax);
             b->y = gbymax - b->bm[1] + 1;
         }

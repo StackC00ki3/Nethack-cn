@@ -114,7 +114,7 @@ English README：[README_en.md](README_en.md)
 - [x] minion.c
 - [x] mklev.c
 - [x] mkmap.c
-- [ ] mkmaze.c
+- [x] mkmaze.c
 - [ ] mkobj.c
 - [ ] mkroom.c
 - [ ] mon.c
