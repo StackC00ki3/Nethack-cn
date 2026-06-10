@@ -609,18 +609,18 @@ impossible(const char *s, ...)
         return;
     }
 
-    Strcpy(pbuf2, "Program in disorder!");
+    Strcpy(pbuf2, "程序状态异常!");
     if (program_state.something_worth_saving)
-        Strcat(pbuf2, "  (Saving and reloading may fix this problem.)");
+        Strcat(pbuf2, "  (保存并重新读取或许能修复这个问题.)");
     pline("%s", pbuf2);
-    pline("Please report these messages to %s.", DEVTEAM_EMAIL);
+    pline("请将这些消息报告给 %s.", DEVTEAM_EMAIL);
     if (sysopt.support) {
-        pline("Alternatively, contact local support: %s", sysopt.support);
+        pline("或者联系本地支持: %s", sysopt.support);
     }
 
 #ifdef CRASHREPORT
     if (sysopt.crashreporturl) {
-        boolean report = ('y' == yn_function("Report now?", ynchars,
+        boolean report = ('y' == yn_function("现在报告吗?", ynchars,
                                              'n', FALSE));
 
         raw_print(""); /* prove to the user the character was accepted */
@@ -658,7 +658,8 @@ execplinehandler(const char *line)
         (void) setuid(getuid());
         (void) execv(args[0], (char *const *) args);
         perror((char *) 0);
-        (void) fprintf(stderr, "Exec to message handler %s failed.\n", sysopt.msghandler);
+        (void) fprintf(stderr, "执行消息处理器 %s 失败.\n",
+                       sysopt.msghandler);
         nh_terminate(EXIT_FAILURE);
     } else if (f > 0) {
         int status;
@@ -667,7 +668,7 @@ execplinehandler(const char *line)
     } else if (f == -1) {
         perror((char *) 0);
         use_pline_handler = FALSE;
-        pline("%s", "Fork to message handler failed.");
+        pline("%s", "创建消息处理器进程失败.");
     }
 #elif defined(WIN32)
     {
@@ -712,7 +713,7 @@ nhassert_failed(const char *expression, const char *filepath, int line)
         filename = p + 1;
 #endif
 
-    impossible("nhassert(%s) failed in file '%s' at line %d",
+    impossible("nhassert(%s) 在文件 '%s' 第 %d 行失败",
                expression, filename, line);
 }
 
