@@ -1276,10 +1276,10 @@ makelevel(void)
         char fillname[9];
         s_level *loc_lev;
 
-        Sprintf(fillname, "%s-中心", gu.urole.filecode);
+        Sprintf(fillname, "%s-loca", gu.urole.filecode);
         loc_lev = find_level(fillname);
 
-        Sprintf(fillname, "%s-填充", gu.urole.filecode);
+        Sprintf(fillname, "%s-fil", gu.urole.filecode);
         Strcat(fillname,
                 (u.uz.dlevel < loc_lev->dlevel.dlevel) ? "a" : "b");
         makemaz(fillname);
@@ -2414,7 +2414,7 @@ mkinvokearea(void)
     coordxy i;
 
     /* slightly odd if levitating, but not wrong */
-    pline_The("地板在你下面剧烈晃动!");
+    pline_The("地板在你脚下剧烈震动!");
     /* decide whether to issue the crumbling walls message */
     {
         xmin = xmax = svi.inv_pos.x;
@@ -2451,7 +2451,7 @@ mkinvokearea(void)
            or if all the walls within range have been dug away; when it does
            appear, it will describe iron bars as "walls" (which is ok) */
         if (wallct)
-            pline_The("你周围的墙壁开始弯曲和崩溃!");
+            pline_The("你周围的墙壁开始弯曲并坍塌!");
     }
     display_nhwindow(WIN_MESSAGE, TRUE);
 
