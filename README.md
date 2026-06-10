@@ -102,7 +102,7 @@ English README：[README_en.md](README_en.md)
 - [x] iactions.c
 - [x] insight.c
 - [x] invent.c
-- [ ] isaac64.c
+- [x] isaac64.c
 - [ ] light.c
 - [ ] lock.c
 - [ ] mail.c
