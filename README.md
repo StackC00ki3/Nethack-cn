@@ -126,7 +126,7 @@ English README：[README_en.md](README_en.md)
 - [x] muse.c
 - [x] music.c
 - [x] nhlobj.c
-- [ ] nhlsel.c
+- [x] nhlsel.c
 - [x] nhlua.c
 - [ ] nhmd4.c
 - [ ] objects.c
