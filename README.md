@@ -138,7 +138,7 @@ English README：[README_en.md](README_en.md)
 - [x] pline.c
 - [x] polyself.c
 - [x] potion.c
-- [ ] pray.c
+- [x] pray.c
 - [ ] priest.c
 - [ ] quest.c
 - [ ] questpgr.c
