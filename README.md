@@ -140,7 +140,7 @@ English README：[README_en.md](README_en.md)
 - [x] potion.c
 - [x] pray.c
 - [x] priest.c
-- [ ] quest.c
+- [x] quest.c
 - [ ] questpgr.c
 - [ ] read.c
 - [x] rect.c (无需翻译)
