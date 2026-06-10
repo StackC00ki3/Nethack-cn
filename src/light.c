@@ -917,17 +917,17 @@ arti_light_description(struct obj *obj)
 {
     switch (arti_light_radius(obj)) {
     case 4:
-        return "radiantly"; /* blessed gold dragon scale mail */
+        return "耀眼"; /* blessed gold dragon scale mail */
     case 3:
-        return "brilliantly"; /* blessed artifact, uncursed gold DSM */
+        return "灿烂"; /* blessed artifact, uncursed gold DSM */
     case 2:
-        return "brightly"; /* uncursed artifact, cursed gold DSM */
+        return "明亮"; /* uncursed artifact, cursed gold DSM */
     case 1:
-        return "dimly"; /* cursed artifact, embedded scales */
+        return "微弱"; /* cursed artifact, embedded scales */
     default:
         break;
     }
-    return "strangely";
+    return "奇异";
 }
 
 /* the #lightsources command */
@@ -942,12 +942,12 @@ wiz_light_sources(void)
     if (win == WIN_ERR)
         return ECMD_OK;
 
-    Sprintf(buf, "移动光源：英雄 @ (%2d,%2d)", u.ux, u.uy);
+    Sprintf(buf, "移动光源: 英雄 @ (%2d,%2d)", u.ux, u.uy);
     putstr(win, 0, buf);
     putstr(win, 0, "");
 
     if (gl.light_base) {
-        putstr(win, 0, "location range flags  type    id");
+        putstr(win, 0, "位置     范围  标志   类型  编号");
         putstr(win, 0, "-------- ----- ------ ----  -------");
         for (ls = gl.light_base; ls; ls = ls->next) {
             Sprintf(buf, "  %2d,%2d   %2d   0x%04x  %s  %s", ls->x, ls->y,
@@ -966,7 +966,7 @@ wiz_light_sources(void)
             putstr(win, 0, buf);
         }
     } else
-        putstr(win, 0, "<none>");
+        putstr(win, 0, "<无>");
 
     display_nhwindow(win, FALSE);
     destroy_nhwindow(win);

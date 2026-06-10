@@ -103,7 +103,7 @@ English README：[README_en.md](README_en.md)
 - [x] insight.c
 - [x] invent.c
 - [x] isaac64.c
-- [ ] light.c
+- [x] light.c
 - [ ] lock.c
 - [ ] mail.c
 - [ ] makemon.c
