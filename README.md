@@ -113,7 +113,7 @@ English README：[README_en.md](README_en.md)
 - [x] mhitu.c
 - [x] minion.c
 - [x] mklev.c
-- [ ] mkmap.c
+- [x] mkmap.c
 - [ ] mkmaze.c
 - [ ] mkobj.c
 - [ ] mkroom.c
