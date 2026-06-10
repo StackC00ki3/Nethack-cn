@@ -115,7 +115,7 @@ English README：[README_en.md](README_en.md)
 - [x] mklev.c
 - [x] mkmap.c
 - [x] mkmaze.c
-- [ ] mkobj.c
+- [x] mkobj.c
 - [ ] mkroom.c
 - [ ] mon.c
 - [ ] mondata.c
