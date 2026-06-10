@@ -118,7 +118,7 @@ English README：[README_en.md](README_en.md)
 - [x] mkobj.c
 - [x] mkroom.c
 - [x] mon.c
-- [ ] mondata.c
+- [x] mondata.c
 - [ ] monmove.c
 - [ ] monst.c
 - [ ] mplayer.c

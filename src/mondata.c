@@ -1376,10 +1376,24 @@ static locoverbs levitate = { "漂", "漂", "摇晃", "摇晃" },
                  immobile = { "扭动", "扭动", "震动", "震动" },
                  crawl = { "爬", "爬", "蹒跚", "蹒跚" };
 
+static const char *
+locomotion_default(const char *def)
+{
+    if (!strcmp(def, "hide"))
+        return "藏";
+    if (!strcmp(def, "jump"))
+        return "跳";
+    if (!strcmp(def, "move"))
+        return "移动";
+    if (!strcmp(def, "pass"))
+        return "通过";
+    return def;
+}
+
 const char *
 locomotion(const struct permonst *ptr, const char *def)
 {
-    int locoindx = 0; /*危险:int locoindx = (*def != highc(*def)) ? 0 : 1;*/
+    int locoindx = 0;
 
     return (is_floater(ptr) ? levitate[locoindx]
             : (is_flyer(ptr) && ptr->msize <= MZ_SMALL) ? flys[locoindx]
@@ -1388,7 +1402,7 @@ locomotion(const struct permonst *ptr, const char *def)
                   : amorphous(ptr) ? ooze[locoindx]
                     : !ptr->mmove ? immobile[locoindx]
                       : nolimbs(ptr) ? crawl[locoindx]
-                        : def);
+                        : locomotion_default(def));
 }
 
 const char *
@@ -1403,7 +1417,7 @@ stagger(const struct permonst *ptr, const char *def)
                   : amorphous(ptr) ? ooze[locoindx]
                     : !ptr->mmove ? immobile[locoindx]
                       : nolimbs(ptr) ? crawl[locoindx]
-                        : def);
+                        : locomotion_default(def));
 }
 
 /* return phrase describing the effect of fire attack on a type of monster */
@@ -1417,16 +1431,16 @@ on_fire(struct permonst *mptr, struct attack *mattk)
     case PM_FIRE_VORTEX:
     case PM_FIRE_ELEMENTAL:
     case PM_SALAMANDER:
-        what = "本来就是着火的";
+        what = "already on fire";
         break;
     case PM_WATER_ELEMENTAL:
     case PM_FOG_CLOUD:
     case PM_STEAM_VORTEX:
-        what = "沸腾了";
+        what = "boiling";
         break;
     case PM_ICE_VORTEX:
     case PM_GLASS_GOLEM:
-        what = "熔化了";
+        what = "melting";
         break;
     case PM_STONE_GOLEM:
     case PM_CLAY_GOLEM:
@@ -1435,10 +1449,10 @@ on_fire(struct permonst *mptr, struct attack *mattk)
     case PM_EARTH_ELEMENTAL:
     case PM_DUST_VORTEX:
     case PM_ENERGY_VORTEX:
-        what = "升温了";
+        what = "heating up";
         break;
     default:
-        what = (mattk->aatyp == AT_HUGS) ? "正在被烤" : "着火了";
+        what = (mattk->aatyp == AT_HUGS) ? "being roasted" : "on fire";
         break;
     }
     return what;
@@ -1453,7 +1467,7 @@ msummon_environ(struct permonst *mptr, const char **cloud)
                 : (mptr->mlet == S_LIGHT) ? PM_YELLOW_LIGHT
                   : monsndx(mptr));
 
-    *cloud = "cloud"; /* default is "cloud of <something>" */
+    *cloud = "团"; /* default is "cloud of <something>" */
     switch (mndx) {
     case PM_WATER_DEMON:
     case PM_AIR_ELEMENTAL:
@@ -1461,34 +1475,34 @@ msummon_environ(struct permonst *mptr, const char **cloud)
     case PM_FOG_CLOUD:
     case PM_ICE_VORTEX:
     case PM_FREEZING_SPHERE:
-        what = "vapor";
+        what = "水汽";
         break;
     case PM_STEAM_VORTEX:
-        what = "steam";
+        what = "蒸汽";
         break;
     case PM_ENERGY_VORTEX:
     case PM_SHOCKING_SPHERE:
-        *cloud = "shower"; /* "shower of sparks" instead of "cloud of..." */
-        what = "sparks";
+        *cloud = "阵"; /* "shower of sparks" instead of "cloud of..." */
+        what = "火花";
         break;
     case PM_EARTH_ELEMENTAL:
     case PM_DUST_VORTEX:
-        what = "dust";
+        what = "尘土";
         break;
     case PM_FIRE_ELEMENTAL:
     case PM_FIRE_VORTEX:
     case PM_FLAMING_SPHERE:
     /*case PM_SALAMANDER:*/
-        *cloud = "ball"; /* "ball of flame" instead of "cloud of..." */
-        what = "flame";
+        *cloud = "团"; /* "ball of flame" instead of "cloud of..." */
+        what = "火焰";
         break;
     case PM_ANGEL: /* actually any 'A'-class */
     case PM_YELLOW_LIGHT: /* any 'y'-class */
-        *cloud = "flash"; /* "flash of light" instead of "cloud of..." */
-        what = "light";
+        *cloud = "道"; /* "flash of light" instead of "cloud of..." */
+        what = "闪光";
         break;
     default:
-        what = "smoke";
+        what = "烟雾";
         break;
     }
     return what;
