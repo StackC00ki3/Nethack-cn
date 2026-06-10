@@ -110,7 +110,7 @@ tshirt_text(struct obj *tshirt, char *buf)
         "岩德军队的士兵们成群结队地行动",
         "我活过了岩德军队新兵训练营",
         "吕底俄斯会计学校校内长曲棍球队",
-        "Oracle(TM) Fountains第十届湿身T恤大赛",
+        "神谕(TM)喷泉第十届湿身T恤大赛",
         "来啊,黑龙!有本事就分解这个!",
         "我跟蠢货在一起-->",
         "别怪我,我投给了Izchak!",
@@ -119,7 +119,7 @@ tshirt_text(struct obj *tshirt, char *buf)
         "你好--,护士!",                                   /* Animaniacs */
         "=^.^=",
         "100%地精毛 - 请勿洗涤",
-        "LI-MING",
+        "阿伯僵尸与费奇",
         "cK -- 鸡蛇碰到了警察",
         "别问我,我只是个探险者",
         "死时还穿着裤子!",
@@ -254,7 +254,7 @@ char *
 apron_text(struct obj *apron, char *buf)
 {
     static const char *const apron_msgs[] = {
-        "Kiss the cook",
+        "亲亲厨师",
         "我在搞*科学*!",
         "别惹大厨",
         "别逼我毒死你",
@@ -430,7 +430,7 @@ doread(void)
         if (scroll->o_id % 3) {
             /* no need to vary this when blind; "on this ___" is important
                because it suggests that there might be something on others */
-            You("在这给%s上找不到可读的东西.", /*危险:You_cant*/
+            You_cant("在这个%s上找到可读的东西.",
                      simpleonames(scroll));
             return ECMD_OK;
         }
@@ -1411,7 +1411,7 @@ seffect_confuse_monster(struct obj **sobjp)
         make_confused(HConfusion + rnd(100), FALSE);
     } else if (confused) {
         if (!sblessed) {
-            Your("%s开始%s%s%s.", hands, /*修改语序:你猜我要干什么？搜索："光"*/
+            Your("%s开始%s%s%s.", hands, /*修改语序:你猜我要干什么? 搜索:"光"*/
                  altfeedback ? "发麻" : "发出",
                  altfeedback ? "" : hcolor(NH_PURPLE), altfeedback ? "" : "光");
             make_confused(HConfusion + rnd(100), FALSE);
@@ -1429,7 +1429,7 @@ seffect_confuse_monster(struct obj **sobjp)
             if (altfeedback)
                 Your("%s%s发麻.", hands, u.umconf ? "更加" : "开始");
             else if (!u.umconf)
-                Your("你的%s开始发出%s光.", hands, hcolor(NH_RED));
+                Your("%s开始发出%s光.", hands, hcolor(NH_RED));
             else
                 pline_The("%s的%s光增强了.", hcolor(NH_RED),
                           hands);
@@ -2955,10 +2955,10 @@ do_genocide(
     if (how & REALLY) {
         if (!num_genocides())
             livelog_printf(LL_CONDUCT | LL_GENOCIDE,
-                           "实施了%s的第一次灭绝(%s)",
-                           uhis(), makeplural(realbuf));
+                            "实施了%s的第一次灭绝(%s)",
+                            uhis(), makeplural(realbuf));
         else
-            livelog_printf(LL_GENOCIDE, "genocided %s", makeplural(realbuf));
+            livelog_printf(LL_GENOCIDE, "灭绝了%s", makeplural(realbuf));
 
         /* setting no-corpse affects wishing and random tin generation */
         svm.mvitals[mndx].mvflags |= (G_GENOD | G_NOCORPSE);
@@ -3159,7 +3159,7 @@ create_particular_parse(
         while (*bufp == ' ')
             bufp++;
     }
-#define QUAN_LIMIT (ROWNO * (COLNO - 1)) /*待写，危险，修改语序，冗余:我不知道怎么写。。。。。。*/
+#define QUAN_LIMIT (ROWNO * (COLNO - 1)) /*待写, 危险, 修改语序, 冗余: 我不知道怎么写......*/
     /* maximum possible quantity is one per cell: (0..ROWNO-1) x (1..COLNO-1)
        [21*79==1659 for default map size; could subtract 1 for hero's spot] */
     if (d->quan < 1 || d->quan > QUAN_LIMIT)

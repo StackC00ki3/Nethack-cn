@@ -142,7 +142,7 @@ English README：[README_en.md](README_en.md)
 - [x] priest.c
 - [x] quest.c
 - [x] questpgr.c
-- [ ] read.c
+- [x] read.c
 - [x] rect.c (无需翻译)
 - [ ] region.c
 - [ ] report.c
