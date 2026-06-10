@@ -125,7 +125,7 @@ English README：[README_en.md](README_en.md)
 - [x] mthrowu.c
 - [x] muse.c
 - [x] music.c
-- [ ] nhlobj.c
+- [x] nhlobj.c
 - [ ] nhlsel.c
 - [x] nhlua.c
 - [ ] nhmd4.c
