@@ -131,7 +131,7 @@ English README：[README_en.md](README_en.md)
 - [x] nhmd4.c
 - [x] objects.c
 - [x] objnam.c
-- [ ] options.c
+- [x] options.c
 - [ ] o_init.c
 - [ ] pager.c
 - [ ] pickup.c
