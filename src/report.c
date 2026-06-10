@@ -381,7 +381,7 @@ submit_web_report(int cos, const char *msg, const char *why)
         // config.h turns this on, but make it easy to turn off if needed
     if (cos == 1) {
         int k;
-        SWR_ADD_URIcoded("Latest messages:\n");
+        SWR_ADD_URIcoded("最近消息:\n");
         mark=uend;
         countpp++;
         for (k = 0; k < 5; k++) {
@@ -428,9 +428,9 @@ printf("ShellExecute returned: %p\n",rv);   // >32 is ok
 #  endif
 
             (void) execve(CRASHREPORT, (char * const *) xargv, environ);
-            Sprintf(err, "Can't start " CRASHREPORT ": %.*s",
+            Sprintf(err, "无法启动 " CRASHREPORT ": %.*s",
                     (int) (sizeof err
-                           - sizeof "Can't start " CRASHREPORT ": "),
+                           - sizeof "无法启动 " CRASHREPORT ": "),
                     strerror(errno));
             raw_print(err);
 #  ifdef CRASHREPORT_EXEC_NOSTDERR
@@ -461,7 +461,7 @@ int
 dobugreport(void)
 {
     if (!submit_web_report(2, NULL, "#bugreport command")) {
-        pline("Unable to send bug report.  Please visit %s instead.",
+        pline("无法发送错误报告. 请改为访问 %s.",
               (sysopt.crashreporturl && *sysopt.crashreporturl)
               ? sysopt.crashreporturl
               : DEVTEAM_URL
@@ -494,7 +494,7 @@ NH_panictrace_libc(void)
     int count, x;
     char **info, buf[BUFSZ];
 
-    raw_print("  Generating more information you may report:\n");
+    raw_print("  正在生成可用于报告的更多信息:\n");
     count = backtrace(bt, SIZE(bt));
     info = backtrace_symbols(bt, count);
     for (x = 0; x < count; x++) {
@@ -545,7 +545,7 @@ NH_panictrace_gdb(void)
              gdbpath, ARGV0, getpid(), greppath);
     gdb = popen(buf, "w");
     if (gdb) {
-        raw_print("  Generating more information you may report:\n");
+        raw_print("  正在生成可用于报告的更多信息:\n");
         (void) fprintf(gdb, "bt\nquit\ny");
         (void) fflush(gdb);
         sleep(4); /* ugly */
@@ -599,7 +599,7 @@ get_saved_pline(int lineno USED_if_dumplog)
 void
 panictrace_handler(int sig_unused UNUSED)
 {
-#define SIG_MSG "\nSignal received.\n"
+#define SIG_MSG "\n收到信号.\n"
     int f2;
 
 #  ifdef CURSES_GRAPHICS
