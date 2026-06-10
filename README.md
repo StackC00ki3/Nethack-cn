@@ -137,7 +137,7 @@ English README：[README_en.md](README_en.md)
 - [x] pickup.c
 - [x] pline.c
 - [x] polyself.c
-- [ ] potion.c
+- [x] potion.c
 - [ ] pray.c
 - [ ] priest.c
 - [ ] quest.c

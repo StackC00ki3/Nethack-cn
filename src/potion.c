@@ -872,7 +872,7 @@ peffect_see_invisible(struct obj *otmp)
     see_monsters();       /* see invisible monsters */
     newsym(u.ux, u.uy);   /* see yourself! */
     if (msg && !Blind) {  /* Blind possible if polymorphed */
-        You("你能看透自己了,但你是可见的!");
+        You("能看透自己了, 但你是可见的!");
         gp.potion_unkn--;
     }
 }
@@ -2589,7 +2589,7 @@ potion_dip(struct obj *obj, struct obj *potion)
            been made in order to get the merge result for both cases;
            as a consequence, mixing while Fumbling drops the mixture */
         freeinv(obj);
-        hold_potion(obj, "You drop %s!", doname(obj), (const char *) 0);
+        hold_potion(obj, "你丢下%s!", doname(obj), (const char *) 0);
         return ECMD_TIME;
     }
 
@@ -2705,7 +2705,7 @@ potion_dip(struct obj *obj, struct obj *potion)
             pline("%s%s满的.", Yname2(obj), otense(obj, "是"));
             potion->in_use = FALSE; /* didn't go poof */
         } else {
-            You("你把%s注满了油.", yname(obj));
+            You("把%s注满了油.", yname(obj));
             check_unpaid(potion);        /* Yendorian Fuel Tax */
             /* burns more efficiently in a lamp than in a bottle;
                diluted potion provides less benefit but we don't attempt
