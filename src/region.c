@@ -986,15 +986,15 @@ enter_force_field(genericptr_t p1, genericptr_t p2)
 
     if (p2 == (genericptr_t) 0) { /* That means the player */
         if (!Blind)
-            You("bump into %s.  Ouch!",
-                Hallucination ? "an invisible tree"
-                              : "some kind of invisible wall");
+            You("撞上了%s. 哎哟!",
+                Hallucination ? "一棵隐形树"
+                              : "某种隐形墙");
         else
-            pline("Ouch!");
+            pline("哎哟!");
     } else {
         mtmp = (struct monst *) p2;
         if (canseemon(mtmp))
-            pline("%s bumps into %s!", Monnam(mtmp), something);
+            pline("%s撞上了%s!", Monnam(mtmp), something);
     }
     return FALSE;
 }
@@ -1111,7 +1111,7 @@ inside_gas_cloud(genericptr_t p1, genericptr_t p2)
         if (m_poisongas_ok(&gy.youmonst) == M_POISONGAS_OK)
             return FALSE;
         if (!Blind) {
-            Your("的%s正在刺痛.", makeplural(body_part(EYE)));
+            Your("%s正在刺痛.", makeplural(body_part(EYE)));
             make_blinded(1L, FALSE);
         }
         if (!Poison_resistance) {
@@ -1195,7 +1195,7 @@ make_gas_cloud(
     add_region(cloud);
 
     if (!gi.in_mklev && !inside_cloud && is_hero_inside_gas_cloud()) {
-        You("你被一团%s包围!",
+        You("被一团%s包围!",
             /* FIXME: "steam" is wrong if this cloud is just the trail of
                a fog cloud's movement; changing to "vapor" would handle
                that but seems a step backward when it really is steam */

@@ -144,7 +144,7 @@ English README：[README_en.md](README_en.md)
 - [x] questpgr.c
 - [x] read.c
 - [x] rect.c (无需翻译)
-- [ ] region.c
+- [x] region.c
 - [ ] report.c
 - [ ] restore.c
 - [ ] rip.c
