@@ -111,7 +111,7 @@ English README：[README_en.md](README_en.md)
 - [x] mdlib.c
 - [x] mhitm.c
 - [x] mhitu.c
-- [ ] minion.c
+- [x] minion.c
 - [ ] mklev.c
 - [ ] mkmap.c
 - [ ] mkmaze.c
