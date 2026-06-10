@@ -117,7 +117,7 @@ English README：[README_en.md](README_en.md)
 - [x] mkmaze.c
 - [x] mkobj.c
 - [x] mkroom.c
-- [ ] mon.c
+- [x] mon.c
 - [ ] mondata.c
 - [ ] monmove.c
 - [ ] monst.c
