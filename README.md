@@ -104,7 +104,7 @@ English README：[README_en.md](README_en.md)
 - [x] invent.c
 - [x] isaac64.c
 - [x] light.c
-- [ ] lock.c
+- [x] lock.c
 - [ ] mail.c
 - [ ] makemon.c
 - [ ] mcastu.c
