@@ -120,7 +120,7 @@ English README：[README_en.md](README_en.md)
 - [x] mon.c
 - [x] mondata.c
 - [x] monmove.c
-- [ ] monst.c
+- [x] monst.c
 - [ ] mplayer.c
 - [ ] mthrowu.c
 - [ ] muse.c
