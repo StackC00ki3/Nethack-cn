@@ -119,7 +119,7 @@ English README：[README_en.md](README_en.md)
 - [x] mkroom.c
 - [x] mon.c
 - [x] mondata.c
-- [ ] monmove.c
+- [x] monmove.c
 - [ ] monst.c
 - [ ] mplayer.c
 - [ ] mthrowu.c
