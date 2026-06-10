@@ -108,7 +108,7 @@ English README：[README_en.md](README_en.md)
 - [x] mail.c
 - [x] makemon.c
 - [x] mcastu.c
-- [ ] mdlib.c
+- [x] mdlib.c
 - [ ] mhitm.c
 - [ ] mhitu.c
 - [ ] minion.c

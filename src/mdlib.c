@@ -118,17 +118,17 @@ static struct win_information window_opts[] = {
          confusing to most users (and it will already be listed separately
          in the compiled options section so users aware of it can find it) */
 #ifdef MSDOS
-      "traditional text with optional 'tiles' graphics",
+      "传统文本, 可选 'tiles' 图形",
 #else
       /* assume that one or more of IBMgraphics, DECgraphics
          can be enabled; we can't tell from here whether that is accurate */
-      "traditional text with optional line-drawing",
+      "传统文本, 可选线条绘制",
 #endif
       TRUE
     },
 #endif /*TTY_GRAPHICS */
 #ifdef CURSES_GRAPHICS
-    { "curses", "terminal-based graphics", TRUE },
+    { "curses", "基于终端的图形", TRUE },
 #endif
 #ifdef X11_GRAPHICS
     { "X11", "X11", TRUE },
@@ -137,10 +137,10 @@ static struct win_information window_opts[] = {
     { "Qt", "Qt", TRUE },
 #endif
 #ifdef MSWIN_GRAPHICS /* win32 */
-    { "mswin", "Windows GUI", TRUE },
+    { "mswin", "Windows 图形界面", TRUE },
 #endif
 #ifdef SHIM_GRAPHICS
-    { "shim", "NetHack Library Windowing Shim", TRUE },
+    { "shim", "NetHack 库窗口系统兼容层", TRUE },
 #endif
 
 #if 0  /* remainder have been retired */
@@ -320,12 +320,12 @@ version_id_string(char *outbuf, size_t bufsz, const char *build_date)
 
 #if (NH_DEVEL_STATUS != NH_STATUS_RELEASED)
 #if (NH_DEVEL_STATUS == NH_STATUS_BETA)
-    Strcpy(statusbuf, " Beta");
+    Strcpy(statusbuf, " 测试版");
 #else
 #if (NH_DEVEL_STATUS == NH_STATUS_WIP)
-    Strcpy(statusbuf, " Work-in-progress");
+    Strcpy(statusbuf, " 开发中");
 #else
-    Strcpy(statusbuf, " post-release");
+    Strcpy(statusbuf, " 发布后");
 #endif
 #endif
 #else
@@ -337,9 +337,9 @@ version_id_string(char *outbuf, size_t bufsz, const char *build_date)
     Strcpy(&subbuf[1], PORT_SUB_ID);
 #endif
 
-    Snprintf(outbuf, bufsz, "%s NetHack%s Version %s%s - last %s %s.",
+    Snprintf(outbuf, bufsz, "%s NetHack%s 版本 %s%s - 最后%s %s.",
              PORT_ID, subbuf, mdlib_version_string(versbuf, "."), statusbuf,
-             date_via_env ? "revision" : "build", build_date);
+             date_via_env ? "修订" : "构建", build_date);
     return outbuf;
 }
 
@@ -357,15 +357,15 @@ bannerc_string(char *outbuf, size_t bufsz, const char *build_date)
 #endif
 #if (NH_DEVEL_STATUS != NH_STATUS_RELEASED)
 #if (NH_DEVEL_STATUS == NH_STATUS_BETA)
-    Strcat(subbuf, " Beta");
+    Strcat(subbuf, " 测试版");
 #else
-    Strcat(subbuf, " Work-in-progress");
+    Strcat(subbuf, " 开发中");
 #endif
 #endif
 
-    Snprintf(outbuf, bufsz, "         Version %s %s%s, %s %s.",
+    Snprintf(outbuf, bufsz, "         版本 %s %s%s, %s于 %s.",
             mdlib_version_string(versbuf, "."), PORT_ID, subbuf,
-            date_via_env ? "revised" : "built", build_date);
+            date_via_env ? "修订" : "构建", build_date);
     return outbuf;
 }
 
@@ -400,202 +400,202 @@ build_savebones_compat_string(void)
 #endif
 
     Strcpy(save_bones_compat_buf,
-           "save and bones files accepted from version");
+           "可接受的存档和骨骸文件版本:");
 #ifdef VERSION_COMPATIBILITY
     if (uver != cver)
-        Sprintf(eos(save_bones_compat_buf), "s %lu.%lu.%lu through %d.%d.%d",
+        Sprintf(eos(save_bones_compat_buf), " %lu.%lu.%lu 至 %d.%d.%d",
                 ((uver >> 24) & 0x0ffUL),
                 ((uver >> 16) & 0x0ffUL),
                 ((uver >>  8) & 0x0ffUL),
                 VERSION_MAJOR, VERSION_MINOR, PATCHLEVEL);
     else
 #endif
-        Sprintf(eos(save_bones_compat_buf), " %d.%d.%d only",
+        Sprintf(eos(save_bones_compat_buf), " 仅 %d.%d.%d",
                 VERSION_MAJOR, VERSION_MINOR, PATCHLEVEL);
 }
 
 static const char *const build_opts[] = {
 #ifdef AMIGA_WBENCH
-    "Amiga WorkBench support",
+    "Amiga WorkBench 支持",
 #endif
 #ifdef ANSI_DEFAULT
-    "ANSI default terminal",
+    "ANSI 默认终端",
 #endif
-    "color",
+    "颜色",
 #ifdef TTY_GRAPHICS
 #ifdef TTY_TILES_ESCCODES
-    "console escape codes for tile hinting",
+    "用于图块提示的控制台转义码",
 #endif
 #endif
 #ifdef LIFE
-    "Conway's Game of Life",
+    "康威生命游戏",
 #endif
 #ifdef COMPRESS
-    "data file compression",
+    "数据文件压缩",
 #endif
 #ifdef ZLIB_COMP
-    "ZLIB data file compression",
+    "ZLIB 数据文件压缩",
 #endif
 #ifdef DLB
 #ifndef VERSION_IN_DLB_FILENAME
-    "data librarian",
+    "数据库归档器",
 #else
-    "data librarian with a version-dependent name",
+    "带版本相关名称的数据归档器",
 #endif
 #endif
 #ifdef EDIT_GETLIN
-    "edit getlin - some prompts remember previous response",
+    "编辑 getlin - 部分提示会记住上次响应",
 #endif
 #ifdef DUMPLOG
-    "end-of-game dumplogs",
+    "游戏结束转储日志",
 #endif
 #ifdef HOLD_LOCKFILE_OPEN
-    "exclusive lock on level 0 file",
+    "对第 0 层文件独占加锁",
 #endif
 #if defined(HANGUPHANDLING) && !defined(NO_SIGNAL)
 #ifdef SAFERHANGUP
-    "deferred handling of hangup signal",
+    "延迟处理挂起信号",
 #else
-    "immediate handling of hangup signal",
+    "立即处理挂起信号",
 #endif
 #endif
 #ifdef INSURANCE
-    "insurance files for recovering from crashes",
+    "用于崩溃恢复的保险文件",
 #endif
 #ifdef LIVELOG
-    "live logging support",
+    "实时日志支持",
 #endif
 #ifdef LOGFILE
-    "log file",
+    "日志文件",
 #endif
 #ifdef XLOGFILE
-    "extended log file",
+    "扩展日志文件",
 #endif
 #ifdef PANICLOG
-    "errors and warnings log file",
+    "错误和警告日志文件",
 #endif
 #ifdef MAIL
-    "mail daemon",
+    "邮件守护进程",
 #endif
 #ifdef MONITOR_HEAP
-    "monitor heap - record memory usage for later analysis",
+    "监控堆 - 记录内存使用以便后续分析",
 #endif
 #if defined(GNUDOS) || defined(__DJGPP__)
-    "MSDOS protected mode",
+    "MSDOS 保护模式",
 #endif
 #ifdef NEWS
-    "news file",
+    "新闻文件",
 #endif
 #ifdef OVERLAY
 #ifdef MOVERLAY
-    "MOVE overlays",
+    "MOVE 覆盖层",
 #else
 #ifdef VROOMM
-    "VROOMM overlays",
+    "VROOMM 覆盖层",
 #else
-    "overlays",
+    "覆盖层",
 #endif
 #endif
 #endif
 #ifdef UNIX
 #if defined(DEF_PAGER) && !defined(DLB)
-    "external pager used for viewing help files",
+    "用于查看帮助文件的外部分页器",
 #else
-    "internal pager used for viewing help files",
+    "用于查看帮助文件的内部分页器",
 #endif
 #endif /* UNIX */
     /* pattern matching method will be substituted by nethack at run time */
-    "pattern matching via :PATMATCH:",
+    "通过 :PATMATCH: 进行模式匹配",
 #ifdef USE_ISAAC64
-    "pseudo random numbers generated by ISAAC64",
+    "由 ISAAC64 生成伪随机数",
 #ifdef DEV_RANDOM
     /* include which specific one */
-    "strong PRNG seed from " DEV_RANDOM,
+    "强 PRNG 种子来自 " DEV_RANDOM,
 #else
 #ifdef WIN32
-    "strong PRNG seed from CNG BCryptGenRandom()",
+    "强 PRNG 种子来自 CNG BCryptGenRandom()",
 #endif
 #endif  /* DEV_RANDOM */
 #else   /* ISAAC64 */
 #ifdef RANDOM
-    "pseudo random numbers generated by random()",
+    "由 random() 生成伪随机数",
 #else
-    "pseudo random numbers generated by C rand()",
+    "由 C rand() 生成伪随机数",
 #endif
 #endif /* ISAAC64 */
 #ifdef SELECTSAVED
-    "restore saved games via menu",
+    "通过菜单恢复已保存游戏",
 #endif
 #ifdef SCORE_ON_BOTL
-    "score on status line",
+    "状态行显示分数",
 #endif
 #ifdef CLIPPING
-    "screen clipping",
+    "屏幕裁剪",
 #endif
 #ifdef NO_TERMS
 #ifdef MACOS9
-    "screen control via mactty",
+    "通过 mactty 控制屏幕",
 #endif
 #ifdef SCREEN_BIOS
-    "screen control via BIOS",
+    "通过 BIOS 控制屏幕",
 #endif
 #ifdef SCREEN_DJGPPFAST
-    "screen control via DJGPP fast",
+    "通过 DJGPP fast 控制屏幕",
 #endif
 #ifdef SCREEN_VGA
-    "screen control via VGA graphics",
+    "通过 VGA 图形控制屏幕",
 #endif
 #ifdef WIN32CON
-    "screen control via WIN32 console I/O",
+    "通过 WIN32 控制台 I/O 控制屏幕",
 #endif
 #endif /* NO_TERMS */
 #ifdef SHELL
-    "shell command",
+    "shell 命令",
 #endif
-    "traditional status display",
+    "传统状态显示",
 #ifdef STATUS_HILITES
-    "status via windowport with highlighting",
+    "通过窗口端口显示带高亮的状态",
 #else
-    "status via windowport without highlighting",
+    "通过窗口端口显示无高亮的状态",
 #endif
 #ifdef SUSPEND
-    "suspend command",
+    "挂起命令",
 #endif
 #ifdef TTY_GRAPHICS
 #ifdef TERMINFO
-    "terminal info library",
+    "终端信息库",
 #else
 #if defined(TERMLIB) || (!defined(MICRO) && !defined(WIN32))
-    "terminal capability library",
+    "终端能力库",
 #endif
 #endif
 #endif /*TTY_GRAPHICS*/
 #ifdef USE_XPM
-    "tiles file in XPM format",
+    "XPM 格式的图块文件",
 #endif
 #ifdef GRAPHIC_TOMBSTONE
-    "graphical RIP screen",
+    "图形化 RIP 画面",
 #endif
 #ifdef TIMED_DELAY
-    "timed wait for display effects",
+    "显示效果定时等待",
 #endif
 #ifdef PREFIXES_IN_USE
-    "variable playground",
+    "可变游戏场地",
 #endif
 #ifdef VISION_TABLES
-    "vision tables",
+    "视野表",
 #endif
 #ifdef SYSCF
-    "system configuration at run-time",
+    "运行时系统配置",
 #endif
 #ifdef PANICTRACE
-    "show stack trace on error",
+    "出错时显示堆栈跟踪",
 #endif
 #ifdef CRASHREPORT
-    "launch browser to report issues",
+    "启动浏览器报告问题",
 #endif
     save_bones_compat_buf,
-    "and basic NetHack features"
+    "以及基本 NetHack 功能"
 };
 
 staticfn int
@@ -682,28 +682,28 @@ build_options(void)
     STOREOPTTEXT(optbuf);
 #if (NH_DEVEL_STATUS != NH_STATUS_RELEASED)
 #if (NH_DEVEL_STATUS == NH_STATUS_BETA)
-#define STATUS_ARG " [beta]"
+#define STATUS_ARG " [测试版]"
 #else
-#define STATUS_ARG " [work-in-progress]"
+#define STATUS_ARG " [开发中]"
 #endif
 #else
 #define STATUS_ARG ""
 #endif /* NH_DEVEL_STATUS == NH_STATUS_RELEASED */
-    Sprintf(optbuf, "%sNetHack version %d.%d.%d%s\n",
+    Sprintf(optbuf, "%sNetHack 版本 %d.%d.%d%s\n",
             opt_indent, VERSION_MAJOR, VERSION_MINOR, PATCHLEVEL, STATUS_ARG);
     STOREOPTTEXT(optbuf);
-    Sprintf(optbuf, "Options compiled into this edition:");
+    Sprintf(optbuf, "此版本编译进的选项:");
     STOREOPTTEXT(optbuf);
     optbuf[0] = '\0';
     length = COLNO + 1; /* force 1st item onto new line */
-    Strcat(strcpy(buf, datamodel(0)), " data model,");
+    Strcat(strcpy(buf, datamodel(0)), " 数据模型,");
     opt_out_words(buf, &length);
     for (i = 0; i < SIZE(build_opts); i++) {
 #if !defined(MAKEDEFS_C) && defined(FOR_RUNTIME)
 #ifdef WIN32
         /* ignore the console entry if GUI version */
         if (GUILaunched
-            && !strcmp("screen control via WIN32 console I/O", build_opts[i]))
+            && !strcmp("通过 WIN32 控制台 I/O 控制屏幕", build_opts[i]))
             continue;
 #endif
 #endif /* !MAKEDEFS_C && FOR_RUNTIME */
@@ -715,8 +715,7 @@ build_options(void)
     optbuf[0] = '\0';
     winsyscnt = count_and_validate_winopts();
     STOREOPTTEXT(optbuf);
-    Sprintf(optbuf, "Supported windowing system%s:",
-            (winsyscnt > 1) ? "s" : "");
+    Sprintf(optbuf, "支持的窗口系统:");
     STOREOPTTEXT(optbuf);
     optbuf[0] = '\0';
     length = COLNO + 1; /* force 1st item onto new line */
@@ -735,15 +734,15 @@ build_options(void)
          * 2+ will be followed by " with a default of..."
          */
         Strcat(buf, (winsyscnt == 1) ? "." /* no 'default' */
-                    : (winsyscnt == 2 && cnt == 0) ? " and"
-                      : (cnt == winsyscnt - 2) ? ", and"
+                    : (winsyscnt == 2 && cnt == 0) ? " 和"
+                      : (cnt == winsyscnt - 2) ? ", 和"
                         : ",");
         opt_out_words(buf, &length);
         cnt++;
     }
     if (cnt > 1) {
         /* loop ended with a comma; opt_out_words() will insert a space */
-        Sprintf(buf, "with a default of \"%s\".", defwinsys);
+        Sprintf(buf, "默认使用 \"%s\".", defwinsys);
         opt_out_words(buf, &length);
     }
 
@@ -753,7 +752,7 @@ build_options(void)
     optbuf[0] = '\0';
     soundlibcnt = count_and_validate_soundlibopts();
     STOREOPTTEXT(optbuf);
-    Sprintf(optbuf, "Supported soundlib%s:", (soundlibcnt > 1) ? "s" : "");
+    Sprintf(optbuf, "支持的音频库:");
     STOREOPTTEXT(optbuf);
     optbuf[0] = '\0';
     length = COLNO + 1; /* force 1st item onto new line */
@@ -777,8 +776,8 @@ build_options(void)
          */
         Strcat(buf, (soundlibcnt == 1 || cnt == soundlibcnt - 1)
                     ? "." /* no 'with default' */
-                    : (soundlibcnt == 2 && cnt == 0) ? " and"
-                      : (cnt == soundlibcnt - 2) ? ", and"
+                    : (soundlibcnt == 2 && cnt == 0) ? " 和"
+                      : (cnt == soundlibcnt - 2) ? ", 和"
                         : ",");
         opt_out_words(buf, &length);
         cnt++;
@@ -786,7 +785,7 @@ build_options(void)
 #ifdef USER_SOUNDS
     if (cnt > 1) {
         /* loop ended with a comma; opt_out_words() will insert a space */
-        Sprintf(buf, "user sounds.");
+        Sprintf(buf, "用户音效.");
         opt_out_words(buf, &length);
     }
 #endif
@@ -798,7 +797,7 @@ build_options(void)
 #if defined(MAKEDEFS_C) || defined(FOR_RUNTIME)
     {
         static const char *const lua_info[] = {
- "", "NetHack 5.0.* uses the 'Lua' interpreter to process some data:", "",
+ "", "NetHack 5.0.* 使用 'Lua' 解释器处理部分数据:", "",
  "    :LUACOPYRIGHT:", "",
  /*        1         2         3         4         5         6         7
   1234567890123456789012345678901234567890123456789012345678901234567890123456
