@@ -132,7 +132,7 @@ getmailstatus(void)
 
     if (mailbox && stat(mailbox, &omstat)) {
 #ifdef PERMANENT_MAILBOX
-        pline("Cannot get status of MAIL=\"%s\".", mailbox);
+        pline("无法获取 MAIL=\"%s\" 的状态.", mailbox);
         free_maildata(); /* set 'mailbox' to Null */
 #else
         omstat.st_mtime = 0;
@@ -274,8 +274,8 @@ md_stop(coord *stopp,  /* stopping position (we fill it in) */
 }
 
 /* Let the mail daemon have a larger vocabulary. */
-staticfn NEARDATA const char *mail_text[] = { "Gangway!", "Look out!",
-                                            "Pardon me!" };
+staticfn NEARDATA const char *mail_text[] = { "让开!", "小心!",
+                                            "借过!" };
 #define md_exclamations() (mail_text[rn2(3)])
 
 /*
@@ -339,7 +339,7 @@ md_rush(struct monst *md,
             if (mon)
                 verbalize1(md_exclamations());
             else if (u_at(fx, fy))
-                verbalize("Excuse me.");
+                verbalize("打扰一下.");
         }
 
         if (mon)
@@ -370,7 +370,7 @@ md_rush(struct monst *md,
         newsym(fx, fy);
         if (!Deaf) {
             SetVoice(md, 0, 80, 0);
-            verbalize("This place's too crowded.  I'm outta here.");
+            verbalize("这里太挤了. 我走了.");
         } else {
             pline("%s.", Never_mind);
         }
@@ -415,9 +415,9 @@ newmail(struct mail_info *info)
     message_seen = TRUE;
     if (!Deaf) {
         SetVoice(md, 0, 80, 0);
-        verbalize("%s, %s!  %s.", Hello(md), svp.plname, info->display_txt);
+        verbalize("%s, %s! %s.", Hello(md), svp.plname, info->display_txt);
     } else {
-        pline("Message:  %s.", info->display_txt);
+        pline("消息: %s.", info->display_txt);
     }
 
     if (info->message_typ) {
@@ -431,14 +431,14 @@ newmail(struct mail_info *info)
         if (!m_next2u(md)) {
             if (!Deaf) {
                 SetVoice(md, 0, 80, 0);
-                verbalize("Catch!");
+                verbalize("接住!");
             } else {
                 /* don't bother with nonverbal alternative ... */
                 ;
             }
         }
         display_nhwindow(WIN_MESSAGE, FALSE);
-        obj = hold_another_object(obj, "Oops!", (const char *) 0,
+        obj = hold_another_object(obj, "哎呀!", (const char *) 0,
                                   (const char *) 0);
         nhUse(obj);
     }
@@ -452,7 +452,7 @@ newmail(struct mail_info *info)
  give_up:
     /* deliver some classes of messages even if no daemon ever shows up */
     if (!message_seen && info->message_typ == MSG_OTHER)
-        pline("Hark!  \"%s.\"", info->display_txt);
+        pline("听啊! \"%s.\"", info->display_txt);
 }
 
 #if !defined(UNIX) && !defined(VMS)
@@ -471,7 +471,7 @@ ckmailstatus(void)
     }
     if (--mustgetmail <= 0) {
         static struct mail_info deliver = {
-            MSG_MAIL, "I have some mail for you", 0, 0
+            MSG_MAIL, "我有你的邮件", 0, 0
         };
         newmail(&deliver);
         mustgetmail = -1;
@@ -490,39 +490,39 @@ readmail(struct obj *otmp UNUSED)
     enum delivery_types delivery = normal_delivery;
     const char *recipient = 0;
     static const char *const junk_templates[] = {
-        "%sReport bugs to <%s>.%s", /*** must be first entry ***/
-        "Please disregard previous letter.",
-        "Welcome to NetHack.",
+        "%s请将错误报告发送至 <%s>.%s", /*** must be first entry ***/
+        "请无视上一封信.",
+        "欢迎来到 NetHack.",
 #ifdef AMIGA
-        "Only Amiga makes it possible.",
-        "CATS have all the answers.",
+        "只有 Amiga 能做到.",
+        "猫咪知道所有答案.",
 #endif
-        "This mail complies with the Yendorian Anti-Spam Act (YASA)",
-        "Please find enclosed a small token to represent your Owlbear",
-        "**FR33 P0T10N 0F FULL H34L1NG**",
-        "Please return to sender (Asmodeus)",
+        "本邮件符合延多反垃圾邮件法案(YASA)",
+        "随信附上一枚小小信物, 代表你的枭熊",
+        "**免费完全治疗药水**",
+        "请退回给发件人(阿斯莫德)",
         /* when enclosed by "It reads:  \"...\"", this is too long
            for an ordinary 80-column display so wraps to a second line
            (suboptimal but works correctly);
            dollar sign and fractional zorkmids are inappropriate within
            nethack but are suitable for typical dysfunctional spam mail */
-        ("Buy a potion of gain level for only $19.99! "
-         " Guaranteed to be blessed!"),
+        ("只要 $19.99 就能购买一瓶升级药水! "
+         "保证受祝福!"),
         /* DEVTEAM_URL will be substituted for 2nd "%s";
            terminating punctuation (formerly "!") has deliberately been
            omitted so that it can't be mistaken for part of the URL
            (unfortunately that is still followed by a closing quote--in
            the pline below, not the data here) */
-        "%sInvitation: Visit the NetHack web site at %s%s"
+        "%s邀请: 访问 NetHack 网站 %s%s"
     };
-    const char *const it_reads = "It reads:  \"";
+    const char *const it_reads = "上面写着: \"";
 
     i = rn2(SIZE(junk_templates));
     if (strchr(junk_templates[i], '%')) {
         if (i == 0) {
             recipient = DEVTEAM_EMAIL;
             delivery = subst_delivery;
-        } else if (strstri(junk_templates[i], "web site")) {
+        } else if (i == SIZE(junk_templates) - 1) {
             recipient = DEVTEAM_URL;
             delivery = subst_delivery;
         } else {
@@ -531,7 +531,7 @@ readmail(struct obj *otmp UNUSED)
         }
     }
     if (Blind) {
-        pline("Unfortunately you cannot see what it says.");
+        pline("很遗憾, 你看不见它写了什么.");
     } else {
         if (delivery == subst_delivery)
             pline(junk_templates[i], it_reads, recipient, "\"");
@@ -561,7 +561,7 @@ ckmailstatus(void)
     laststattime = svm.moves;
     if (stat(mailbox, &nmstat)) {
 #ifdef PERMANENT_MAILBOX
-        pline("Cannot get status of MAIL=\"%s\" anymore.", mailbox);
+        pline("无法再获取 MAIL=\"%s\" 的状态.", mailbox);
         free_maildata();
 #else
         nmstat.st_mtime = 0;
@@ -570,10 +570,10 @@ ckmailstatus(void)
         if (nmstat.st_size) {
             static struct mail_info deliver = {
 #ifndef NO_MAILREADER
-                MSG_MAIL, "I have some mail for you",
+                MSG_MAIL, "我有你的邮件",
 #else
                 /* suppress creation and delivery of scroll of mail */
-                MSG_OTHER, "You have some mail in the outside world",
+                MSG_OTHER, "外面的世界有你的邮件",
 #endif
                 0, 0
             };
@@ -623,8 +623,8 @@ read_simplemail(const char *mbox, boolean adminmsg)
             fl.l_type = F_UNLCK;
             fcntl(fileno(mb), F_UNLCK, &fl);
 #endif
-            There("is a%s message on this scroll.",
-                  seen_one_already ? "nother" : "");
+            There("有%s条消息在这张卷轴上.",
+                  seen_one_already ? "另一" : "一");
         }
         msg = strchr(curline, ':');
 
@@ -643,11 +643,11 @@ read_simplemail(const char *mbox, boolean adminmsg)
             endpunct = ".";
 
         if (adminmsg) {
-            urgent_pline("The voice of %s booms through the caverns:",
-                         curline);
+            urgent_pline("%s的声音在洞穴中回荡:",
+                          curline);
         } else {
-            pline("This message is from '%s'.", curline);
-            pline("It reads:");
+            pline("这条消息来自 '%s'.", curline);
+            pline("上面写着:");
         }
         pline("\"%s\"%s", msg, endpunct);
 
@@ -676,7 +676,7 @@ read_simplemail(const char *mbox, boolean adminmsg)
  bail:
     /* bail out _professionally_ */
     if (!adminmsg)
-        pline("It appears to be all gibberish.");
+        pline("它看起来全是乱码.");
 }
 
 #endif /* SIMPLE_MAIL */
@@ -778,7 +778,7 @@ readmail(struct obj *otmp)
     if (!cmd || !*cmd)
         cmd = "SPAWN";
 
-    Sprintf(qbuf, "System command (%s)", cmd);
+    Sprintf(qbuf, "系统命令(%s)", cmd);
     getlin(qbuf, buf);
     if (*buf != '\033') {
         for (p = eos(buf); p > buf; *p = '\0')
