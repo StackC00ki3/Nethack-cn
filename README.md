@@ -139,7 +139,7 @@ English README：[README_en.md](README_en.md)
 - [x] polyself.c
 - [x] potion.c
 - [x] pray.c
-- [ ] priest.c
+- [x] priest.c
 - [ ] quest.c
 - [ ] questpgr.c
 - [ ] read.c

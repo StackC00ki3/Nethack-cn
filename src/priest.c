@@ -127,7 +127,7 @@ move_special(struct monst *mtmp, boolean in_his_shop, schar appr,
 #if 0 /* dead code; maybe someday someone will track down why... */
         if (ib) {
             if (cansee(mtmp->mx, mtmp->my))
-                pline("%s picks up %s.", Monnam(mtmp),
+                pline("%s捡起%s.", Monnam(mtmp),
                       distant_name(ib, doname));
             obj_extract_self(ib);
             (void) mpickobj(mtmp, ib);
@@ -589,7 +589,7 @@ priest_talk(struct monst *priest)
         };
 
         if (helpless(priest)) {
-            pline("%s从s的沉思中惊醒!", Monnam(priest),
+            pline("%s从%s沉思中惊醒!", Monnam(priest),
                   mhis(priest));
             priest->mfrozen = priest->msleeping = 0;
             priest->mcanmove = 1;
