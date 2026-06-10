@@ -123,7 +123,7 @@ English README：[README_en.md](README_en.md)
 - [x] monst.c
 - [x] mplayer.c
 - [x] mthrowu.c
-- [ ] muse.c
+- [x] muse.c
 - [ ] music.c
 - [ ] nhlobj.c
 - [ ] nhlsel.c
