@@ -21,6 +21,7 @@ staticfn boolean only_here(struct obj *);
 staticfn void compactify(char *);
 staticfn boolean taking_off(const char *);
 staticfn void mime_action(const char *);
+staticfn const char *getobj_word_cn(const char *);
 staticfn char *getobj_hands_txt(const char *, char *);
 staticfn int ckvalidcat(struct obj *);
 staticfn int ckunpaid(struct obj *);
@@ -60,8 +61,8 @@ static const char venom_inv[] = { VENOM_CLASS, 0 }; /* (constant) */
    pointers aren't const because dispinv_with_action() might temporarily
    change "Accessories" to "Rings" or "Amulet", then back again */
 static const char *inuse_headers[] = { /* [4] shown first, [1] last */
-    "", "Miscellaneous", "Worn Armor",
-    "Wielded/Readied Weapons", "Accessories",
+    "", "杂项", "穿戴的盔甲",
+    "挥舞/准备的武器", "饰品",
 };
 
 /* sortloot() classification for in-use sort;
@@ -938,7 +939,7 @@ merged(struct obj **potmp, struct obj **pobj)
         if (discovered && otmp->where == OBJ_INVENT
             && obj->how_lost != LOST_THROWN
             && otmp->how_lost != LOST_THROWN) {
-            pline("你通过比较它们对自己的物品有了更多了解。");
+            pline("你通过比较它们对自己的物品有了更多了解.");
         }
 
         obfree(obj, otmp); /* free(obj), bill->otmp */
@@ -1037,7 +1038,7 @@ addinv_core2(struct obj *obj)
         obj->otyp != SCR_BLANK_PAPER && !Blind &&
         !objects[obj->otyp].oc_name_known) {
         observe_object(obj);
-        pline("你解读了%s上的标签。", yname(obj));
+        pline("你解读了%s上的标签.", yname(obj));
         makeknown(obj->otyp);
 
         /* conduct: this is avoidable via not picking up / wishing for
@@ -1671,7 +1672,8 @@ splittable(struct obj *obj)
 staticfn boolean
 taking_off(const char *action)
 {
-    return !strcmp(action, "take off") || !strcmp(action, "remove");
+    return !strcmp(action, "take off") || !strcmp(action, "remove")
+           || !strcmp(action, "脱下") || !strcmp(action, "取下");
 }
 
 staticfn void
@@ -1701,8 +1703,67 @@ mime_action(const char *word)
     } else
         bp = buf;
 
-    You("模仿%s%s%s某物%s%s。", ing_suffix(bp),
+    You("模仿%s%s%s某物%s%s.", ing_suffix(bp),
         pfx ? " " : "", pfx ? pfx : "", sfx ? " " : "", sfx ? sfx : "");
+}
+
+staticfn const char *
+getobj_word_cn(const char *word)
+{
+    static const struct {
+        const char *en, *cn;
+    } actions[] = {
+        { "adjust", "调整" },
+        { "apply", "使用" },
+        { "call", "命名" },
+        { "给什么充能", "充能" },
+        { "destroy", "摧毁" },
+        { "dip", "浸泡" },
+        { "drop", "丢弃" },
+        { "eat", "吃" },
+        { "fire", "发射" },
+        { "grease", "涂油" },
+        { "identify", "鉴定" },
+        { "invoke", "祈求" },
+        { "loot", "搜刮" },
+        { "offer", "献上" },
+        { "open", "打开" },
+        { "put in", "放入" },
+        { "put on", "戴上" },
+        { "quaff", "喝" },
+        { "read", "阅读" },
+        { "read what", "阅读" },
+        { "ready", "准备" },
+        { "remove", "取下" },
+        { "rub", "摩擦" },
+        { "sacrifice", "献祭" },
+        { "split", "拆分" },
+        { "stash", "存放" },
+        { "take off", "脱下" },
+        { "take out", "取出" },
+        { "throw", "扔" },
+        { "tip", "倒出" },
+        { "wear", "穿戴" },
+        { "wield", "挥舞" },
+        { "write with", "用来书写" },
+        { "zap", "施放" },
+        { "涂抹蜂王浆", "涂抹蜂王浆于" },
+        { "涂脂于", "涂脂" },
+        { "写在什么上", "书写" },
+        { "写字用", "书写" },
+        { "喝什么", "喝" },
+        { "挥舞什么魔杖", "施放" },
+        { "解除什么", "解除" },
+        { "蘸什么", "蘸" },
+        { "装备什么", "装备" },
+        { "阅读什么", "阅读" },
+    };
+    int i;
+
+    for (i = 0; i < SIZE(actions); ++i)
+        if (!strcmp(word, actions[i].en))
+            return actions[i].cn;
+    return word;
 }
 
 /* getobj callback that allows any object - but not hands. */
@@ -1718,15 +1779,15 @@ any_obj_ok(struct obj *obj)
 staticfn char *
 getobj_hands_txt(const char *action, char *qbuf)
 {
-    if (!strcmp(action, "grease")) {
+    if (!strcmp(action, "grease") || !strcmp(action, "涂脂于")) {
         Sprintf(qbuf, "你的 %s", fingers_or_gloves(FALSE));
-    } else if (!strcmp(action, "write with")) {
+    } else if (!strcmp(action, "write with") || !strcmp(action, "写字用")) {
         Sprintf(qbuf, "你的 %s", body_part(FINGERTIP));
-    } else if (!strcmp(action, "wield")) {
+    } else if (!strcmp(action, "wield") || !strcmp(action, "装备什么")) {
         Sprintf(qbuf, "你的%s的%s%s", uarmg ? "戴着手套" : "赤着",
                 makeplural(body_part(HAND)),
                 !uwep ? " (拿着)" : "");
-    } else if (!strcmp(action, "ready")) {
+    } else if (!strcmp(action, "ready") || !strcmp(action, "准备")) {
         Sprintf(qbuf, "空的囊%s",
                 !uquiver ? " (无准备物)" : "");
     } else {
@@ -1771,6 +1832,7 @@ getobj(
     boolean cntgiven = FALSE;
     boolean msggiven = FALSE;
     boolean oneloop = FALSE;
+    const char *word_cn = getobj_word_cn(word);
     Loot *sortedinvent, *srtinv;
     struct _cmd_queue cq, *cmdq;
     boolean need_more_cq = FALSE;
@@ -1910,13 +1972,13 @@ getobj(
     *ap = '\0';
 
     if (suggested == 0 && !forceprompt && !allownone) {
-        You("没有%s任何东西来%s.", inaccess ? "别的" : "", word);
+        You("没有%s任何东西可以%s.", inaccess ? "别的" : "", word_cn);
         return (struct obj *) 0;
     }
     for (;;) {
         cnt = 0L;
         cntgiven = FALSE;
-        Sprintf(qbuf, "你想要 %s 什么？", word);
+        Sprintf(qbuf, "你想要%s什么?", word_cn);
         if (gi.in_doagain) {
             ilet = readchar();
         } else if (iflags.force_invmenu) {
@@ -1954,7 +2016,7 @@ getobj(
         }
         if (ilet == HANDS_SYM) { /* '-' */
             if (!allownone)
-                mime_action(word);
+                mime_action(word_cn);
             return (allownone ? &hands_obj : (struct obj *) 0);
         }
  redo_menu:
@@ -1972,7 +2034,7 @@ getobj(
             menuquery[0] = qbuf[0] = '\0';
             if (iflags.force_invmenu)
                 Snprintf(menuquery, sizeof menuquery,
-                         "What do you want to %s?", word);
+                         "你想要%s什么?", word_cn);
             if (!allowed_choices || *allowed_choices == HANDS_SYM
                 || *buf == HANDS_SYM)
                 handsbuf = getobj_hands_txt(word, qbuf);
@@ -2009,7 +2071,7 @@ getobj(
                than one invent slot of gold and picking the non-'$' one */
             || (otmp && otmp->oclass == COIN_CLASS)) {
             if (otmp && obj_ok(otmp) <= GETOBJ_EXCLUDE) {
-                You("不能%s 金币.", word);
+                You("不能%s金币.", word_cn);
                 return (struct obj *) 0;
             }
             /*
@@ -2020,13 +2082,12 @@ getobj(
              */
             if (cntgiven && cnt <= 0L) {
                 if (cnt < 0L)
-                    pline_The("LRS would be very interested to know"
-                              " you have that much.");
+                    pline_The("LRS 会非常想知道你有那么多.");
                 return (struct obj *) 0;
             }
         }
         if (cntgiven && !strcmp(word, "throw")) {
-            static const char only_one[] = "can only throw one at a time";
+            static const char only_one[] = "一次只能扔一个";
             boolean coins;
 
             /* permit counts for throwing gold, but don't accept counts
@@ -2038,7 +2099,7 @@ getobj(
             coins = (otmp->oclass == COIN_CLASS);
             if (cnt > 1L && (!coins || cnt > otmp->quan)) {
                 if (cnt > otmp->quan)
-                    You("只有%ld%s%s。", otmp->quan,
+                    You("只有%ld%s%s.", otmp->quan,
                         (!coins && otmp->quan > 1L) ? " 和 " : "",
                         (!coins && otmp->quan > 1L) ? only_one : "");
                 else
@@ -2061,7 +2122,7 @@ getobj(
                 return (struct obj *) 0;
             continue;
         } else if (cnt < 0L || otmp->quan < cnt) {
-            You("没有那么多!  你只有%ld.", otmp->quan);
+            You("没有那么多! 你只有%ld.", otmp->quan);
             if (gi.in_doagain)
                 return (struct obj *) 0;
             continue;
@@ -2116,18 +2177,19 @@ silly_thing(const char *word,
             s1 = "R", s2 = "remove", s3 = "";
     }
     if (s1)
-        pline("Use the '%s' command to %s %s%s.", s1, s2,
-              !(is_plural(otmp) || pair_of(otmp)) ? "that" : "those", s3);
+        pline("请使用 '%s' 命令来%s%s%s.", s1, getobj_word_cn(s2),
+              !(is_plural(otmp) || pair_of(otmp)) ? "该物品" : "这些物品", s3);
     else
 #endif
     /* see comment about Amulet of Yendor in objtyp_is_callable(do_name.c);
        known fakes yield the silly thing feedback */
-    if (!strcmp(word, "call")
+    if ((!strcmp(word, "call") || !strcmp(word, "命名")
+         || !strcmp(word, "称呼"))
         && (otmp->otyp == AMULET_OF_YENDOR
             || (otmp->otyp == FAKE_AMULET_OF_YENDOR && !otmp->known)))
         pline_The("护身符不喜欢被命名.");
     else
-        pline(silly_thing_to, word);
+        pline(silly_thing_to, getobj_word_cn(word));
 }
 
 RESTORE_WARNING_FORMAT_NONLITERAL
@@ -2211,9 +2273,10 @@ ggetobj(const char *word, int (*fn)(OBJ_P), int mx,
     char sym, *ip, olets[MAXOCLASSES + 6], ilets[MAXOCLASSES + 11];
     char extra_removeables[3 + 1]; /* uwep,uswapwep,uquiver */
     char buf[BUFSZ] = DUMMY, qbuf[QBUFSZ];
+    const char *word_cn = getobj_word_cn(word);
 
     if (!gi.invent) {
-        You("没有东西来%s.", word);
+        You("没有东西可以%s.", word_cn);
         if (resultflags)
             *resultflags = ALL_FINISHED;
         return 0;
@@ -2258,8 +2321,8 @@ ggetobj(const char *word, int (*fn)(OBJ_P), int mx,
     ilets[iletct] = '\0';
 
     for (;;) {
-        Sprintf(qbuf, "你想要什么类型的物品来%s？[%s]",
-                word, ilets);
+        Sprintf(qbuf, "你想要什么类型的物品来%s?[%s]",
+                word_cn, ilets);
         getlin(qbuf, buf);
         if (buf[0] == '\033')
             return 0;
@@ -2317,7 +2380,7 @@ ggetobj(const char *word, int (*fn)(OBJ_P), int mx,
                 You("没有戴戒指.");
                 return 0;
             } else if (oc_of_sym == AMULET_CLASS && !uamul) {
-                You("你没有佩戴护身符。");
+                You("没有佩戴护身符.");
                 return 0;
             } else if (oc_of_sym == TOOL_CLASS && !ublindf) {
                 You("没有戴眼罩.");
@@ -2338,7 +2401,7 @@ ggetobj(const char *word, int (*fn)(OBJ_P), int mx,
         } else if (sym == 'm') {
             m_seen = TRUE;
         } else if (oc_of_sym == MAXOCLASSES) {
-            You("没有任何 %c's.", sym);
+            You("没有任何 %c 类物品.", sym);
         } else {
             if (!strchr(olets, oc_of_sym)) {
                 add_valid_menu_class(oc_of_sym);
@@ -2394,7 +2457,8 @@ askchain(
     ident = !strcmp(word, "identify");
     take_out = !strcmp(word, "take out");
     put_in = !strcmp(word, "put in");
-    nodot = (!strcmp(word, "nodot") || !strcmp(word, "drop") || ident
+    nodot = (!strcmp(word, "nodot") || !strcmp(word, "drop")
+             || !strcmp(word, "丢下") || !strcmp(word, "丢弃") || ident
              || takeoff || take_out || put_in);
     ininv = (*objchn == gi.invent);
     bycat = (menu_class_present('u')
@@ -2456,13 +2520,13 @@ askchain(
                    class of objects is involved, so prefix the first
                    object being queried here with an explanation why */
                 if (take_out || put_in)
-                    Sprintf(qpfx, "%s: ", word), *qpfx = highc(*qpfx);
+                    Sprintf(qpfx, "%s: ", getobj_word_cn(word));
                 first = FALSE;
             }
             (void) safe_qbuf(qbuf, qpfx, "?", otmp,
                              ininv ? safeq_xprname : doname,
                              ininv ? safeq_shortxprname : ansimpleoname,
-                             "item");
+                             "该物品");
             /* nyaq(qbuf) or nyNaq(qbuf), bypassing canned input for ^A */
             sym = yn_function(qbuf,
                               (takeoff || ident || otmp->quan < 2L)
@@ -2528,7 +2592,7 @@ askchain(
         goto nextclass;
 
     if (!takeoff && (dud || cnt))
-        pline("就这些了。");
+        pline("就这些了.");
     else if (!dud && !cnt)
         pline("没有适用物品.");
  ret:
@@ -2596,7 +2660,7 @@ reroll_menu(void)
     add_menu(win, &nul_glyphinfo, &any, 0, 0, ATR_NONE, NO_COLOR,
              buf, MENU_ITEMFLAGS_NONE);
 
-    end_menu(win, "重新生成这个角色？");
+    end_menu(win, "重新生成这个角色?");
     if (select_menu(win, PICK_ONE, &pick_list) > 0) {
         option = pick_list[0].item.a_char;
         free((genericptr_t) pick_list);
@@ -2604,7 +2668,7 @@ reroll_menu(void)
         /* user closed the menu without selecting; unclear what their choice
            is here so ask again; but (e.g. for hangup handling) stop asking if
            the user cancels out again */
-        option = y_n("Reroll this character?");
+        option = y_n("重新生成这个角色?");
     }
     destroy_nhwindow(win);
 
@@ -2683,13 +2747,13 @@ menu_identify(int id_limit)
         } else if (n == -2) { /* player used ESC to quit menu */
             break;
         } else if (n == -1) { /* no eligible items found */
-            pline("就这些了。");
+            pline("就这些了.");
             break;
         } else if (!--tryct) { /* stop re-prompting */
             pline1(thats_enough_tries);
             break;
         } else { /* try again */
-            pline("选择一项; 使用ESC 来退出.");
+            pline("选择一项; 使用 ESC 来退出.");
         }
     }
 }
@@ -2716,7 +2780,7 @@ identify_pack(
     int n, unid_cnt = count_unidentified(gi.invent);
 
     if (!unid_cnt) {
-        You("已经识别了你财产中 %s 的物品。",
+        You("已经识别了你财产中 %s 的物品.",
             !learning_id ? "所有" : "其余");
     } else if (!id_limit || id_limit >= unid_cnt) {
         /* identify everything */
@@ -2833,16 +2897,16 @@ doperminv(void)
     if ((windowprocs.wincap & WC_PERM_INVENT) == 0) {
         /* [TODO? perhaps omit "by <interface>" if all the window ports
            compiled into this binary lack support for perm_invent...] */
-        pline("'%s' 不支持持久库存显示。",
+        pline("'%s' 不支持持久库存显示.",
               windowprocs.name);
 
     } else if (!iflags.perm_invent) {
         pline(
-     "持久物品栏（'perm_invent' 选项）目前未启用。");
+     "持久物品栏('perm_invent' 选项)目前未启用.");
 
     } else if (!gi.invent) {
         /* [should this be left for the interface to decide?] */
-        pline("持久化物品栏显示为空。");
+        pline("持久化物品栏显示为空.");
 
     } else {
         /* note: we used to request a scrolling key here and pass that to
@@ -2883,7 +2947,7 @@ prinv(const char *prefix, struct obj *obj, long quan)
     totalbuf[0] = '\0';
     if (total_of)
         Snprintf(totalbuf, sizeof totalbuf,
-                 " (%ld in total).", obj->quan);
+                 " (总共 %ld).", obj->quan);
     pline("%s%s%s%s", prefix, *prefix ? " " : "",
           xprname(obj, (char *) 0, obj_to_let(obj), !total_of, 0L, quan),
           flags.verbose ? totalbuf : "");
@@ -2940,7 +3004,7 @@ xprname(
         /* ordinary inventory display or pickup message */
         if (use_invlet)
             let = obj->invlet;
-        Strcpy(suffix, dot ? "。" : "");
+        Strcpy(suffix, dot ? "." : "");
     }
     sfxlen = (int) strlen(suffix);
     if (txtlen > BUFSZ - 1 - (4 + sfxlen)) /* 4: "c - " prefix */
@@ -3063,9 +3127,9 @@ display_pickinv(
     long *out_cnt) /* optional; count player entered when selecting an item */
 {
     static const char /* potential entries for perm_invent window */
-        not_carrying_anything[] = "Not carrying anything",
-        not_using_anything[] = "Not using any items",
-        only_carrying_gold[] = "Only carrying gold";
+        not_carrying_anything[] = "没有携带任何东西",
+        not_using_anything[] = "没有使用任何物品",
+        only_carrying_gold[] = "只携带金币";
     struct obj *otmp, wizid_fakeobj, inuse_fakeobj;
     char ilet, ret, *formattedobj;
     const char *invlet = flags.inv_order;
@@ -3138,7 +3202,7 @@ display_pickinv(
         ++n;
 
     if (n == 0) {
-        pline("%s。", not_carrying_anything);
+        pline("%s.", not_carrying_anything);
         return 0;
     }
 
@@ -3226,13 +3290,12 @@ display_pickinv(
         unid_cnt = count_unidentified(gi.invent);
         Sprintf(prompt, "调试鉴定"); /* 'title' rather than 'prompt' */
         if (unid_cnt)
-            Sprintf(eos(prompt),
-                    " -- 未鉴定或部分鉴定物品%s",
-                    plur(unid_cnt));
+            Sprintf(eos(prompt), " -- %d 件未鉴定或部分鉴定物品",
+                    unid_cnt);
         add_menu_str(win, prompt);
         if (!unid_cnt) {
             add_menu_str(win,
-                         "(all items are permanently identified already)");
+                         "(所有物品都已经永久鉴定)");
             gotsomething = TRUE;
         } else {
             any.a_obj = &wizid_fakeobj;
@@ -3253,7 +3316,7 @@ display_pickinv(
    } else if (usextra) {
         /* wizard override ID and xtra_choice are mutually exclusive */
         if (flags.sortpack)
-            add_menu_heading(win, "Miscellaneous");
+            add_menu_heading(win, "杂项");
         any.a_char = HANDS_SYM; /* '-' */
         add_menu(win, &nul_glyphinfo, &any, HANDS_SYM, 0, ATR_NONE,
                  clr, xtra_choice, MENU_ITEMFLAGS_NONE);
@@ -3276,8 +3339,8 @@ display_pickinv(
             if (inuse_only) {
                 /* for inuse-only, start with an extra header */
                 if (!inusecount++)
-                    add_menu_heading(win, doing_perm_invent ? "In use"
-                                            : "Inventory in use");
+                    add_menu_heading(win, doing_perm_invent ? "使用中"
+                                            : "物品栏中使用的物品");
             } else if (doing_perm_invent && !show_gold) {
                 /* don't skip gold if it is quivered, even for !show_gold */
                 if (otmp->invlet == GOLD_SYM && !otmp->owornmask) {
@@ -3353,13 +3416,13 @@ display_pickinv(
         if ((allowxtra && !usextra)
             || (lets && (int) strlen(lets) < inv_cnt(TRUE))) {
             any.a_char = '*';
-            menutext = "(list everything)";
+            menutext = "(列出所有物品)";
         } else if (!lets) {
             any.a_char = '?';
-            menutext = "(list likely candidates)";
+            menutext = "(列出可能候选项)";
         }
         if (menutext) {
-            add_menu_heading(win, "Special");
+            add_menu_heading(win, "特殊");
             add_menu(win, &nul_glyphinfo, &any, any.a_char, 0, ATR_NONE, clr,
                      menutext, MENU_ITEMFLAGS_NONE);
             gotsomething = TRUE; /* menu isn't empty */
@@ -3738,7 +3801,7 @@ dounpaid(
                     char contbuf[BUFSZ];
 
                     /* Shopkeeper knows what to charge for contents */
-                    Sprintf(contbuf, "%s里面", s_suffix(xname(otmp)));
+                    Sprintf(contbuf, "%s的内容", s_suffix(xname(otmp)));
                     putstr(win, 0,
                            xprname((struct obj *) 0, contbuf, CONTAINED_SYM,
                                    TRUE, contcost, 0L));
@@ -3750,7 +3813,7 @@ dounpaid(
     if (count > 0) {
         putstr(win, 0, "");
         putstr(win, 0,
-               xprname((struct obj *) 0, "Total:", '*', FALSE, totcost, 0L));
+               xprname((struct obj *) 0, "合计:", '*', FALSE, totcost, 0L));
     }
 
     /* an unpaid item can be on the floor if dropped on the shop boundary
@@ -3761,23 +3824,23 @@ dounpaid(
     if (xtracount > 0) { /* floorcount + buriedcount > 0 */
         char buf[BUFSZ];
         const char
-            *floorverb = (xtracount > 1) ? "are" : "is",
+            *floorverb = "有",
             /* "under the floor" might actually be "under the floor
                beneath a wall" when shop repair is involved but that seems
                too nit-picky to bother trying to handle here (even more
                extreme description-wise:  "under the floor beneath the
                door/doorway") */
-            *where = (buriedcount == 0) ? "on the floor"
-                     : (floorcount == 0) ? "under the floor"
-                       : "on or under the floor";
+            *where = (buriedcount == 0) ? "在地面上"
+                     : (floorcount == 0) ? "在地面下"
+                       : "在地面上或地面下";
 
         if (!count) {
-            You("没有携带任何未付物品，但那里有 %s %d %s。",
+            You("没有携带任何未付物品, 但%s %d 个未付物品%s.",
                 floorverb, xtracount, where);
         } else {
             putstr(win, 0, "");
-            Sprintf(buf, "(%s %d 个更多未付物品%s %s。)",
-                    floorverb, xtracount, plur(xtracount), where);
+            Sprintf(buf, "(%s %d 个更多未付物品%s.)",
+                    floorverb, xtracount, where);
             putstr(win, 0, buf);
         }
     }
@@ -3827,7 +3890,7 @@ int
 dotypeinv(void)
 {
     static const char
-        prompt[] = "What type of object do you want an inventory of?";
+        prompt[] = "你想查看哪类物品的清单?";
     char c = '\0';
     int n, i = 0;
     char *extra_types, types[BUFSZ], title[QBUFSZ];
@@ -3944,8 +4007,8 @@ dotypeinv(void)
         if (billx)
             (void) doinvbill(1);
         else
-            pline("没有用过的物品%s.",
-                  any_unpaid ? "在你的购物清单上" : "");
+            pline("%s没有用过的物品.",
+                  any_unpaid ? "你的购物清单上" : "");
         goto doI_done;
     }
     if (c == 'u' || (c == 'U' && any_unpaid && !ucnt)) {
@@ -3972,19 +4035,19 @@ dotypeinv(void)
        constructing a title to be used by query_objlist() */
     switch (c) {
     case 'B':
-        before = "known to be blessed ";
+        before = "已知受祝福的";
         break;
     case 'U':
-        before = "known to be uncursed ";
+        before = "已知未诅咒的";
         break;
     case 'C':
-        before = "known to be cursed ";
+        before = "已知受诅咒的";
         break;
     case 'X':
-        after = " whose blessed/uncursed/cursed status is unknown";
+        after = "祝福/未诅咒/诅咒状态未知的";
         break; /* better phrasing is desirable */
     case 'P':
-        after = " that were just picked up";
+        after = "刚拾取的";
         break;
     default:
         /* 'c' is an object class, because we've already handled
@@ -3993,13 +4056,13 @@ dotypeinv(void)
            to somewhere above so that we can access it here (via
            lcase(strcpy(classnamebuf, names[(int) c]))), but the
            game-play value of doing so is low... */
-        before = "such ";
+        before = "此类";
         break;
     }
 
     if (traditional) {
         if (strchr(types, c) > strchr(types, '\033')) {
-            You("没有%s%s的物品.", before, after);
+            You("没有%s%s物品.", before, after);
             goto doI_done;
         }
         gt.this_type = oclass; /* extra input for this_type_only() */
@@ -4007,7 +4070,7 @@ dotypeinv(void)
     if (strchr("BUCXP", c)) {
         /* the before and after phrases for "you have no..." can both be
            treated as mutually-exclusive suffices when creating a title */
-        Sprintf(title, "物品 %s", (before && *before) ? before : after);
+        Sprintf(title, "%s物品", (before && *before) ? before : after);
         /* get rid of trailing space from 'before' and double-space from
            'after's leading space */
         (void) mungspaces(title);
@@ -4037,7 +4100,7 @@ const char *
 dfeature_at(coordxy x, coordxy y, char *buf)
 {
     struct rm *lev = &levl[x][y];
-    int ltyp = lev->typ, cmap = -1;
+    int ltyp = lev->typ;
     const char *dfeature = 0;
     static char altbuf[BUFSZ];
     stairway *stway = stairway_at(x, y);
@@ -4045,33 +4108,54 @@ dfeature_at(coordxy x, coordxy y, char *buf)
     if (IS_DOOR(ltyp)) {
         switch (lev->doormask) {
         case D_NODOOR:
-            cmap = S_ndoor;
+            dfeature = "门道";
             break; /* "doorway" */
         case D_ISOPEN:
-            cmap = S_vodoor;
+            dfeature = "打开的门";
             break; /* "open door" */
         case D_BROKEN:
             dfeature = "坏掉的门";
             break;
         default:
-            cmap = S_vcdoor;
+            dfeature = "关着的门";
             break; /* "closed door" */
         }
         /* override door description for open drawbridge */
         if (is_drawbridge_wall(x, y) >= 0)
-            dfeature = "打开的吊桥闸门", cmap = -1;
+            dfeature = "打开的吊桥闸门";
     } else if (IS_FOUNTAIN(ltyp))
-        cmap = S_fountain; /* "fountain" */
+        dfeature = "喷泉";
     else if (IS_THRONE(ltyp))
-        cmap = S_throne; /* "opulent throne" */
+        dfeature = "华丽的王座";
     else if (is_lava(x, y))
-        cmap = S_lava; /* "molten lava" */
-    else if (is_ice(x, y))
-        dfeature = ice_descr(x, y, altbuf), cmap = -1; /* "ice" */
-    else if (is_pool(x, y))
+        dfeature = "熔岩";
+    else if (is_ice(x, y)) {
+        static const struct {
+            const char *en, *cn;
+        } ice_prefixes[] = {
+            { "solid ", "坚实的" },
+            { "sturdy ", "结实的" },
+            { "steady ", "稳定的" },
+            { "unsteady ", "不稳定的" },
+            { "thin ", "薄" },
+            { "slushy ", "雪泥状的" },
+        };
+        int i;
+
+        dfeature = ice_descr(x, y, altbuf);
+        for (i = 0; i < SIZE(ice_prefixes); ++i) {
+            int len = (int) strlen(ice_prefixes[i].en);
+
+            if (!strncmp(dfeature, ice_prefixes[i].en, len)) {
+                Strcpy(buf, dfeature + len);
+                Sprintf(altbuf, "%s%s", ice_prefixes[i].cn, buf);
+                break;
+            }
+        }
+    } else if (is_pool(x, y))
         dfeature = "水池";
     else if (IS_SINK(ltyp))
-        cmap = S_sink; /* "sink" */
+        dfeature = "水槽";
     else if (IS_ALTAR(ltyp)) {
         Sprintf(altbuf, "%s(%s)的%s祭坛", /*修改语序:Sprintf(altbuf, "%s祭坛向%s(%s)",*/
                 a_gname(), /*修改语序:(lev->altarmask & AM_SANCTUM) ? "高阶" : "",*/
@@ -4081,18 +4165,16 @@ dfeature_at(coordxy x, coordxy y, char *buf)
     } else if (stway) {
         dfeature = stairs_description(stway, altbuf, TRUE);
     } else if (ltyp == DRAWBRIDGE_DOWN)
-        cmap = S_vodbridge; /* "lowered drawbridge" */
+        dfeature = "放下的吊桥";
     else if (ltyp == DBWALL)
-        cmap = S_vcdbridge; /* "raised drawbridge" */
+        dfeature = "升起的吊桥";
     else if (IS_GRAVE(ltyp))
-        cmap = S_grave; /* "grave" */
+        dfeature = "坟墓";
     else if (ltyp == TREE)
-        cmap = S_tree; /* "tree" */
+        dfeature = "树";
     else if (ltyp == IRONBARS)
         dfeature = "铁栅栏";
 
-    if (cmap >= 0)
-        dfeature = defsyms[cmap].explanation;
     if (dfeature)
         Strcpy(buf, dfeature);
     return dfeature;
@@ -4107,7 +4189,7 @@ look_here(
 {
     struct obj *otmp;
     struct trap *trap;
-    const char *verb = Blind ? "feel" : "see";
+    const char *verb = Blind ? "感觉" : "看";
     const char *dfeature = (char *) 0;
     char fbuf[BUFSZ], fbuf2[BUFSZ];
     winid tmpwin;
@@ -4137,11 +4219,10 @@ look_here(
          *  something along the lines of "because it's worn on the outside
          *  so is unreachable from in here...").
          */
-        Sprintf(fbuf, "%s%s里面", s_suffix(mon_nam(mtmp)),
+        Sprintf(fbuf, "%s的%s里面", s_suffix(mon_nam(mtmp)),
                 mbodypart(mtmp, STOMACH));
-        /* Skip "Contents of " by using fbuf index 12 */
-        You("你%s来%s%s中有什么。", Blind ? "尝试" : "环顾四周",
-            verb, &fbuf[12]);
+        You("%s%s有什么.", Blind ? "试着感觉" : "环顾四周看",
+            fbuf);
         otmp = mtmp->minvent;
         if (otmp) {
             for (; otmp; otmp = otmp->nobj) {
@@ -4151,11 +4232,11 @@ look_here(
                     feel_cockatrice(otmp, FALSE);
             }
             if (Blind)
-                Strcpy(fbuf, "你感觉");
+                Strcpy(fbuf, "你感觉到的物品");
             Strcat(fbuf, ":");
             (void) display_minventory(mtmp, MINV_ALL | PICK_NONE, fbuf);
         } else {
-            You("%s这里没有物品。", verb);
+            You("%s这里没有物品.", verb);
         }
         return (!!Blind ? ECMD_TIME : ECMD_OK);
     }
@@ -4166,12 +4247,12 @@ look_here(
         regbuf[0] = '\0';
         if ((reg = visible_region_at(u.ux, u.uy)) != 0)
             Sprintf(regbuf, "一朵%s云",
-                    reg_damg(reg) ? "poison gas" : "vapor");
+                    reg_damg(reg) ? "毒气" : "蒸汽");
         if ((trap = t_at(u.ux, u.uy)) != 0 && !trap->tseen)
             trap = (struct trap *) NULL;
 
         if (reg || trap)
-            There("这里有%s%s%s。",
+            There("有%s%s%s.",
                   reg ? regbuf : "",
                   (reg && trap) ? " 和 " : "",
                   trap ? an(trapname(trap->ttyp, FALSE)) : "");
@@ -4185,9 +4266,9 @@ look_here(
     if (Blind) {
         boolean drift = Is_airlevel(&u.uz) || Is_waterlevel(&u.uz);
 
-        if (dfeature && !strncmp(dfeature, "altar ", 6)) {
+        if (dfeature && strstr(dfeature, "祭坛")) {
             /* don't say "altar" twice, dfeature has more info */
-            You("你试图感觉这里有什么。");
+            You("试图感觉这里有什么.");
         } else if (SURFACE_AT(u.ux, u.uy) == ICE) {
             /* using describe_decor() to handle ice is simpler than
                replicating it in the conditional message construction */
@@ -4195,16 +4276,16 @@ look_here(
                 force_decor(FALSE);
             /* plain "ice" if blind and levitating, otherwise "solid ice" &c;
               "There is [thin ]ice here.  You try to feel what is on it." */
-            You("试着感觉上面有什么。");
+            You("试着感觉上面有什么.");
             skip_dfeature = TRUE; /* ice already described */
         } else {
             boolean cant_reach = !can_reach_floor(TRUE);
             const char *surf = surface(u.ux, u.uy),
-                       *where = cant_reach ? "lying beneath you"
-                                           : "lying here on the ",
+                       *where = cant_reach ? "在你下方"
+                                           : "在这里的",
                        *onwhat = cant_reach ? "" : surf;
 
-            You("试着感受%s%s。", drift ? "漂浮在这里" : where,
+            You("试着感受%s%s.", drift ? "漂浮在这里" : where,
                 drift ? "" : onwhat);
 
             if (dfeature && !drift && !strcmp(dfeature, surf))
@@ -4212,39 +4293,13 @@ look_here(
         }
         trap = t_at(u.ux, u.uy);
         if (!can_reach_floor(trap && is_pit(trap->ttyp))) {
-            pline("但你不能够到它！");
+            pline("但你不能够到它!");
             return ECMD_OK;
         }
     }
 
-    if (dfeature && !skip_dfeature) {
-        const char *p;
-        int article = 1; /* 0 => none, 1 => a/an, 2 => the (not used here) */
-
-        /* "molten lava", "iron bars", and plain "ice" are handled as special
-           cases in an() but probably shouldn't be; don't rely on that */
-        if (!strcmp(dfeature, "molten lava")
-            || !strcmp(dfeature, "iron bars")
-            || !strcmp(dfeature, "ice")
-            || !strcmp(dfeature, "水池")
-            || !strcmp(dfeature, "护城河")
-            || !strcmp(dfeature, "沼泽")
-            || !strcmp(dfeature, "浅海")
-            || !strcmp(dfeature, "池塘")
-            || !strcmp(dfeature, "无穷的水")
-            || !strcmp(dfeature, "水墙")
-            || !strcmp(dfeature, "冰")
-            || !strncmp(dfeature, "frozen ", 7) /* ice while hallucinating */
-            /* thawing ice ("solid ice", "thin ice", &c) */
-            || ((p = strchr(dfeature, ' ')) != 0 && !strcmpi(p, " ice")))
-            article = 0;
-        if (article == 1)
-            dfeature = an(dfeature);
-
-        /* hardcoded "is" worked here because "iron bars" is actually
-           "set of iron bars"; use vtense() instead of relying on that */
-        Sprintf(fbuf, "这里 %s %s.", vtense(dfeature, "有"), dfeature);
-    }
+    if (dfeature && !skip_dfeature)
+        Sprintf(fbuf, "这里有%s.", dfeature);
 
     if (!otmp || is_lava(u.ux, u.uy)
         || (is_pool(u.ux, u.uy) && !Underwater)) {
@@ -4252,7 +4307,7 @@ look_here(
             pline1(fbuf);
         read_engr_at(u.ux, u.uy); /* Eric Backus */
         if (!skip_objects && (Blind || !dfeature))
-            You("%s此地没有物品。", verb);
+            You("%s此地没有物品.", verb);
         return (!!Blind ? ECMD_TIME : ECMD_OK);
     }
     /* we know there is something here */
@@ -4262,9 +4317,9 @@ look_here(
             pline1(fbuf);
         read_engr_at(u.ux, u.uy); /* Eric Backus */
         if (obj_cnt == 1 && otmp->quan == 1L)
-            There("这里有 %s 物品。", picked_some ? "另一个" : "一个");
+            There("有%s物品.", picked_some ? "另一个" : "一个");
         else
-            There("这里有%s%s物品。",
+            There("有%s%s物品.",
                   (obj_cnt == 2) ? "两个"
                   : (obj_cnt < 5) ? "几个"
                     : (obj_cnt < 10) ? "数个"
@@ -4272,13 +4327,13 @@ look_here(
                   picked_some ? "更多" : "");
         for (; otmp; otmp = otmp->nexthere)
             if (otmp->otyp == CORPSE && will_feel_cockatrice(otmp, FALSE)) {
-                pline("%s%s%s。",
+                pline("%s%s%s.",
                       (obj_cnt > 1) ? "包括"
                       : (otmp->quan > 1L) ? "它们是"
                         : "它是",
                       corpse_xname(otmp, (const char *) 0, CXN_ARTICLE),
                       poly_when_stoned(gy.youmonst.data) ? ""
-                      : "，不幸的是");
+                      : ", 不幸的是");
                 feel_cockatrice(otmp, FALSE);
                 break;
             }
@@ -4287,7 +4342,7 @@ look_here(
         if (dfeature && !skip_dfeature)
             pline1(fbuf);
         read_engr_at(u.ux, u.uy); /* Eric Backus */
-        You("%s在这里%s。", verb, doname_with_price(otmp));
+        You("%s到这里有%s.", verb, doname_with_price(otmp));
         iflags.last_msg = PLNMSG_ONE_ITEM_HERE;
         if (otmp->otyp == CORPSE)
             feel_cockatrice(otmp, FALSE);
@@ -4300,9 +4355,9 @@ look_here(
             putstr(tmpwin, 0, fbuf);
             putstr(tmpwin, 0, "");
         }
-        Sprintf(buf, "%s %s 这里:",
-                picked_some ? "其他物品" : "物品",
-                Blind ? "你感觉到" : "是");
+        Sprintf(buf, Blind ? "你感觉到这里%s物品:"
+                           : "这里%s物品:",
+                picked_some ? "还有其他" : "有");
         putstr(tmpwin, 0, buf);
         for (; otmp; otmp = otmp->nexthere) {
             if (otmp->otyp == CORPSE && will_feel_cockatrice(otmp, FALSE)) {
@@ -4537,7 +4592,7 @@ doprgold(void)
     } else {
         long total = umoney + hmoney;
         if (total)
-            You("你总共携带了 %ld %s。", total, currency(total));
+            You("总共携带了 %ld %s.", total, currency(total));
         else
             You("没有钱.");
     }
@@ -4558,7 +4613,7 @@ int
 doprwep(void)
 {
     if (!uwep) {
-        You("是一个%s.", empty_handed());
+        You("现在%s.", empty_handed());
     } else if (!iflags.menu_requested) {
         prinv((char *) 0, uwep, 0L);
         if (u.twoweap)
@@ -4677,7 +4732,7 @@ doprring(void)
         (void) dispinv_with_action(lets, use_inuse_mode,
                                    /* note; alternate label will be ignored
                                       if 'use_inuse_mode' is False */
-                                   (ct == 1) ? "Ring" : "Rings");
+                                   (ct == 1) ? "戒指" : "戒指");
     }
     return ECMD_OK;
 }
@@ -4696,7 +4751,7 @@ dopramulet(void)
            in order to perform a context-sensitive item action */
         lets[0] = obj_to_let(uamul), lets[1] = '\0';
 
-        (void) dispinv_with_action(lets, TRUE, "Amulet");
+        (void) dispinv_with_action(lets, TRUE, "护身符");
     }
     return ECMD_OK;
 }
@@ -4795,12 +4850,12 @@ useupf(struct obj *obj, long numused)
  * This must match the object class order.
  */
 static NEARDATA const char *names[] = {
-    0, "Illegal objects", "Weapons", "Armor", "Rings", "Amulets", "Tools",
-    "Comestibles", "Potions", "Scrolls", "Spellbooks", "Wands", "Coins",
-    "Gems/Stones", "Boulders/Statues", "Iron balls", "Chains", "Venoms"
+    0, "非法物品", "武器", "盔甲", "戒指", "护身符", "工具",
+    "食物", "药水", "卷轴", "魔法书", "魔杖", "钱币",
+    "宝石/石头", "巨石/雕像", "铁球", "锁链", "毒液"
 };
 static NEARDATA const char oth_symbols[] = { CONTAINED_SYM, '\0' };
-static NEARDATA const char *oth_names[] = { "Bagged/Boxed items" };
+static NEARDATA const char *oth_names[] = { "袋中/箱中物品" };
 
 DISABLE_WARNING_FORMAT_NONLITERAL
 
@@ -4909,11 +4964,11 @@ check_invent_gold(const char *why) /* 'why' == caller in case of warning */
 
     if (goldstacks > 1 || wrongslot > 0) {
         impossible("%s: %s%s%s", why,
-                   (wrongslot > 1) ? "gold in wrong slots"
-                      : (wrongslot > 0) ? "gold in wrong slot"
+                   (wrongslot > 1) ? "金币在错误槽位"
+                      : (wrongslot > 0) ? "金币在错误槽位"
                            : "",
-                   (wrongslot > 0 && goldstacks > 1) ? " and " : "",
-                   (goldstacks > 1) ? "multiple gold stacks" : "");
+                   (wrongslot > 0 && goldstacks > 1) ? "并且" : "",
+                   (goldstacks > 1) ? "多叠金币" : "");
         return TRUE; /* gold can be #adjusted */
     }
 
@@ -5028,7 +5083,7 @@ adjust_split(void)
         splitamount = 1L;
     } else {
         /* get first digit; doesn't wait for <return> */
-        dig = yn_function("Split off how many?", (char *) 0, '\0', TRUE);
+        dig = yn_function("要拆分出多少?", (char *) 0, '\0', TRUE);
         if (!digit(dig)) {
             pline1(Never_mind);
             return ECMD_CANCEL;
@@ -5055,12 +5110,12 @@ adjust_split(void)
     }
     if (splitamount < 1L || splitamount >= obj->quan) {
         static const char
-            Amount[] = "Amount to split from current stack must be";
+            Amount[] = "从当前堆叠拆分的数量必须";
 
         if (splitamount < 1L)
-            pline("%s至少1。", Amount);
+            pline("%s至少为1.", Amount);
         else
-            pline("%s少于%ld。", Amount, obj->quan);
+            pline("%s少于%ld.", Amount, obj->quan);
         return ECMD_CANCEL;
     }
 
@@ -5169,7 +5224,7 @@ doorganize_core(struct obj *obj)
                 pline1(Never_mind);
             return ECMD_OK;
         } else if (let == GOLD_SYM && obj->oclass != COIN_CLASS) {
-            pline("只有金币才能被放入'%c'槽位中。",
+            pline("只有金币才能被放入'%c'槽位中.",
                   GOLD_SYM);
             ever_mind = TRUE;
             goto noadjust;
@@ -5186,9 +5241,9 @@ doorganize_core(struct obj *obj)
 
     collect = (let == obj->invlet);
     /* change the inventory and print the resulting item */
-    adj_type = collect ? "Collecting:"
-               : !splitting ? "Moving:"
-                 : "Splitting:";
+    adj_type = collect ? "收集:"
+               : !splitting ? "移动:"
+                 : "拆分:";
 
     /*
      * don't use freeinv/addinv to avoid double-touching artifacts,
@@ -5221,7 +5276,7 @@ doorganize_core(struct obj *obj)
             /* Merging: when from and to are compatible */
             if ((!otmpname || (objname && !strcmp(objname, otmpname)))
                 && merged(&otmp, &obj)) {
-                adj_type = "Merging:";
+                adj_type = "合并:";
                 obj = otmp;
                 otmp = otmp->nobj;
                 extract_nobj(obj, &gi.invent);
@@ -5231,7 +5286,7 @@ doorganize_core(struct obj *obj)
                Found 'otmp' in destination slot; merge if compatible,
                otherwise bump whatever is there to an open slot. */
             if (!splitting) {
-                adj_type = "Swapping:";
+                adj_type = "交换:";
                 otmp->invlet = obj->invlet;
             } else {
                 /* strip 'from' name if it has one */
@@ -5248,7 +5303,7 @@ doorganize_core(struct obj *obj)
                 }
 
                 if (merged(&otmp, &obj)) {
-                    adj_type = "Splitting and merging:";
+                    adj_type = "拆分并合并:";
                     obj = otmp;
                     extract_nobj(obj, &gi.invent);
                 } else if (inv_cnt(FALSE) >= invlet_basic) {
@@ -5286,7 +5341,7 @@ doorganize_core(struct obj *obj)
     /* messages deferred until inventory has been fully reestablished */
     prinv(adj_type, obj, 0L);
     if (bumped)
-        prinv("Moving:", bumped, 0L);
+        prinv("移动:", bumped, 0L);
     if (splitting)
         clear_splitobjs(); /* reset splitobj context */
     update_inventory();
@@ -5361,7 +5416,7 @@ display_minventory(
         have_any = (have_inv || incl_hero),
         pickings = (dflags & MINV_PICKMASK);
 
-    Sprintf(tmp, "%s %s:", s_suffix(noit_Monnam(mon)),
+    Sprintf(tmp, "%s的%s:", s_suffix(noit_Monnam(mon)),
             do_all ? "物品" : "武器");
 
     if (do_all ? have_any : (mon->misc_worn_check || MON_WEP(mon))) {
@@ -5381,7 +5436,7 @@ display_minventory(
         /* was 'set_uasmon();' but that potentially has side-effects */
         gy.youmonst.data = &mons[u.umonnum]; /* basic part of set_uasmon() */
     } else {
-        invdisp_nothing(title ? title : tmp, "(none)");
+        invdisp_nothing(title ? title : tmp, "(无)");
         n = 0;
     }
 
@@ -5393,7 +5448,7 @@ display_minventory(
     return ret;
 }
 
-/* format a container name for cinventory_display(), inserting "trapped"
+/* format a container name for cinventory_display(), inserting trap status
    if that's appropriate */
 staticfn char *
 cinv_doname(struct obj *obj)
@@ -5409,19 +5464,17 @@ cinv_doname(struct obj *obj)
     /* 'result' is an obuf[] but might point into the middle (&buf[PREFIX])
        rather than the beginning and we don't have access to that;
        assume that there is at least QBUFSZ available when reusing it */
-    if (obj->otrapped && strlen(result) + sizeof "trapped " <= QBUFSZ) {
-        /* obj->lknown has been set before calling us so either "locked" or
-           "unlocked" should always be present (for a trapped container) */
-        char *p = strstri(result, " locked"),
-             *q = strstri(result, " unlocked");
+    if (obj->otrapped && !strstr(result, "陷阱的")
+        && strlen(result) + sizeof "陷阱的 " <= QBUFSZ) {
+        char *p = strstri(result, "上锁的"),
+             *q = strstri(result, "未锁的");
 
         if (p && (!q || p < q))
-            (void) strsubst(p, " locked ", " trapped locked ");
+            (void) strsubst(p, "上锁的", "陷阱的 上锁的");
         else if (q)
-            (void) strsubst(q, " unlocked ", " trapped unlocked ");
-        /* might need to change "an" to "a"; when no BUC is present,
-           "an unlocked" yielded "an trapped unlocked" above */
-        (void) strsubst(result, "an trapped ", "a trapped ");
+            (void) strsubst(q, "未锁的", "陷阱的 未锁的");
+        else
+            (void) strsubst(result, "", "陷阱的 ");
     }
     return result;
 }
@@ -5433,18 +5486,8 @@ cinv_ansimpleoname(struct obj *obj)
     char *result = ansimpleoname(obj);
 
     /* result is an obuf[] so we know this will always fit */
-    if (obj->otrapped) {
-        if (strncmp(result, "a ", 2))
-            (void) strsubst(result, "a ", "a trapped ");
-        else if (strncmp(result, "an ", 3))
-            (void) strsubst(result, "an ", "an trapped ");
-        /* unique container? nethack doesn't have any */
-        else if (strncmp(result, "the ", 4))
-            (void) strsubst(result, "the ", "the trapped ");
-        /* no leading article at all? shouldn't happen with ansimpleoname() */
-        else
-            (void) strsubst(result, "", "trapped "); /* insert at beginning */
-    }
+    if (obj->otrapped && !strstr(result, "陷阱的"))
+        (void) strsubst(result, "", "陷阱的 "); /* insert at beginning */
     return result;
 }
 
@@ -5458,17 +5501,17 @@ display_cinventory(struct obj *obj)
     int n;
     menu_item *selected = 0;
 
-    (void) safe_qbuf(qbuf, "Contents of ", ":", obj,
+    (void) safe_qbuf(qbuf, "", "的内容:", obj,
                      /* custom formatting routines to insert "trapped"
                         into the object's name when appropriate;
                         last resort "that" won't ever get used */
-                     cinv_doname, cinv_ansimpleoname, "that");
+                     cinv_doname, cinv_ansimpleoname, "该物品");
 
     if (obj->cobj) {
         n = query_objlist(qbuf, &(obj->cobj), INVORDER_SORT,
                           &selected, PICK_NONE, allow_all);
     } else {
-        invdisp_nothing(qbuf, "(empty)");
+        invdisp_nothing(qbuf, "(空)");
         n = 0;
     }
     if (n > 0) {
@@ -5498,7 +5541,7 @@ display_binventory(coordxy x, coordxy y, boolean as_if_seen)
 {
     struct obj *obj;
     char qbuf[QBUFSZ];
-    const char *underwhat = "here";
+    const char *underwhat = "这里";
     menu_item *selected = 0;
     int n, n2 = 0;
 
@@ -5514,21 +5557,20 @@ display_binventory(coordxy x, coordxy y, boolean as_if_seen)
         if (!obj->nexthere) {
             boolean more_than_1 = is_plural(obj);
 
-            There("%s %s 在这里的 %s 下面。", more_than_1 ? "有" : "有",
-                  doname(obj), seen_liquid);
+            There("的%s下面有 %s.", seen_liquid, doname(obj));
             n2 = 1;
             /* "pair of boots" is singular but "beneath it" sounds strange */
             if (pair_of(obj))
                 more_than_1 = TRUE;
-            underwhat = more_than_1 ? "under them" : "beneath it";
+            underwhat = more_than_1 ? "它们下面" : "它下面";
         } else {
-            Sprintf(qbuf, "此处的%s下方的物品：", seen_liquid);
+            Sprintf(qbuf, "此处的%s下方的物品:", seen_liquid);
             if (query_objlist(qbuf, &svl.level.objects[x][y], BY_NEXTHERE,
                               &selected, PICK_NONE, allow_all) > 0)
                 free((genericptr_t) selected), selected = 0;
             for (n2 = 0; obj; obj = obj->nexthere)
                 ++n2;
-            underwhat = "beneath them";
+            underwhat = "它们下面";
         }
     }
 
@@ -5544,7 +5586,7 @@ display_binventory(coordxy x, coordxy y, boolean as_if_seen)
         go.only.x = x;
         go.only.y = y;
         /* "buried here", but vary if we've already shown underwater items */
-        Sprintf(qbuf, "埋藏%s的东西：", underwhat);
+        Sprintf(qbuf, "埋藏%s的东西:", underwhat);
         if (query_objlist(qbuf, &svl.level.buriedobjlist, INVORDER_SORT,
                           &selected, PICK_NONE, only_here) > 0)
             free((genericptr_t) selected);
@@ -5636,9 +5678,8 @@ sync_perminvent(void)
                         destroy_nhwindow(WIN_INVEN), WIN_INVEN = WIN_ERR;
                     wport_id = WINDOWPORT(tty) ? "tty perm_invent"
                                                : "perm_invent";
-                    pline("%s 无法启用。", wport_id);
-                    pline("%s needs a terminal that is at least %dx%d, yours "
-                          "is %dx%d.",
+                    pline("%s 无法启用.", wport_id);
+                    pline("%s 需要至少 %dx%d 的终端, 你的终端是 %dx%d.",
                           wport_id, wri->tocore.needrows,
                           wri->tocore.needcols, wri->tocore.haverows,
                           wri->tocore.havecols);
