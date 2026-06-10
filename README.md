@@ -121,7 +121,7 @@ English README：[README_en.md](README_en.md)
 - [x] mondata.c
 - [x] monmove.c
 - [x] monst.c
-- [ ] mplayer.c
+- [x] mplayer.c
 - [ ] mthrowu.c
 - [ ] muse.c
 - [ ] music.c
