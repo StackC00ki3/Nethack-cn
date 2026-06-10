@@ -106,7 +106,7 @@ English README：[README_en.md](README_en.md)
 - [x] light.c
 - [x] lock.c
 - [x] mail.c
-- [ ] makemon.c
+- [x] makemon.c
 - [ ] mcastu.c
 - [ ] mdlib.c
 - [ ] mhitm.c
