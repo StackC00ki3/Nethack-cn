@@ -107,7 +107,7 @@ English README：[README_en.md](README_en.md)
 - [x] lock.c
 - [x] mail.c
 - [x] makemon.c
-- [ ] mcastu.c
+- [x] mcastu.c
 - [ ] mdlib.c
 - [ ] mhitm.c
 - [ ] mhitu.c
