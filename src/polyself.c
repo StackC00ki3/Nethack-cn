@@ -1264,7 +1264,7 @@ break_armor(void)
         if ((otmp = uarmh) != 0) {
             if (donning(otmp))
                 cancel_don();
-            Your("%s掉落在了%s上！", helm_simple_name(otmp),
+            Your("%s掉到了%s上!", helm_simple_name(otmp),
                  surface(u.ux, u.uy));
             (void) Helmet_off();
             dropp(otmp);
@@ -1680,7 +1680,7 @@ dogaze(void)
             if (Invis && !perceives(mtmp->data)) {
                 pline("%s似乎没有注意到你的注视.", Monnam(mtmp));
             } else if (mtmp->minvis && !See_invisible) {
-                You("不知道在哪里注视%s.", Monnam(mtmp)); /*危险:You_cant*/
+                You_cant("看清该朝哪里注视%s.", Monnam(mtmp));
             } else if (M_AP_TYPE(mtmp) == M_AP_FURNITURE
                        || M_AP_TYPE(mtmp) == M_AP_OBJECT) {
                 looked--;

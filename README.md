@@ -136,7 +136,7 @@ English README：[README_en.md](README_en.md)
 - [x] pager.c
 - [x] pickup.c
 - [x] pline.c
-- [ ] polyself.c
+- [x] polyself.c
 - [ ] potion.c
 - [ ] pray.c
 - [ ] priest.c
