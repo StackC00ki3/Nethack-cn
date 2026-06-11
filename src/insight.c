@@ -1983,13 +1983,13 @@ attributes_enlightenment(
             case 1:
                 break; /* just "are dead" */
             default:
-                Sprintf(buf, " (%d%s次!)", u.umortality,
+                Sprintf(buf, " (第%d%s次!)", u.umortality,
                         ordin(u.umortality));
                 break;
             }
         }
         if (p)
-            enl_msg(You_, "", "", p, buf, "");
+            enl_msg(You_, "被杀过", p, buf, "");
     }
 }
 
