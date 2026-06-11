@@ -293,7 +293,7 @@ choose_windows(const char *s)
         windowprocs.win_wait_synch = def_wait_synch;
 
     if (!winchoices[0].procs) {
-        raw_printf("No window types supported?");
+        raw_printf("没有受支持的窗口类型?");
         nh_terminate(EXIT_FAILURE);
     }
     /* 50: arbitrary, no real window_type names are anywhere near that long;
@@ -311,7 +311,7 @@ choose_windows(const char *s)
 
     if (!winchoices[1].procs) {
         config_error_add(
-                     "Window type %s not recognized.  The only choice is: %s",
+                     "未识别窗口类型 %s. 唯一可选项是: %s",
                          s, winchoices[0].procs->name);
     } else {
         char buf[BUFSZ];
@@ -327,7 +327,7 @@ choose_windows(const char *s)
                     first ? "" : "， ", winchoices[i].procs->name);
             first = FALSE;
         }
-        config_error_add("Window type %s not recognized.  Choices are:  %s",
+        config_error_add("未识别窗口类型 %s. 可选项为:  %s",
                          s, buf);
     }
     if (tmps)
@@ -358,7 +358,7 @@ addto_windowchain(const char *s)
 
     windowprocs.win_raw_print = def_raw_print;
 
-    raw_printf("Window processor %s not recognized.  Choices are:", s);
+    raw_printf("未识别窗口处理器 %s. 可选项为:", s);
     for (i = 0; winchoices[i].procs; i++) {
         if ('+' != winchoices[i].procs->name[0])
             continue;
@@ -386,7 +386,7 @@ commit_windowchain(void)
     p = wl_new();
     p->wincp = win_choices_find("-chainin");
     if (!p->wincp) {
-        raw_printf("Can't locate processor '-chainin'");
+        raw_printf("无法定位处理器 '-chainin'");
         exit(EXIT_FAILURE);
     }
     wl_addhead(p);
@@ -394,7 +394,7 @@ commit_windowchain(void)
     p = wl_new();
     p->wincp = win_choices_find("-chainout");
     if (!p->wincp) {
-        raw_printf("Can't locate processor '-chainout'");
+        raw_printf("无法定位处理器 '-chainout'");
         exit(EXIT_FAILURE);
     }
     wl_addtail(p);
@@ -1543,7 +1543,7 @@ genl_display_file(const char *fname, boolean complain)
 
     if (!f) {
         if (complain) /* send complaint to stdout rather than to stderr */
-            fprintf(stdout, "\nCannot open \"%s\".\n", fname);
+            fprintf(stdout, "\n无法打开\"%s\".\n", fname);
     } else {
         /* straight copy to stdout, no pagination or other interaction */
         while (dlb_fgets(buf, BUFSZ, f)) {
@@ -1723,14 +1723,15 @@ choose_classes_menu(const char *prompt,
            de-selected in order to select anything else */
         add_menu(win, &nul_glyphinfo, &any, 'A', 0,
                  ATR_NONE, clr, buf, MENU_ITEMFLAGS_SKIPINVERT);
-        if (!strcmp(prompt, "Autopickup what?")) {
+        if (!strcmp(prompt, "Autopickup what?")
+            || !strcmp(prompt, "自动拾取什么?")) {
             add_menu_str(win,
-                   "Note: when no choices are selected, \"all\" is implied.");
+                         "注意: 未选择任何项时, 默认表示\"全部\".");
             /* for 'O', "toggle" should be intuitive; for 'm O', it would
                probably be better to say "Set 'autopickup' to true|false" */
             add_menu_str(win, flags.pickup
-                        ? "Toggle off 'autopickup' to not pick up anything."
-           : "Toggle on 'autopickup' to automatically pick these things up.");
+                         ? "关闭'autopickup'可不拾取任何东西."
+                         : "开启'autopickup'可自动拾取这些东西.");
         }
     }
     end_menu(win, prompt);

@@ -182,7 +182,7 @@ English README：[README_en.md](README_en.md)
 - [x] weapon.c
 - [x] were.c
 - [x] wield.c
-- [ ] windows.c
+- [x] windows.c
 - [ ] wizard.c
 - [ ] wizcmds.c
 - [ ] worm.c
