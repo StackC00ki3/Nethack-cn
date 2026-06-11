@@ -937,13 +937,27 @@ m_dowear_type(
             /* a monster will swap an item of the same type as the one it
                is replacing when the enchantment is better;
                if newarm and oldarm have identical descriptions, substitute
-               "another <newarm>" for "a|an <newarm>" */
+               "another/另一... <newarm>" for "a|an/一... <newarm>" */
             if (!strcmpi(newarm, oldarm)) {
                 /* size of newarm[] has been overallocated to guarantee
-                   enough room to insert "another " */
-                if (!strncmpi(newarm, "a ", 2)) /*待写：if (!cnstrncmpi(newarm, "一个", 2))*/
+                   enough room to insert "another " or "另" */
+                if (!strncmp(newarm, "一个", sizeof "一个" - 1))
+                    (void) strsubst(newarm, "一个", "另一个");
+                else if (!strncmp(newarm, "一件", sizeof "一件" - 1))
+                    (void) strsubst(newarm, "一件", "另一件");
+                else if (!strncmp(newarm, "一副", sizeof "一副" - 1))
+                    (void) strsubst(newarm, "一副", "另一副");
+                else if (!strncmp(newarm, "一双", sizeof "一双" - 1))
+                    (void) strsubst(newarm, "一双", "另一双");
+                else if (!strncmp(newarm, "一顶", sizeof "一顶" - 1))
+                    (void) strsubst(newarm, "一顶", "另一顶");
+                else if (!strncmp(newarm, "一面", sizeof "一面" - 1))
+                    (void) strsubst(newarm, "一面", "另一面");
+                else if (!strncmp(newarm, "一条", sizeof "一条" - 1))
+                    (void) strsubst(newarm, "一条", "另一条");
+                else if (!strncmpi(newarm, "a ", 2))
                     (void) strsubst(newarm, "a ", "another ");
-                else if (!strncmpi(newarm, "an ", 3)) /*待写：if (!cnstrncmpi(newarm, "一个", 2))*/
+                else if (!strncmpi(newarm, "an ", 3))
                     (void) strsubst(newarm, "an ", "another ");
                 newarm[BUFSZ - 1] = '\0';
             }

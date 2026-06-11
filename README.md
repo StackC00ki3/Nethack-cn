@@ -186,7 +186,7 @@ English README：[README_en.md](README_en.md)
 - [x] wizard.c
 - [x] wizcmds.c
 - [x] worm.c
-- [ ] worn.c
+- [x] worn.c
 - [ ] write.c
 - [ ] zap.c
 
