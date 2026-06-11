@@ -149,7 +149,7 @@ English README：[README_en.md](README_en.md)
 - [x] restore.c
 - [x] rip.c
 - [x] rnd.c (无需翻译)
-- [ ] role.c
+- [x] role.c
 - [ ] rumors.c
 - [ ] save.c
 - [x] selvar.c (无需翻译)

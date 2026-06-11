@@ -245,8 +245,8 @@ const struct Role roles[NUM_ROLES+1] = {
         { "长老", 0 } },
       "哪吒", "太上老君", "混世四猴", /* Chinese */
       "禅",
-      "禅顺寺", /*待写:我不知道Chan-Sune是什么，翻遍了所有我能查到的汉语方言和外语汉字音都不知道是什么，姑且这么猜吧*/
-      "土地庙", /*这真的是土地庙吗？？？*/
+      "禅顺寺", /*待写:我不知道Chan-Sune是什么, 翻遍了所有我能查到的汉语方言和外语汉字音都不知道是什么, 姑且这么猜吧*/
+      "土地庙", /*这真的是土地庙吗???*/
       PM_MONK,
       NON_PM,
       PM_GRAND_MASTER,
@@ -281,7 +281,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "祭司", 0 },
         { "副牧师", 0 },
         { "教区牧师", 0 },
-        { "喇嘛", 0 }, /*待写:别问我，原文就是这么写的（Lama）*/
+        { "喇嘛", 0 }, /*待写:别问我, 原文就是这么写的(Lama)*/
         { "牧首", 0 },
         { "高阶祭司", 0 } },
       0, 0, 0, /* deities from a randomly chosen other role will be used */
@@ -415,7 +415,7 @@ const struct Role roles[NUM_ROLES+1] = {
     { { "武士", 0 },
       { { "旗本", 0 },       /* Banner Knight */
         { "浪人", 0 },          /* no allegiance */
-        { "忍者", "くノ一" }, /* secret society */ /*待写:くノ一（kunoichi）三笔连在一起为“女”*/
+        { "忍者", "くノ一" }, /* secret society */ /*待写:くノ一(kunoichi)三笔连在一起为"女"*/
         { "城主", 0 },          /* heads a castle */
         { "领主", 0 },         /* has a territory */
         { "国主", 0 },        /* heads a province */
@@ -424,7 +424,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "将军", 0 } },       /* supreme commander, warlord */
       "_天照大御神", "雷神", "须佐之男", /* Japanese */
       "武",
-      "太郎氏的城堡", /*待写:？？？*/
+      "太郎氏的城堡", /*待写:???*/
       "将军的城堡",
       PM_SAMURAI,
       PM_LITTLE_DOG,
@@ -503,7 +503,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "豪杰", 0 },
         { "殿下", 0 } },
       "提尔", "奥丁", "洛基", /* Norse */
-      "瓦", /*待写:不知道咋简称。。。*/
+      "瓦", /*待写:不知道咋简称...*/
       "命运神殿",
       "苏尔特尔之穴",
       PM_VALKYRIE,
@@ -542,7 +542,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "妖术师", 0 },
         { "大魔法师", 0 },
         { "智者", 0 } },
-      "普塔", "托特", "安胡尔", /* Egyptian */ /*待写:或者是荷鲁斯？*/
+      "普塔", "托特", "安胡尔", /* Egyptian */ /*待写:或者是荷鲁斯?*/
       "巫",
       "孤独之塔",
       "黑暗之塔",
@@ -2878,8 +2878,8 @@ setup_rolemenu(
             any.a_int = i + 1;
         else
             any.a_string = roles[i].name.m;
-        /*危险，冗余:thisch = lowc(*roles[i].name.m);*/
-        /*危险，冗余:if (thisch == lastch)
+        /*危险, 冗余:thisch = lowc(*roles[i].name.m);*/
+        /*危险, 冗余:if (thisch == lastch)
             thisch = highc(thisch);*/
         Strcpy(rolenamebuf, roles[i].name.m);
         if (roles[i].name.f) {
