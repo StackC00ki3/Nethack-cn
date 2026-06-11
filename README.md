@@ -167,7 +167,7 @@ English README：[README_en.md](README_en.md)
 - [x] strutil.c
 - [x] symbols.c (无需翻译)
 - [x] sys.c (无需翻译)
-- [ ] teleport.c
+- [x] teleport.c
 - [ ] tile.c
 - [ ] timeout.c
 - [ ] topten.c

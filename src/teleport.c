@@ -850,7 +850,7 @@ scrolltele(struct obj *scroll)
         You_feel("迷失了一刹那.");
         /* don't discover the scroll [at least not yet for wizard override];
            disorientation doesn't reveal that this is a teleport attempt */
-        if (!wizard || y_n("Override?") != 'y')
+        if (!wizard || y_n("覆盖限制?") != 'y')
             return;
     }
     if (((Teleport_control || (scroll && scroll->blessed)) && !Stunned)
@@ -1063,10 +1063,10 @@ dotele(boolean break_the_rules) /* True: wizard mode ^T */
             /* casting isn't inhibited by being Stunned (...it ought to be) */
             castit = (knownsp >= spe_Fresh && !Confusion);
             if (!castit && !break_the_rules) {
-                You("你%s.", (!Teleportation ? ((knownsp != spe_Unknown)
-                                                    ? "无法施放那个法术"
-                                                    : "不知道那个法术")
-                                             : "无法随意传送"));
+                You("%s.", (!Teleportation ? ((knownsp != spe_Unknown)
+                                                  ? "无法施放那个法术"
+                                                  : "不知道那个法术")
+                                           : "无法随意传送"));
                 return 0;
             }
         }
@@ -1223,7 +1223,7 @@ level_tele(void)
                            for something like this, but we don't want
                            fumbling or already full pack to interfere */
                         amu = addinv(amu);
-                        prinv("Endgame prerequisite:", amu, 0L);
+                        prinv("终局前置物品:", amu, 0L);
                     }
                 }
                 force_dest = TRUE;
@@ -1679,12 +1679,12 @@ rloc_to_core(struct monst *mtmp, coordxy x, coordxy y, unsigned rlocflags)
         if (mtmp == u.ustuck && !u_at(u.ux0, u.uy0)) {
             You("和%s一起传送.", mon_nam(mtmp));
         } else if (telemsg && (couldsee(x, y) || sensemon(mtmp))) {
-            pline("%s消失了又重现到%s.", Monnam(mtmp),
+            pline("%s消失后又在%s出现.", Monnam(mtmp),
                   next                                  ? next
                   : nearu                               ? nearu
-                  : ((olddu = distu(oldx, oldy)) == du) ? ""
+                  : ((olddu = distu(oldx, oldy)) == du) ? "原处"
                   : (du < olddu)                        ? "更近处"
-                                                        : "得更处");
+                                                        : "更远处");
         } else {
             pline("%s%s%s%s!", appearmsg ? Amonnam(mtmp) : Monnam(mtmp),
                   appearmsg ? "突然" : "", !Blind ? "出现在" : "到达",
