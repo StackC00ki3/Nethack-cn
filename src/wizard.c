@@ -75,11 +75,11 @@ amulet(void)
             if (ttmp->ttyp == MAGIC_PORTAL) {
                 int du = distu(ttmp->tx, ttmp->ty);
                 if (du <= 9)
-                    pline("%s 烫!", Tobjnam(amu, "感觉"));
+                    pline("%s发烫!", Tobjnam(amu, "感觉"));
                 else if (du <= 64)
-                    pline("%s 非常温暖.", Tobjnam(amu, "感觉"));
+                    pline("%s非常温暖.", Tobjnam(amu, "感觉"));
                 else if (du <= 144)
-                    pline("%s 温暖.", Tobjnam(amu, "感觉"));
+                    pline("%s温暖.", Tobjnam(amu, "感觉"));
                 /* else, the amulet feels normal */
                 break;
             }
@@ -441,7 +441,7 @@ tactics(struct monst *mtmp)
 
                 if ((otmp = on_ground(which_arti(targ))) != 0) {
                     if (cansee(mtmp->mx, mtmp->my))
-                        pline("%s捡起了%s。", Monnam(mtmp),
+                        pline("%s捡起了%s.", Monnam(mtmp),
                               distant_name(otmp, doname));
                     obj_extract_self(otmp);
                     (void) mpickobj(mtmp, otmp);
@@ -720,7 +720,7 @@ resurrect(void)
 
     if (!svc.context.no_of_wizards) {
         /* make a new Wizard */
-        verb = "kill";
+        verb = "杀死";
         mtmp = makemon(&mons[PM_WIZARD_OF_YENDOR], u.ux, u.uy, MM_NOWAIT);
         /* affects experience; he's not coming back from a corpse
            but is subject to repeated killing like a revived corpse */
@@ -728,7 +728,7 @@ resurrect(void)
             mtmp->mrevived = 1;
     } else {
         /* look for a migrating Wizard */
-        verb = "elude";
+        verb = "摆脱";
         mmtmp = &gm.migrating_mons;
         while ((mtmp = *mmtmp) != 0) {
             if (mtmp->iswiz
@@ -774,7 +774,7 @@ resurrect(void)
         if (!Deaf) {
             pline("一个声音传出...");
             SetVoice(mtmp, 0, 80, 0);
-            verbalize("So thou thought thou couldst %s me, fool.", verb);
+            verbalize("所以你以为你能%s我,蠢货.", verb);
         }
     }
 }
@@ -790,7 +790,7 @@ intervene(void)
     switch (which) {
     case 0:
     case 1:
-        You_feel("到不明的紧张.");
+        You_feel("莫名地紧张.");
         break;
     case 2:
         if (!Blind)
@@ -822,23 +822,23 @@ wizdeadorgone(void)
 }
 
 static const char *const random_insult[] = {
-    "antic",      "blackguard",   "caitiff",    "chucklehead",
-    "coistrel",   "craven",       "cretin",     "cur",
-    "dastard",    "demon fodder", "dimwit",     "dolt",
-    "fool",       "footpad",      "imbecile",   "knave",
-    "maledict",   "miscreant",    "niddering",  "poltroon",
-    "rattlepate", "reprobate",    "scapegrace", "varlet",
-    "villein", /* (sic.) */
-    "wittol",     "worm",         "wretch",
+    "滑稽小丑",   "恶棍",       "卑鄙小人",   "蠢脑袋",
+    "无赖",       "懦夫",       "白痴",       "狗东西",
+    "卑鄙之徒",   "恶魔口粮",   "傻瓜",       "蠢材",
+    "笨蛋",       "扒手",       "低能儿",     "流氓",
+    "被诅咒者",   "不法之徒",   "卑劣者",     "胆小鬼",
+    "响脑袋",     "堕落者",     "替罪羊",     "贱民",
+    "农奴", /* (sic.) */
+    "窝囊废",     "虫子",       "可怜虫",
 };
 
 static const char *const random_malediction[] = {
-    "Hell shall soon claim thy remains,", "I chortle at thee, thou pathetic",
-    "Prepare to die, thou", "Resistance is useless,",
-    "Surrender or die, thou", "There shall be no mercy, thou",
-    "Thou shalt repent of thy cunning,", "Thou art as a flea to me,",
-    "Thou art doomed,", "Thy fate is sealed,",
-    "Verily, thou shalt be one dead"
+    "地狱很快就会收下你的残骸,", "我嘲笑你,可悲的",
+    "准备受死吧,", "抵抗是徒劳的,",
+    "投降或死亡吧,", "不会有任何怜悯,",
+    "你会为自己的狡猾忏悔,", "在我面前你不过是跳蚤,",
+    "你已注定灭亡,", "你的命运已经注定,",
+    "说真的,你很快就是死掉的"
 };
 
 /* Insult or intimidate the player */
@@ -852,16 +852,16 @@ cuss(struct monst *mtmp)
             pline("%s极坏地笑着.", Monnam(mtmp));
         } else if (u.uhave.amulet && !rn2(SIZE(random_insult))) {
             SetVoice(mtmp, 0, 80, 0);
-            verbalize("Relinquish the amulet, %s!",
+            verbalize("交出护身符, %s!",
                       ROLL_FROM(random_insult));
         } else if (u.uhp < 5 && !rn2(2)) { /* Panic */
             SetVoice(mtmp, 0, 80, 0);
-            verbalize(rn2(2) ? "Even now thy life force ebbs, %s!"
-                             : "Savor thy breath, %s, it be thy last!",
+            verbalize(rn2(2) ? "此刻你的生命力仍在流逝, %s!"
+                             : "好好品味这口气吧, %s, 它将是你的最后一口!",
                       ROLL_FROM(random_insult));
         } else if (mtmp->mhp < 5 && !rn2(2)) { /* Parthian shot */
             SetVoice(mtmp, 0, 80, 0);
-            verbalize(rn2(2) ? "I shall return." : "I'll be back.");
+            verbalize(rn2(2) ? "我还会归来." : "我会回来的.");
         } else {
             SetVoice(mtmp, 0, 80, 0);
             verbalize("%s %s!",

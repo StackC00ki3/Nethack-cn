@@ -183,7 +183,7 @@ English README：[README_en.md](README_en.md)
 - [x] were.c
 - [x] wield.c
 - [x] windows.c
-- [ ] wizard.c
+- [x] wizard.c
 - [ ] wizcmds.c
 - [ ] worm.c
 - [ ] worn.c
