@@ -1032,17 +1032,21 @@ revive(struct obj *corpse, boolean by_hero)
             shkp = shop_keeper(*in_rooms(x, y, SHOPBASE));
 
         if (cansee(x, y)) {
-            char buf[BUFSZ];
+            char buf[BUFSZ], owner[BUFSZ], corpsebuf[BUFSZ];
 
-            Strcpy(buf, one_of ? "其中之一" : "");
+            owner[0] = '\0';
             /* shk_your: "the " or "your " or "<mon>'s " or "<Shk>'s ".
                If the result is "Shk's " then it will be ambiguous:
                is Shk the mon carrying it, or does Shk's shop own it?
                Let's not worry about that... */
-            (void) shk_your(eos(buf), corpse);
+            (void) shk_your(owner, corpse);
             if (one_of)
                 corpse->quan++; /* force plural */
-            Strcat(corpse_xname(corpse, (const char *) 0, CXN_NO_PFX), buf); /*修改语序：Strcat(buf, corpse_xname(corpse, (const char *) 0, CXN_NO_PFX));*/
+            Strcpy(corpsebuf,
+                   corpse_xname(corpse, (const char *) 0, CXN_NO_PFX));
+            /*修改语序: Strcat(buf, corpse_xname(corpse, (const char *) 0, CXN_NO_PFX));*/
+            Sprintf(buf, "%s%s%s", owner, corpsebuf,
+                    one_of ? "之一" : "");
             if (one_of) /* could be simplified to ''corpse->quan = 1L;'' */
                 corpse->quan--;
             pline("%s发出虹彩的光芒.", upstart(buf));
@@ -4579,7 +4583,7 @@ zhitu(
             /* FIXME: "zapped by herself" is suitable for a rebound;
                "zapped at herself" would be better if player explicitly
                targeted hero */
-            Sprintf(kbuf, "%s自己%s的%s", uhim(), verb, fltxt); /*修改语序：Sprintf(kbuf, "%s %s 被 %s自身", fltxt, verb, uhim());*/
+            Sprintf(kbuf, "%s自己%s的%s", uhim(), verb, fltxt); /*修改语序: Sprintf(kbuf, "%s %s 被 %s自身", fltxt, verb, uhim());*/
         }
         /* Half_spell_damage protection yields half-damage for wands & spells,
            including hero's own ricochets; breath attacks do full damage */
@@ -6168,9 +6172,9 @@ wishcmdassist(int triesleft)
         wishinfo[] = {
   "许愿详情:",
   "",
-  "输入物品的名称,例如\"potion of monster detection\"、",
+  "输入物品的名称,例如\"potion of monster detection\",",
   "\"scroll labeled README\",\"elven mithril-coat\"或",
-  "\"Grimtooth\"（不带引号）.",
+  "\"Grimtooth\"(不带引号).",
   "",
   "对于成堆出现的物品类型,可以指定复数名称,例如\"potions ",
   "of healing\",或指定数量,例如\"1000 gold pieces\",尽",
@@ -6369,7 +6373,7 @@ makewish(void)
     } else if (otmp == &nothing) {
         /* explicitly wished for "nothing", presumably attempting
            to retain wishless conduct */
-        livelog_printf(LL_WISH, "declined to make a wish");
+        livelog_printf(LL_WISH, "拒绝许愿");
         return;
     } else if (otmp == &hands_obj) {
         wish_history_add(bufcpy);
