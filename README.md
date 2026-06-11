@@ -159,7 +159,7 @@ English README：[README_en.md](README_en.md)
 - [x] shknam.c
 - [x] sit.c
 - [x] sounds.c
-- [ ] spell.c
+- [x] spell.c
 - [x] sp_lev.c (无需翻译)
 - [ ] stairs.c
 - [ ] steal.c

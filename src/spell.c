@@ -720,7 +720,7 @@ getspell(int *spell_no)
 
     nspells = num_spells();
     if (!nspells) {
-        You("你目前不知道任何法术.");
+        You("目前不知道任何法术.");
         return FALSE;
     }
     if (rejectcasting())
@@ -837,9 +837,9 @@ spelltypemnemonic(int skill)
     case P_HEALING_SPELL:
         return "治疗";
     case P_DIVINATION_SPELL:
-        return "预测";
+        return "预言";
     case P_ENCHANTMENT_SPELL:
-        return "迷惑";
+        return "附魔";
     case P_CLERIC_SPELL:
         return "神圣";
     case P_ESCAPE_SPELL:
@@ -1273,7 +1273,7 @@ spelleffects_check(int spell, int *res, int *energy)
         *res = ECMD_OK;
         return TRUE;
     } else if (ACURR(A_STR) < 4 && spellid(spell) != SPE_RESTORE_ABILITY) {
-        You("的力量不足以来施展魔法.");
+        You("没有足够的力量施展魔法.");
         *res = ECMD_OK;
         return TRUE;
     } else if (check_capacity(
@@ -1312,10 +1312,10 @@ spelleffects_check(int spell, int *res, int *energy)
          * isn't now (lost energy when losing levels or polymorphing into
          * new person or had some stripped away by traps or monsters).
          */
-        You("的能量%s还不足以施放那个法术.",
-            (u.uen < u.uenmax) ? "" /* not at full energy => normal message */
-            : (*energy > u.uenpeak) ? "还" /* haven't ever had enough */
-              : "了"); /* once had enough but have lost some since */
+        You("%s足够的能量施放那个法术.",
+            (u.uen < u.uenmax) ? "没有" /* not at full energy => normal message */
+            : (*energy > u.uenpeak) ? "还没有" /* haven't ever had enough */
+              : "不再有"); /* once had enough but have lost some since */
         return TRUE;
     } else {
         if (spellid(spell) != SPE_DETECT_FOOD) {
@@ -1561,7 +1561,7 @@ spelleffects(int spell_otyp, boolean atme, boolean force)
          *  Sick +  Slimed -- You are no longer ill.  The slime disappears.
          */
         if (was_sick || !was_slimed)
-            You("你%s.", was_sick ? "痊愈了" : "没有生病");
+            You("%s.", was_sick ? "痊愈了" : "没有生病");
         if (was_slimed)
             make_slimed(0L, "黏液消失了!");
         break;
@@ -1854,7 +1854,7 @@ enum spl_sort_types {
 
 static const char *const spl_sortchoices[NUM_SPELL_SORTBY] = {
     "按快捷键顺序",
-    "按字母顺序", /*危险:还用我说吗，，，*/
+    "按字母顺序",
     "按等级,从低到高",
     "按等级,从高到低",
     "按法术种类,每组内按字母排序",
@@ -2025,7 +2025,7 @@ dovspell(void)
     struct spell spl_tmp;
 
     if (spellid(0) == NO_SPELL) {
-        You("你目前不知道任何法术.");
+        You("目前不知道任何法术.");
     } else {
         while (dospellmenu("已知法术",
                            SPELLMENU_VIEW, &splnum)) {
@@ -2033,7 +2033,7 @@ dovspell(void)
                 if (spellsortmenu())
                     sortspells();
             } else {
-                Sprintf(qbuf, "重新排序;'%c'交换",
+                Sprintf(qbuf, "重新排序:将'%c'与哪个交换",
                         spellet(splnum));
                 if (!dospellmenu(qbuf, splnum, &othnum))
                     break;
@@ -2063,7 +2063,7 @@ show_spells(void)
         pline("你目前不知道任何法术.");
         pline("%s", "");
     } else {
-        pline("法术：");
+        pline("法术:");
         nhUse(dospellmenu("", SPELLMENU_DUMP, &unused));
     }
 }
