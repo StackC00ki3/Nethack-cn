@@ -230,7 +230,7 @@ mount_steed(
         char qbuf[QBUFSZ];
 
         legs_in_no_shape("riding", FALSE);
-        Sprintf(qbuf, "治疗你的%s腿吗？",
+        Sprintf(qbuf, "治疗你的%s腿吗?",
                 ((HWounded_legs & BOTH_SIDES) == BOTH_SIDES) ? "双" : "");
         if (force && wizard && y_n(qbuf) == 'y')
             heal_legs(0);
@@ -632,7 +632,7 @@ dismount_steed(
     case DISMOUNT_BYCHOICE:
     default:
         if (otmp && otmp->cursed) {
-            You("不能.这个鞍%s被诅咒的.",
+            You("不能.这个鞍%s被诅咒.",
                 otmp->bknown ? "是" : "似乎是");
             otmp->bknown = 1; /* ok to skip set_bknown() here */
             return;
@@ -865,7 +865,7 @@ poly_steed(
                              SUPPRESS_SADDLE, FALSE));
         if (oldshape != steed->data)
             (void) strsubst(buf, "你的", "你的新");
-        You("调整你坐的安在%s上的鞍.", buf);
+        You("在%s的鞍上调整姿势.", buf);
 
         /* riding blocks stealth unless hero+steed fly */
         steed_vs_stealth();

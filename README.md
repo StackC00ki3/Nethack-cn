@@ -163,7 +163,7 @@ English README：[README_en.md](README_en.md)
 - [x] sp_lev.c (无需翻译)
 - [x] stairs.c
 - [x] steal.c
-- [ ] steed.c
+- [x] steed.c
 - [ ] strutil.c
 - [x] symbols.c (无需翻译)
 - [x] sys.c (无需翻译)
