@@ -57,6 +57,7 @@ staticfn int ready_weapon(struct obj *) NO_NNARGS;
 staticfn int ready_ok(struct obj *) NO_NNARGS;
 staticfn int wield_ok(struct obj *) NO_NNARGS;
 staticfn void finish_splitting(struct obj *);
+staticfn const char *wield_verb_cn(const char *) NONNULLARG1;
 
 /* used by will_weld() */
 /* probably should be renamed */
@@ -80,6 +81,20 @@ staticfn void finish_splitting(struct obj *);
 static const char
     are_no_longer_twoweap[] = "不能同时使用两件武器了",
     can_no_longer_twoweap[] = "不能同时装备两件武器了";
+
+staticfn const char *
+wield_verb_cn(const char *verb)
+{
+    if (!strcmp(verb, "ready"))
+        return "准备";
+    if (!strcmp(verb, "fire"))
+        return "发射";
+    if (!strcmp(verb, "wield"))
+        return "装备";
+    if (!strcmp(verb, "rub"))
+        return "擦";
+    return verb;
+}
 
 /*** Functions that place a given item in a slot ***/
 /* Proper usage includes:
@@ -529,7 +544,8 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
     /* forget last splitobj() before calling getobj() with GETOBJ_ALLOWCNT */
     clear_splitobjs();
     /* Prompt for a new quiver: "What do you want to {ready|fire}?" */
-    newquiver = getobj(verb, ready_ok, GETOBJ_PROMPT | GETOBJ_ALLOWCNT);
+    newquiver = getobj(wield_verb_cn(verb), ready_ok,
+                       GETOBJ_PROMPT | GETOBJ_ALLOWCNT);
 
     if (!newquiver) {
         /* Cancelled */
@@ -563,7 +579,7 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
         pline("发射物已经准备好了!");
         return ECMD_OK;
     } else if (newquiver->owornmask & (W_ARMOR | W_ACCESSORY | W_SADDLE)) {
-        You("不能%s那个!", !strcmp(verb, "ready") ? "准备" : (!strcmp(verb, "fire") ? "发射" : (!strcmp(verb, "wield") ? "装备" : (!strcmp(verb, "rub") ? "擦" : "")))); /*危险:You("不能%s那个！", verb);*/
+        You("不能%s那个!", wield_verb_cn(verb));
         return ECMD_OK;
     } else if (newquiver == uwep) {
         int weld_res = !uwep->bknown;
@@ -696,8 +712,11 @@ wield_tool(struct obj *obj,
                    || strstri(what, "s of ") != 0);
 
     if (obj->owornmask & (W_ARMOR | W_ACCESSORY)) {
-        You_cant("在戴着%s的时候%s%s.", more_than_1 ? "它们" : "它", !strcmp(verb, "ready") ? "准备" : (!strcmp(verb, "fire") ? "发射" : (!strcmp(verb, "wield") ? "装备" : (!strcmp(verb, "rub") ? "擦" : ""))), /*修改语序，危险:You_cant("%s %s while wearing %s.", verb, yname(obj),*/
-                 yname(obj)); /*修改语序:more_than_1 ? "them" : "it");*/
+        You_cant("在戴着%s的时候%s%s.", more_than_1 ? "它们" : "它",
+                 wield_verb_cn(verb),
+                 /*修改语序:You_cant("%s %s while wearing %s.", verb,
+                   yname(obj), more_than_1 ? "them" : "it");*/
+                 yname(obj));
         return FALSE;
     }
     if (uwep && welded(uwep)) {
@@ -710,7 +729,8 @@ wield_tool(struct obj *obj,
                 more_than_1 = FALSE;
             pline(
                "因为你的武器粘在你的%s上, 所以你不能%s%s%s.",
-                  hand, !strcmp(verb, "ready") ? "准备" : (!strcmp(verb, "fire") ? "发射" : (!strcmp(verb, "wield") ? "装备" : (!strcmp(verb, "rub") ? "擦" : ""))), more_than_1 ? "那些" : "那个", xname(obj)); /*危险:hand, verb, more_than_1 ? "those" : "that", xname(obj));*/
+                  hand, wield_verb_cn(verb), more_than_1 ? "那些" : "那个",
+                  xname(obj));
         } else {
             You_cant("做那个.");
         }
@@ -722,7 +742,7 @@ wield_tool(struct obj *obj,
     }
     /* check shield */
     if (uarms && bimanual(obj)) {
-        You("不能在穿戴盾牌的时候%s双手%s.", verb,
+        You("不能在穿戴盾牌的时候%s双手%s.", wield_verb_cn(verb),
             (obj->oclass == WEAPON_CLASS) ? "武器" : "工具");
         return FALSE;
     }
