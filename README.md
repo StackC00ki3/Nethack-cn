@@ -187,7 +187,7 @@ English README：[README_en.md](README_en.md)
 - [x] wizcmds.c
 - [x] worm.c
 - [x] worn.c
-- [ ] write.c
+- [x] write.c
 - [ ] zap.c
 
 ##### 文本文件(主要的几个，还有好多)
