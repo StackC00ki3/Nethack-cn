@@ -179,7 +179,7 @@ English README：[README_en.md](README_en.md)
 - [x] vault.c
 - [x] version.c (无需翻译)
 - [x] vision.c (无需翻译)
-- [ ] weapon.c
+- [x] weapon.c
 - [ ] were.c
 - [ ] wield.c
 - [ ] windows.c
