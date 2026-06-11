@@ -164,7 +164,7 @@ English README：[README_en.md](README_en.md)
 - [x] stairs.c
 - [x] steal.c
 - [x] steed.c
-- [ ] strutil.c
+- [x] strutil.c
 - [x] symbols.c (无需翻译)
 - [x] sys.c (无需翻译)
 - [ ] teleport.c
