@@ -338,7 +338,7 @@ tricked_fileremoved(NHFILE *nhfp, char *whynot)
 {
     if (!nhfp) {
         pline1(whynot);
-        pline("可能是被移走了 .");
+        pline("可能是被移走了.");
         Strcpy(svk.killer.name, whynot);
         done(TRICKED);
         return TRUE;
@@ -381,7 +381,7 @@ savestateinlock(void)
 
         Sfi_int(nhfp, &hpid, "gamestate-hackpid");
         if (svh.hackpid != hpid) {
-            Sprintf(whynot, "Level #0 pid (%d) doesn't match ours (%d)!",
+            Sprintf(whynot, "#0层pid(%d)与当前pid(%d)不匹配!",
                     hpid, svh.hackpid);
             goto giveup;
         }

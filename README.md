@@ -151,7 +151,7 @@ English README：[README_en.md](README_en.md)
 - [x] rnd.c (无需翻译)
 - [x] role.c
 - [x] rumors.c
-- [ ] save.c
+- [x] save.c
 - [x] selvar.c (无需翻译)
 - [x] sfbase.c (无需翻译)
 - [x] sfstruct.c (无需翻译)
