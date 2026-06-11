@@ -139,7 +139,7 @@ getrumor(
             if (gt.true_rumor_size == 0L) { /* if this is 1st outrumor() */
                 init_rumors(rumors);
                 if (gt.true_rumor_size < 0L) { /* init failed */
-                    Sprintf(rumor_buf, "Error reading \"%.80s\".", RUMORFILE);
+                    Sprintf(rumor_buf, "读取\"%.80s\"时出错.", RUMORFILE);
                     return rumor_buf;
                 }
             }
@@ -278,7 +278,7 @@ rumor_check(void)
        we didn't bother trying again this time */
     } else if (gt.true_rumor_size < 0L) {
  no_rumors: /* file could be opened but init_rumors() didn't like it */
-        pline("rumors not accessible.");
+        pline("无法访问谣言.");
         /* engravings, epitaphs, and bogus monsters will still be shown,
            and in tmpwin rather than via additional pline() calls */
         display_nhwindow(WIN_MESSAGE, TRUE); /* --more-- */
@@ -722,7 +722,7 @@ doconsult(struct monst *oracl)
         return ECMD_OK;
     case 'y':
         if (umoney < (long) minor_cost) {
-            You("你没有足够的金币来支付这个!");
+            You("没有足够的金币来支付这个!");
             return ECMD_OK;
         }
         u_pay = minor_cost;
