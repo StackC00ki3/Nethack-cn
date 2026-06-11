@@ -169,7 +169,7 @@ English README：[README_en.md](README_en.md)
 - [x] sys.c (无需翻译)
 - [x] teleport.c
 - [x] tile.c
-- [ ] timeout.c
+- [x] timeout.c
 - [ ] topten.c
 - [x] track.c (无需翻译)
 - [ ] trap.c

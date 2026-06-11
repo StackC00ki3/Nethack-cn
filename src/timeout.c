@@ -32,8 +32,8 @@ static const struct propname {
     { STONED, "石化" },
     { SLIMED, "变成黏液" },
     { STRANGLED, "窒息" },
-    { SICK, "濒死" },
-    { STUNNED, "定身" },
+    { SICK, "重病" },
+    { STUNNED, "眩晕" },
     { CONFUSION, "混乱" },
     { HALLUC, "幻觉" },
     { BLINDED, "失明" },
@@ -64,7 +64,7 @@ static const struct propname {
        (as well as in wizard mode) after life-saving in lava if it fails to
        teleport the hero to safety and player declines to die */
     { WWALKING, "水上行走" },
-    { FIRE_RES, "火焰" },
+    { FIRE_RES, "火焰抗性" },
     /*
      * Properties beyond here don't have timed values during normal play,
      * so there's not much point in trying to order them sensibly.
@@ -85,11 +85,11 @@ static const struct propname {
     { HUNGER, "饥饿" },
     { TELEPAT, "心灵感应" },
     { WARNING, "警觉" },
-    { WARN_OF_MON, "警觉: monster type or class" },
-    { WARN_UNDEAD, "警觉: undead" },
+    { WARN_OF_MON, "警觉: 怪物类型或类别" },
+    { WARN_UNDEAD, "警觉: 亡灵" },
     { SEARCHING, "搜索" },
     { INFRAVISION, "红外视觉" },
-    { ADORNED, "装饰 (+/- Cha)" },
+    { ADORNED, "装饰(魅力修饰)" },
     { STEALTH, "潜行" },
     { AGGRAVATE_MONSTER, "激怒怪物" },
     { CONFLICT, "冲突" },
@@ -189,7 +189,7 @@ static NEARDATA const char *const vomiting_texts[] = {
     "感到有点恶心.", /* 14 */
     "感到有些困惑.",       /* 11 */
     "的脑子好像转不过来.", /* 8 */
-    "感到十分不是.",         /* 5 */
+    "感到非常不适.",         /* 5 */
     "马上就要吐了."            /* 2 */
 };
 
@@ -286,7 +286,7 @@ static NEARDATA const char *const choke_texts[] = {
 static NEARDATA const char *const choke_texts2[] = {
     "你的%s正在被勒住.",
     "你的血液难以流向大脑.",
-    "你的%s血压在上升.",
+    "你的%s上的压力越来越大.",
     "你的意识正在模糊.",
     "你窒息了."
 };
@@ -1123,7 +1123,7 @@ hatch_egg(anything *arg, long timeout)
                       flags.female ? "妈妈" : "爸爸", egg->spe ? "." : "?");
             } else if (mon->data->mlet == S_DRAGON && !Deaf) {
                 SetVoice(mon, 0, 80, 0);
-                verbalize("Gleep!"); /* Mything eggs :-) */
+                verbalize("咕叽!"); /* Mything eggs :-) */
             }
             break;
 
@@ -1282,7 +1282,7 @@ slip_or_trip(void)
             && ((saddle = which_armor(u.usteed, W_SADDLE)) == 0
                 || !saddle->cursed)
             && (!ice_only || !rn2(3))) {
-            You("你失去了平衡.");
+            You("失去了平衡.");
             dismount_steed(DISMOUNT_FELL);
         } else if (!rn2(10 + ACURR(A_DEX))) {
             /* Maybe slip in a random direction.  This takes place after
@@ -2017,9 +2017,9 @@ print_queue(winid win, timer_element *base)
     char buf[BUFSZ];
 
     if (!base) {
-        putstr(win, 0, " <empty>");
+        putstr(win, 0, " <空>");
     } else {
-        putstr(win, 0, "timeout  id   kind   call");
+        putstr(win, 0, "超时    id   类型   调用");
         for (curr = base; curr; curr = curr->next) {
 #ifdef VERBOSE_TIMER
             Sprintf(buf, " %4ld   %4ld  %-6s %s(%s)", curr->timeout,
@@ -2050,10 +2050,10 @@ wiz_timeout_queue(void)
     if (win == WIN_ERR)
         return ECMD_OK;
 
-    Sprintf(buf, "Current time = %ld.", svm.moves);
+    Sprintf(buf, "当前时间 = %ld.", svm.moves);
     putstr(win, 0, buf);
     putstr(win, 0, "");
-    putstr(win, 0, "Active timeout queue:");
+    putstr(win, 0, "活动超时队列:");
     putstr(win, 0, "");
     print_queue(win, gt.timer_base);
 
@@ -2075,16 +2075,16 @@ wiz_timeout_queue(void)
     }
     putstr(win, 0, "");
     if (!count) {
-        putstr(win, 0, "No timed properties.");
+        putstr(win, 0, "没有限时属性.");
     } else {
-        putstr(win, 0, "Timed properties:");
+        putstr(win, 0, "限时属性:");
         putstr(win, 0, "");
         for (i = 0; (propname = propertynames[i].prop_name) != 0; ++i) {
             p = propertynames[i].prop_num;
             intrinsic = u.uprops[p].intrinsic;
             if (intrinsic & TIMEOUT) {
                 if (specindx > 0 && i >= specindx) {
-                    putstr(win, 0, " -- settable via #wizintrinsic only --");
+                    putstr(win, 0, " -- 只能通过#wizintrinsic设置 --");
                     specindx = 0;
                 }
                 /* timeout value can be up to 16777215 (0x00ffffff) but
@@ -2101,12 +2101,12 @@ wiz_timeout_queue(void)
         putstr(win, 0, "");
         /* decremented when engulfer makes a move, so can last longer than
            the number of turns reported if engulfer is slow */
-        Sprintf(buf, "Swallow countdown is %u.", u.uswldtim);
+        Sprintf(buf, "吞咽倒计时为%u.", u.uswldtim);
         putstr(win, 0, buf);
     }
     if (u.uinvault) {
         putstr(win, 0, "");
-        Sprintf(buf, "Vault counter is %d.", u.uinvault);
+        Sprintf(buf, "金库计数器为%d.", u.uinvault);
         putstr(win, 0, buf);
     }
     if (any_visible_region()) {
@@ -2114,10 +2114,8 @@ wiz_timeout_queue(void)
     }
     if (svl.level.flags.stasis_until >= svm.moves) {
         putstr(win, 0, "");
-        Sprintf(buf, "Level is no-teleport for %ld %s.",
-                svl.level.flags.stasis_until - svm.moves + 1L,
-                (svl.level.flags.stasis_until - svm.moves > 0L)
-                  ? "turns" : "more turn");
+        Sprintf(buf, "本层禁止传送还剩%ld回合.",
+                svl.level.flags.stasis_until - svm.moves + 1L);
         putstr(win, 0, buf);
     }
     display_nhwindow(win, FALSE);
