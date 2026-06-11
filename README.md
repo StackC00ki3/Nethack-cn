@@ -161,7 +161,7 @@ English README：[README_en.md](README_en.md)
 - [x] sounds.c
 - [x] spell.c
 - [x] sp_lev.c (无需翻译)
-- [ ] stairs.c
+- [x] stairs.c
 - [ ] steal.c
 - [ ] steed.c
 - [ ] strutil.c
