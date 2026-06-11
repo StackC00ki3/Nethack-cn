@@ -173,8 +173,8 @@ throne_sit_effect(void)
                         Your("%s在%s...", eye, vtense(eye, "刺痛"));
                         break;
                     case 0: /* no eyes */
-                        You("你的%s中有一种非常奇怪的感觉.",
-                            body_part(HEAD));
+                        Your("%s中有一种非常奇怪的感觉.",
+                             body_part(HEAD));
                         break;
                     }
                 }
@@ -222,13 +222,13 @@ throne_sit_effect(void)
        started from.]  "Analyzing a throne" doesn't really make any sense
        but if the answer is yes than it will vanish in a puff of logic. */
     if (!special_throne &&
-        !rn2(3) && (!wizard || y_n("Analyze throne?") == 'y')) {
+        !rn2(3) && (!wizard || y_n("分析王座吗?") == 'y')) {
         levl[tx][ty].typ = ROOM, levl[tx][ty].flags = 0;
         map_background(tx, ty, FALSE);
         newsym_force(tx, ty);
         /* "[God] promptly vanishes in a puff of logic" is from
            Douglas Adams' _The_Hitchhiker's_Guide_to_the_Galaxy_. */
-        pline_The("王座在一团逻辑烟雾中%s。",
+        pline_The("王座在一团逻辑烟雾中%s.",
                   cansee(tx, ty) ? "消失" : "已经消失");
     }
 }
@@ -301,7 +301,7 @@ special_throne_effect(int effect) {
     {
         /* summon demons; a NULL argument to msummon summons demons as
            though they were summoned by the Wizard of Yendor */
-        pline_The("王座似乎在呼救！");
+        pline_The("王座似乎在呼救!");
         msummon(NULL);
         msummon(NULL);
         msummon(NULL);
@@ -423,9 +423,10 @@ dosit(void)
         /* holding monster is next to hero rather than beneath, but
            hero is in no condition to actually sit at has/her own spot */
         if (humanoid(u.ustuck->data))
-            pline("%s不把你放开%s.", Monnam(u.ustuck), mhis(u.ustuck));
+            pline("%s不会让你坐在%s膝上.", Monnam(u.ustuck),
+                  mhis(u.ustuck));
         else
-            pline("%s不放开你.", Monnam(u.ustuck));
+            pline("%s没有膝盖.", Monnam(u.ustuck));
         return ECMD_OK;
     } else if (is_pool(u.ux, u.uy) && !Underwater) { /* water walking */
         goto in_water;
@@ -492,7 +493,7 @@ dosit(void)
                        KILLED_BY); /* lava damage */
             } else if (u.utraptype == TT_INFLOOR
                        || u.utraptype == TT_BURIEDBALL) {
-                You("挪不动!"); /*危险:You_cant("挪动来坐下!");*/
+                You_cant("挪动来坐下!");
                 u.utrap++;
             }
         } else {

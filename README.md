@@ -157,7 +157,7 @@ English README：[README_en.md](README_en.md)
 - [x] sfstruct.c (无需翻译)
 - [x] shk.c
 - [x] shknam.c
-- [ ] sit.c
+- [x] sit.c
 - [ ] sounds.c
 - [ ] spell.c
 - [x] sp_lev.c (无需翻译)
