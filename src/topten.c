@@ -702,7 +702,7 @@ topten(int how, time_t when)
 #ifdef LOGFILE /* used for debugging (who dies of what, where) */
     if (lock_file(LOGFILE, SCOREPREFIX, 10)) {
         if (!(lfile = fopen_datafile(LOGFILE, "a", SCOREPREFIX))) {
-            HUP raw_print("Cannot open log file!");
+            HUP raw_print("无法打开日志文件!");
         } else {
             writeentry(lfile, t0);
             (void) fclose(lfile);
@@ -713,7 +713,7 @@ topten(int how, time_t when)
 #ifdef XLOGFILE
     if (lock_file(XLOGFILE, SCOREPREFIX, 10)) {
         if (!(xlfile = fopen_datafile(XLOGFILE, "a", SCOREPREFIX))) {
-            HUP raw_print("Cannot open extended log file!");
+            HUP raw_print("无法打开扩展日志文件!");
         } else {
             writexlentry(xlfile, t0, how);
             (void) fclose(xlfile);
@@ -746,7 +746,7 @@ topten(int how, time_t when)
 #endif
 
     if (!rfile) {
-        HUP raw_print("Cannot open record file!");
+        HUP raw_print("无法打开记录文件!");
         unlock_file(RECORD);
         goto destroywin;
     }
@@ -819,7 +819,7 @@ topten(int how, time_t when)
 #else
         (void) fclose(rfile);
         if (!(rfile = fopen_datafile(RECORD, "w", SCOREPREFIX))) {
-            HUP raw_print("Cannot write record file");
+            HUP raw_print("无法写入记录文件");
             unlock_file(RECORD);
             free_ttlist(tt_head);
             goto destroywin;
@@ -828,13 +828,13 @@ topten(int how, time_t when)
         if (!done_stopprint)
             if (rank0 > 0) {
                 if (rank0 <= 10) {
-                    topten_print("You made the top ten list!");
+                    topten_print("你进入了前十名!");
                 } else {
                     char pbuf[BUFSZ];
 
                     Sprintf(pbuf,
                             "在前%d名的榜单中,你达到了排行榜第%d名.",
-                            rank0, sysopt.entrymax); /*危险: 移除复数s后缀*/
+                            sysopt.entrymax, rank0);
                     topten_print(pbuf);
                 }
                 topten_print("");
@@ -972,31 +972,38 @@ outentry(int rank, struct toptenentry *t1, boolean so)
         Strcat(linebuf, " ");
     if (!strncmp("escaped", t1->death, 7)) {
         Sprintf(eos(linebuf), "逃离了地牢 %s[最高等级 %d]",
-                !strncmp("（", t1->death + 7, 2) ? t1->death + 7 + 2 : "",
+                !strncmp(" (", t1->death + 7, 2) ? t1->death + 7 + 2 : "",
                 t1->maxlvl);
         /* fixup for closing paren in "escaped... with...Amulet)[max..." */
         if ((bp = strchr(linebuf, ')')) != 0)
             *bp = (t1->deathdnum == astral_level.dnum) ? '\0' : ' ';
         second_line = FALSE;
     } else if (!strncmp("ascended", t1->death, 8)) {
-        Sprintf(eos(linebuf), "升为半神%s",
-                (t1->plgend[0] == 'F') ? "" : "");
+        Sprintf(eos(linebuf), "升为半%s",
+                (t1->plgend[0] == 'F' || !strcmp(t1->plgend, "女"))
+                    ? "女神"
+                    : "神");
         second_line = FALSE;
     } else {
-        if (!strncmp(t1->death, "quit", 4)) { /*待写:if (!cnstrncmp(t1->death, "退出", 2))*/
+        if (!strncmp(t1->death, "quit", 4)
+            || !strncmp(t1->death, "退出", sizeof "退出" - 1)) {
             Strcat(linebuf, "退出");
             second_line = FALSE;
-        } else if (!strncmp(t1->death, "died of st", 10)) { /*待写:} else if (!cnstrncmp(t1->death, "死于饥", 3)) {*/
+        } else if (!strncmp(t1->death, "died of st", 10)
+                   || strstri(t1->death, "饥饿")) {
             Strcat(linebuf, "饿死");
             second_line = FALSE;
-        } else if (!strncmp(t1->death, "choked", 6)) { /*待写:} else if (!cnstrncmp(t1->death, "噎死于", 3)) {*/
-            Sprintf(eos(linebuf), "噎死于%s食物",
-                    (t1->plgend[0] == 'F') ? "其" : "其");
-        } else if (!strncmp(t1->death, "poisoned", 8)) { /*待写:} else if (!cnstrncmp(t1->death, "毒死于", 3)) {*/
+        } else if (!strncmp(t1->death, "choked", 6)
+                   || !strncmp(t1->death, "噎死于", sizeof "噎死于" - 1)) {
+            Strcat(linebuf, "被自己的食物噎死");
+        } else if (!strncmp(t1->death, "poisoned", 8)
+                   || !strncmp(t1->death, "中毒于", sizeof "中毒于" - 1)) {
             Strcat(linebuf, "被毒死");
-        } else if (!strncmp(t1->death, "crushed", 7)) { /*待写:} else if (!strncmp(t1->death, "压死于", 3)) {*/
+        } else if (!strncmp(t1->death, "crushed", 7)
+                   || !strncmp(t1->death, "压死于", sizeof "压死于" - 1)) {
             Strcat(linebuf, "被挤压至死");
-        } else if (!strncmp(t1->death, "petrified by ", 13)) { /*待写:} else if (!strncmp(t1->death, "石化于", 3)) {*/
+        } else if (!strncmp(t1->death, "petrified by ", 13)
+                   || !strncmp(t1->death, "石化于", sizeof "石化于" - 1)) {
             Strcat(linebuf, "被石化");
         } else
             Strcat(linebuf, "死");
@@ -1022,7 +1029,7 @@ outentry(int rank, struct toptenentry *t1, boolean so)
                 arg = "土";
                 break;
             default:
-                arg = "Void";
+                arg = "虚空";
                 break;
             }
             Sprintf(eos(linebuf), fmt, arg);
@@ -1210,13 +1217,13 @@ prscore(int argc, char **argv)
            : Strlen(argv[1]);
     if (ln < 2 || (strncmp(argv[1], "-s", 2)
                    && strcmp(argv[1], "--scores"))) {
-        raw_printf("prscore: bad arguments (%d)", argc);
+        raw_printf("prscore: 参数错误(%d)", argc);
         return;
     }
 
     rfile = fopen_datafile(RECORD, "r", SCOREPREFIX);
     if (!rfile) {
-        raw_print("Cannot open record file!");
+        raw_print("无法打开记录文件!");
         return;
     }
 
@@ -1299,15 +1306,15 @@ prscore(int argc, char **argv)
                 (void) outentry(rank, t1, FALSE);
         }
     } else {
-        Sprintf(pbuf, "无法找到任何%s条目给",
-                current_ver ? "当前" : "");
+        Sprintf(pbuf, "无法找到任何%s分数条目: ",
+                current_ver ? "当前版本" : "");
         if (playerct < 1) {
             Strcat(pbuf, "你");
         } else {
             /* minor bug: 'nethack -s -u ziggy' will say "any of"
                even though the '-u' doesn't indicate multiple names */
             if (playerct > 1)
-                Strcat(pbuf, "任何");
+                Strcat(pbuf, "以下任一项: ");
             for (i = 0; i < playerct; i++) {
                 /* accept '-u name' and '-uname' as well as just 'name'
                    so skip '-u' for the none-found feedback */
@@ -1336,11 +1343,11 @@ prscore(int argc, char **argv)
         }
         /* append end-of-sentence punctuation if there is room */
         if (strlen(pbuf) < BUFSZ - 1)
-            Strcat(pbuf, "死亡");
+            Strcat(pbuf, ".");
         raw_print(pbuf);
-        raw_printf("Usage: %s -s [-v] <playertypes> [maxrank] [playernames]",
+        raw_printf("用法: %s -s [-v] <玩家类型> [最高名次] [玩家名]",
                    gh.hname);
-        raw_printf("Player types are: [-p role] [-r race]");
+        raw_printf("玩家类型为: [-p 角色] [-r 种族]");
     }
     free_ttlist(tt_head);
 #ifdef AMIGA

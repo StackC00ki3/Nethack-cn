@@ -170,7 +170,7 @@ English README：[README_en.md](README_en.md)
 - [x] teleport.c
 - [x] tile.c
 - [x] timeout.c
-- [ ] topten.c
+- [x] topten.c
 - [x] track.c (无需翻译)
 - [ ] trap.c
 - [ ] uhitm.c
