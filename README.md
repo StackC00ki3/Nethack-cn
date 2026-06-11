@@ -168,7 +168,7 @@ English README：[README_en.md](README_en.md)
 - [x] symbols.c (无需翻译)
 - [x] sys.c (无需翻译)
 - [x] teleport.c
-- [ ] tile.c
+- [x] tile.c
 - [ ] timeout.c
 - [ ] topten.c
 - [x] track.c (无需翻译)
