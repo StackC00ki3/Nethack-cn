@@ -184,7 +184,7 @@ English README：[README_en.md](README_en.md)
 - [x] wield.c
 - [x] windows.c
 - [x] wizard.c
-- [ ] wizcmds.c
+- [x] wizcmds.c
 - [ ] worm.c
 - [ ] worn.c
 - [ ] write.c
