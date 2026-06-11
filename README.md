@@ -176,7 +176,7 @@ English README：[README_en.md](README_en.md)
 - [x] uhitm.c
 - [x] utf8map.c (无需翻译)
 - [x] u_init.c (无需翻译)
-- [ ] vault.c
+- [x] vault.c
 - [x] version.c (无需翻译)
 - [x] vision.c (无需翻译)
 - [ ] weapon.c

@@ -511,7 +511,10 @@ invault(void)
         }
 
         if (!strcmpi(buf, "Croesus") || !strcmpi(buf, "Kroisos")
-            || !strcmpi(buf, "Creosote")) { /* Discworld */ /*待写:|| !strcmpi(buf, "Creosote")) || !cnstrcmpi(buf, "克罗伊斯") || !cnstrcmpi(buf, "克洛伊斯") || !cnstrcmpi(buf, "克罗伊索斯") || !cnstrcmpi(buf, "克罗伊苏斯") || !cnstrcmpi(buf, "克洛伊索斯") || !cnstrcmpi(buf, "克洛伊苏斯")) {*/
+            || !strcmpi(buf, "Creosote") /* Discworld */
+            || !strcmp(buf, "克罗伊斯") || !strcmp(buf, "克洛伊斯")
+            || !strcmp(buf, "克罗伊索斯") || !strcmp(buf, "克罗伊苏斯")
+            || !strcmp(buf, "克洛伊索斯") || !strcmp(buf, "克洛伊苏斯")) {
             if (!svm.mvitals[PM_CROESUS].died) {
                 if (Deaf) {
                     if (!Blind)
@@ -1228,7 +1231,7 @@ paygd(boolean silently)
             pline("%s把你的金币寄回了金库.", Monnam(grd));
         gdx = svr.rooms[EGD(grd)->vroom].lx + rn2(2);
         gdy = svr.rooms[EGD(grd)->vroom].ly + rn2(2);
-        Sprintf(buf, "致Croesus:这里是从%s%s获得的金币.",
+        Sprintf(buf, "致克罗伊斯:这里是从%s%s获得的金币.",
                 svp.plname,
                 pmname(&mons[u.umonster], flags.female ? FEMALE : MALE));
         make_grave(gdx, gdy, buf);
