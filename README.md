@@ -172,7 +172,7 @@ English README：[README_en.md](README_en.md)
 - [x] timeout.c
 - [x] topten.c
 - [x] track.c (无需翻译)
-- [ ] trap.c
+- [x] trap.c
 - [ ] uhitm.c
 - [x] utf8map.c (无需翻译)
 - [x] u_init.c (无需翻译)

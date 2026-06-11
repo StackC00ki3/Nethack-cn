@@ -307,7 +307,7 @@ erode_obj(
                 Sprintf(actbuf, "%s掉了", vtense(ostr, action[type]));
             else
                 Sprintf(actbuf, "碎裂");
-            pline("%s%s%s%s!", /*修改语序，危险:pline("%s%s%s%s!",*/
+            pline("%s%s%s%s!", /*修改语序:pline("%s%s%s%s!",*/
                   uvictim ? "你的"
                   : !vismon ? "这个" /* visobj */
                     : s_suffix(Monnam(victim)), vismon ? "的" : "",/*修改语序:: s_suffix(Monnam(victim)),*/
@@ -372,7 +372,7 @@ grease_protect(
             pline("%s的%s%s%s", Monnam(victim),
                   ostr, vtense(ostr, "受到"), txt);
     } else if (victim == &gy.youmonst || vismon) {
-        pline("%s%s", Yobjnam2(otmp, "收到"), txt);
+        pline("%s%s", Yobjnam2(otmp, "受到"), txt);
     }
     if (!rn2(2)) {
         otmp->greased = 0;
@@ -985,7 +985,7 @@ mu_maybe_destroy_web(
         if (flaming(mptr) || acidic(mptr)) {
             if (domsg) {
                 if (isyou)
-                    You("%s了%s蜘蛛网！",
+                    You("%s了%s蜘蛛网!",
                         (flaming(mptr)) ? "烧掉" : "溶解",
                         a_your[trap->madeby_u]);
                 else
@@ -2667,7 +2667,7 @@ trapeffect_rolling_boulder_trap(
         int style = ROLL | (trap->tseen ? LAUNCH_KNOWN : 0);
 
         feeltrap(trap);
-        pline("%s你触发了一个滚石陷阱！",
+        pline("%s你触发了一个滚石陷阱!",
               !Deaf ? "咔哒!  " : "");
         if (!launch_obj(BOULDER, trap->launch.x, trap->launch.y,
                         trap->launch2.x, trap->launch2.y, style)) {
@@ -2748,7 +2748,7 @@ trapeffect_vibrating_square(
                     p = eos(strcat(buf, " "));
                     Strcpy(p, makeplural(mbodypart(mtmp, FOOT)));
                     /* avoid "beneath 'rear paws'" or 'rear hooves' */
-                    (void) strsubst(p, "后", ""); /*危险:(void) strsubst(p, "rear", "");*/
+                    (void) strsubst(p, "后", "");
                 }
                 You_see("%s下方有一个奇怪的振动.", buf);
             } else {
@@ -3961,16 +3961,16 @@ float_up(void)
                 body_part(LEG),
                 IS_ROOM(levl[cc.x][cc.y].typ) ? "地板" : "地面");
         } else if (u.utraptype == WEB) {
-            You("你微微上浮,但仍仍然卡在%s中.",
+            You("微微上浮,但仍然卡在%s中.",
                 trapname(WEB, FALSE));
         } else { /* bear trap */
-            You("你微微上浮,但你的%s仍然卡在里面.",
+            You("微微上浮,但你的%s仍然卡在里面.",
                 body_part(LEG));
         }
         /* when still trapped, float_vs_flight() below will block levitation */
 #if 0
     } else if (Is_waterlevel(&u.uz)) {
-        pline("It feels as though you've lost some weight.");
+        pline("感觉像是变轻了一些.");
 #endif
     } else if (u.uinwater) {
         spoteffects(TRUE);
@@ -4401,7 +4401,7 @@ domagictrap(void)
                 You("突然思念%s.",
                     Hallucination
                         ? "克利夫兰"
-                        : (In_quest(&u.uz) || at_dgn_entrance("The Quest")) /*待写*/
+                        : (In_quest(&u.uz) || at_dgn_entrance("The Quest"))
                               ? "你附近的故乡"
                               : "你遥远的故乡");
             break;
@@ -4783,7 +4783,7 @@ water_damage(
 #endif
            ) return 0;
         if (in_invent)
-            Your("你的%s%s.", ostr, vtense(ostr, "洇了"));
+            Your("%s%s.", ostr, vtense(ostr, "洇了"));
 
         obj->otyp = SCR_BLANK_PAPER;
         obj->dknown = 0;
@@ -4980,7 +4980,7 @@ back_on_ground(boolean rescued)
                *surf = surface(u.ux, u.uy), *you_are_back;
     char icebuf[QBUFSZ];
 
-    //if (is_ice(u.ux, u.uy)) { /*危险、冗余*/
+    //if (is_ice(u.ux, u.uy)) {
         /* "on ice" */
         //surf = ice_descr(u.ux, u.uy, icebuf);
     //} else if (!strcmpi(surf, "floor") || !strcmpi(surf, "ground")) {
@@ -5473,7 +5473,7 @@ try_disarm(
         if (u.usteed && P_SKILL(P_RIDING) < P_BASIC)
             rider_cant_reach();
         else
-            You("够不到%s！", trapname(ttype, FALSE));
+            You("够不到%s!", trapname(ttype, FALSE));
         return 0;
     }
 
@@ -5579,7 +5579,7 @@ disarm_holdingtrap(struct trap *ttmp)
 
         if (wep && wep->oartifact
             && (u_wield_art(ART_STING) || attacks(AD_FIRE, wep)))
-            pline("%s%s了%s蜘蛛网！", bare_artifactname(uwep),
+            pline("%s%s了%s蜘蛛网!", bare_artifactname(uwep),
                   u_wield_art(ART_STING) ? "切穿" : "烧穿", which);
         else if (wep)
             You("切断了%s蜘蛛网.", which);
@@ -6781,9 +6781,13 @@ unconscious(void)
 
     return (u.usleep
             || (gn.nomovemsg
-                && (!strncmp(gn.nomovemsg, "You awake", 9) /*待写:&& (!cnstrncmp(gn.nomovemsg, "你醒", 2)*/
-                    || !strncmp(gn.nomovemsg, "You regain con", 14) /*待写:|| !strncmp(gn.nomovemsg, "你恢复了意识", 6)*/
-                    || !strncmp(gn.nomovemsg, "You are consci", 14)))); /*待写:|| !strncmp(gn.nomovemsg, "你恢复了知觉", 6))));*/
+                && (!strncmp(gn.nomovemsg, "You awake", 9)
+                    || !strncmp(gn.nomovemsg, "You regain con", 14)
+                    || !strncmp(gn.nomovemsg, "You are consci", 14)
+                    || strstri(gn.nomovemsg, "醒")
+                    || strstri(gn.nomovemsg, "恢复意识")
+                    || strstri(gn.nomovemsg, "恢复了意识")
+                    || strstri(gn.nomovemsg, "恢复了知觉"))));
 }
 
 static const char lava_killer[] = "熔岩";
@@ -6969,7 +6973,7 @@ lava_effects(void)
         set_utrap((unsigned) (rn1(4, 4) + ((boil_away ? 2
                                                       : rn1(4, 12)) << 8)),
                   TT_LAVA);
-        You("沉入%s中%s！", waterbody_name(u.ux, u.uy),
+        You("沉入%s中%s!", waterbody_name(u.ux, u.uy),
             !boil_away ? ",但只是轻微灼烧"
                        : "并且即将被烧死");
         if (Fire_resistance)
@@ -7105,7 +7109,7 @@ trapname(
     static const char *const halu_trapnames[] = {
         /* riffs on actual nethack traps */
         "无底洞", "多态陷阱", "恶魔传送门",
-        "滚石陷阱", "反反魔法陷阱", "催泪瓦斯陷阱",
+        "滚石陷阱", "反魔法陷阱", "催泪瓦斯陷阱",
         "恶心的板子", "带电的网", "枭熊陷阱", "沙漠地雷",
         "摇摆三角",
         /* some traps found in nethack variants */
