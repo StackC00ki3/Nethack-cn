@@ -180,7 +180,7 @@ English README：[README_en.md](README_en.md)
 - [x] version.c (无需翻译)
 - [x] vision.c (无需翻译)
 - [x] weapon.c
-- [ ] were.c
+- [x] were.c
 - [ ] wield.c
 - [ ] windows.c
 - [ ] wizard.c

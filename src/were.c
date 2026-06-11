@@ -5,6 +5,26 @@
 
 #include "hack.h"
 
+staticfn const char *werebeast_cn_name(int);
+
+staticfn const char *
+werebeast_cn_name(int pm)
+{
+    switch (pm) {
+    case PM_WEREWOLF:
+    case PM_HUMAN_WEREWOLF:
+        return "狼";
+    case PM_WEREJACKAL:
+    case PM_HUMAN_WEREJACKAL:
+        return "豺狼";
+    case PM_WERERAT:
+    case PM_HUMAN_WERERAT:
+        return "鼠";
+    default:
+        return "野兽";
+    }
+}
+
 void
 were_change(struct monst *mon)
 {
@@ -113,8 +133,7 @@ new_were(struct monst *mon)
     if (canseemon(mon) && !Hallucination)
         pline("%s变成了%s.", Monnam(mon),
               is_human(&mons[pm]) ? "人"
-                                  /* pmname()+4: skip past "were" prefix */
-                                  : (!strcmp(pmname(&mons[pm], Mgender(mon)), "狼人")) ? "狼" : ((!strcmp(pmname(&mons[pm], Mgender(mon)), "豺狼人")) ? "豺狼" : ((!strcmp(pmname(&mons[pm], Mgender(mon)), "鼠人")) ? "鼠" : ""))); /*危险:: pmname(&mons[pm], Mgender(mon)) + 4);*/
+                                  : werebeast_cn_name(pm));
 
     set_mon_data(mon, &mons[pm]);
     if (helpless(mon)) {
@@ -197,9 +216,8 @@ you_were(void)
     if (Unchanging || u.umonnum == u.ulycn)
         return;
     if (controllable_poly) {
-        /* `+4' => skip "were" prefix to get name of beast */
         Sprintf(qbuf, "你想变成%s吗?",
-                (!strcmp(pmname(&mons[u.ulycn], Mgender(&gy.youmonst)), "狼人")) ? "狼" : ((!strcmp(pmname(&mons[u.ulycn], Mgender(&gy.youmonst)), "豺狼人")) ? "豺狼" : ((!strcmp(pmname(&mons[u.ulycn], Mgender(&gy.youmonst)), "鼠人")) ? "鼠" : ""))); /*危险:an(mons[u.ulycn].pmnames[NEUTRAL] + 4));*/
+                werebeast_cn_name(u.ulycn));
         if (!paranoid_query(ParanoidWerechange, qbuf))
             return;
     } else if (monster_nearby()) {
@@ -221,7 +239,7 @@ you_unwere(boolean purify)
     if (!Unchanging && is_were(gy.youmonst.data)
         && !monster_nearby()
         && (!controllable_poly
-            || !paranoid_query(ParanoidWerechange, "Remain in beast form?")))
+            || !paranoid_query(ParanoidWerechange, "保持野兽形态吗?")))
         rehumanize();
     else if (is_were(gy.youmonst.data) && !u.mtimedone)
         u.mtimedone = rn1(200, 200); /* 40% of initial were change */
