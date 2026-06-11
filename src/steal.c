@@ -89,7 +89,7 @@ stealgold(struct monst *mtmp)
         /* reduce "rear hooves/claws" to "hooves/claws" */
         if (!strncmp(what, "rear ", 5))
             what += 5;
-        pline("%s迅速从%s%s%s抢走了一些金币！", Monnam(mtmp),
+        pline("%s迅速从%s%s%s抢走了一些金币!", Monnam(mtmp),
               whose, what, (Levitation || Flying) ? "下" : "间"); /*修改语序:(Levitation || Flying) ? "下" : "间", whose, what);*/
         if (!ygold || !rn2(5)) {
             if (!tele_restrict(mtmp))
@@ -137,8 +137,10 @@ unresponsive(void)
 
     return (unconscious() || is_fainted()
             || (gm.multi_reason
-                && (!strstri(gm.multi_reason, "定住") /*危险:&& (!strncmp(gm.multi_reason, "frozen", 6)*/
-                    || !strstri(gm.multi_reason, "麻痹")))); /*危险:|| !strncmp(gm.multi_reason, "paralyzed", 9))));*/ /*汉语的动词在后面，英语的动词在前面*/
+                && (strstri(gm.multi_reason, "定住")
+                    || strstri(gm.multi_reason, "麻痹")
+                    || !strncmp(gm.multi_reason, "frozen", 6)
+                    || !strncmp(gm.multi_reason, "paralyzed", 9))));
 }
 
 /* called via (*ga.afternmv)() when hero finishes taking off armor that
@@ -313,12 +315,11 @@ worn_item_removal(
         (void) strsubst(objbuf, article, (obj == uchain) ? "the " : "your ");
     }
     /* these ought to be guarded against matching user-supplied name */
-    (void) strsubst(objbuf, "(穿戴中)", ""); /*危险:(void) strsubst(objbuf, " (being worn)", "");*/
-    (void) strsubst(objbuf, "(副武器;未装备)", ""); /*危险:(void) strsubst(objbuf, " (alternate weapon; not wielded)", "");*/
-    /* convert "ring (on left hand)" to "ring (from left hand)" */
-    if ((p = strstri(objbuf, "(在")) /*危险:if ((p = strstri(objbuf, " (on "))*/
-        && (!strncmp(p + 2, "左", 1) || !strncmp(p + 2, "右", 1))) /*危险:&& (!strncmp(p + 5, "left ", 5) || !strncmp(p + 5, "right ", 6)))*/
-        (void) strsubst(p + 1, "在", "从"); /*危险:(void) strsubst(p + 2, "on", "from");*/
+    (void) strsubst(objbuf, " (穿戴中)", "");
+    (void) strsubst(objbuf, " (副武器;未装备)", "");
+    /* convert "ring (戴在左手)" to "ring (从左手)" */
+    if ((p = strstri(objbuf, " (戴在")) != 0)
+        (void) strsubst(p + 2, "戴在", "从");
 
     /* slightly iffy for alternate weapon that isn't actively dual-wielded,
        but it's better to alert the player to the change in equipment than
@@ -326,7 +327,7 @@ worn_item_removal(
     verb = ((obj->owornmask & W_WEAPONS) != 0L) ? "缴下"
            : ((obj->owornmask & W_ACCESSORY) != 0L) ? "移除"
              : "脱下";
-    pline("%s%s了你的%s。", Some_Monnam(mon), verb, objbuf);
+    pline("%s%s了你的%s.", Some_Monnam(mon), verb, objbuf);
     iflags.last_msg = PLNMSG_MON_TAKES_OFF_ITEM;
     /* removal might trigger more messages (due to loss of Lev|Fly;
        descending happens before the theft in progress finishes) */
@@ -386,7 +387,7 @@ steal(struct monst *mtmp, char *objnambuf)
 
             /* buried ball is not tracked via 'uball' and there is no chain
                at all (hence no uchain to take off) */
-            pline("%s取下了你没有的脚镣.", Monnambuf);
+            pline("%s取下了你看不见的锁链.", Monnambuf);
             (void) openholdingtrap(&gy.youmonst, &dummy);
         } else if (Blind) {
             pline("有人想要偷你的东西,但是发现你一无所有.");
@@ -759,7 +760,7 @@ stealamulet(struct monst *mtmp)
         freeinv(otmp);
         Strcpy(buf, doname(otmp));
         (void) mpickobj(mtmp, otmp); /* could merge and free otmp but won't */
-        pline("%s偷走了%s！", Some_Monnam(mtmp), buf);
+        pline("%s偷走了%s!", Some_Monnam(mtmp), buf);
         if (can_teleport(mtmp->data) && !tele_restrict(mtmp))
             (void) rloc(mtmp, RLOC_MSG);
         encumber_msg();
