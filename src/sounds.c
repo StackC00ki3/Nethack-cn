@@ -34,9 +34,9 @@ throne_mon_sound(struct monst *mtmp)
         && mon_in_room(mtmp, COURT)) {
         static const char *const throne_msg[4] = {
             "宫廷谈话的腔调.",
-            "权杖敲击的阴沉声音.",
+            "权杖敲击的裁决声.",
             "有人在喊\"砍了%s的头!\"",
-            "贝如希尔王的猫!",
+            "贝如希尔女王的猫!",
         };
         int which = rn2(3) + (Hallucination ? 1 : 0);
 
@@ -295,8 +295,8 @@ dosounds(void)
                 continue;
             if (is_mercenary(mtmp->data)
 #if 0 /* don't bother excluding these */
-                && !strstri(mtmp->data->epmnames[NEUTRAL], "watch") /*危险:&& !strstri(mtmp->data->pmnames[NEUTRAL], "watch") */
-                && !strstri(mtmp->data->epmnames[NEUTRAL], "guard") /*危险:&& !strstri(mtmp->data->pmnames[NEUTRAL], "guard") */
+                && !strstri(mtmp->data->epmnames[NEUTRAL], "watch")
+                && !strstri(mtmp->data->epmnames[NEUTRAL], "guard")
 #endif
                 && mon_in_room(mtmp, BARRACKS)
                 /* sleeping implies not-yet-disturbed (usually) */
@@ -320,7 +320,7 @@ dosounds(void)
             && !strchr(u.ushops, (int) (ROOM_INDEX(sroom) + ROOMOFFSET))) {
             static const char *const shop_msg[3] = {
                 "有人在咒骂偷东西的人.",
-                "收银机的叮当声.", "七、十一吵起来了!",
+                "收银机的叮当声.", "内曼和马库斯吵起来了!",
             };
             You_hear1(shop_msg[rn2(2) + hallu]);
             noisy_shop(sroom);
@@ -342,9 +342,9 @@ static const char *const h_sounds[] = {
     "哔",   "咻",   "唱",   "打嗝", "嘎吱", "咳",
     "咔嗒", "哀号", "噗",   "叮当", "抽鼻", "叮咚",
     "吱",   "哐当", "嗡",   "滋滋", "啁啾", "喘息",
-    "沙沙", "嘟",   "咬舌", "假",   "咕",   "打饱嗝",
+    "沙沙", "嘟",   "含糊", "约德尔", "咕",   "打饱嗝",
     "哞",   "嘭",   "低语", "嗷嗷", "嘎嘎", "隆隆",
-    "鼻",   "嘟嘟", "咕噜", "呼啸", "咏叹"
+    "拨弦", "嘟嘟", "咕噜", "呼啸", "咏叹"
 };
 
 const char *
@@ -371,7 +371,7 @@ growl_sound(struct monst *mtmp)
         ret = "嗡嗡";
         break;
     case MS_SQEEK:
-        ret = "尖叫";
+        ret = "低吼";
         break;
     case MS_SQAWK:
         ret = "尖啸";
@@ -383,7 +383,7 @@ growl_sound(struct monst *mtmp)
         ret = "哀号";
         break;
     case MS_GROAN:
-        ret = "呻吟";
+        ret = "哼哼";
         break;
     case MS_MOO:
         ret = "低鸣";
@@ -1014,7 +1014,7 @@ domonnoise(struct monst *mtmp)
                 pline_msg = "抱怨吃的全是羊肉.";
                 break;
             default:
-                pline_msg = "大喊：\"菲,菲,福,福!\"然后放声大笑.";
+                pline_msg = "大喊:\"菲,菲,福,福!\"然后放声大笑.";
                 wake_nearto(mtmp->mx, mtmp->my, 7 * 7);
                 break;
             }
@@ -1202,7 +1202,7 @@ domonnoise(struct monst *mtmp)
                 Sprintf(verbuf, "啊,原来你有一本\"%s\".", tribtitle);
                 /* no Death featured in these two, so exclude them */
                 if (strcmpi(tribtitle, "Snuff")
-                    && strcmpi(tribtitle, "The Wee Free Men")) /*危险:先别动。do_name.c 1591*/
+                    && strcmpi(tribtitle, "The Wee Free Men"))
                     Strcat(verbuf, "我可能在那里面被曲解了.");
                 verbl_msg = verbuf;
             }
@@ -1318,7 +1318,7 @@ dochat(void)
             return 1;
         }
          */
-        pline("自言自语不是个地牢探险家的的好习惯.");
+        pline("自言自语不是地牢探险家的好习惯.");
         return ECMD_OK;
     }
 
@@ -1446,7 +1446,7 @@ tiphat(void)
     /* most helmets have a short wear/take-off delay and we could set
        'multi' to account for that, but we'll pretend that no extra time
        beyond the current move is necessary */
-    You("你轻轻摘下你的%s.", helm_simple_name(uarmh));
+    You("轻轻摘下你的%s.", helm_simple_name(uarmh));
 
     if (!u.dx && !u.dy) {
         if (u.usteed && u.dz > 0) {
@@ -1580,7 +1580,7 @@ add_sound_mapping(const char *mapping)
         if (!sounddir)
             sounddir = dupstr(".");
         if (strlen(sounddir) + 1 + strlen(filename) >= sizeof filespec) {
-            raw_print("sound file name too long");
+            raw_print("声音文件名过长");
             return 0;
         }
         Snprintf(filespec, sizeof filespec, "%s/%s", sounddir, filename);
@@ -1613,12 +1613,12 @@ add_sound_mapping(const char *mapping)
                 soundmap = new_map;
             }
         } else {
-            Sprintf(text, "cannot read %.243s", filespec);
+            Sprintf(text, "无法读取%.243s", filespec);
             raw_print(text);
             return 0;
         }
     } else {
-        raw_print("syntax error in SOUND");
+        raw_print("SOUND语法错误");
         return 0;
     }
 
@@ -1850,7 +1850,7 @@ choose_soundlib(const char *s)
                     soundlib_choices[i].sndprocs->soundname);
             first = FALSE;
         }
-        config_error_add("Soundlib type %s not recognized.  Choices are:  %s",
+        config_error_add("无法识别声音库类型%s. 可选项: %s",
                          s, buf);
     }
     if (tmps)
