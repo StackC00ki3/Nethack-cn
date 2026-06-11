@@ -156,7 +156,7 @@ English README：[README_en.md](README_en.md)
 - [x] sfbase.c (无需翻译)
 - [x] sfstruct.c (无需翻译)
 - [x] shk.c
-- [ ] shknam.c
+- [x] shknam.c
 - [ ] sit.c
 - [ ] sounds.c
 - [ ] spell.c
