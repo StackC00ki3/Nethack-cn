@@ -1402,7 +1402,7 @@ level_tele(void)
     }
 
     schedule_goto(&newlevel, UTOTYPE_NONE, (char *) 0,
-                  flags.verbose ? "出现在另一层!" : (char *) 0);
+                  flags.verbose ? "你出现在另一层!" : (char *) 0);
 #if 0 /* always wait until end of turn to change level, otherwise code \
        * that references monsters as this call stack unwinds won't be  \
        * able to access them reliably; the do-the-change-now code here \

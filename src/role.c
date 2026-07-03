@@ -41,7 +41,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "收藏家", 0 },
         { "馆长", 0 } },
       "羽蛇神", "米斯科瓦特尔", "修特库特利", /* Central American */
-      "古",
+      "考", "Arc",
       "考古学院",
       "托尔特克诸王之墓",
       PM_ARCHEOLOGIST,
@@ -82,7 +82,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "首领", 0 },
         { "征服者", 0 } },
       "密特拉", "克罗姆", "赛特", /* Hyborian */
-      "蛮",
+      "蛮", "Bar",
       "杜阿利部落营地",
       "杜阿利绿洲",
       PM_BARBARIAN,
@@ -123,7 +123,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "探险者", 0 },
         { "先驱者", 0 } },
       "安努", "_伊什塔尔", "安沙尔", /* Babylonian */
-      "穴",
+      "穴", "Cav",
       "祖先之穴",
       "龙巢",
       PM_CAVE_DWELLER,
@@ -164,7 +164,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "医师", 0 },
         { "外科医生", 0 } },
       "_雅典娜", "赫尔墨斯", "波塞冬", /* Greek */
-      "医",
+      "医", "Hea",
       "埃皮达鲁斯神庙",
       "科俄斯神庙",
       PM_HEALER,
@@ -204,7 +204,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "庄园主", 0 },
         { "圣骑士", 0 } },
       "鲁格", "_布里吉特", "马纳南·麦克·利尔", /* Celtic */
-      "骑",
+      "骑", "Kni",
       "亚瑟王的城堡",
       "玻璃岛",
       PM_KNIGHT,
@@ -244,7 +244,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "火之学徒", 0 },
         { "长老", 0 } },
       "哪吒", "太上老君", "混世四猴", /* Chinese */
-      "禅",
+      "禅", "Mon",
       "禅顺寺", /*待写:我不知道Chan-Sune是什么，翻遍了所有我能查到的汉语方言和外语汉字音都不知道是什么，姑且这么猜吧*/
       "土地庙", /*这真的是土地庙吗？？？*/
       PM_MONK,
@@ -285,7 +285,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "牧首", 0 },
         { "高阶祭司", 0 } },
       0, 0, 0, /* deities from a randomly chosen other role will be used */
-      "牧",
+      "牧", "Pri",
       "大神殿",
       "纳尔佐克的神殿",
       PM_CLERIC,
@@ -328,7 +328,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "欺诈者", 0 },
         { "大盗", 0 } },
       "伊塞克", "莫格", "科斯", /* Nehwon */
-      "盗",
+      "盗", "Rog",
       "盗贼公会大厅",
       "刺客公会大厅",
       PM_ROGUE,
@@ -382,7 +382,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "狙击手", 0 },
         { "神枪手", 0 } },
       "墨丘利", "_维纳斯", "玛尔斯", /* Roman/planets */
-      "侠",
+      "侠", "Ran",
       "俄里翁的营地",
       "狮头象之穴",
       PM_RANGER,
@@ -423,7 +423,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "公家", 0 },           /* Noble of the Court */
         { "将军", 0 } },       /* supreme commander, warlord */
       "_天照大御神", "雷神", "须佐之男", /* Japanese */
-      "武",
+      "侍", "Sam",
       "太郎氏的城堡", /*待写:？？？*/
       "将军的城堡",
       PM_SAMURAI,
@@ -463,7 +463,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "考察者", 0 },
         { "探险家", 0 } },
       "空眼爱奥", "_圣夫人", "奥夫勒", /* Discworld */
-      "旅",
+      "旅", "Tou",
       "安科–莫波克",
       "盗贼公会大厅",
       PM_TOURIST,
@@ -503,7 +503,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "豪杰", 0 },
         { "殿下", 0 } },
       "提尔", "奥丁", "洛基", /* Norse */
-      "瓦", /*待写:不知道咋简称。。。*/
+      "瓦", "Val", /*待写:不知道咋简称。。。*/
       "命运神殿",
       "苏尔特尔之穴",
       PM_VALKYRIE,
@@ -543,7 +543,7 @@ const struct Role roles[NUM_ROLES+1] = {
         { "大魔法师", 0 },
         { "智者", 0 } },
       "普塔", "托特", "安赫", /* Egyptian */ /*待写:或者是荷鲁斯？安赫？*/
-      "巫",
+      "巫", "Wiz",
       "孤独之塔",
       "黑暗之塔",
       PM_WIZARD,
@@ -585,7 +585,7 @@ const struct Race races[NUM_RACES + 1] = {
         "人类",
         "人类",
         "人类",
-        "人",
+        "人", "Hum",
         { "男人", "女人" },
         PM_HUMAN,
         PM_HUMAN_MUMMY,
@@ -606,7 +606,7 @@ const struct Race races[NUM_RACES + 1] = {
         "精灵",
         "精灵",
         "精灵",
-        "精",
+        "精", "Elf",
         { 0, 0 },
         PM_ELF,
         PM_ELF_MUMMY,
@@ -626,7 +626,7 @@ const struct Race races[NUM_RACES + 1] = {
         "矮人",
         "矮人",
         "矮人",
-        "矮",
+        "矮", "Dwa",
         { 0, 0 },
         PM_DWARF,
         PM_DWARF_MUMMY,
@@ -646,7 +646,7 @@ const struct Race races[NUM_RACES + 1] = {
         "侏儒",
         "侏儒",
         "侏儒",
-        "侏",
+        "侏", "Gno",
         { 0, 0 },
         PM_GNOME,
         PM_GNOME_MUMMY,
@@ -666,7 +666,7 @@ const struct Race races[NUM_RACES + 1] = {
         "兽人",
         "兽人",
         "兽人",
-        "兽",
+        "兽", "Orc",
         { 0, 0 },
         PM_ORC,
         PM_ORC_MUMMY,
@@ -688,19 +688,19 @@ const struct Race races[NUM_RACES + 1] = {
 
 /* Table of all genders */
 const struct Gender genders[] = {
-    { "男性", "他", "他", "他", "男", ROLE_MALE },
-    { "女性", "她", "她", "她", "女", ROLE_FEMALE },
-    { "中性", "它", "它", "它", "中", ROLE_NEUTER },
+    { "男性", "他", "他", "他", "男", "Mal", ROLE_MALE },
+    { "女性", "她", "她", "她", "女", "Fem", ROLE_FEMALE },
+    { "中性", "它", "它", "它", "中", "Ntr", ROLE_NEUTER },
     /* used by pronoun_gender() when hallucinating */
-    { "一群", "它们", "它们", "它们", "群", 0 },
+    { "一群", "它们", "它们", "它们", "群", "Grp", 0 },
 };
 
 /* Table of all alignments */
 const struct Align aligns[] = {
-    { "秩序", "秩序", "秩", ROLE_LAWFUL, A_LAWFUL },
-    { "中立", "中立", "中", ROLE_NEUTRAL, A_NEUTRAL },
-    { "混沌", "混沌", "混", ROLE_CHAOTIC, A_CHAOTIC },
-    { "邪恶", "无阵营", "无", 0, A_NONE }
+    { "秩序", "秩序", "秩", "Law", ROLE_LAWFUL, A_LAWFUL },
+    { "中立", "中立", "中", "Neu", ROLE_NEUTRAL, A_NEUTRAL },
+    { "混沌", "混沌", "混", "Cha", ROLE_CHAOTIC, A_CHAOTIC },
+    { "邪恶", "无阵营", "无", "Una", 0, A_NONE }
 };
 
 staticfn int randrole_filtered(void);
@@ -764,7 +764,7 @@ str2role(const char *str)
         if (roles[i].name.f && !strncmpi(str, roles[i].name.f, len))
             return i;
         /* Or the filecode? */
-        if (!strcmpi(str, roles[i].filecode))
+        if (!strcmpi(str, roles[i].efilecode))
             return i;
     }
 
@@ -830,7 +830,7 @@ str2race(const char *str)
         if (races[i].adj && !strncmpi(str, races[i].adj, len))
             return i;
         /* Or the filecode? */
-        if (!strcmpi(str, races[i].filecode))
+        if (!strcmpi(str, races[i].efilecode))
             return i;
     }
 
@@ -894,7 +894,7 @@ str2gend(const char *str)
         if (!strncmpi(str, genders[i].adj, len))
             return i;
         /* Or the filecode? */
-        if (!strcmpi(str, genders[i].filecode))
+        if (!strcmpi(str, genders[i].efilecode))
             return i;
     }
     if ((len == 1 && (*str == '*' || *str == '@'))
@@ -957,7 +957,7 @@ str2align(const char *str)
         if (!strncmpi(str, aligns[i].adj, len))
             return i;
         /* Or the filecode? */
-        if (!strcmpi(str, aligns[i].filecode))
+        if (!strcmpi(str, aligns[i].efilecode))
             return i;
     }
     if ((len == 1 && (*str == '*' || *str == '@'))

@@ -7,6 +7,7 @@
 #include "hack.h"
 #include "wincurs.h"
 #include "cursmesg.h"
+#include "cursmisc.h"
 #include "curswins.h"
 
 /* defined in sys/<foo>/<foo>tty.c or cursmain.c as last resort;
@@ -703,7 +704,7 @@ curses_message_win_getline(const char *prompt, char *answer, int buffer)
     }
     promptline = nlines - 1;
     mvwaddstr(win, my, mx, linestarts[promptline]);
-    ltmp = (int) strlen(linestarts[promptline]);
+    ltmp = curses_utf8_str_cols(linestarts[promptline]);
     mx = promptx = ltmp + border_space;
 #ifdef EDIT_GETLIN
     if (len <= ltmp) {
@@ -728,12 +729,12 @@ curses_message_win_getline(const char *prompt, char *answer, int buffer)
 #endif
 
     while (1) {
-        mx = (int) strlen(linestarts[nlines - 1]) + border_space;
+        mx = curses_utf8_str_cols(linestarts[nlines - 1]) + border_space;
         if (mx > maxx) {
             if (nlines < maxlines) {
                 tmpstr = curses_break_str(linestarts[nlines - 1],
                                           width - 1, 1);
-                mx = (int) strlen(tmpstr) + border_space;
+                mx = curses_utf8_str_cols(tmpstr) + border_space;
                 mvwprintw(win, my, mx, "%*c", maxx - mx + 1, ' ');
                 if (++my > maxy) {
                     scroll_window(MESSAGE_WIN);
@@ -745,7 +746,8 @@ curses_message_win_getline(const char *prompt, char *answer, int buffer)
                 if (*linestarts[nlines] == ' ')
                     linestarts[nlines]++;
                 mvwaddstr(win, my, mx, linestarts[nlines]);
-                mx = (int) strlen(linestarts[nlines]) + border_space;
+                mx = curses_utf8_str_cols(linestarts[nlines])
+                     + border_space;
                 nlines++;
                 free(tmpstr);
             } else {
@@ -830,14 +832,21 @@ curses_message_win_getline(const char *prompt, char *answer, int buffer)
         case KEY_DC: /* delete-character */
         case '\b': /* ^H (Backspace: '\010') */
         case KEY_BACKSPACE:
-            if (len < 1) {
-                len = 1;
-                mx = promptx;
+            if (len < 1)
+                break;
+            {
+                char *prev = curses_utf8_prev_char(p_answer,
+                                                   p_answer + len);
+                int charcols = curses_utf8_str_cols(prev);
+
+                len = (int) (prev - p_answer);
+                p_answer[len] = '\0';
+                while (charcols-- > 0 && mx > border_space)
+                    mvwaddch(win, my, --mx, ' ');
             }
-            p_answer[--len] = '\0';
-            mvwaddch(win, my, --mx, ' ');
             /* try to unwrap back to the previous line if there is one */
-            if (nlines > 1 && (int) strlen(linestarts[nlines - 2]) < width) {
+            if (nlines > 1
+                && curses_utf8_str_cols(linestarts[nlines - 2]) < width) {
                 mvwaddstr(win, my - 1, border_space, linestarts[nlines - 2]);
                 if (nlines-- > height) {
                     unscroll_window(MESSAGE_WIN);
@@ -849,17 +858,24 @@ curses_message_win_getline(const char *prompt, char *answer, int buffer)
                     /* clean up the leftovers on the next line,
                        if we didn't scroll it away */
                     mvwprintw(win, my--, border_space, "%*c",
-                              (int) strlen(linestarts[nlines]), ' ');
+                              curses_utf8_str_cols(linestarts[nlines]), ' ');
                 }
             }
             break;
         default:
-            p_answer[len++] = ch;
-            if (len >= buffer)
-                len = buffer - 1;
-            else
-                mvwaddch(win, my, mx, ch);
-            p_answer[len] = '\0';
+            if (ch >= ' ' && ch <= 255) {
+                char utf8buf[8];
+                int addlen = curses_read_utf8_char(win, ch, utf8buf,
+                                                   (int) sizeof utf8buf);
+
+                if (addlen > 0 && len + addlen < buffer) {
+                    (void) memcpy(p_answer + len, utf8buf, addlen);
+                    len += addlen;
+                    p_answer[len] = '\0';
+                    waddnstr(win, utf8buf, addlen);
+                    getyx(win, my, mx);
+                }
+            }
         }
     }
 

@@ -1005,9 +1005,9 @@ store_plname_in_file(NHFILE *nhfp)
     /* augment svp.plname[]; the gender and alignment values reflect those
        in effect at time of saving rather than at start of game */
     Snprintf(hero, sizeof hero, "%s-%.3s-%.3s-%.3s-%.3s",
-            svp.plname, gu.urole.filecode,
-            gu.urace.filecode, genders[flags.female].filecode,
-            aligns[1 - u.ualign.type].filecode);
+            svp.plname, gu.urole.efilecode,
+            gu.urace.efilecode, genders[flags.female].efilecode,
+            aligns[1 - u.ualign.type].efilecode);
     /* replace "-role-race..." with "\0role-race..." so that we can include
        or exclude the role-&c suffix easily, without worrying about whether
        plname contains any dashes; but don't rely on snprintf() for this */

@@ -41,6 +41,12 @@ static char *nh_compose_ascii_screenshot(void);
 static WCHAR *nh_compose_unicode_screenshot(void);
 #endif
 static void mswin_apply_window_style_all(void);
+static void mswin_input_push_utf8_bytes(const char *utf8, int utf8_len);
+static void mswin_input_push_utf8_from_wide_char(const WCHAR *text,
+                                                 int text_len);
+static void mswin_input_push_wide_char(WPARAM ch);
+static void mswin_input_push_codepoint(unsigned int codepoint);
+static void mswin_input_push_ime_char(HWND hWnd, WPARAM ch);
 // returns strdup() created pointer - callee assumes the ownership
 
 HWND
@@ -60,17 +66,17 @@ mswin_init_main_window(void)
     /* create the main window */
     ret =
         CreateWindow(szMainWindowClass, /* registered class name */
-                     szTitle,           /* window name */
-                     WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN, /* window style */
-                     CW_USEDEFAULT,    /* horizontal position of window */
-                     CW_USEDEFAULT,    /* vertical position of window */
-                     CW_USEDEFAULT,    /* window width */
-                     CW_USEDEFAULT,    /* window height */
-                     NULL,             /* handle to parent or owner window */
-                     NULL,             /* menu handle or child identifier */
-                     GetNHApp()->hApp, /* handle to application instance */
-                     NULL              /* window-creation data */
-                     );
+                      szTitle,           /* window name */
+                      WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN, /* window style */
+                      CW_USEDEFAULT,    /* horizontal position of window */
+                      CW_USEDEFAULT,    /* vertical position of window */
+                      CW_USEDEFAULT,    /* window width */
+                      CW_USEDEFAULT,    /* window height */
+                      NULL,             /* handle to parent or owner window */
+                      NULL,             /* menu handle or child identifier */
+                      GetNHApp()->hApp, /* handle to application instance */
+                      NULL              /* window-creation data */
+                      );
 
     if (!ret)
         panic("Cannot create main window");
@@ -192,6 +198,117 @@ static const char scanmap[] = {
 };
 
 #define IDT_FUZZ_TIMER 100
+
+static void
+mswin_input_push_utf8_bytes(const char *utf8, int utf8_len)
+{
+    int i;
+
+    if (!utf8 || utf8_len <= 0)
+        return;
+
+    for (i = 0; i < utf8_len; ++i)
+        NHEVENT_KBD((unsigned char) utf8[i]);
+}
+
+static void
+mswin_input_push_utf8_from_wide_char(const WCHAR *text, int text_len)
+{
+    char utf8[8];
+    int utf8_len;
+
+    if (!text || text_len <= 0)
+        return;
+
+    utf8_len = WideCharToMultiByte(CP_UTF8, 0, text, text_len, utf8,
+                                   (int) sizeof utf8, NULL, NULL);
+    if (utf8_len <= 0)
+        return;
+
+    mswin_input_push_utf8_bytes(utf8, utf8_len);
+}
+
+static void
+mswin_input_push_codepoint(unsigned int codepoint)
+{
+    WCHAR text[2];
+    int text_len = 1;
+
+    if (codepoint > 0x10FFFF || (codepoint >= 0xD800 && codepoint <= 0xDFFF))
+        return;
+
+    if (codepoint <= 0xFFFF) {
+        text[0] = (WCHAR) codepoint;
+    } else {
+        codepoint -= 0x10000;
+        text[0] = (WCHAR) (0xD800 + (codepoint >> 10));
+        text[1] = (WCHAR) (0xDC00 + (codepoint & 0x3FF));
+        text_len = 2;
+    }
+    mswin_input_push_utf8_from_wide_char(text, text_len);
+}
+
+static void
+mswin_input_push_wide_char(WPARAM ch)
+{
+    static WCHAR high_surrogate = 0;
+    WCHAR text[2];
+
+    if (ch == 0)
+        return;
+
+    if (ch >= 0xD800 && ch <= 0xDBFF) {
+        high_surrogate = (WCHAR) ch;
+        return;
+    }
+
+    if (ch >= 0xDC00 && ch <= 0xDFFF) {
+        if (!high_surrogate)
+            return;
+        text[0] = high_surrogate;
+        text[1] = (WCHAR) ch;
+        high_surrogate = 0;
+        mswin_input_push_utf8_from_wide_char(text, 2);
+        return;
+    }
+
+    high_surrogate = 0;
+    mswin_input_push_codepoint((unsigned int) ch);
+}
+
+static void
+mswin_input_push_mbcs_ime_char(WPARAM ch)
+{
+    char mbcs[2];
+    WCHAR wide[2];
+    int mbcs_len, wide_len;
+
+    if ((ch & 0xFF00) != 0) {
+        mbcs[0] = (char) ((ch >> 8) & 0xFF);
+        mbcs[1] = (char) (ch & 0xFF);
+        mbcs_len = 2;
+    } else {
+        mbcs[0] = (char) (ch & 0xFF);
+        mbcs_len = 1;
+    }
+
+    wide_len = MultiByteToWideChar(CP_ACP, MB_ERR_INVALID_CHARS, mbcs,
+                                   mbcs_len, wide, SIZE(wide));
+    if (wide_len <= 0)
+        wide_len = MultiByteToWideChar(CP_ACP, 0, mbcs, mbcs_len, wide,
+                                       SIZE(wide));
+    if (wide_len > 0)
+        mswin_input_push_utf8_from_wide_char(wide, wide_len);
+}
+
+static void
+mswin_input_push_ime_char(HWND hWnd, WPARAM ch)
+{
+    if (IsWindowUnicode(hWnd))
+        mswin_input_push_wide_char(ch);
+    else
+        mswin_input_push_mbcs_ime_char(ch);
+}
 
 /*
 //  FUNCTION: WndProc(HWND, unsigned, WORD, LONG)
@@ -380,24 +497,25 @@ MainWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
             return 0;
 
-        default: {
-            WORD c;
-            BYTE kbd_state[256];
-
-            c = 0;
-            ZeroMemory(kbd_state, sizeof(kbd_state));
-            (void) GetKeyboardState(kbd_state);
-
-            if (ToAscii((UINT) wParam, (lParam >> 16) & 0xFF, kbd_state, &c, 0)) {
-                NHEVENT_KBD(c & 0xFF);
-                return 0;
-            } else {
-                return 1;
-            }
-        }
+        default:
+            return 1;
 
         } /* end switch */
     } break;
+
+    case WM_CHAR:
+        mswin_input_push_wide_char(wParam);
+        return 0;
+
+    case WM_UNICHAR:
+        if (wParam == UNICODE_NOCHAR)
+            return TRUE;
+        mswin_input_push_codepoint((unsigned int) wParam);
+        return 0;
+
+    case WM_IME_CHAR:
+        mswin_input_push_ime_char(hWnd, wParam);
+        return 0;
 
     case WM_SYSCHAR: /* Alt-char pressed */
     {

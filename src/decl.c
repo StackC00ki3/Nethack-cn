@@ -126,7 +126,7 @@ static const struct Role urole_init_data = {
     { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 },
       { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } },
     "L", "N", "C",
-    "Xxx", "home", "locate",
+    "Xxx", "XXX", "home", "locate",
     NON_PM, NON_PM, NON_PM, NON_PM, NON_PM, NON_PM, NON_PM,
     0, 0, 0, 0,
     /* Str Int Wis Dex Con Cha */
@@ -150,7 +150,7 @@ static const struct Race urace_init_data = {
     "something",
     "undefined",
     "something",
-    "Xxx",
+    "Xxx", "Xxx",
     { 0, 0 },
     NON_PM,
     NON_PM,

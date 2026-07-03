@@ -93,6 +93,10 @@ static int menu_operation(WINDOW *win, nhmenu *menu, menu_op operation,
                                                    int page_num) NONNULLARG12;
 static void menu_clear_selections(nhmenu *menu) NONNULLARG1;
 static int menu_max_height(void);
+static void dialog_line_input_redraw(WINDOW *, int, int, int,
+                                     const char *) NONNULLARG1;
+static void dialog_line_input_getline(WINDOW *, char *, int, int, int,
+                                      int) NONNULLARG12;
 
 static nhmenu *nhmenus = NULL;  /* NetHack menu array */
 
@@ -101,6 +105,105 @@ static nhmenu *nhmenus = NULL;  /* NetHack menu array */
 #define MAX_ACCEL_PER_PAGE 52 /* 'a'..'z' + 'A'..'Z' */
 /* TODO?  limit per page should be ignored for perm_invent, which might
    have some '#' overflow entries and isn't used to select items */
+
+
+static void
+dialog_line_input_redraw(
+    WINDOW *win,
+    int answery,
+    int answerx,
+    int height,
+    const char *input)
+{
+    int y, cy, cx;
+
+    for (y = answery; y < height; ++y) {
+        wmove(win, y, (y == answery) ? answerx : 0);
+        wclrtoeol(win);
+    }
+    wmove(win, answery, answerx);
+    if (input && *input)
+        waddstr(win, input);
+    getyx(win, cy, cx);
+    wmove(win, cy, cx);
+    wrefresh(win);
+}
+
+static void
+dialog_line_input_getline(
+    WINDOW *win,
+    char *input,
+    int buffer,
+    int answery,
+    int answerx,
+    int height)
+{
+    int len = 0;
+
+    input[0] = '\0';
+    dialog_line_input_redraw(win, answery, answerx, height, input);
+    while (1) {
+        int ch = wgetch(win);
+
+        if (ch == ERR) {
+            iflags.term_gone = 1;
+            input[0] = '\0';
+            return;
+        }
+        if (erase_char && ch == (int) (uchar) erase_char) {
+            ch = '\177';
+        } else if (kill_char && ch == (int) (uchar) kill_char
+                   && (ch < ' ' || ch >= '\177')) {
+            len = 0;
+            input[0] = '\0';
+            dialog_line_input_redraw(win, answery, answerx, height, input);
+            continue;
+        }
+
+        switch (ch) {
+        case '\r':
+        case '\n':
+            return;
+        case '\033':
+            if (len == 0) {
+                Strcpy(input, "\033");
+                return;
+            }
+            len = 0;
+            input[0] = '\0';
+            dialog_line_input_redraw(win, answery, answerx, height, input);
+            break;
+        case '\177':
+        case KEY_DC:
+        case '\b':
+        case KEY_BACKSPACE:
+            if (len > 0) {
+                char *prev = curses_utf8_prev_char(input, input + len);
+
+                len = (int) (prev - input);
+                input[len] = '\0';
+                dialog_line_input_redraw(win, answery, answerx, height,
+                                         input);
+            }
+            break;
+        default:
+            if (ch >= ' ' && ch <= 255) {
+                char utf8buf[8];
+                int addlen = curses_read_utf8_char(win, ch, utf8buf,
+                                                   (int) sizeof utf8buf);
+
+                if (addlen > 0 && len + addlen < buffer) {
+                    (void) memcpy(input + len, utf8buf, addlen);
+                    len += addlen;
+                    input[len] = '\0';
+                    dialog_line_input_redraw(win, answery, answerx, height,
+                                             input);
+                }
+            }
+            break;
+        }
+    }
+}
 
 
 /* Get a line of text from the player, such as asking for a character name
@@ -116,7 +219,7 @@ curses_line_input_dialog(
     WINDOW *askwin, *bwin;
     char *tmpstr;
     int prompt_width, prompt_height = 1, height = prompt_height,
-        answerx = 0, answery = 0, trylim;
+        answerx = 0, answery = 0;
     char input[BUFSZ];
 
     /* if messages were being suppressed for the remainder of the turn,
@@ -176,23 +279,10 @@ curses_line_input_dialog(
         getyx(askwin, answery, answerx);
     }
 
-    echo();
+    noecho();
     curs_set(1);
-    trylim = 10;
-    do {
-        /* move and clear are only needed for 2nd and subsequent passes */
-        wmove(askwin, answery, answerx);
-        wclrtoeol(askwin);
-
-        wgetnstr(askwin, input, buffer - 1);
-        /* ESC after some input kills that input and tries again;
-           ESC at the start cancels, leaving ESC in the result buffer.
-           [Note: wgetnstr() treats <escape> as an ordinary character
-           so user has to type <escape><return> for it to behave the
-           way we want it to.] */
-        if (input[0] != '\033' && strchr(input, '\033') != 0)
-             input[0] = '\0';
-    } while (--trylim > 0 && !input[0]);
+    dialog_line_input_getline(askwin, input, buffer, answery, answerx,
+                              height);
     curs_set(0);
     Strcpy(answer, input);
     werase(bwin);

@@ -186,6 +186,7 @@ struct Role {
     struct RoleName rank[9]; /* names for experience levels (from botl.c) */
     const char *lgod, *ngod, *cgod; /* god names (from pray.c) */
     const char *filecode;           /* abbreviation for use in file names */
+    const char *efilecode;          /*危险:role.c*/
     const char *homebase; /* quest leader's location (from questpgr.c) */
     const char *intermed; /* quest intermediate goal (from questpgr.c) */
 
@@ -260,6 +261,7 @@ struct Race {
     const char *adj;            /* adjective ("human", "elven") */
     const char *coll;           /* collective ("humanity", "elvenkind") */
     const char *filecode;       /* code for filenames */
+    const char *efilecode;      /*危险:role.c*/
     struct RoleName individual; /* individual as a noun ("man", "elf") */
 
     /*** Indices of important monsters and objects ***/
@@ -304,6 +306,7 @@ struct Gender {
     const char *him;      /* him/her/it */
     const char *his;      /* his/her/its */
     const char *filecode; /* file code */
+    const char *efilecode;/*危险:role.c*/
     short allow;          /* equivalent ROLE_ mask */
 };
 #define ROLE_GENDERS 2    /* number of permitted player genders
@@ -335,6 +338,7 @@ struct Align {
     const char *noun;     /* law/balance/chaos */
     const char *adj;      /* lawful/neutral/chaotic */
     const char *filecode; /* file code */
+    const char *efilecode;/*危险:role.c*/
     short allow;          /* equivalent ROLE_ mask */
     aligntyp value;       /* equivalent A_ value */
 };

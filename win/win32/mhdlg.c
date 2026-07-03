@@ -12,6 +12,8 @@
 #include "mhdlg.h"
 
 #include <assert.h>
+#include <limits.h>
+#include <wchar.h>
 int list_view_height(HWND hWnd, int count);
 void get_rect_size(RECT *rect, SIZE *size);
 void center_dialog(HWND dialog);
@@ -26,6 +28,61 @@ struct getlin_data {
 };
 
 INT_PTR CALLBACK GetlinDlgProc(HWND, UINT, WPARAM, LPARAM);
+static int getlin_utf8_to_wide(const char *src, WCHAR *dst, int dst_size);
+static void getlin_wide_to_utf8(const WCHAR *src, char *dst,
+                                size_t dst_size);
+
+static int
+getlin_utf8_to_wide(const char *src, WCHAR *dst, int dst_size)
+{
+    int len;
+
+    if (!dst || dst_size <= 0)
+        return 0;
+
+    if (!src)
+        src = "";
+
+    len = MultiByteToWideChar(CP_UTF8, 0, src, -1, dst, dst_size);
+    if (len <= 0) {
+        dst[0] = L'\0';
+        return 0;
+    }
+
+    dst[dst_size - 1] = L'\0';
+    return len - 1; /* exclude terminating NUL */
+}
+
+static void
+getlin_wide_to_utf8(const WCHAR *src, char *dst, size_t dst_size)
+{
+    int out_size, srclen, bytes;
+
+    if (!dst || dst_size == 0)
+        return;
+    dst[0] = '\0';
+    if (!src)
+        return;
+
+    out_size = (dst_size > (size_t) INT_MAX) ? INT_MAX : (int) dst_size;
+    srclen = (int) wcslen(src);
+    while (srclen > 0) {
+        bytes = WideCharToMultiByte(CP_UTF8, 0, src, srclen, NULL, 0,
+                                    NULL, NULL);
+        if (bytes > 0 && bytes < out_size) {
+            bytes = WideCharToMultiByte(CP_UTF8, 0, src, srclen, dst,
+                                        out_size, NULL, NULL);
+            if (bytes > 0)
+                dst[bytes] = '\0';
+            return;
+        }
+
+        --srclen;
+        while (srclen > 0 && src[srclen - 1] >= 0xD800
+               && src[srclen - 1] <= 0xDBFF)
+            --srclen;
+    }
+}
 
 int
 mswin_getlin_window(const char *question, char *result, size_t result_size)
@@ -48,8 +105,9 @@ mswin_getlin_window(const char *question, char *result, size_t result_size)
     data.result_size = result_size;
 
     /* create modal dialog window */
-    ret = DialogBoxParam(GetNHApp()->hApp, MAKEINTRESOURCE(IDD_GETLIN),
-                         GetNHApp()->hMainWnd, GetlinDlgProc, (LPARAM) &data);
+    ret = DialogBoxParamW(GetNHApp()->hApp, MAKEINTRESOURCEW(IDD_GETLIN),
+                          GetNHApp()->hMainWnd, GetlinDlgProc,
+                          (LPARAM) &data);
     if (ret == -1)
         panic("Cannot create getlin window");
 
@@ -62,7 +120,8 @@ GetlinDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     struct getlin_data *data;
     RECT main_rt, dlg_rt;
     SIZE dlg_sz;
-    TCHAR wbuf[BUFSZ];
+    WCHAR wbuf[BUFSZ];
+    int wlen;
     HDC WindowDC;
     HWND ControlHWND;
     SIZE WindowExtents;
@@ -75,7 +134,8 @@ GetlinDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     switch (message) {
     case WM_INITDIALOG:
         data = (struct getlin_data *) lParam;
-        SetWindowText(hWnd, NH_A2W(data->question, wbuf, sizeof(wbuf)));
+        wlen = getlin_utf8_to_wide(data->question, wbuf, SIZE(wbuf));
+        SetWindowTextW(hWnd, wbuf);
         SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR) data);
 
         /* center dialog in the main window */
@@ -83,10 +143,9 @@ GetlinDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         GetWindowRect(GetNHApp()->hMainWnd, &main_rt);
         WindowDC = GetWindowDC(hWnd);
 
-        if (!GetWindowExtEx(WindowDC, &WindowExtents)
+        if (!WindowDC || !GetWindowExtEx(WindowDC, &WindowExtents)
             || !GetViewportExtEx(WindowDC, &ViewPortExtents)
-            || !GetTextExtentPoint32(GetWindowDC(hWnd), wbuf, _tcslen(wbuf),
-                                     &dlg_sz)) {
+            || !GetTextExtentPoint32W(WindowDC, wbuf, wlen, &dlg_sz)) {
             dlg_sz.cx = 0;
         } else {
             /* I think we need to do the following scaling */
@@ -97,6 +156,8 @@ GetlinDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                          + 2 * (GetSystemMetrics(SM_CXBORDER)
                                 + GetSystemMetrics(SM_CXFRAME));
         }
+        if (WindowDC)
+            ReleaseDC(hWnd, WindowDC);
 
         if (dlg_sz.cx < dlg_rt.right - dlg_rt.left)
             dlg_sz.cx = dlg_rt.right - dlg_rt.left;
@@ -137,17 +198,17 @@ GetlinDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
 
     case WM_COMMAND: {
-        TCHAR wbuf2[BUFSZ];
+        WCHAR wbuf2[BUFSZ];
 
-        wbuf2[BUFSZ - 1] = '\0';
+        wbuf2[0] = L'\0';
+        wbuf2[BUFSZ - 1] = L'\0';
         switch (LOWORD(wParam)) {
         /* OK button was pressed */
         case IDOK:
             data =
                 (struct getlin_data *) GetWindowLongPtr(hWnd, GWLP_USERDATA);
-            SendDlgItemMessage(hWnd, IDC_GETLIN_EDIT, WM_GETTEXT,
-                               (WPARAM) sizeof(wbuf2), (LPARAM) wbuf2);
-            NH_W2A(wbuf2, data->result, data->result_size);
+            GetDlgItemTextW(hWnd, IDC_GETLIN_EDIT, wbuf2, SIZE(wbuf2));
+            getlin_wide_to_utf8(wbuf2, data->result, data->result_size);
 
         FALLTHROUGH;
         /* FALLTHRU */

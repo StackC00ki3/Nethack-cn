@@ -1099,7 +1099,7 @@ fixup_level_locations(void)
                 /* This is where the name substitution on the
                  * levels of the quest dungeon occur.
                  */
-                Sprintf(x->proto, "%s%s", gu.urole.filecode,
+                Sprintf(x->proto, "%s%s", gu.urole.efilecode,
                         &lev_map->lev_name[1]);
             } else if (lev_map->lev_spec == &knox_level) {
                 branch *br;

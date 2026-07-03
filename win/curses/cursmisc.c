@@ -424,6 +424,151 @@ curses_str_remainder(const char *str, int width, int line_num)
 }
 
 
+int
+curses_utf8_char_len(unsigned char ch)
+{
+    if ((ch & 0x80) == 0)
+        return 1;
+    if ((ch & 0xe0) == 0xc0)
+        return 2;
+    if ((ch & 0xf0) == 0xe0)
+        return 3;
+    if ((ch & 0xf8) == 0xf0)
+        return 4;
+    return 1;
+}
+
+boolean
+curses_utf8_continuation(unsigned char ch)
+{
+    return (boolean) ((ch & 0xc0) == 0x80);
+}
+
+char *
+curses_utf8_prev_char(char *start, char *pos)
+{
+    char *prev;
+
+    if (pos <= start)
+        return start;
+
+    prev = pos - 1;
+    while (prev > start && curses_utf8_continuation((unsigned char) *prev))
+        --prev;
+    return prev;
+}
+
+int
+curses_read_utf8_char(WINDOW *win, int first_ch, char *buf, int bufsz)
+{
+    int need, len = 1;
+
+    if (bufsz < 2 || first_ch < 0 || first_ch > 255)
+        return 0;
+
+    buf[0] = (char) first_ch;
+    need = curses_utf8_char_len((unsigned char) first_ch);
+    while (len < need && len < bufsz - 1) {
+        int ch = wgetch(win);
+
+        if (ch == ERR)
+            break;
+        if (ch < 0 || ch > 255
+            || !curses_utf8_continuation((unsigned char) ch)) {
+            ungetch(ch);
+            break;
+        }
+        buf[len++] = (char) ch;
+    }
+    buf[len] = '\0';
+    return len;
+}
+
+static boolean
+curses_utf8_decode(const char *src, unsigned long *codepoint, int *srclen)
+{
+    const unsigned char *s = (const unsigned char *) src;
+    unsigned long cp;
+    int len, i;
+
+    if (!src || !*src)
+        return FALSE;
+
+    len = curses_utf8_char_len(s[0]);
+    if (len == 1) {
+        *codepoint = s[0];
+        *srclen = 1;
+        return TRUE;
+    }
+    for (i = 1; i < len; ++i)
+        if (!curses_utf8_continuation(s[i]))
+            return FALSE;
+
+    switch (len) {
+    case 2:
+        cp = (unsigned long) (s[0] & 0x1f);
+        break;
+    case 3:
+        cp = (unsigned long) (s[0] & 0x0f);
+        break;
+    case 4:
+        cp = (unsigned long) (s[0] & 0x07);
+        break;
+    default:
+        return FALSE;
+    }
+    for (i = 1; i < len; ++i)
+        cp = (cp << 6) | (unsigned long) (s[i] & 0x3f);
+
+    *codepoint = cp;
+    *srclen = len;
+    return TRUE;
+}
+
+static int
+curses_utf8_char_cols(const char *src, int *srclen)
+{
+    unsigned long cp;
+    int len = 1;
+
+    if (!curses_utf8_decode(src, &cp, &len)) {
+        if (srclen)
+            *srclen = 1;
+        return 1;
+    }
+    if (srclen)
+        *srclen = len;
+
+    if (cp >= 0x1100
+        && (cp <= 0x115f || cp == 0x2329 || cp == 0x232a
+            || (cp >= 0x2e80 && cp <= 0xa4cf)
+            || (cp >= 0xac00 && cp <= 0xd7a3)
+            || (cp >= 0xf900 && cp <= 0xfaff)
+            || (cp >= 0xfe10 && cp <= 0xfe19)
+            || (cp >= 0xfe30 && cp <= 0xfe6f)
+            || (cp >= 0xff00 && cp <= 0xff60)
+            || (cp >= 0xffe0 && cp <= 0xffe6)
+            || (cp >= 0x20000 && cp <= 0x3fffd)))
+        return 2;
+
+    return 1;
+}
+
+int
+curses_utf8_str_cols(const char *str)
+{
+    int cols = 0;
+
+    while (str && *str) {
+        int len = 1;
+
+        cols += curses_utf8_char_cols(str, &len);
+        str += len;
+    }
+    return cols;
+}
+
+
 /* Determine if the given NetHack winid is a menu window */
 
 boolean

@@ -1100,8 +1100,8 @@ typedef struct nh_file NHFILE;
       { NULL, NULL }, { { NULL, NULL } },       \
       /* strings: pantheon deity names */       \
       NULL, NULL, NULL,                         \
-      /* file code, quest home+goal names */    \
-      NULL, NULL, NULL,                         \
+      /* (e)file code, quest home+goal names */ \
+      NULL, NULL, NULL, NULL,                   \
       /* indices: base mon type, pet */         \
       NON_PM, NON_PM,                           \
       /* quest leader, guardians, nemesis */    \
@@ -1120,8 +1120,8 @@ typedef struct nh_file NHFILE;
 /* The UNDEFINED_RACE macro is used to initialize Race variables */
 #define UNDEFINED_RACE \
     {                                           \
-      /* strings */                             \
-      NULL, NULL, NULL, NULL, { NULL, NULL },   \
+      /* strings (plus efilecode) */            \
+      NULL, NULL, NULL, NULL, NULL, { NULL, NULL },\
       /* Indices: base race, mummy, zombie */   \
       NON_PM, NON_PM, NON_PM,                   \
       /* Bitmasks */                            \

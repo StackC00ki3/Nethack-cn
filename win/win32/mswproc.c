@@ -54,6 +54,11 @@ static BOOL initMapTiles(void);
 static void mswin_color_from_string(char *colorstring, HBRUSH *brushptr,
                                     COLORREF *colorptr);
 static void prompt_for_player_selection(void);
+static int mswin_utf8_char_len(unsigned char c);
+static boolean mswin_utf8_continuation(unsigned char c);
+static boolean mswin_utf8_valid_char(const char *buf, int len);
+static char *mswin_utf8_prev_char(char *start, char *pos);
+static int mswin_collect_utf8_input(int first, char *buf, int bufsz);
 
 #define TOTAL_BRUSHES 10
 HBRUSH brush_table[TOTAL_BRUSHES];
@@ -1711,6 +1716,78 @@ mswin_yn_function(const char *question, const char *choices, char def)
     return ch;
 }
 
+static int
+mswin_utf8_char_len(unsigned char c)
+{
+    if ((c & 0x80) == 0)
+        return 1;
+    if ((c & 0xE0) == 0xC0)
+        return 2;
+    if ((c & 0xF0) == 0xE0)
+        return 3;
+    if ((c & 0xF8) == 0xF0)
+        return 4;
+    return 1;
+}
+
+static boolean
+mswin_utf8_continuation(unsigned char c)
+{
+    return (boolean) ((c & 0xC0) == 0x80);
+}
+
+static boolean
+mswin_utf8_valid_char(const char *buf, int len)
+{
+    WCHAR wide[2];
+
+    if (!buf || len <= 0)
+        return FALSE;
+
+    return (boolean) (MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, buf,
+                                          len, wide, SIZE(wide)) > 0);
+}
+
+static char *
+mswin_utf8_prev_char(char *start, char *pos)
+{
+    char *prev = pos - 1;
+
+    while (prev > start && mswin_utf8_continuation((unsigned char) *prev))
+        --prev;
+    return prev;
+}
+
+static int
+mswin_collect_utf8_input(int first, char *buf, int bufsz)
+{
+    PMSNHEvent event;
+    int count = 1, need;
+
+    if (!buf || bufsz <= 0 || first < 0 || first > 0xFF)
+        return 0;
+
+    buf[0] = (char) (unsigned char) first;
+    need = mswin_utf8_char_len((unsigned char) first);
+    if (need == 1)
+        return ((unsigned char) first < 0x80
+                || mswin_utf8_valid_char(buf, count)) ? count : 0;
+    if (need > bufsz)
+        return 0;
+
+    while (count < need) {
+        event = mswin_input_peek();
+        if (!event || event->type != NHEVENT_CHAR
+            || event->ei.kbd.ch < 0 || event->ei.kbd.ch > 0xFF
+            || !mswin_utf8_continuation((unsigned char) event->ei.kbd.ch))
+            break;
+
+        event = mswin_input_pop();
+        buf[count++] = (char) (unsigned char) event->ei.kbd.ch;
+    }
+    return (count == need && mswin_utf8_valid_char(buf, count)) ? count : 0;
+}
+
 /*
 getlin(const char *ques, char *input)
             -- Prints ques as a prompt and reads a single line of text,
@@ -1727,7 +1804,7 @@ mswin_getlin(const char *question, char *input)
     logDebug("mswin_getlin(%s, %p)\n", question, input);
 
     if (!iflags.wc_popup_dialog) {
-        char c;
+        int c;
         int len;
         int done;
         int createcaret;
@@ -1758,20 +1835,33 @@ mswin_getlin(const char *question, char *input)
             case '\n':
             case '\r':
             case -115:
+            case 0x8D:
                 done = TRUE;
                 break;
             default:
                 if (input[0])
                     mswin_putstr_ex(WIN_MESSAGE, ATR_NONE, input, -len);
                 if (c == VK_BACK) {
-                    if (len > 0)
-                        len--;
+                    if (len > 0) {
+                        char *prev = mswin_utf8_prev_char(input, input + len);
+                        len = (int) (prev - input);
+                    }
                     input[len] = '\0';
-                } else if (len>=(BUFSZ-1)) {
-                    PlaySound((LPCSTR)SND_ALIAS_SYSTEMEXCLAMATION, NULL, SND_ALIAS_ID|SND_ASYNC);
                 } else {
-                    input[len++] = c;
-                    input[len] = '\0';
+                    char utf8buf[8];
+                    int addlen = mswin_collect_utf8_input(
+                        c, utf8buf, (int) sizeof utf8buf);
+
+                    if (addlen <= 0) {
+                        mswin_nhbell();
+                    } else if (len + addlen >= BUFSZ) {
+                        PlaySound((LPCSTR) SND_ALIAS_SYSTEMEXCLAMATION, NULL,
+                                  SND_ALIAS_ID | SND_ASYNC);
+                    } else {
+                        memcpy(input + len, utf8buf, addlen);
+                        len += addlen;
+                        input[len] = '\0';
+                    }
                 }
                 mswin_putstr_ex(WIN_MESSAGE, ATR_NONE, input, 1);
                 break;
