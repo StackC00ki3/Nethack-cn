@@ -108,6 +108,7 @@ staticfn void stdio_raw_print(const char *str);
 staticfn void stdio_nonl_raw_print(const char *str);
 staticfn void stdio_raw_print_bold(const char *str);
 staticfn int stdio_nhgetch(void);
+staticfn void stdout_write_utf8(const char *str);
 
 #ifdef PORT_HELP
 void port_help(void);
@@ -435,14 +436,14 @@ attempt_restore:
         if (ge.early_raw_messages)
             raw_print("Restoring save file...");
         else
-            pline("Restoring save file...");
+            pline("读取存档中...");
         mark_synch(); /* flush output */
         if (dorecover(nhfp)) {
             resuming = TRUE; /* not starting new game */
             if (discover)
-                You("are in non-scoring discovery mode.");
+                You("正在游玩不计分的探索模式.");
             if (discover || wizard) {
-                if (y_n("Do you want to keep the save file?") == 'n')
+                if (y_n("你想保留存档文件吗?") == 'n')
                     (void) delete_savefile();
                 else {
                     nh_compress(fqname(gs.SAVEF, SAVEPREFIX, 0));
@@ -471,7 +472,7 @@ attempt_restore:
         }
         newgame();
         if (discover)
-            You("are in non-scoring discovery mode.");
+            You("正在游玩不计分的探索模式.");
     }
 
         // iflags.debug_fuzzer = TRUE;
@@ -951,8 +952,10 @@ void freefakeconsole(void)
 void
 windows_raw_print(const char *str)
 {
-    if (str)
-        fprintf(stdout, "%s\n", str);
+    if (str) {
+        stdout_write_utf8(str);
+        stdout_write_utf8("\n");
+    }
     windows_nhgetch();
     return;
 }
@@ -1083,12 +1086,12 @@ getlock(void)
      * prompt_result == -1 means willfully destroy the old game.
      * prompt_result == 0 should just exit.
      */
-    Sprintf(oops, "You chose to %s.",
+    Sprintf(oops, "你选择%s.", //中文乱码
                 (prompt_result == -1)
-                    ? "destroy the old game and start a new one"
+                    ? "摧毁旧的游戏, 开始新的"
                     : (prompt_result == 1)
-                        ? "recover the old game"
-                        : "not start a new game");
+                        ? "恢复旧的游戏"
+                        : "不开始新的游戏");
 #ifdef WIN32CON
     if (istty)
         term_clear_screen();
@@ -1212,8 +1215,8 @@ tty_self_recover_prompt(void)
     raw_print("\n");
     raw_print("\n");
     raw_print("\n");
-    raw_print("There are files from a game in progress under your name. ");
-    raw_print("Recover? [yn] ");
+    raw_print("在你的名下有一些正在进行的游戏文件. "); //中文乱码
+    raw_print("恢复? [yn] ");
 
  tty_ask_again:
 
@@ -1235,8 +1238,8 @@ tty_self_recover_prompt(void)
 
     if (pl == 1 && (c == 'n' || c == 'N')) {
         /* no to recover */
-        raw_print("\n\nAre you sure you wish to destroy the old game rather than try to\n");
-        raw_print("recover it? [yn] ");
+        raw_print("\n\n你确定要摧毁旧的游戏, \n"); //中文乱码
+        raw_print("而非恢复它? [yn] ");
         c = 'n';
         ct = 0;
         pl = 2;
@@ -1276,13 +1279,13 @@ other_self_recover_prompt(void)
     c = 'n';
     ct = 0;
     if (iflags.window_inited || WINDOWPORT(curses)) {
-        c = y_n("There are files from a game in progress under your name. "
-               "Recover?");
+        c = y_n("在你的名下有一些正在进行的游戏文件. " //中文乱码
+               "恢复?");
     } else {
         c = 'n';
         ct = 0;
-        raw_print("There are files from a game in progress under your name. "
-              "Recover? [yn]");
+        raw_print("在你的名下有一些正在进行的游戏文件. " //中文乱码
+              "恢复? [yn]");
     }
 
  other_ask_again:
@@ -1303,8 +1306,8 @@ other_self_recover_prompt(void)
     }
     if (pl == 1 && (c == 'n' || c == 'N')) {
         /* no to recover */
-        c = y_n("Are you sure you wish to destroy the old game, rather than try to "
-                  "recover it? [yn] ");
+        c = y_n("你确定要摧毁旧的游戏, " //中文乱码
+                  "而非恢复它? [yn] ");
         pl = 2;
         if (!ismswin && !iscurses) {
             c = 'n';
@@ -1356,14 +1359,39 @@ set_emergency_io(void)
 }
 
 
+/* Helper: write UTF-8 string to console via WriteConsoleW,
+   bypassing CRT encoding issues entirely */
+staticfn void
+stdout_write_utf8(const char *str)
+{
+    HANDLE hOut;
+    int wlen;
+    wchar_t *wstr;
+    DWORD written;
+
+    if (!str || !*str)
+        return;
+    hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    if (hOut == INVALID_HANDLE_VALUE)
+        return;
+    wlen = MultiByteToWideChar(CP_UTF8, 0, str, -1, NULL, 0);
+    if (wlen <= 0)
+        return;
+    wstr = (wchar_t *) malloc(wlen * sizeof(wchar_t));
+    if (!wstr)
+        return;
+    MultiByteToWideChar(CP_UTF8, 0, str, -1, wstr, wlen);
+    WriteConsoleW(hOut, wstr, wlen - 1, &written, NULL);
+    free(wstr);
+}
+
 /* Add to your code: windowprocs.win_raw_print = stdio_wait_synch; */
 void
 stdio_wait_synch(void)
 {
     char valid[] = { ' ', '\n', '\r', '\033', '\0' };
 
-    fprintf(stdout, "--More--");
-    (void) fflush(stdout);
+    stdout_write_utf8("--More--");
     while (!strchr(valid, nhgetch()))
         ;
 }
@@ -1372,8 +1400,10 @@ stdio_wait_synch(void)
 void
 stdio_raw_print(const char *str)
 {
-    if (str)
-        fprintf(stdout, "%s\n", str);
+    if (str) {
+        stdout_write_utf8(str);
+        stdout_write_utf8("\n");
+    }
     return;
 }
 
@@ -1383,7 +1413,7 @@ void
 stdio_nonl_raw_print(const char *str)
 {
     if (str)
-        fprintf(stdout, "%s", str);
+        stdout_write_utf8(str);
     return;
 }
 

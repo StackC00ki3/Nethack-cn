@@ -383,6 +383,47 @@ colortable_to_bgr_int32(const struct nethack_color *tbl)
     return bgrint32;
 }
 
+/* Decode one UTF-8 character from s, returning the Unicode codepoint
+   and advancing *idx by the number of bytes consumed (1..4).
+   Invalid sequences return -1. */
+static int
+xputs_decode_utf8(const char *s, int *idx, int slen)
+{
+    unsigned char c = (unsigned char) s[*idx];
+    int len = 1, codepoint = c;
+
+    if (c < 0x80) {
+        (*idx)++;
+        return codepoint;
+    }
+    if (c < 0xC0) {
+        (*idx)++;
+        return -1;
+    } else if (c < 0xE0) {
+        len = 2;
+        codepoint = c & 0x1F;
+    } else if (c < 0xF0) {
+        len = 3;
+        codepoint = c & 0x0F;
+    } else if (c < 0xF8) {
+        len = 4;
+        codepoint = c & 0x07;
+    } else {
+        return -1;
+    }
+    if (*idx + len > slen)
+        return -1;
+    for (int i = 1; i < len; ++i) {
+        unsigned char cb = (unsigned char) s[*idx + i];
+        if ((cb & 0xC0) != 0x80)
+            return -1;
+        codepoint = (codepoint << 6) | (cb & 0x3F);
+    }
+    *idx += len;
+    return codepoint;
+}
+
+
 #define rgbtable_offset 16
 
 static void
@@ -1369,12 +1410,27 @@ xputs(const char *s)
         set_console_cursor(ttyDisplay->curx, ttyDisplay->cury);
 
     if (s) {
-        for (k = 0; k < slen && s[k]; ++k)
-#ifndef VIRTUAL_TERMINAL_SEQUENCES
-            xputc_core(s[k]);
-#else
-            xputc_core((int) s[k]);
+#ifdef VIRTUAL_TERMINAL_SEQUENCES
+        if (console.has_unicode) {
+            for (k = 0; k < slen && s[k]; ) {
+                int codepoint = xputs_decode_utf8(s, &k, slen);
+                if (codepoint >= 0) {
+                    xputc_core(codepoint);
+                } else {
+                    xputc_core((unsigned char) s[k]);
+                    k++;
+                }
+            }
+        } else
 #endif
+        {
+            for (k = 0; k < slen && s[k]; ++k)
+#ifndef VIRTUAL_TERMINAL_SEQUENCES
+                xputc_core(s[k]);
+#else
+                xputc_core((int) s[k]);
+#endif
+        }
     }
 }
 

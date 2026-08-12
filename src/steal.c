@@ -833,7 +833,7 @@ mdrop_obj(
     }
     /* obj_no_longer_held(obj); -- done by place_object */
     if (verbosely && cansee(omx, omy))
-        pline_mon(mon, "%s的%s掉出来了.", Monnam(mon), obj_name);
+        pline_mon(mon, "%s丢下了%s.", Monnam(mon), obj_name);
     if (!flooreffects(obj, omx, omy, "掉")) {
         place_object(obj, omx, omy);
         stackobj(obj);

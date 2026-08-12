@@ -1,51 +1,51 @@
-Debug-Mode Quick Reference:
+调试模式快速参考: 
 
-^E  ==  detect secret doors and traps nearby
-^F  ==  map level; reveals traps and secret corridors but not secret doors
-^G  ==  create monster by name or class
-^I  ==  identify items in pack
-^T  ==  do intra-level teleport
-^V  ==  do trans-level teleport; '?' yields menu of special destinations
-^W  ==  make a wish for an item or a trap or a limited subset of terrain
-^X  ==  show status, attributes, and characteristics (extended enlightenment)
+^E  ==  探测附近的隐秘门和陷阱
+^F  ==  绘制地图; 显示陷阱和隐秘走廊, 但不显示隐秘门
+^G  ==  按名称或种类召唤怪物
+^I  ==  鉴定背包中的物品
+^T  ==  进行同层位传送
+^V  ==  进行跨层位传送; 输入"?"可调出特殊目的地菜单
+^W  ==  许愿获取某件物品, 某个陷阱或特定地形子集
+^X  ==  显示状态, 属性及特征(扩展启示)
 
-#debugfuzzer    == set game to run on autopilot; keeps going until failure;
-                   escalates impossible warnings to panic
-#levelchange    == set hero's experience level
-#lightsources   == show mobile light sources
-#migratemons    == show migrating monsters; [Opt] potentially create some
-#panic          == panic test (warning: current game will be terminated)
-#polyself       == polymorph self
-#stats          == show memory statistics
-#terrain        == show current level (more options than in normal play)
-#timeout        == look at timeout queue and hero's timed intrinsics
-#vision         == show vision array
-#wizborn        == show monster birth/death/geno/extinct stats
-#wizcast        == cast any spell
-#wizdispmacros  == [Opt] check internal display classifications
-#wizfliplevel   == transpose the current dungeon level
-#wizintrinsic   == set selected intrinsic timeouts
-#wizkill        == remove monster(s) from play
-#wizloaddes     == load and execute a special level description lua script
-#wizloadlua     == load and execute a lua script
-#wizmakemap     == recreate the current dungeon level
-#wizmondiff     == [Opt] check for discrepancies in monster difficulty ratings
-#wizobjprobs    == [Opt] list actual probabilities of item generation
-#wizrumorcheck  == validate rumor indexing; also show first, second, and last
-                   random engravings, epitaphs, and hallucinatory monsters
-#wizseenv       == show map locations' seen vectors
-#wizsmell       == smell a monster
-#wiztelekinesis == magically shove a monster
-#wizwhere       == show dungeon placement of all special levels
-#wmode          == show wall modes
+#debugfuzzer    == 将游戏设为自动运行; 持续运行直至失败; 
+                   将"无法完成"警告升级为恐慌状态; 
+#levelchange    == 设置英雄的经验等级; 
+#lightsources   == 显示移动光源; 
+#migratemons    == 显示迁徙中的怪物; [可选] 可能生成一些; 
+#panic          == 恐慌测试(警告: 当前游戏将被终止); 
+#polyself       == 对自己施放变形术; 
+#stats          == 显示内存统计信息; 
+#terrain        == 显示当前等级(选项比正常游戏更多); 
+#timeout        == 查看超时队列和英雄的定时内在属性;
+#vision         == 显示视野数组;
+#wizborn        == 显示怪物出生/死亡/基因/灭绝统计数据;
+#wizcast        == 施放任意法术;
+#wizdispmacros  == [可选] 检查内部显示分类;
+#wizfliplevel   == 转置当前地牢层;
+#wizintrinsic   == 设置选定内在属性的超时;
+#wizkill        == 从游戏中移除怪物;
+#wizloaddes     == 加载并执行一个特殊的层描述Lua脚本;
+#wizloadlua     == 加载并执行一个Lua脚本;
+#wizmakemap     == 重建当前地牢层
+#wizmondiff     == [可选] 检查怪物难度评级是否存在差异
+#wizobjprobs    == [可选] 列出物品生成的实际概率
+#wizrumorcheck  == 验证传闻索引; 同时显示第一, 第二和最后一条
+                   随机生成铭文, 墓志铭和幻觉怪物
+#wizseenv       == 显示地图位置的"已探查"向量
+#wizsmell       == 嗅探怪物
+#wiztelekinesis == 用魔法推开怪物
+#wizwhere       == 显示所有特殊层在地下城中的位置
+#wmode          == 显示墙壁模式
 
-Options:
-debug_hunger    == disable hero's hunger
-debug_mongen    == disable random monster generation
+选项:
+debug_hunger    == 禁用英雄的饥饿感
+debug_mongen    == 禁用随机怪物生成
 debug_overwrite_stairs
-                == allows stairs to be replaced by other terrain
-monpolycontrol  == prompt for new form whenever any monster changes shape
-sanity_check    == evaluate monsters, objects, and map prior to each turn
-wizweight       == augment object descriptions with their objects' weight
+                == 允许用其他地形替换楼梯
+monpolycontrol  == 每当有怪物变形时, 提示输入新形态
+sanity_check    == 在每个回合开始前评估怪物, 物体和地图
+wizweight       == 在物体描述中补充其重量信息
 
-[Opt] = conditionally available depending upon build-time settings
+[可选] = 根据构建时设置而定, 可能提供, 也可能不提供

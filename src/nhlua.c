@@ -1157,8 +1157,8 @@ nhl_dnum_name(lua_State *L)
     if (argc == 1) {
         lua_Integer dnum = luaL_checkinteger(L, 1);
 
-        if (dnum >= 0 && dnum < svn.n_dgns)
-            lua_pushstring(L, svd.dungeons[dnum].dname);
+        if (dnum >= 0 && dnum < svn.n_dgns){
+            lua_pushstring(L, svd.dungeons[dnum].dname);}
         else
             lua_pushstring(L, "");
     } else

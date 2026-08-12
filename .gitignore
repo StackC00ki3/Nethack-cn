@@ -99,3 +99,6 @@ submodules/CHKSUMS.tmp
 sys/amiga/regex/
 
 .idea/
+
+#auto-generated files
+kanjifiles.txt

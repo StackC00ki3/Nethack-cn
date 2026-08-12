@@ -1295,7 +1295,7 @@ do_data(void)
             free((genericptr_t) line);
             continue;
         }
-        if (*line > ' ') { /* got an entry name */
+        if (!(*line == '\t' || *line == ' ')) { /* got an entry name */ //危险 DANGEROUS DANGEREUX PELIGROSO OPASNYJ KHATIR:if (*line > ' ') {
             /* first finish previous entry */
             if (line_cnt)
                 Fprintf(ofp, "%d\n", line_cnt), line_cnt = 0;
@@ -1658,7 +1658,7 @@ filter_nonascii(char *line)
             break;
         if (*p == '\t' && ascii_ctx.tabok)
             continue;
-        reason = (*p > 126) ? 3 : (*p == '\t') ? 2 : (*p < ' ');
+        reason = (*p == '\t') ? 2 : (*p < ' ') ? 1 : 0; /*危险:reason = (*p > 126) ? 3 : (*p == '\t') ? 2 : (*p < ' ');*/
         if (reason != 0) {
             if (!warned)
                 ascii_ctx.warncnt += 1; /* number of lines warned about */

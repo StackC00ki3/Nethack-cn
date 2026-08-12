@@ -21,22 +21,82 @@ env:
 jobs:
   build:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        orthography: [s, t, tg, twp]
     defaults:
       run:
         shell: pwsh
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           submodules: recursive
+          lfs: true
 
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@v2
 
+      - name: Set up OpenCC
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download --repo BYVoid/OpenCC --pattern "*windows*.zip" --dir ./opencc
+          unzip ./opencc/*windows*.zip -d ./opencc
+
+      - name: Set up General Standard Traditional (opencc-tonggui)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download --repo amorphobia/opencc-tonggui --pattern "*tonggui*.zip" --dir ./opencc-tonggui
+          unzip ./opencc-tonggui/*tonggui*.zip -d ./opencc-tonggui
+
+      - name: Get All Kanji Files
+        shell: bash
+        run: |
+          python ./.github/workflows/findkanjifiles.py
+
+      - name: Orthographic Convert
+        shell: bash
+        run: |
+          if [ "${{ matrix.orthography }}" = "s" ]; then
+            echo "Original, skip converting"
+          elif [ "${{ matrix.orthography }}" = "tg" ]; then
+            echo "Using orthography: ${{ matrix.orthography }}"
+            cat ./kanjifiles.txt
+            cat ./kanjifiles.txt | tr -d '\r' | while read -r file; do
+              echo "Converting: $file"
+              ./opencc/bin/opencc.exe -c "./opencc-tonggui/opencc/s2tg.json" -i "$file" -o "$file --in-place"
+            done
+          else
+            echo "Using orthography: ${{ matrix.orthography }}"
+            cat ./kanjifiles.txt
+            cat ./kanjifiles.txt | tr -d '\r' | while read -r file; do
+              echo "Converting: $file"
+              ./opencc/bin/opencc.exe -c "s2${{ matrix.orthography }}.json" -i "$file" -o "$file --in-place"
+            done
+          fi
+
+      - name: Package (Converted) Source Code
+        shell: bash
+        run: |
+          mkdir -p "$PACKAGE_DIR"
+          7z a "$PACKAGE_DIR/NetHack-cn-src-${{ matrix.orthography }}.zip" . '-xr!.git' '-xr!.github' '-xr!opencc' '-xr!opencc-tonggui' '-xr!vspackage'
+
       - name: Build Visual Studio solution
+        env:
+          CL: "/utf-8"
         run: |
           msbuild $env:SOLUTION_PATH /m /p:Configuration=$env:BUILD_CONFIGURATION /p:Platform=$env:BUILD_PLATFORM /t:Build
+
+      - name: Rename packaged artifacts
+        run: |
+          Get-ChildItem -Path $env:PACKAGE_DIR -Filter *.zip | Where-Object { $_.Name -notlike "NetHack-cn-src-*" } | ForEach-Object {
+            $newName = "$($_.BaseName)-${{ matrix.orthography }}$($_.Extension)"
+            Rename-Item -Path $_.FullName -NewName $newName
+          }
 
       - name: Verify packaged artifacts
         run: |
@@ -46,7 +106,7 @@ jobs:
       - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: nethack-vspackage-x64
+          name: nethack-vspackage-x64-${{ matrix.orthography }}
           path: vspackage/*.zip
           if-no-files-found: error
 
@@ -59,8 +119,9 @@ jobs:
       - name: Download packaged artifacts
         uses: actions/download-artifact@v4
         with:
-          name: nethack-vspackage-x64
+          pattern: nethack-vspackage-*
           path: release-assets
+          merge-multiple: true
 
       - name: Prepare release metadata
         id: meta
@@ -68,7 +129,7 @@ jobs:
         run: |
           short_sha="${GITHUB_SHA::7}"
           tag="nethack-pre-${GITHUB_RUN_NUMBER}-${short_sha}"
-          name="NetHack prerelease #${GITHUB_RUN_NUMBER} (${short_sha})"
+          name="NetHack prerelease ${GITHUB_RUN_NUMBER} (${short_sha})"
           {
             echo "tag=$tag"
             echo "name=$name"
@@ -80,7 +141,9 @@ jobs:
           tag_name: ${{ steps.meta.outputs.tag }}
           name: ${{ steps.meta.outputs.name }}
           prerelease: true
-          files: release-assets/*.zip
+          files: |
+            release-assets/*.zip
+            release-assets/**/*.zip
           body: |
             Automated NetHack Visual Studio package build.
 

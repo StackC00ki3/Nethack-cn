@@ -30,7 +30,7 @@ des.region(selection.area(00,00,25,10), "unlit")
 -- Stairs
 des.stair("up", 20,05)
 -- Objects
-des.object({ id = "lenses", coord = place[placeidx], buc="blessed", spe=0, name="The Eyes of the Overworld" })
+des.object({ id = "lenses", coord = place[placeidx], buc="blessed", spe=0, name="上界之眼" })
 des.object()
 des.object()
 des.object()

@@ -92,7 +92,7 @@ des.door("random",51,15)
 des.door("open",59,14)
 des.door("open",59,17)
 -- Objects
-des.object({ id = "credit card", x=04, y=01, buc="blessed", spe=0, name="The Platinum Yendorian Express Card" })
+des.object({ id = "credit card", x=04, y=01, buc="blessed", spe=0, name="岩德利亚至尊白金卡" })
 des.object()
 des.object()
 des.object()

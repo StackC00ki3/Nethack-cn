@@ -1,4 +1,4 @@
-/* NetHack 5.0  botl.c  $NHDT-Date: 1769839231 2026/01/30 22:00:31 $
+﻿/* NetHack 5.0  botl.c  $NHDT-Date: 1769839231 2026/01/30 22:00:31 $
  * $NHDT-Branch: NetHack-3.7 $:$NHDT-Revision: 1.277 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
 /*-Copyright (c) Michael Allison, 2006. */
@@ -457,7 +457,7 @@ describe_level(
     int ret = 1;
 
     if (Is_knox(&u.uz)) {
-        Sprintf(buf, "%s", svd.dungeons[u.uz.dnum].dname);
+        Sprintf(buf, "%s", svd.dungeons[u.uz.dnum].dcname);
         addbranch = FALSE;
     } else if (In_quest(&u.uz)) {
         Sprintf(buf, "家 %d", dunlev(&u.uz));
@@ -477,7 +477,7 @@ describe_level(
         ret = 0;
     }
     if (addbranch) {
-        Sprintf(eos(buf), ", %s", svd.dungeons[u.uz.dnum].dname);
+        Sprintf(eos(buf), ", %s", svd.dungeons[u.uz.dnum].dcname);
         /* 冗余: 大小写操作在中文语境下失效，考虑直接删除
         (void) strsubst(buf, "The ", "the "); */
     }
@@ -913,7 +913,7 @@ const struct cond_zh_t conditions_ui[] = {
     [bl_parlyz] = { "麻痹", "mabi" },
     [bl_ride] = { "骑乘", "qicheng" },
     [bl_sleeping] = { "睡眠", "shuimian" },
-    [bl_slime] = { "粘液化", "nianyehua" },
+    [bl_slime] = { "黏液化", "nianyehua" },
     [bl_slippery] = { "手滑", "shouhua" }, // 对于部分怪物可能不是“手”？
     [bl_stone] = { "石化", "shihua" },
     [bl_strngl] = { "窒息", "zhixi" },
@@ -1259,6 +1259,11 @@ bot_via_windowport(void)
 
     /* Armor class */
     gb.blstats[idx][BL_AC].a.a_int = u.uac;
+    /* preformat with padding so that single-digit values like 9
+       become "9 " to match 2-digit "10" and avoid display artifacts;
+       valset[]=TRUE prevents anything_to_s() from overwriting this */
+    Sprintf(gb.blstats[idx][BL_AC].val, "%-2d", u.uac);
+    gv.valset[BL_AC] = TRUE;
 
     /* Monster level (if Upolyd) */
     gb.blstats[idx][BL_HD].a.a_int =

@@ -100,7 +100,7 @@ thitu(
     }
     onm = (obj && obj_is_pname(obj)) ? the(name)
           : (obj && obj->quan > 1L) ? name
-            : an(name);
+            : name;
     is_acid = (obj && obj->otyp == ACID_VENOM);
 
     if (u.uac + tlev <= (dieroll = rnd(20))) {
@@ -289,8 +289,8 @@ monshoot(struct monst *mtmp, struct obj *otmp, struct obj *mwep)
         Strcpy(trgbuf, mtarg ? some_mon_nam(mtarg) : "");
         set_msg_xy(mtmp->mx, mtmp->my);
         pline("%s%s%s%s了%s!", Monnam(mtmp),
-              gm.m_shot.s ? "向" : "", trgbuf, /*修改语序:gm.m_shot.s ? "向" : "", onm,*/
-              mtarg ? "射出" : "投掷", onm); /*修改语序:mtarg ? "射出" : "投掷", trgbuf);*/
+              mtarg ? "向" : "", trgbuf, /*修改语序:gm.m_shot.s ? "向" : "", onm,*/
+              gm.m_shot.s ? "射出" : "投掷", onm); /*修改语序:mtarg ? "射出" : "投掷", trgbuf);*/
         gm.m_shot.o = otmp->otyp;
     } else {
         gm.m_shot.o = STRANGE_OBJECT; /* don't give multishot feedback */
@@ -383,7 +383,7 @@ ohitmon(
         Soundeffect(se_splat_egg, 35);
         if (vis) {
             if (otmp->otyp == EGG) {
-                pline("啪! %s被%s蛋打中了!", Monnam(mtmp),
+                pline("啪! %s被%s蛋击中了!", Monnam(mtmp),
                       otmp->known ? an(mons[otmp->corpsenm].pmnames[NEUTRAL])
                                   : "一个");
             } else {
@@ -397,7 +397,7 @@ ohitmon(
                 hit(distant_name(otmp, mshot_xname), mtmp, how);
             }
         } else if (verbose && !gm.mtarget)
-            pline("%s%s被打中了%s", (otmp->otyp == EGG) ? "啪! " : "",
+            pline("%s%s被击中了%s", (otmp->otyp == EGG) ? "啪! " : "",
                   Monnam(mtmp), exclam(damage));
 
         if (otmp->opoisoned && is_poisonable(otmp)) {
@@ -624,7 +624,7 @@ m_throw(
             if (is_ammo(singleobj))
                 pline("%s没有发射!", Monnam(mon));
             else
-                pline("当%s投掷时, %s了!", mon_nam(mon), /*修改语序:pline("%s了当%s投掷时!", Tobjnam(singleobj, "滑落"),*/
+                pline("%s投掷时, %s了!", mon_nam(mon), /*修改语序:pline("%s了当%s投掷时!", Tobjnam(singleobj, "滑落"),*/
                       Tobjnam(singleobj, "滑落")); /*修改语序:mon_nam(mon));*/
         }
         dx = rn2(3) - 1;
@@ -883,7 +883,7 @@ return_from_mtoss(
             static long do_not_annoy = 0;
 
             if (!do_not_annoy || (svm.moves - do_not_annoy) > 500L) {
-                pline("%s到了%s的%s上!", Tobjnam(otmp, "飞回"),
+                pline("%s了%s的%s上!", Tobjnam(otmp, "飞回"),
                       s_suffix(mon_nam(magr)), mbodypart(magr, HAND));
                 do_not_annoy = svm.moves;
             }
@@ -902,7 +902,7 @@ return_from_mtoss(
             dmg = rn2(2);
             if (!dmg) {
                 if (canseemon(magr)) {
-                    pline("%s到了%s附近, 落在%s的%s%s.",
+                    pline("%s了%s附近, 落在%s的%s%s.",
                           Tobjnam(otmp, "飞回"), mon_nam(magr),
                           mhis(magr), makeplural(mbodypart(magr, FOOT)), 
                           mlevitating ? "下" : "上"); /*修改语序:自己看原文*/
@@ -912,8 +912,8 @@ return_from_mtoss(
             } else {
                 dmg += rnd(3);
                 if (canseemon(magr)) {
-                    pline("%s向%s飞回, 击中了%s%s!",
-                          Tobjnam(otmp, "飞"), mon_nam(magr),
+                    pline("%s了%s, 击中了%s的%s!",
+                          Tobjnam(otmp, "飞回"), mon_nam(magr),
                           mhis(magr), body_part(ARM));
                 } else if (!Deaf) {
                     You_hear("%s砰地击中了%s!", something,
@@ -941,7 +941,7 @@ return_from_mtoss(
         if (notcaught) {
             (void) snuff_candle(otmp);
             if (!ship_object(otmp, x, y, FALSE)) {
-                if (flooreffects(otmp, x, y, "落")) {
+                if (flooreffects(otmp, x, y, "掉")) {
                     if (cansee(x, y))
                         newsym(x, y);
                     return;

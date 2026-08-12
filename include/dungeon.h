@@ -59,7 +59,7 @@ typedef struct exclusion_zone {
 } exclusion_zone;
 
 typedef struct dungeon {   /* basic dungeon identifier */
-    char dname[24];        /* name of the dungeon (eg. "Hell") */
+    char dname[24];        /* name of the dungeon (eg. "Hell") */ char dcname[24];
     char proto[15];        /* name of prototype file (eg. "tower") */
     char fill_lvl[15];     /* name of "fill" level protype file */
     char themerms[15];     /* lua file name containing themed rooms */

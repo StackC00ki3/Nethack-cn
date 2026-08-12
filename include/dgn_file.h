@@ -18,7 +18,7 @@ struct couple {
 };
 
 struct tmpdungeon {
-    char *name, *protoname;
+    char *name, *cname, *protoname;
     struct couple lev;
     int flags, chance, levels, branches,
         entry_lev; /* entry level for this dungeon */

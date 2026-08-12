@@ -116,49 +116,49 @@ static int optfn_##a(int, int, boolean, char *, char *);
      */
     NHOPTC(windowtype, Advanced, WINTYPELEN, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "windowing system to use (should be specified first)")
+                "使用的窗口系统(应最先设定)")
     NHOPTC(playmode, Advanced, 8, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "normal play, non-scoring explore mode, or debug mode")
+                "正常游戏, 不计分的探索模式, 或者调试模式")
     NHOPTC(name, Advanced, PL_NSIZ, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "your character's name (e.g., name:Merlin-W)")
+                "你的角色的名字(e.g., name:Merlin-W)")
     NHOPTC(role, Advanced, PL_CSIZ, opt_in, set_gameview,
                 Yes, Yes, Yes, No, "character",
-                "your starting role (e.g., Barbarian, Valkyrie)")
+                "你的起始职业(e.g., Barbarian, Valkyrie)")
     NHOPTC(race, Advanced, PL_CSIZ, opt_in, set_gameview,
                 Yes, Yes, Yes, No, NoAlias,
-                "your starting race (e.g., Human, Elf)")
+                "你的起始种族(e.g., Human, Elf)")
     NHOPTC(gender, Advanced, 8, opt_in, set_gameview,
                 Yes, Yes, Yes, No, NoAlias,
-                "your starting gender (male or female)")
+                "你的起始性别(male or female)")
     NHOPTC(alignment, Advanced, 8, opt_in, set_gameview,
                 Yes, Yes, Yes, No, "align",
-                "your starting alignment (lawful, neutral, or chaotic)")
+                "你的起始阵营(lawful, neutral, or chaotic)")
     /* end of special ordering; remainder of entries are in alphabetical order
      */
     NHOPTB(accessiblemsg, Advanced, 0, opt_out, set_in_game,
            Off, Yes, No, No, NoAlias, &a11y.accessiblemsg, Term_False,
-           "add location information to messages")
+           "在消息中添加位置信息")
     NHOPTB(acoustics, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.acoustics, Term_False,
-           "can your character hear anything")
+           "你的角色是否能听到")
  /* NHOPTC(align) -- moved to top */
     NHOPTC(align_message, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, No, Yes, NoAlias, "message window alignment")
+                Yes, Yes, No, Yes, NoAlias, "消息窗口对齐")
     NHOPTC(align_status, Advanced, 20, opt_in, set_gameview,
-                No, Yes, No, Yes, NoAlias, "status window alignment")
+                No, Yes, No, Yes, NoAlias, "状态窗口对齐")
 #ifdef WIN32
     NHOPTC(altkeyhandling, Advanced, 20, opt_in, set_in_game,
-                No, Yes, No, Yes, "altkeyhandler", "alternative key handling")
+                No, Yes, No, Yes, "altkeyhandler", "alt键处理")
 #else
     NHOPTC(altkeyhandling, Advanced, 20, opt_in, set_in_config,
-                No, Yes, No, Yes, "altkeyhandler", "(not applicable)")
+                No, Yes, No, Yes, "altkeyhandler", "(不可用)")
 #endif
 #ifdef ALTMETA
     NHOPTB(altmeta, Advanced, 0, opt_out, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.altmeta, Term_False,
-           "treat \"ESC c\" as M-c (Meta+c, 8th bit set)")
+           "将\"ESC c\"视为M-c(Meta+c, 8th bit set)")
 #else
     NHOPTB(altmeta, Advanced, 0, opt_out, set_in_config,
            Off, Yes, No, No, NoAlias, (boolean *) 0, Term_False,
@@ -166,42 +166,42 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #endif
     NHOPTB(armorstatus, Advanced, 0, opt_in, set_in_game,
                 Off, Yes, No, No, NoAlias, &flags.armorstatus, Term_False,
-                "summarize currently worn armor in a status field")
+                "在状态栏中汇总当前穿戴的护甲")
     NHOPTB(ascii_map, Advanced, 0, opt_in, set_in_game,
                 ascii_map_Def, Yes, No, No, NoAlias, &iflags.wc_ascii_map,
-                Term_False, "show map as text")
+                Term_False, "以文本显示地图")
     NHOPTO("autocompletions", Advanced, o_autocomplete, BUFSZ, opt_in,
-                set_in_game, No, Yes, No, NoAlias, "edit autocompletions")
+                set_in_game, No, Yes, No, NoAlias, "编辑自动补全")
     NHOPTB(autodescribe, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &iflags.autodescribe, Term_False,
-           "describe terrain under cursor")
+           "描述光标下的地形")
     NHOPTB(autodig, Behavior, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.autodig, Term_False,
-           "dig if moving and wielding a digging tool")
+           "有挖掘工具时, 移动会自动挖掘")
     NHOPTB(autoopen, Behavior, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.autoopen, Term_False,
-           "walking into a door attempts to open it")
+           "走向门时尝试打开")
     NHOPTB(autopickup, Behavior, 0, opt_out, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.pickup, Term_False,
-           "automatically pick up objects")
+           "自动捡起物品")
     NHOPTO("autopickup exceptions", Behavior, o_autopickup_exceptions, BUFSZ,
                 opt_in, set_in_game,
-                No, Yes, No, NoAlias, "edit autopickup exceptions")
+                No, Yes, No, NoAlias, "编辑自动拾取例外")
     NHOPTB(autoquiver, Behavior, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.autoquiver, Term_False,
-           "fill empty quiver automatically when firing")
+           "射击时自动填满空箭袋")
     NHOPTC(autounlock, Behavior, 80, opt_out, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "action to take when encountering locked door or chest")
+                "遇到上锁的门或箱子时采取的行动")
     NHOPTB(bgcolors, Map, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &iflags.bgcolors, Term_Off,
-           "use background color for some map hilighting")
+           "将背景色用于某些地图高亮")
     NHOPTO("bind keys", Advanced, o_bind_keys, BUFSZ, opt_in, set_in_game,
-                No, Yes, No, NoAlias, "edit key binds")
+                No, Yes, No, NoAlias, "编辑键绑定")
 #if defined(MICRO) && !defined(AMIGA)
     NHOPTB(BIOS, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, &iflags.BIOS, Term_False,
-           "use IBM ROM BIOS calls")
+           "使用IBM ROM BIOS调用")
 #else
     NHOPTB(BIOS, Advanced, 0, opt_in, set_in_config,
            Off, No, No, No, NoAlias, (boolean *) 0, Term_False,
@@ -209,22 +209,22 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #endif
     NHOPTB(blind, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, "permablind", &u.uroleplay.blind, Term_False,
-           "your character is permanently blind")
+           "你的角色永久失明")
     NHOPTB(bones, Advanced, 0, opt_out, set_in_config,
            On, Yes, No, No, NoAlias, &flags.bones, Term_False,
-           "allow loading bones files")
+           "允许加载遗骨文件")
 #ifdef BACKWARD_COMPAT
     NHOPTC(boulder, Advanced, 1, opt_in, set_in_game,
                 No, Yes, No, No, NoAlias,
-                "deprecated (use S_boulder in sym file instead)")
+                "已弃用(请在sym文件中改用S_boulder)")
 #endif
     NHOPTC(catname, Advanced, PL_PSIZ, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "name of your starting pet if it is a kitten")
+                "你的起始宠物的名字(如果是猫)")
 #ifdef INSURANCE
     NHOPTB(checkpoint, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.ins_chkpt, Term_False,
-           "save game state after each level change")
+           "每次层变更后保存游戏状态")
 #else
     NHOPTB(checkpoint, Advanced, 0, opt_out, set_in_config,
            Off, No, No, No, NoAlias, (boolean *) 0, Term_False,
@@ -232,168 +232,168 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #endif
     NHOPTB(cmdassist, Behavior, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &iflags.cmdassist, Term_False,
-           "give help for errors on direction input")
+           "输入方向错误时显示帮助信息")
     NHOPTB(color, Map, 0, opt_in, set_in_game,
            On, Yes, No, No, "colour", &iflags.wc_color, Term_False,
-           "use color in map")
+           "使用地图颜色")
     NHOPTB(confirm, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.confirm, Term_False,
-           "ask before hitting tame or peaceful monsters")
+           "在攻击驯服或和平状态的怪物之前询问")
 #ifdef CRASHREPORT
     NHOPTC(crash_email, Advanced, PL_NSIZ, opt_in, set_in_game,
                 No, Yes, No, No, NoAlias,
-                "email address for reporting")
+                "你在报告中使用的邮箱地址")
     NHOPTC(crash_name, Advanced, PL_NSIZ, opt_in, set_in_game,
                 No, Yes, No, No, NoAlias,
-                "your name for reporting")
+                "你在报告中使用的名字")
     NHOPTC(crash_urlmax, Advanced, PL_NSIZ, opt_in, set_in_game,
                 No, Yes, No, No, NoAlias,
-                "length of longest url we can generate")
+                "可生成的url长度上线")
 #endif
 #ifdef CURSES_GRAPHICS
     NHOPTC(cursesgraphics, Advanced, 70, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "load curses display symbols into symset")
+                "将curses显示符号加载到symset中")
 #endif
     NHOPTB(customcolors, Map, 0, opt_out, set_in_game,
            On, Yes, No, No, "customcolours", &iflags.customcolors,
-           Term_False, "use custom colors in map")
+           Term_False, "在地图中使用自定义颜色")
     NHOPTB(customsymbols, Map, 0, opt_out, set_in_game,
            On, Yes, No, No, "customsymbols", &iflags.customsymbols,
-           Term_False, "use custom utf8 symbols in map")
+           Term_False, "在地图中使用自定义utf8符号")
     NHOPTB(dark_room, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.dark_room, Term_False,
-           "show floor outside line of sight differently")
+           "以不同方式显示视线范围外的地板")
     NHOPTB(deaf, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, "permadeaf", &u.uroleplay.deaf, Term_False,
-           "your character is permanently deaf")
+           "你的角色永久失聪")
 #ifdef BACKWARD_COMPAT
     NHOPTC(DECgraphics, Advanced, 70, opt_in, set_in_config,
                 Yes, Yes, No, No, NoAlias,
-                "load DECGraphics display symbols into symset")
+                "将DECGraphics加载到symset中")
 #endif
     NHOPTB(debug_hunger, Advanced, 0, opt_in, set_wiznofuz,
            Off, Yes, No, No, NoAlias, &iflags.debug_hunger, Term_False,
-           "no hunger")
+           "无饥饿")
     NHOPTB(debug_mongen, Advanced, 0, opt_in, set_wiznofuz,
            Off, Yes, No, No, NoAlias, &iflags.debug_mongen, Term_False,
-           "no random monster generation")
+           "无随机怪物生成")
     NHOPTB(debug_overwrite_stairs, Advanced, 0, opt_in, set_wiznofuz,
                 Off, Yes, No, No, NoAlias, &iflags.debug_overwrite_stairs,
-           Term_False, "level generation can overwrite stairs")
+           Term_False, "地图生成时可以覆盖楼梯")
     NHOPTC(disclose, Advanced, sizeof flags.end_disclose * 2,
                 opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "the kinds of information to disclose at end of game")
+                "游戏结束时应披露的信息类型")
     NHOPTC(dogname, Advanced, PL_PSIZ, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "name of your starting pet if it is a little dog")
+                "你的起始宠物的名字(如果是小狗)")
     NHOPTB(dropped_nopick, Behavior, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.nopick_dropped, Term_False,
-           "don't autopickup dropped items")
+           "不要自动捡起丢下的物品")
     NHOPTC(dungeon, Advanced, MAXDCHARS + 1,opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "list of symbols to use in drawing the dungeon map")
+                "绘制地牢地图时使用的符号列表")
     NHOPTC(effects, Advanced, MAXECHARS + 1, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "list of symbols to use in drawing special effects")
+                "绘制特殊效果时使用的符号列表")
     NHOPTB(eight_bit_tty, Advanced, 0, opt_in, set_in_game,
                 Off, Yes, No, No, NoAlias, &iflags.wc_eight_bit_input,
-           Term_False, "send 8-bit characters directly to terminal")
+           Term_False, "直接对终端输出8-bit字符")
     NHOPTB(extmenu, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.extmenu, Term_False,
-           "use menu for getting extended commands")
+           "使用扩展命令菜单")
     NHOPTB(female, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, "male", &flags.female, Term_False,
-           "deprecated; use gender:female")
+           "已弃用; 使用gender:female")
     NHOPTB(fireassist, Behavior, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &iflags.fireassist, Term_False,
-           "fire-command tries to be helpful")
+           "fire-command试图提供帮助")
     NHOPTB(fixinv, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.invlet_constant, Term_False,
-           "inventory items keep their letters")
+           "物品栏里的物品保持其字母")
     NHOPTC(font_map, Advanced, 40, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "font to use in the map window")
+                Yes, Yes, Yes, No, NoAlias, "地图窗口使用的字体")
     NHOPTC(font_menu, Advanced, 40, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "font to use in menus")
+                Yes, Yes, Yes, No, NoAlias, "菜单使用的字体")
     NHOPTC(font_message, Advanced, 40, opt_in, set_gameview,
                 Yes, Yes, Yes, No, NoAlias,
-                "font to use in the message window")
+                "消息窗口使用的字体")
     NHOPTC(font_size_map, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "size of the map font")
+                Yes, Yes, Yes, No, NoAlias, "地图字体的大小")
     NHOPTC(font_size_menu, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "size of the menu font")
+                Yes, Yes, Yes, No, NoAlias, "菜单字体的大小")
     NHOPTC(font_size_message, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "size of the message font")
+                Yes, Yes, Yes, No, NoAlias, "信息字体的大小")
     NHOPTC(font_size_status, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "size of the status font")
+                Yes, Yes, Yes, No, NoAlias, "状态字体的大小")
     NHOPTC(font_size_text, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "size of the text font")
+                Yes, Yes, Yes, No, NoAlias, "文本字体的大小")
     NHOPTC(font_status, Advanced, 40, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "font to use in status window")
+                Yes, Yes, Yes, No, NoAlias, "状态窗口使用的字体")
     NHOPTC(font_text, Advanced, 40, opt_in, set_gameview,
-                Yes, Yes, Yes, No, NoAlias, "font to use in text windows")
+                Yes, Yes, Yes, No, NoAlias, "文本窗口使用的字体")
     NHOPTB(force_invmenu, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.force_invmenu, Term_False,
-           "commands asking for inventory item show a menu")
+           "询问物品的命令会显示菜单")
     NHOPTC(fruit, General, PL_FSIZ, opt_in, set_in_game,
-                No, Yes, No, No, NoAlias, "name of a fruit you enjoy eating")
+                No, Yes, No, No, NoAlias, "你喜欢吃的水果名称")
     NHOPTB(fullscreen, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, &iflags.wc2_fullscreen, Term_False,
-           "toggle fullscreen")
+           "开启全屏")
  /* NHOPTC(gender) -- moved to top */
     NHOPTC(glyph, Advanced, 40, opt_in, set_in_game,
                 No, Yes, Yes, No, NoAlias,
-                "set representation of a glyph to a unicode value and color")
+                "将字形的表示形式设置为Unicode值和颜色")
     NHOPTB(goldX, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.goldX, Term_False,
-           "classify gold as unknown or uncursed")
+           " 金币视为未知或无诅咒的")
     NHOPTB(guicolor, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &iflags.wc2_guicolor, Term_False,
-           "use color for UI")
+           "在UI中使用颜色")
     NHOPTB(help, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.help, Term_False,
-           "show all available info when using whatis-command")
+           "使用whatis命令时显示所有可用信息")
     NHOPTB(herecmd_menu, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.herecmd_menu, Term_False,
-           "show commands available in this location")
+           "显示此位置可用的命令")
 #if defined(MACOS9)
     NHOPTC(hicolor, Advanced, 15, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "same as palette, only order is reversed")
+                "同palette, 只是顺序相反")
 #endif
     NHOPTB(hilite_pet, Map, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.wc_hilite_pet, Term_False,
-           "use highlight for pets")
+           "高亮宠物")
     NHOPTB(hilite_pile, Map, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.hilite_pile, Term_False,
-           "highlight piles of items")
+           "高亮物品堆")
 #ifdef STATUS_HILITES
     NHOPTC(hilite_status, Advanced, 13, opt_out, set_in_game,
                 Yes, Yes, Yes, No, NoAlias,
-                "a status highlighting rule (can occur multiple times)")
+                "状态突出显示规则(可出现多次)")
 #else
     NHOPTC(hilite_status, Advanced, 13, opt_out, set_in_config,
-                Yes, Yes, Yes, No, NoAlias, "(not available)")
+                Yes, Yes, Yes, No, NoAlias, "(不可用)")
 #endif
     NHOPTB(hitpointbar, Status, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.wc2_hitpointbar, Term_False,
-           "show colored bar for hit points")
+           "生命值条显示颜色")
     NHOPTC(horsename, Advanced, PL_PSIZ, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "name of your starting pet if it is a pony")
+                "你的起始宠物的名字(如果是小马)")
 #ifdef BACKWARD_COMPAT
     NHOPTC(IBMgraphics, Advanced, 70, opt_in, set_in_config,
                 Yes, Yes, No, No, NoAlias,
-                "load IBMGraphics display symbols into symset")
+                "将IBMGraphics加载到symset中")
 #endif
     NHOPTB(idlecheckpoint, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.idlecheckpoint, Term_Off,
-           "update checkpoint file if input is idle for 10 seconds")
+           "如果输入处于空闲状态10秒, 则更新检查点文件")
 #ifndef MACOS9
     NHOPTB(ignintr, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.ignintr, Term_False,
-           "ignore interrupt signals")
+           "忽略中断信号")
 #else
     NHOPTB(ignintr, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, (boolean *) 0, Term_False,
@@ -401,7 +401,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #endif
     NHOPTB(implicit_uncursed, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.implicit_uncursed, Term_False,
-           "omit \"uncursed\" from inventory")
+           "省略物品栏中的\"无诅咒的\"")
 #if 0   /* obsolete - pre-OSX Mac */
     NHOPTB(large_font, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, &iflags.obsolete,
@@ -409,118 +409,118 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #endif
     NHOPTB(legacy, Advanced, 0, opt_out, set_in_config,
            On, Yes, No, No, NoAlias, &flags.legacy, Term_False,
-           "show introductory message")
+           "显示介绍信息")
     NHOPTB(lit_corridor, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.lit_corridor, Term_False,
-           "show dark corridors as lit if in sight")
+           "如果能看见, 将黑暗的走廊显示为明亮的")
     NHOPTB(lootabc, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.lootabc, Term_False,
-           "use a/b/c rather than o/i/c when looting")
+           "搜刮时使用a/b/c而非o/i/c")
     NHOPTB(mail, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.biff, Term_False,
-           "enable the mail daemon")
+           "启用传信小鬼")
     NHOPTC(map_mode, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, No, No, NoAlias, "map display mode under Windows")
+                Yes, Yes, No, No, NoAlias, "Windows下的地图显示模式")
     NHOPTB(mention_decor, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.mention_decor, Term_False,
-           "give feedback when walking over interesting features")
+           "在经过有趣的地块特征时提供反馈")
     NHOPTB(mention_map, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &a11y.glyph_updates, Term_False,
-           "give feedback when interesting map locations change")
+           "在有趣的地图位置变化时提供反馈")
     NHOPTB(mention_walls, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.mention_walls, Term_False,
-           "give feedback when walking into walls")
+           "撞到墙时提供反馈")
     NHOPTC(menu_deselect_all, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "deselect all items in a menu")
+                No, Yes, No, No, NoAlias, "在菜单中取消选择所有选项")
     NHOPTC(menu_deselect_page, Advanced, 4, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "deselect all items on this page of a menu")
+                "在本页菜单中取消选择所有选项")
     NHOPTC(menu_first_page, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "jump to the first page in a menu")
+                No, Yes, No, No, NoAlias, "跳到菜单第一页")
     NHOPTC(menu_headings, Advanced, 4, opt_in, set_in_game,
-                Yes, Yes, No, Yes, NoAlias, "display style for menu headings")
+                Yes, Yes, No, Yes, NoAlias, "菜单标题的显示风格")
     NHOPTC(menu_invert_all, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "invert all items in a menu")
+                No, Yes, No, No, NoAlias, "在菜单中反选所有选项")
     NHOPTC(menu_invert_page, Advanced, 4, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "invert all items on this page of a menu")
+                "在本页菜单中反选所有选项")
     NHOPTC(menu_last_page, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "jump to the last page in a menu")
+                No, Yes, No, No, NoAlias, "跳到菜单最后一页")
     NHOPTC(menu_next_page, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "go to the next menu page")
+                No, Yes, No, No, NoAlias, "切换到菜单下一页")
     NHOPTC(menu_objsyms, Advanced, 12, opt_in, set_in_game,
            Yes, Yes, No, Yes, "use_menu_glyphs",
-           "show object symbols in menus")
+           "在菜单中显示物品符号")
 #ifdef TTY_GRAPHICS
     NHOPTB(menu_overlay, Advanced, 0, opt_in, set_in_game,
            On, Yes, No, No, NoAlias, &iflags.menu_overlay, Term_False,
-           "menus overlay and align to right")
+           "菜单叠加并向右对齐")
 #else
     NHOPTB(menu_overlay, Advanced, 0, opt_in, set_in_config,
            Off, No, No, No, NoAlias, (boolean *) 0, Term_False,
            (char *)0)
 #endif
     NHOPTC(menu_previous_page, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "go to the previous menu page")
+                No, Yes, No, No, NoAlias, "切换到菜单上一页")
     NHOPTC(menu_search, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "search for a menu item")
+                No, Yes, No, No, NoAlias, "搜索一个菜单选项")
     NHOPTC(menu_select_all, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "select all items in a menu")
+                No, Yes, No, No, NoAlias, "在菜单中全选")
     NHOPTC(menu_select_page, Advanced, 4, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "select all items on this page of a menu")
+                "在本页菜单中全选")
     NHOPTC(menu_shift_left, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "pan current menu page left")
+                No, Yes, No, No, NoAlias, "本页菜单左移")
     NHOPTC(menu_shift_right, Advanced, 4, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "pan current menu page right")
+                No, Yes, No, No, NoAlias, "本页菜单右移")
     NHOPTB(menu_tab_sep, Advanced, 0, opt_in, set_wizonly,
            Off, Yes, No, No, NoAlias, &iflags.menu_tab_sep, Term_False,
-           "menu formatting")
+           "菜单格式化")
     NHOPTB(menucolors, Advanced, 0, opt_in, set_in_game,
            Off, Yes, Yes, No, NoAlias, &iflags.use_menu_color, Term_False,
-           "use colors in menus")
+           "使用菜单颜色")
     NHOPTO("menu colors", Status, o_menu_colors, BUFSZ, opt_in, set_in_game,
-                No, Yes, No, NoAlias, "change colors used in menus")
+                No, Yes, No, NoAlias, "修改菜单使用的颜色")
     NHOPTC(menuinvertmode, Advanced, 5, opt_in, set_in_game,
                 No, Yes, No, No, NoAlias,
-                "experimental behavior of menu inverts")
+                "菜单反转实验性行为")
     NHOPTC(menustyle, Advanced, MENUTYPELEN, opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "user interface for object selection")
+                "选择物品的用户接口")
     NHOPTO("message types", Advanced, o_message_types, BUFSZ,
                 opt_in, set_in_game,
-                No, Yes, No, NoAlias, "edit message types")
+                No, Yes, No, NoAlias, "编辑消息类型")
     NHOPTB(mon_movement, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &a11y.mon_movement, Term_False,
-           "message when hero sees monster movement")
+           "主角看见怪物移动时显示的消息")
     NHOPTB(monpolycontrol, Advanced, 0, opt_in, set_wizonly,
            Off, Yes, No, No, NoAlias, &iflags.mon_polycontrol, Term_False,
-           "control monster polymorphs")
+           "控制怪物变形")
     NHOPTB(montelecontrol, Advanced, 0, opt_in, set_wizonly,
            Off, Yes, No, No, NoAlias, &iflags.mon_telecontrol, Term_False,
-           "control monster teleport destinations")
+           "控制怪物传送目标")
     NHOPTC(monsters, Advanced, MAXMCLASSES, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "list of symbols to use for monsters")
+                "怪物符号列表")
     NHOPTC(mouse_support, Advanced, 0, opt_in, set_in_game,
                 No, Yes, No, No, NoAlias,
-                "game receives click info from mouse")
+                "游戏接收鼠标按键信号")
 #if PREV_MSGS /* tty or curses */
     NHOPTC(msg_window, Advanced, 1, opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "control of \"view previous message(s)\" (^P) behavior")
+                "控制\"查看之前消息\"(^P)的行为")
 #else
     NHOPTC(msg_window, Advanced, 1, opt_in, set_in_config,
-                Yes, Yes, No, Yes, NoAlias, "(not applicable)")
+                Yes, Yes, No, Yes, NoAlias, "(不可用)")
 #endif
     NHOPTC(msghistory, Advanced, 5, opt_in, set_gameview,
                 Yes, Yes, No, No, NoAlias,
-                "number of top line messages to save")
+                "保存的顶层消息数")
  /* NHOPTC(name) -- moved to top */
 #ifdef NEWS
     NHOPTB(news, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, &iflags.news, Term_False,
-           "show any news at game start")
+           "游戏开始时显示新闻")
 #else
     NHOPTB(news, Advanced, 0, opt_in, set_in_config,
            Off, No, No, No, NoAlias, (boolean *) 0, Term_False,
@@ -528,66 +528,66 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #endif
     NHOPTB(nudist, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, &u.uroleplay.nudist, Term_False,
-           "start your character without armor")
+           "你的角色起始时没有防具")
     NHOPTB(null, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.null, Term_False,
-           "allow nulls to be sent to terminal")
+           "允许想终端发送null")
     NHOPTC(number_pad, General, 1, opt_in, set_in_game,
                 No, Yes, No, Yes, NoAlias,
-                "use the number pad for movement")
+                "使用数字键盘移动")
     NHOPTC(objects, Advanced, MAXOCLASSES, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "list of symbols to use for objects")
+                "物品符号列表")
     NHOPTC(packorder, Advanced, MAXOCLASSES, opt_in, set_in_game,
                 No, Yes, No, No, NoAlias,
-                "the inventory order of the items in your pack")
+                "物品栏中的物品种类顺序")
 #ifdef CHANGE_COLOR
 #ifndef MACOS9     /* not old Mac OS9 */
     NHOPTC(palette, Advanced, 15, opt_in, set_gameview,
                 No, Yes, Yes, No, "hicolor",
-                "palette (adjust an RGB color in palette (color/R-G-B)")
+                "样式(以palette(color/R-G-B)调整RGB颜色)")
 #else
     NHOPTC(palette, Advanced, 15, opt_in, set_in_game,
                 No, Yes, Yes, No, "hicolor",
-                "palette (00c/880/-fff is blue/yellow/reverse white)")
+                "样式(00c/880/-fff等于blue/yellow/reverse white)")
 #endif
 #endif
     /* prior to paranoid_confirmation, 'prayconfirm' was a distinct option */
     NHOPTC(paranoid_confirmation, Advanced, 28, opt_in, set_in_game,
                 Yes, Yes, Yes, Yes, "prayconfirm",
-                "extra prompting in certain situations")
+                "特定情况下再询问一次")
     NHOPTB(pauper, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, &u.uroleplay.pauper, Term_False,
-           "start your character without any items")
+           "你的角色起始时没有物品")
     NHOPTB(perm_invent, Advanced, 0, opt_in, set_in_game,
                 Off, Yes, No, No, NoAlias, &iflags.perm_invent, Term_Off,
-                "show persistent inventory window")
+                "显示永久物品栏窗口")
     NHOPTC(perminv_mode, Advanced, 20, opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "what to show in persistent inventory window")
+                "永久物品栏窗口显示的内容")
     NHOPTC(petattr, Advanced, 88, opt_in, set_in_game, /* tty/curses only */
-                No, Yes, No, Yes, NoAlias, "attributes for highlighting pets")
+                No, Yes, No, Yes, NoAlias, "高亮宠物的属性")
     /* pettype is ignored for some roles */
     NHOPTC(pettype, Advanced, 4, opt_in, set_gameview,
-                Yes, Yes, No, No, "pet", "your preferred initial pet type")
+                Yes, Yes, No, No, "pet", "你喜欢的起始宠物类型")
     NHOPTC(pickup_burden, Advanced, 20, opt_in, set_in_game,
                 No, Yes, No, Yes, NoAlias,
-                "maximum burden picked up before prompt")
+                "不询问是否捡起物品的最大负重度")
     NHOPTB(pickup_stolen, Behavior, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.pickup_stolen, Term_False,
-           "autopickup stolen items")
+           "自动拾取被偷的物品")
     NHOPTB(pickup_thrown, Behavior, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.pickup_thrown, Term_False,
-           "autopickup thrown items")
+           "自动拾取被扔出的物品")
     NHOPTC(pickup_types, Behavior, MAXOCLASSES, opt_in, set_in_game,
                 No, Yes, No, Yes, NoAlias,
-                "types of objects to pick up automatically")
+                "自动拾取的种类")
     NHOPTC(pile_limit, Advanced, 24, opt_in, set_in_game,
                 Yes, Yes, No, No, NoAlias,
-                "threshold for \"there are many objects here\"")
+                "\"这里有许多物品\"的阈值")
     NHOPTC(player_selection, Advanced, 12, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "choose character via dialog or prompts")
+                "通过对话或询问选择角色")
  /* NHOPTC(playmode) -- moved to top */
     NHOPTB(popup_dialog, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.wc_popup_dialog, Term_False,
@@ -597,21 +597,21 @@ static int optfn_##a(int, int, boolean, char *, char *);
            (char *)0)
     NHOPTB(price_quotes, General, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.pricequotes, Term_False,
-           "display prices you have seen for unidentified objects")
+           "为未鉴定物品显示你知道的价格")
     NHOPTB(pushweapon, Behavior, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.pushweapon, Term_False,
-           "previous weapon goes to secondary slot")
+           "上一个武器进入副武器槽")
     NHOPTB(query_menu, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.query_menu, Term_False,
-           "use a menu for yes/no queries")
+           "询问yes/no时使用确认")
     NHOPTB(quick_farsight, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.quick_farsight, Term_False,
-           "skip map browse when forced to looked at map")
+           "强制看地图时跳过地图浏览指南")
  /* NHOPTC(race) -- moved to top */
 #ifdef MICRO
     NHOPTB(rawio, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, &iflags.rawio, Term_False,
-           "allow use to raw I/O")
+           "允许使用raw I/O")
 #else
     NHOPTB(rawio, Advanced, 0, opt_in, set_in_config,
            Off, No, No, No, NoAlias, (boolean *) 0, Term_False,
@@ -619,51 +619,51 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #endif
     NHOPTB(reroll, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, &u.uroleplay.reroll, Term_False,
-           "allow rerolling of starting inventory and items")
+           "允许重掷起始物品栏")
     NHOPTB(rest_on_space, Advanced, 0, opt_in, set_in_game, Off,
            Yes, No, No, NoAlias, &flags.rest_on_space, Term_False,
-           "space bar is bound to the rest-command")
+           "空格绑定休息命令")
     NHOPTC(roguesymset, Advanced, 70, opt_in, set_in_game,
                 No, Yes, No, Yes, NoAlias,
-                "load a set of rogue display symbols from symbols file")
+                "从symbols文件中加载加载一系列rogue显示符号")
  /* NHOPTC(role) -- moved to top */
     NHOPTC(runmode, Advanced, sizeof "teleport", opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "display frequency when `running' or `travelling'")
+                "`奔跑'或者`旅行'时显示频率")
     NHOPTB(safe_pet, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.safe_dog, Term_False,
-           "prevent you from hitting pets")
+           "阻止你攻击宠物")
     NHOPTB(safe_wait, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.safe_wait, Term_False,
-           "prevent waiting next to hostiles")
+           "在有相邻敌人时阻止等待")
     NHOPTB(sanity_check, Advanced, 0, opt_in, set_wizonly,
            Off, Yes, No, No, NoAlias, &iflags.sanity_check, Term_False,
-           "perform data sanity checks")
+           "实行数据合法性检测")
     NHOPTC(scores, Advanced, 32, opt_in, set_in_game,
                 No, Yes, No, No, NoAlias,
-                "the parts of the score list you wish to see")
+                "你想看的得分表部分")
     NHOPTC(scroll_amount, Advanced, 20, opt_in, set_gameview,
                 Yes, Yes, No, No, NoAlias,
-                "amount to scroll map when scroll_margin is reached")
+                "到达scroll_margin时地图滚动的长度")
     NHOPTC(scroll_margin, Advanced, 20, opt_in, set_gameview,
                 Yes, Yes, No, No, NoAlias,
-                "scroll map when this far from the edge")
+                "距离边缘这么远时滚动地图")
     NHOPTB(selectsaved, Advanced, 0, opt_out, set_in_config,
            On, Yes, No, No, NoAlias, &iflags.wc2_selectsaved, Term_False,
            (char *)0)
     NHOPTB(showdamage, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.showdamage, Term_False,
-           "show damage hero takes in message line")
+           "在消息栏中显示主角受到的伤害")
     NHOPTB(showexp, Status, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.showexp, Term_False,
-           "show experience points in status line")
+           "在状态行中显示经验点数")
     NHOPTB(showrace, Map, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.showrace, Term_False,
-           "show your character by race rather than role")
+           "通过种族而非职业显示你的角色")
 #ifdef SCORE_ON_BOTL
     NHOPTB(showscore, Status, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.showscore, Term_False,
-           "show current score in status line")
+           "在状态行中显示当前得分")
 #else
     NHOPTB(showscore, Status, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, (boolean *) 0, Term_False,
@@ -671,101 +671,101 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #endif
     NHOPTB(showvers, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.showvers, Term_False,
-           "show version info on status line")
+           "在状态行中显示版本信息")
     NHOPTB(silent, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.silent, Term_False,
-           "don't use terminal bell")
+           "不使用终端时钟")
     NHOPTB(softkeyboard, Advanced, 0, opt_in, set_in_config,
                 Off, Yes, No, No, NoAlias, &iflags.wc2_softkeyboard,
            Term_False, (char *)0)
     NHOPTC(sortdiscoveries, Advanced, 0, opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "preferred order when displaying discovered objects")
+                "显示已发现物品时的优先顺序")
     NHOPTC(sortloot, Advanced, 4, opt_in, set_in_game,
                 No, Yes, No, Yes, NoAlias,
-                "sort object selection lists by description")
+                "通过描述对物品选择列表进行排序")
     NHOPTB(sortpack, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.sortpack, Term_False,
-           "group inventory items by type")
+           "在物品栏中通过类别分组")
     NHOPTC(sortvanquished, Advanced, 0, opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "preferred order when displaying vanquished monsters")
+                "显示已击败怪物时的优先顺序")
     NHOPTC(soundlib, Advanced, WINTYPELEN, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "soundlib interface to use (if any)")
+                "使用的soundlib接口(如果有)")
 #ifdef SND_LIB_INTEGRATED
     NHOPTB(sounds, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &iflags.sounds, Term_Off,
-           "use integrated sound effects")
+           "使用内置音效")
 #else
     NHOPTB(sounds, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.sounds, Term_Off,
-           "use sounds")
+           "使用音效")
 #endif
     NHOPTB(sparkle, Map, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.sparkle, Term_False,
-           "display sparkly effect when resisting magic")
+           "抵抗魔法时显示粒子效果(推荐在火之位面打开)")
     NHOPTB(spot_monsters, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &a11y.mon_notices, Term_False,
-           "message when hero spots a monster")
+           "英雄发现怪物时显示的消息")
     NHOPTB(splash_screen, Advanced, 0, opt_out, set_in_config,
            On, Yes, No, No, NoAlias, &iflags.wc_splash_screen, Term_False,
            (char *)0)
     NHOPTB(standout, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.standout, Term_False,
-           "use standout for --more--")
+           "使用standout配合--more--")
     NHOPTB(status_updates, Advanced, 0, opt_out, set_in_config,
            On, Yes, No, No, NoAlias, &iflags.status_updates, Term_False,
-           "allow the status lines to update")
+           "允许状态行更新")
     NHOPTO("status condition fields", Status, o_status_cond, BUFSZ,
                 opt_in, set_in_game,
-                No, Yes, No, NoAlias, "change status condition highlighting")
+                No, Yes, No, NoAlias, "更改状态条件的高亮显示")
 #ifdef STATUS_HILITES
     NHOPTC(statushilites, Advanced, 20, opt_in, set_in_game,
                 Yes, Yes, Yes, No, NoAlias,
-                "0=no status highlighting, N=show highlights for N turns")
+                "0=无状态条件高亮, N=状态条件高亮N回合")
     NHOPTO("status highlight rules", Status, o_status_hilites, BUFSZ,
                 opt_in, set_in_game,
-                No, Yes, No, NoAlias, "change status line highlighting")
+                No, Yes, No, NoAlias, "更改状态行高亮显示")
 #else
     NHOPTC(statushilites, Advanced, 20, opt_in, set_in_config,
-                Yes, Yes, Yes, No, NoAlias, "highlight control")
+                Yes, Yes, Yes, No, NoAlias, "高亮控制")
 #endif
     NHOPTC(statuslines, Status, 20, opt_in, set_in_game,
-                No, Yes, No, No, NoAlias, "2 or 3 lines for status display")
+                No, Yes, No, No, NoAlias, "状态显示2或3行")
 #ifdef WIN32CON
     NHOPTC(subkeyvalue, Advanced, 7, opt_in, set_in_config,
-                No, Yes, Yes, No, NoAlias, "override keystroke value")
+                No, Yes, Yes, No, NoAlias, "覆盖按键值")
 #endif
     NHOPTC(suppress_alert, Advanced, 8, opt_in, set_in_game,
                 No, Yes, Yes, No, NoAlias,
-                "suppress alerts about version-specific features")
+                "屏蔽有关特定版本功能的提醒")
     NHOPTC(symset, Map, 70, opt_in, set_in_game,
                 No, Yes, No, Yes, NoAlias,
-                "load a set of display symbols from symbols file")
+                "从symbols文件中加载加载一系列显示符号")
     NHOPTC(term_cols, Advanced, 6, opt_in, set_in_config,
-                No, Yes, No, No, "termcolumns", "number of columns")
+                No, Yes, No, No, "termcolumns", "列数")
     NHOPTC(term_rows, Advanced, 6, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "number of rows")
+                No, Yes, No, No, NoAlias, "行数")
     NHOPTB(terrainstatus, Advanced, 0, opt_in, set_in_game,
                 Off, Yes, No, No, NoAlias, &flags.terrainstatus, Term_False,
-                "show hero's location as a status field")
+                "将主角的位置显示为状态字段")
     NHOPTC(tile_file, Advanced, 70, opt_in, set_gameview,
-                No, Yes, No, No, NoAlias, "name of tile file")
+                No, Yes, No, No, NoAlias, "tile文件的名称")
     NHOPTC(tile_height, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, No, No, NoAlias, "height of tiles")
+                Yes, Yes, No, No, NoAlias, "tile的高度")
     NHOPTC(tile_width, Advanced, 20, opt_in, set_gameview,
-                Yes, Yes, No, No, NoAlias, "width of tiles")
+                Yes, Yes, No, No, NoAlias, "tile的宽度")
     NHOPTB(tiled_map, Advanced, 0, opt_in, set_in_game,
                 tiled_map_Def, Yes, No, No, NoAlias, &iflags.wc_tiled_map,
            Term_False, (char *)0)
     NHOPTB(time, Status, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.time, Term_False,
-           "display game turns in status line")
+           "在状态行中显示游戏回合数")
 #ifdef TIMED_DELAY
     NHOPTB(timed_delay, Map, 0, opt_out, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.nap, Term_False,
-           "use delay when pausing for display effects")
+           "暂停时使用延迟以实现显示效果")
 #else
     NHOPTB(timed_delay, Map, 0, opt_in, set_in_config,
            Off, No, No, No, NoAlias, (boolean *) 0, Term_False,
@@ -773,19 +773,19 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #endif
     NHOPTB(tips, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.tips, Term_False,
-           "show some helpful tips during gameplay")
+           "在游戏中显示一些有用的帮助")
     NHOPTB(tombstone, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.tombstone, Term_False,
-           "show tombstone when your character dies")
+           "当你的角色死亡时, 显示墓碑")
     NHOPTB(toptenwin, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.toptenwin, Term_False,
-           "show top scores in window")
+           "在窗口中显示最高分")
     NHOPTC(traps, Advanced, MAXTCHARS + 1, opt_in, set_in_config,
                 No, Yes, No, No, NoAlias,
-                "list of symbols to use in drawing traps")
+                "绘制陷阱时使用的符号列表")
     NHOPTB(travel, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.travelcmd, Term_False,
-           "enable traveling via mouse click")
+           "允许通过鼠标点击旅行")
 #ifdef DEBUG
     NHOPTB(travel_debug, Advanced, 0, opt_out, set_wizonly,
            Off, Yes, No, No, NoAlias, &iflags.trav_debug, Term_False,
@@ -797,41 +797,41 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #endif
     NHOPTB(tutorial, Advanced, 0, opt_out, set_in_config,
            On, Yes, No, No, NoAlias, &flags.tutorial, Term_False,
-           "ask if you want the tutorial")
+           "询问是否开始教程")
     NHOPTB(use_darkgray, Advanced, 0, opt_out, set_in_config,
            On, Yes, No, No, NoAlias, &iflags.wc2_darkgray, Term_False,
-           "use bold black color instead of blue")
+           "使用黑色粗体字而非蓝色")
     NHOPTB(use_inverse, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &iflags.wc_inverse, Term_False,
-           "display detected monsters in inverse")
+           "以反色显示发现到的怪物")
     NHOPTB(use_truecolor, Advanced, 0, opt_in, set_in_config,
                 Off, Yes, No, No, "use_truecolour",
            &iflags.use_truecolor, Term_False,
            (char *)0)
     NHOPTC(vary_msgcount, Advanced, 20, opt_in, set_gameview,
-                No, Yes, No, No, NoAlias, "show more old messages at a time")
+                No, Yes, No, No, NoAlias, "每次显示更多旧消息")
     NHOPTB(verbose, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &flags.verbose, Term_False,
            (char *)0)
     NHOPTC(versinfo, Advanced, 80, opt_out, set_in_game,
-           No, Yes, No, Yes, NoAlias, "extra information for 'showvers'")
+           No, Yes, No, Yes, NoAlias, "'showvers'显示额外信息")
 #ifdef MSDOS
     NHOPTC(video, Advanced, 20, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "method of video updating")
+                No, Yes, No, No, NoAlias, "视频更新的方法")
 #endif
 #ifdef VIDEOSHADES
     NHOPTC(videocolors, Advanced, 40, opt_in, set_gameview,
                 No, Yes, No, No, "videocolours",
-                "color mappings for internal screen routines")
+                "内部屏幕例程的颜色映射")
     NHOPTC(videoshades, Advanced, 32, opt_in, set_gameview,
                 No, Yes, No, No, NoAlias,
-                "gray shades to map to black/gray/white")
+                "gray在地图中渲染成black/gray/white")
 #endif
 #ifdef MSDOS
     NHOPTC(video_width, Advanced, 10, opt_in, set_gameview,
-                No, Yes, No, No, NoAlias, "video width")
+                No, Yes, No, No, NoAlias, "视频宽度")
     NHOPTC(video_height, Advanced, 10, opt_in, set_gameview,
-                No, Yes, No, No, NoAlias, "video height")
+                No, Yes, No, No, NoAlias, "视频高度")
 #endif
 #ifdef SND_SPEECH
     NHOPTB(voices, Advanced, 0, opt_in, set_in_game,
@@ -845,7 +845,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #ifdef TTY_TILES_ESCCODES
     NHOPTB(vt_tiledata, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, &iflags.vt_tiledata, Term_False,
-           "output special escape codes")
+           "输出特殊的转义码")
 #else
     NHOPTB(vt_tiledata, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, (boolean *) 0, Term_False,
@@ -854,38 +854,38 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #ifdef TTY_SOUND_ESCCODES
     NHOPTB(vt_sounddata, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, &iflags.vt_sounddata, Term_False,
-           "output sound data in special escape codes")
+           "以特殊转义码输出声音数据")
 #else
     NHOPTB(vt_sounddata, Advanced, 0, opt_in, set_in_config,
            Off, Yes, No, No, NoAlias, (boolean *) 0, Term_False,
            (char *)0)
 #endif
     NHOPTC(warnings, Advanced, 10, opt_in, set_in_config,
-                No, Yes, No, No, NoAlias, "display characters for warnings")
+                No, Yes, No, No, NoAlias, "显示警告字符")
     NHOPTB(weaponstatus, Advanced, 0, opt_in, set_in_game,
                 Off, Yes, No, No, NoAlias, &flags.weaponstatus, Term_False,
-                "show currently wielded weapon in a status field")
+                "在状态栏中显示装备的武器")
     NHOPTC(whatis_coord, Advanced, 1, opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "show coordinates when auto-describing cursor position")
+                "自动描述光标位置时显示坐标")
     NHOPTC(whatis_filter, Advanced, 1, opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
-                "filter coordinate locations when targeting next or previous")
+                "在定位下一项或上一项时过滤坐标位置")
     NHOPTB(whatis_menu, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.getloc_usemenu, Term_False,
-           "show menu when getting a map location")
+           "获取地图位置时显示菜单")
     NHOPTB(whatis_moveskip, Advanced, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &iflags.getloc_moveskip, Term_False,
-           "skip same glyph when getting map location")
+           "获取地图位置时跳过相同的图标")
     NHOPTC(windowborders, Advanced, 9, opt_in, set_in_game,
-                Yes, Yes, No, Yes, NoAlias, "0 (off), 1 (on), 2 (auto)")
+                Yes, Yes, No, Yes, NoAlias, "0(关), 1(开), 2(自动)")
 #ifdef WINCHAIN
     NHOPTC(windowchain, Advanced, WINTYPELEN, opt_in, set_in_sysconf,
-                No, Yes, No, No, NoAlias, "window processor to use")
+                No, Yes, No, No, NoAlias, "使用的窗口处理器")
 #endif
     NHOPTC(windowcolors, Advanced, 80, opt_in, set_gameview,
                 No, Yes, Yes, No, NoAlias,
-                "the foreground/background colors of windows")
+                "窗口的前景/背景色")
  /* NHOPTC(windowtype) -- moved to top */
     NHOPTB(wizmgender, Advanced, 0, opt_in, set_wizonly,
            Off, Yes, No, No, NoAlias, &iflags.wizmgender, Term_False,
@@ -902,13 +902,13 @@ static int optfn_##a(int, int, boolean, char *, char *);
      */
 
     NHOPTP(cond_, Advanced, 0, opt_in, set_hidden,
-                Yes, No, Yes, Yes, NoAlias, "prefix for cond_ options")
+                Yes, No, Yes, Yes, NoAlias, "cond_选项的前缀")
     NHOPTP(font, Advanced, 0, opt_in, set_hidden,
-                Yes, Yes, Yes, No, NoAlias, "prefix for font options")
+                Yes, Yes, Yes, No, NoAlias, "字体选项的前缀")
 #if defined(MICRO) && !defined(AMIGA)
     /* included for compatibility with old NetHack.cnf files */
     NHOPTP(IBM_, Advanced, 0, opt_in, set_hidden,
-                No, No, Yes, No, NoAlias, "prefix for old micro IBM_ options")
+                No, No, Yes, No, NoAlias, "旧的micro IBM_选项的前缀")
 #endif /* MICRO */
 
 #undef NoAlias

@@ -271,7 +271,7 @@ do_pit(coordxy x, coordxy y, unsigned tu_pit)
             }
             /* Falling is okay for falling down
                within a pit from jostling too */
-            mselftouch(mtmp, "掉下去的", TRUE);
+            mselftouch(mtmp, "掉下去时, ", TRUE);
             if (!DEADMONSTER(mtmp)) {
                 mtmp->mhp -= rnd(m_already_trapped ? 4 : 6);
                 if (DEADMONSTER(mtmp)) {
@@ -589,9 +589,9 @@ do_improvisation(struct obj *instr)
     case MAGIC_FLUTE: /* Make monster fall asleep */
         consume_obj_charge(instr, TRUE);
 
-        You("%s产生出了%s%s音乐.", !Deaf ? "" : "似乎",
-            Hallucination ? "管乐的" : "柔和的",
-            same_old_song ? "" : "熟悉的");
+        You("%s产生出了%s%s.", !Deaf ? "" : "似乎",
+            same_old_song ? "" : "熟悉的",
+            Hallucination ? "管乐" : "柔和的音乐"); /*修改语序:自己看*/
         Hero_playnotes(obj_to_instr(&itmp), improvisation, 50);
         put_monsters_to_sleep(u.ulevel * 5);
         exercise(A_DEX, TRUE);
@@ -790,7 +790,7 @@ do_play_instrument(struct obj *instr)
     } else if (c == 'y') {
         Strcpy(buf, svt.tune);
     } else {
-        getlin("你要演奏什么? [5个字母,A-G]", buf);
+        getlin("你要演奏什么? [5个字母, A-G]", buf);
         (void) mungspaces(buf);
         if (*buf == '\033')
             goto nevermind;

@@ -1,58 +1,42 @@
-	Depending upon hardware or operating system or NetHack's interface,
-	some keystrokes may be off-limits.
+	根据硬件、操作系统或NetHack界面的不同, 某些按键可能无法使用. 
 
-	For example, ^S and ^Q are often used for XON/XOFF flow-control,
-	meaning that ^S suspends output and subsequent ^Q resumes suspended
-	output.  When that is the case, neither of those characters will
-	reach NetHack when it is waiting for a command keystroke.  So they
-	aren't used as commands, but 'whatdoes' might not be able to tell
-	you that if they don't get passed through to NetHack.
+	例如, ^S和^Q通常用于XON/XOFF流控制, 这意味着^S会暂停输出, 随后输入
+	^Q则会恢复被暂停的输出. 在这种情况下, 这两个字符都传达到正在等待命
+	令按键的NetHack. 因此, 它们不能作为命令使用, 但如果这些按键未能传递
+	给NetHack, 'whatdoes'可能无法向你提示这一情况. 
 
-	^M or <return> or <enter> is likely to be transformed into ^J or
-	<linefeed> or 'newline' before being passed to NetHack for handling.
-	So it isn't used as a command, and 'whatdoes' might seem as if it
-	is reporting the wrong character but will be operating correctly if
-	it describes ^J when you type ^M.
+	^M或<return>或<enter>在传递给NetHack处理之前, 很可能会被转换为^J或
+	<linefeed>或'newline'. 因此它不被用作命令, 而'whatdoes'可能看起来好
+	像在报告错误的字符, 但如果当你输入^M时它描述的是^J, 则说明其运行是
+	正确的. 
 
-	A NUL character, which is typed as ^<space> on some keyboards,
-	^@ on others, and maybe not typeable at all on yet others, is not
-	used as a command, and will be converted into ESC before reaching
-	'whatdoes'.  Unlike ^M, this transformation is performed within
-	NetHack.  But like ^M, if you type NUL and get feedback about ESC,
-	the situation is expected.
+	NUL字符(在某些键盘上输入为^<空格>, 在其他键盘上输入为^@, 还有些键盘
+	可能根本无法输入)不会被视为命令, 且在到达'whatdoes'之前会被转换为
+	ESC. 与^M不同, 这种转换是在NetHack内部进行的. 但与^M一样, 如果你输
+	入NUL却收到关于ESC的反馈, 这种情况是预期的. 
 
-	ESC itself is a synonym for ^[, and is another source of oddity.
-	Various function keys, including cursor arrow keys, may transmit
-	an "escape sequence" of ESC + [ + other stuff, confusing NetHack
-	as to what command was intended since the ESC will be processed
-	and then whatever follows will seem to NetHack like--and be used
-	as--something typed by the user.  (If you press a function key and
-	a menu of the armor your hero is wearing appears, what happened
-	was that an escape sequence was sent to NetHack, its ESC aborted
-	any pending key operation, its '[' was then treated as a command
-	to show worn armor, and the "other stuff" probably got silently
-	discarded as invalid choices while you dismissed the menu.)
+	ESC本身是^[的同义词, 也是导致异常的另一个原因. 各种功能键(包括光标
+	方向键)可能会发送由ESC+[+其他内容组成的"转义序列", 这会让NetHack无
+	法判断用户本意要执行哪个命令--因为ESC会被处理, 随后跟在后面的内容在
+	NetHack看来--并且会被当作--用户输入的内容. (如果你按下某个功能键, 
+	并弹出了英雄当前所穿盔甲的菜单, 发生的情况是: 一个转义序列被发送给
+	了NetHack, 其中的ESC终止了了任何待处理的键操作, 其"["随后被视为显示
+	已穿戴护甲的命令, 而"其他内容"很可能在你关闭菜单时被默默地作为无效
+	选项丢弃了. )
 
-	If you have NetHack's 'altmeta' option enabled, meaning that the
-	<alt> or <option> key, when used as shift while typing some other
-	character, transmits ESC and then the other character so NetHack
-	should treat that other character as a meta-character, then ESC
-	takes on added potential for confusion.  Implicit in the handling
-	of a two character sequence ESC + something is the fact that when
-	NetHack sees ESC, it needs to wait for another character before
-	it can decide what to do.  So if you type ESC manually, you'll
-	need to type it a second time or NetHack will sit there waiting.
-	(It will then be treated as if you typed ESC rather than M-ESC.)
+	如果你启用了NetHack的"altmeta"选项, 这意味着当<alt>或<option>键在输
+	入其他字符时作为Shift键使用字符时, 会先发送ESC再发送该字符, 因此
+	NetHack应将该字符视为meta字符, 那么ESC键就可能引发更多混淆. 在处理
+	ESC+某个字符的两个字符序列时, 隐含的一个事实是: 当NetHack检测到ESC
+	时, 它需要等待另一个字符出现, 才能决定如何处理. 因此, 如果你手动输
+	入ESC, 你将需要再输入一次, 否则NetHack会一直处于等待状态. (此时系统
+	会将其视为你输入了ESC, 而非M-ESC. )
 
-	On some systems, typing ^\ will send a QUIT signal to the current
-	process, probably killing it and possibly causing it to save a
-	core dump.  It is not used for any NetHack command, so don't type
-	that character.
+	在某些系统上, 输入^\会向当前进程发送一个QUIT信号, 这可能会终止该进
+	程, 并可能导致其保存一个核心转储文件. 该字符未用于任何NetHack命令, 
+	因此请勿输入该字符. 
 
-	One last note:  characters shown as ^x mean that you should hold
-	down the <control> or <ctrl> key as a shift and then type 'x'.
-	Control characters are all implicitly uppercase, but you don't
-	need to press the shift key while typing them.  The opposite is
-	true for meta-characters:  they can be either case, so you need
-	to use shift as well as <meta> or <alt> to generate an uppercase
-	letter meta-character.
+	最后需要注意的是: 显示为^x的字符表示你应像按住Shift一样按住<control>
+	或<ctrl>键, 然后输入'x'. 控制字符默认均为大写, 但输入时无需按住Shift
+	键. 而meta字符则相反: 它们可以是任意大小写, 因此你需要同时按住Shift键
+	以及<meta>或<alt>键来生成大写字母的meta字符. 

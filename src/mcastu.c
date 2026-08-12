@@ -198,8 +198,8 @@ castmu(
     if (!foundyou && thinks_it_foundyou
         && !is_undirected_spell(spellnum)) {
         pline_mon(mtmp, "%s对%s施法!",
-                 canseemon(mtmp) ? Monnam(mtmp) : "什么东西",
-                 is_waterwall(mtmp->mux, mtmp->muy) ? "空水"
+                 canseemon(mtmp) ? Monnam(mtmp) : "有东西在",
+                 is_waterwall(mtmp->mux, mtmp->muy) ? "水"
                                                     : "空气");
         return M_ATTK_MISS;
     }
@@ -373,7 +373,7 @@ death_inflicted_by(
            can't cast spells */
         if (!type_is_pname(champtr) && !the_unique_pm(mptr))
             realnm = an(realnm);
-        Sprintf(eos(outbuf), "%s", ",由"); /*修改语序:Sprintf(eos(outbuf), ",由%s%s导致",*/
+        Sprintf(eos(outbuf), "%s", ", 由"); /*修改语序:Sprintf(eos(outbuf), ", 由%s%s导致",*/
         if (champtr != mptr){ /*修改语序:the_unique_pm(mptr) ? "" : "", realnm);*/
             Sprintf(eos(outbuf), "模仿成%s的", an(fakenm));}/*修改语序:if (champtr != mptr)*/
         Sprintf(eos(outbuf), "%s%s导致", the_unique_pm(mptr) ? "" : "", realnm); /*修改语序:Sprintf(eos(outbuf), "(模仿成%s)", an(fakenm));*/ Sprintf(eos(outbuf), "%s", deathreason); /*危险:原来没有*/
@@ -706,7 +706,7 @@ mcast_insects(struct monst *mtmp)
            words, no need to fuss with visibility or singularization;
            player is told what's happening even if hero is unconscious) */
     } else if (!success) {
-        fmt = "%s朝一堆树枝施法,但什么也有没发生.%s";
+        fmt = "%s朝一堆树枝施法, 但什么也有没发生.%s";
         what = "";
     } else if (let == S_SNAKE) {
         fmt = "%s把一堆树枝变成了%s!";

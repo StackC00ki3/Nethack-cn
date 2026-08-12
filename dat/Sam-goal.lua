@@ -56,7 +56,7 @@ des.terrain(place[placeidx], ".")
 -- Non diggable walls
 des.non_diggable(selection.area(00,00,44,19))
 -- Objects
-des.object({ id = "tsurugi", x=22, y=10, buc="blessed", spe=0, name="The Tsurugi of Muramasa" })
+des.object({ id = "tsurugi", x=22, y=10, buc="blessed", spe=0, name="村正" })
 des.object()
 des.object()
 des.object()

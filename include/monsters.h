@@ -1,4 +1,4 @@
-﻿/* NetHack 5.0	monsters.h	$NHDT-Date: 1723945838 2024/08/18 01:50:38 $  $NHDT-Branch: NetHack-3.7 $:$NHDT-Revision: 1.124 $ */
+﻿/* NetHack 5.0  monsters.h  $NHDT-Date: 1723945838 2024/08/18 01:50:38 $  $NHDT-Branch: NetHack-3.7 $:$NHDT-Revision: 1.124 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
 /*-Copyright (c) Michael Allison, 2006. */
 /* NetHack may be freely redistributed.  See license for details. */
@@ -528,7 +528,7 @@
         M2_HOSTILE | M2_NASTY | M2_GREEDY | M2_JEWELS | M2_COLLECT,
         M3_INFRAVISIBLE | M3_INFRAVISION,
         13, CLR_BRIGHT_MAGENTA, MIND_FLAYER),
-    MON(NAM("master mind flayer"), NAM("夺心魔大师"), S_HUMANOID,
+    MON(NAM("master mind flayer"), NAM("高阶夺心魔"), S_HUMANOID,
         LVL(13, 12, 0, 90, -8), (G_GENO | 1),
         A(ATTK(AT_WEAP, AD_PHYS, 1, 8), ATTK(AT_TENT, AD_DRIN, 2, 1),
           ATTK(AT_TENT, AD_DRIN, 2, 1), ATTK(AT_TENT, AD_DRIN, 2, 1),
@@ -1059,7 +1059,7 @@
             | M1_MINDLESS | M1_AMORPHOUS | M1_UNSOLID,
         M2_HOSTILE | M2_NEUTER, 0,
         4, CLR_GRAY, FOG_CLOUD),
-    MON(NAM("dust vortex"), NAM("尘埃旋涡"), S_VORTEX,
+    MON(NAM("dust vortex"), NAM("尘埃漩涡"), S_VORTEX,
         LVL(4, 20, 2, 30, 0), (G_GENO | G_NOCORPSE | 2),
         A(ATTK(AT_ENGL, AD_BLND, 2, 8),
           NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK),
@@ -1068,7 +1068,7 @@
             | M1_MINDLESS,
         M2_HOSTILE | M2_NEUTER, 0,
         6, CLR_BROWN, DUST_VORTEX),
-    MON(NAM("ice vortex"), NAM("冰旋涡"), S_VORTEX,
+    MON(NAM("ice vortex"), NAM("冰漩涡"), S_VORTEX,
         LVL(5, 20, 2, 30, 0), (G_NOHELL | G_GENO | G_NOCORPSE | 1),
         A(ATTK(AT_ENGL, AD_COLD, 1, 6),
           NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK),
@@ -1078,7 +1078,7 @@
             | M1_MINDLESS,
         M2_HOSTILE | M2_NEUTER, M3_INFRAVISIBLE,
         7, CLR_CYAN, ICE_VORTEX),
-    MON(NAM("energy vortex"), NAM("能量旋涡"), S_VORTEX,
+    MON(NAM("energy vortex"), NAM("能量漩涡"), S_VORTEX,
         LVL(6, 20, 2, 30, 0), (G_GENO | G_NOCORPSE | 1),
         A(ATTK(AT_ENGL, AD_ELEC, 1, 6), ATTK(AT_ENGL, AD_DREN, 2, 6),
           ATTK(AT_NONE, AD_ELEC, 0, 4), NO_ATTK, NO_ATTK, NO_ATTK),
@@ -1088,7 +1088,7 @@
             | M1_MINDLESS | M1_UNSOLID,
         M2_HOSTILE | M2_NEUTER, 0,
         9, HI_ZAP, ENERGY_VORTEX),
-    MON(NAM("steam vortex"), NAM("蒸汽旋涡"), S_VORTEX,
+    MON(NAM("steam vortex"), NAM("蒸汽漩涡"), S_VORTEX,
         LVL(7, 22, 2, 30, 0), (G_HELL | G_GENO | G_NOCORPSE | 2),
         A(ATTK(AT_ENGL, AD_FIRE, 1, 8),
           NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK),
@@ -1098,7 +1098,7 @@
             | M1_MINDLESS | M1_UNSOLID,
         M2_HOSTILE | M2_NEUTER, M3_INFRAVISIBLE,
         9, CLR_BLUE, STEAM_VORTEX),
-    MON(NAM("fire vortex"), NAM("火旋涡"), S_VORTEX,
+    MON(NAM("fire vortex"), NAM("火漩涡"), S_VORTEX,
         LVL(8, 22, 2, 30, 0), (G_HELL | G_GENO | G_NOCORPSE | 1),
         A(ATTK(AT_ENGL, AD_FIRE, 1, 10), ATTK(AT_NONE, AD_FIRE, 0, 4),
           NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK),
@@ -1774,7 +1774,7 @@
                                         | M2_NASTY | M2_COLLECT | M2_JEWELS,
         M3_INFRAVISIBLE | M3_INFRAVISION,
         19, CLR_BLUE, STORM_GIANT),
-    MON(NAM("titan"), NAM("提坦"), S_GIANT,
+    MON(NAM("titan"), NAM("泰坦"), S_GIANT,
         LVL(16, 18, -3, 70, 9), (1),
         A(ATTK(AT_WEAP, AD_PHYS, 2, 8), ATTK(AT_MAGC, AD_SPEL, 0, 0),
           NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK),
@@ -1783,7 +1783,7 @@
         M2_STRONG | M2_ROCKTHROW | M2_NASTY | M2_COLLECT | M2_MAGIC,
         M3_INFRAVISIBLE | M3_INFRAVISION,
         20, CLR_MAGENTA, TITAN),
-    MON(NAM("minotaur"), NAM("弥诺陶洛斯"), S_GIANT,
+    MON(NAM("minotaur"), NAM("牛头人"), S_GIANT,
         LVL(15, 15, 6, 0, 0), (G_GENO | G_NOGEN),
         A(ATTK(AT_CLAW, AD_PHYS, 3, 10), ATTK(AT_CLAW, AD_PHYS, 3, 10),
           ATTK(AT_BUTT, AD_PHYS, 2, 8), NO_ATTK, NO_ATTK, NO_ATTK),
@@ -1969,7 +1969,7 @@
     /*
      * Nagas
      */
-    MON(NAM("red naga hatchling"), NAM("红幼纳迦"), S_NAGA,
+    MON(NAM("red naga hatchling"), NAM("幼红纳迦"), S_NAGA,
         LVL(3, 10, 6, 0, 0), G_GENO,
         A(ATTK(AT_BITE, AD_PHYS, 1, 4),
           NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK),
@@ -1977,7 +1977,7 @@
         M1_NOLIMBS | M1_SLITHY | M1_THICK_HIDE | M1_NOTAKE | M1_OMNIVORE,
         M2_STRONG, M3_INFRAVISIBLE,
         4, CLR_RED, RED_NAGA_HATCHLING),
-    MON(NAM("black naga hatchling"), NAM("黑幼纳迦"), S_NAGA,
+    MON(NAM("black naga hatchling"), NAM("幼黑纳迦"), S_NAGA,
         LVL(3, 10, 6, 0, 0), G_GENO,
         A(ATTK(AT_BITE, AD_PHYS, 1, 4),
           NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK),
@@ -1987,7 +1987,7 @@
             | M1_CARNIVORE,
         M2_STRONG, 0,
         4, CLR_BLACK, BLACK_NAGA_HATCHLING),
-    MON(NAM("golden naga hatchling"), NAM("金幼纳迦"), S_NAGA,
+    MON(NAM("golden naga hatchling"), NAM("幼金纳迦"), S_NAGA,
         LVL(3, 10, 6, 0, 0), G_GENO,
         A(ATTK(AT_BITE, AD_PHYS, 1, 4),
           NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK),
@@ -2597,7 +2597,7 @@
      *  the '@' class does not obey rule #2.
      *  Plain "human" is a placeholder, not a normal monster.
      */
-    MON(NAM("human"), NAM("人"), S_HUMAN, /* for corpses */
+    MON(NAM("human"), NAM("人类"), S_HUMAN, /* for corpses */
         LVL(0, 12, 10, 0, 0), G_NOGEN,
         A(ATTK(AT_WEAP, AD_PHYS, 1, 6),
           NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK),
@@ -2746,7 +2746,7 @@
     /* aligned priests always have the epri extension attached;
        individual instantiations should always have either ispriest
        or isminion set; role monster priests are separate (below) */
-    MON(NAMS("priest", "priestess", "aligned cleric"), NAMS("男牧师", "女牧师", "阵营牧师"), S_HUMAN,
+    MON(NAMS("priest", "priestess", "aligned cleric"), NAM("祭司"), S_HUMAN,
         LVL(12, 12, 10, 50, 0), G_NOGEN,
         A(ATTK(AT_WEAP, AD_PHYS, 4, 10), ATTK(AT_KICK, AD_PHYS, 1, 4),
           ATTK(AT_MAGC, AD_CLRC, 0, 0), NO_ATTK, NO_ATTK, NO_ATTK),
@@ -2757,7 +2757,7 @@
         15, CLR_WHITE, ALIGNED_CLERIC),
     /* high priests always have epri and always have ispriest set;
        they are flagged as unique even through they aren't */
-    MON(NAMS("high priest", "high priestess", "high cleric"), NAMS("高级男祭司", "高级女祭司", "高级祭司"), S_HUMAN,
+    MON(NAMS("high priest", "high priestess", "high cleric"), NAM("高阶祭司"), S_HUMAN,
         LVL(25, 15, 7, 70, 0), (G_NOGEN | G_UNIQ),
         A(ATTK(AT_WEAP, AD_PHYS, 4, 10), ATTK(AT_KICK, AD_PHYS, 2, 8),
           ATTK(AT_MAGC, AD_CLRC, 2, 8), ATTK(AT_MAGC, AD_CLRC, 2, 8),
@@ -3358,7 +3358,7 @@
         M1_HUMANOID | M1_OMNIVORE,
         M2_NOPOLY | M2_HUMAN | M2_STRONG | M2_COLLECT, M3_INFRAVISIBLE,
         12, HI_DOMESTIC, BARBARIAN),
-    MON(NAMS("caveman", "cavewoman", "cave dweller"), NAMS("男穴居人", "女穴居人", "穴居人"), S_HUMAN,
+    MON(NAMS("caveman", "cavewoman", "cave dweller"), NAM("穴居人"), S_HUMAN,
         LVL(10, 12, 10, 0, 1), G_NOGEN,
         A(ATTK(AT_WEAP, AD_PHYS, 2, 4),
           NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK),
@@ -3383,7 +3383,7 @@
         M1_HUMANOID | M1_OMNIVORE,
         M2_NOPOLY | M2_HUMAN | M2_STRONG | M2_COLLECT, M3_INFRAVISIBLE,
         12, HI_DOMESTIC, KNIGHT),
-    MON(NAM("monk"), NAM("僧侣"), S_HUMAN,
+    MON(NAM("monk"), NAM("武僧"), S_HUMAN,
         LVL(10, 12, 10, 2, 0), G_NOGEN,
         A(ATTK(AT_CLAW, AD_PHYS, 1, 8), ATTK(AT_KICK, AD_PHYS, 1, 8),
           NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK),
@@ -3393,7 +3393,7 @@
         M3_INFRAVISIBLE,
         11, HI_DOMESTIC, MONK),
     /* monster priests are separate monsters (above; "aligned cleric") */
-    MON(NAMS("priest", "priestess", "cleric"), NAMS("男祭司", "女祭司", "祭司"), S_HUMAN,
+    MON(NAMS("priest", "priestess", "cleric"), NAM("牧师"), S_HUMAN,
         LVL(10, 12, 10, 2, 0), G_NOGEN,
         A(ATTK(AT_WEAP, AD_PHYS, 1, 6), ATTK(AT_MAGC, AD_CLRC, 0, 0),
           NO_ATTK, NO_ATTK, NO_ATTK, NO_ATTK),
@@ -3828,7 +3828,7 @@
         M2_NOPOLY | M2_HUMAN | M2_PEACEFUL | M2_STRONG | M2_COLLECT,
         M3_INFRAVISIBLE,
         7, HI_DOMESTIC, PAGE),
-    MON(NAM("abbot"), NAM("方丈"), S_HUMAN,
+    MON(NAM("abbot"), NAM("修道院院长"), S_HUMAN,
         LVL(5, 12, 10, 20, 0), G_NOGEN,
         A(ATTK(AT_CLAW, AD_PHYS, 8, 2), ATTK(AT_KICK, AD_STUN, 3, 2),
           ATTK(AT_MAGC, AD_CLRC, 0, 0), NO_ATTK, NO_ATTK, NO_ATTK),

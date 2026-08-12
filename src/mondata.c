@@ -1016,6 +1016,7 @@ name_to_monplus(
             { "djinn", PM_DJINNI, NEUTRAL },
             { "mumakil", PM_MUMAK, NEUTRAL },
             { "erinyes", PM_ERINYS, NEUTRAL },
+#include "mon_chinese.inc"
             /* end of list */
             { 0, NON_PM, NEUTRAL }
         };

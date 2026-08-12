@@ -118,7 +118,7 @@ self_lookat(char *outbuf)
             (Invis && (senseself() || !Blind)) ? "隐形的" : "", svp.plname, race, /*修改语序:(Invis && (senseself() || !Blind)) ? "隐形的" : "", race,*/
             pmname(&mons[u.umonnum], Ugender)); /*修改语序:pmname(&mons[u.umonnum], Ugender), svp.plname);*/
     if (u.usteed)
-        Sprintf(eos(outbuf), ",骑在%s上", y_monnam(u.usteed));
+        Sprintf(eos(outbuf), ", 骑在%s上", y_monnam(u.usteed));
     if (u.uundetected || (Upolyd && U_AP_TYPE)
         || visible_region_at(u.ux, u.uy))
         mhidden_description(&gy.youmonst,
@@ -893,6 +893,12 @@ checkfile(
         dbase_str += 5;
     else if (!strncmp(dbase_str, "那个", strlen("那个")))
         dbase_str += strlen("那个");
+    else if (!strncmp(dbase_str, "被称为", strlen("被称为")))
+        dbase_str += strlen("被称为");
+    else if (!strncmp(dbase_str, "名为", strlen("名为")))
+        dbase_str += strlen("被称为");
+    else if (!strncmp(dbase_str, "叫做", strlen("叫做")))
+        dbase_str += strlen("叫做");
     else if (digit(*dbase_str)) {
         /* remove count prefix ("2 ya") which can come from looking at map */
         while (digit(*dbase_str))
@@ -983,11 +989,19 @@ checkfile(
             alt = ep + 7;
             if ((ap = strstri(dbase_str, " called ")) != 0 && ap < ep)
                 ep = ap; /* "named" is alt but truncate at "called" */
-        } else if ((ep = strstri(dbase_str, ", 被称为")) != 0) { /*危险:我当时是怎么写的，，，*/
-            alt = ep + strlen(", 被称为");
-            if ((ap = strstri(dbase_str, ", 被称为")) != 0 && ap < ep)
+        } else if ((ep = strstri(dbase_str, " (被称为")) != 0) {
+            alt = ep + strlen(" (被称为");
+            if ((ap = strstri(dbase_str, " (被称为")) != 0 && ap < ep)
                 ep = ap; /* "named" is alt but truncate at "called" */
-        }else if ((ep = strstri(dbase_str, " called ")) != 0) {
+        } else if ((ep = strstri(dbase_str, "名为")) != 0) {
+            alt = ep + strlen("名为");
+            if ((ap = strstri(dbase_str, "叫做")) != 0 && ap < ep)
+                ep = ap; /* "named" is alt but truncate at "called" */
+        } else if ((ep = strstri(dbase_str, "的")) != 0) {
+            alt = ep + strlen("的");
+            if ((ap = strstri(dbase_str, "的")) != 0 && ap < ep)
+                ep = ap; /* "named" is alt but truncate at "called" */
+        } else if ((ep = strstri(dbase_str, " called ")) != 0) {
             copynchars(givenname, ep + 8, BUFSZ - 1);
             alt = givenname;
             if (supplemental_name && (sp = strstri(inp, " called ")) != 0)
@@ -1039,9 +1053,10 @@ checkfile(
                 impossible("can't read 'data' file");
                 goto checkfile_done;
             } else if (sscanf(buf, "%8lx\n", &txt_offset) < 1
-                       || txt_offset == 0L)
-                goto bad_data_file;
-
+                       || txt_offset == 0L){
+                panic("baddata1");goto bad_data_file;
+                
+            }
             /* look for the appropriate entry */
             while (dlb_fgets(buf, BUFSZ, fp)) {
                 if (*buf == '.')
@@ -1051,8 +1066,9 @@ checkfile(
                     /* a number indicates the end of current entry */
                     skipping_entry = FALSE;
                 } else if (!skipping_entry) {
-                    if (!(ep = strchr(buf, '\n')))
-                        goto bad_data_file;
+                    if (!(ep = strchr(buf, '\n'))){
+                        panic("baddata2");goto bad_data_file;
+                        }
                     (void) strip_newline((ep > buf) ? ep - 1 : ep);
                     /* if we match a key that begins with "~", skip
                        this entry */
@@ -1078,11 +1094,13 @@ checkfile(
 
                 /* skip over other possible matches for the info */
                 do {
-                    if (!dlb_fgets(buf, BUFSZ, fp))
-                        goto bad_data_file;
+                    if (!dlb_fgets(buf, BUFSZ, fp)){
+                        panic("baddata3");goto bad_data_file;
+                        }
                 } while (!digit(*buf));
-                if (sscanf(buf, "%ld,%d\n", &entry_offset, &entry_count) < 2)
-                    goto bad_data_file;
+                if (sscanf(buf, "%ld,%d\n", &entry_offset, &entry_count) < 2){
+                    panic("baddata4:%s", buf);goto bad_data_file;
+                    }
                 fseekoffset = (long) txt_offset + entry_offset;
                 if (pass == 1)
                     pass1offset = fseekoffset;
@@ -1118,11 +1136,13 @@ checkfile(
                         /* room for 1-tab or 8-space prefix + BUFSZ-1 + \0 */
                         char tabbuf[BUFSZ + 8], *tp;
 
-                        if (!dlb_fgets(tabbuf, BUFSZ, fp))
-                            goto bad_data_file;
+                        if (!dlb_fgets(tabbuf, BUFSZ, fp)){
+                            panic("baddata5");goto bad_data_file;
+                            }
                         tp = tabbuf;
-                        if (!strchr(tp, '\n'))
-                            goto bad_data_file;
+                        if (!strchr(tp, '\n')){
+                            panic("baddata6");goto bad_data_file;
+                            }
                         (void) strip_newline(tp);
                         /* text in this file is indented with one tab but
                            someone modifying it might use spaces instead */
@@ -1136,7 +1156,8 @@ checkfile(
                                 ++tp;
                             } while (tp < &tabbuf[8] && *tp == ' ');
                         } else if (*tp) { /* empty lines are ok */
-                            goto bad_data_file;
+                            panic("baddata7");goto bad_data_file;
+                            
                         }
                         /* if a tab after the leading one is found,
                            convert tabs into spaces; the attributions
@@ -1149,7 +1170,7 @@ checkfile(
                     destroy_nhwindow(datawin), datawin = WIN_ERR;
                 }
             } else if (user_typed_name && pass == 0 && !pass1found_in_file) {
-                pline("你对这些事情一无所知.");
+                pline("你对这些事物一无所知.");
             }
         }
     }
@@ -1877,7 +1898,7 @@ do_look(int mode, coord *click_cc)
           }
         case '?':
             from_screen = FALSE;
-            getlin("高亮什么? (输入单词)", out_str);
+            getlin("查找什么? (输入单词)", out_str);
             if (strcmp(out_str, " ")) /* keep single space as-is */
                 /* remove leading and trailing whitespace and
                    condense consecutive internal whitespace */
@@ -2699,9 +2720,9 @@ dowhatdoes(void)
     char q, *reslt;
 
     if (!once) {
-        pline("用'&'或者'?'来获取更多信息.%s",
+        pline("用'&'或者'?'来获取更多信息. %s",
 #ifdef ALTMETA
-              iflags.altmeta ? " (按下两次ESC以退出.)" :
+              iflags.altmeta ? "(按下两次ESC以退出. )" :
 #endif
               "");
         once = TRUE;
@@ -2709,7 +2730,7 @@ dowhatdoes(void)
 #if defined(UNIX) || defined(VMS)
     introff(); /* disables ^C but not ^\ */
 #endif
-    q = yn_function("什么指令?", (char *) 0, '\0', TRUE);
+    q = yn_function("什么命令?", (char *) 0, '\0', TRUE);
 #ifdef ALTMETA
     if (q == '\033' && iflags.altmeta) {
         /* in an ideal world, we would know whether another keystroke
@@ -2775,6 +2796,12 @@ docontact(void)
     putstr(cwin, 0, "");
     putstr(cwin, 0, "如需了解有关NetHack的更多信息, 或报告错误,");
     Sprintf(buf, "请访问我们的网站\"%s\".", DEVTEAM_URL);
+    putstr(cwin, 0, buf);
+    putstr(cwin, 0, "");
+    putstr(cwin, 0, "(译者注: 中文版请访问");
+    Sprintf(buf, "\"https://nethack-cn.github.io/\". )");
+    putstr(cwin, 0, buf);
+    Sprintf(buf, "\"仓库: https://github.com/StackC00ki3/Nethack-cn\". )");
     putstr(cwin, 0, buf);
     display_nhwindow(cwin, FALSE);
     destroy_nhwindow(cwin);
@@ -2868,24 +2895,24 @@ static const struct {
     const char *text;
 } help_menu_items[] = {
     { hmenu_doextversion, "关于NetHack(版本信息)." },
-    { dispfile_help, "游戏及指令的详细说明." },
-    { dispfile_shelp, "游戏指令列表." },
+    { dispfile_help, "游戏及命令的详细说明." },
+    { dispfile_shelp, "游戏命令列表." },
     { hmenu_dohistory, "NetHack的简要历史." },
     { hmenu_dowhatis, "游戏中现实的某个特定符号的信息." },
     { hmenu_dowhatdoes, "某个特定按键的功能说明." },
     { option_help, "游戏选项列表." },
-    { dispfile_optionfile, "L游戏选项的详细说明." },
+    { dispfile_optionfile, "游戏选项的详细说明." },
     { dispfile_optmenu, "使用%s命令设置选项." },
-    { dokeylist, "键盘指令完整列表." },
-    { hmenu_doextlist, "扩展指令列表." },
+    { dokeylist, "键盘命令完整列表." },
+    { hmenu_doextlist, "扩展命令列表." },
     { domenucontrols, "菜单控制键列表." },
     { dispfile_usagehelp, "NetHack命令行介绍." },
     { dispfile_license, "NetHack许可协议." },
     { docontact, "支持信息." },
 #ifdef PORT_HELP
-    { port_help, "和%s有关的帮助和指令." },
+    { port_help, "%s特定的的帮助和命令." },
 #endif
-    { dispfile_debughelp, "巫师模式指令列表." },
+    { dispfile_debughelp, "巫师模式命令列表." },
     { (void (*)(void)) 0, (char *) 0 }
 };
 

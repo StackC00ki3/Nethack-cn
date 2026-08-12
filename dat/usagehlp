@@ -1,139 +1,120 @@
-This is a terse description of nethack's command line arguments.
-It is oriented toward UNIX (including descendants such as linux and macOS)
-and might not be accurate for other platforms.
+这是对nethack命令行参数的简要说明. 
+本文以UNIX系统(包括其衍生系统, 如Linux和macOS)为主要对象, 
+在其他平台上可能不完全准确. 
 
-When starting play, if there is a save file for the chosen character name
-then it will be restored, otherwise a new game using that name will begin.
+开始游戏时, 如果存在所选角色名的存档文件, 
+则会恢复该存档; 否则将以该名称开始新游戏. 
 
 nethack
-  with no arguments; uses character name from run-time configuration file's
-  OPTIONS=name:character-name entry, or player's username if none.
+  不带任何参数; 使用运行时配置文件中
+  OPTIONS=name:角色名条目中的角色名, 若无则使用玩家的用户名. 
 
-nethack -u character-name [-X or -D]
-  '-u character-name' specifies the name to use for this game's character;
-       -u must be lowercase; the space between it and character-name may
-       be omitted;
-  '-X' play in non-scoring explore mode also known as discovery mode;
-       -X must be uppercase; character starts with a wand of wishing and
-       player may opt to be life-saved and keep going if character dies;
-  '-D' run in debug mode also known as wizard mode; -D must be uppercase;
-       if player is not allowed then nethack will switch to -X; if player
-       is allowed, character name will be changed to "wizard".
+nethack -u 角色名 [-X或-D]
+  '-u 角色名'指定本局游戏中要使用的角色名; -u必须为小写; 其与角色名之间的
+       空格可省略; 
+  '-X' 以无计分探索模式(也称为发现模式)进行游戏; -X必须为大写; 角色初始持
+       有许愿魔杖, 且角色死亡时, 玩家可选择复活并继续游戏; 
+  '-D' 以调试模式运行, 也称为巫师模式; -D必须大写; 若玩家未获许可, NetHack
+       将切换至-X模式; 若玩家获准, 角色名称将更改为"wizard". 
 
-  A character name may have a suffix specifying any or all of role, race,
-  gender, and alignment such as -u Conan-Bar-Hum-Mal-Neu or -u Tim-Wiz.
-  The components present must be at least three letters long but can be
-  longer; their case doesn't matter.  See also -p and -r, next,
+  角色名可以带有后缀, 用于指定职业, 种族, 性别和阵营中的任意一项或全部, 例
+  如-u Conan-Bar-Hum-Mal-Neu或-u Tim-Wiz. 各组成部分长度必须至少为三个字母,
+  但可以更长; 其大小写不分. 另请参阅下文的-p和-r, 
 
 nethack -p Ppp -r Rrr [-@]
-  '-p Ppp' specify role; p for "profession" is used because -r is in use;
-       'Ppp' is three or more letters of the role name such as Val for
-       Valkyrie; unlike -p itself, upper/lower case of Ppp doesn't matter
-  '-r Rrr' specify race or species: Hum[an], Elf, Orc, Dwa[rf], Gno[me];
-  '-@' force non-interactive start; any of role, race, gender, and
-       alignment that is not specified on the command line or in the
-       run-time configuration file gets chosen randomly without prompting;
-       the at-sign might need to be quoted by preceding it with backslash.
+  '-p Ppp' 指定职业; 使用p代表"职业", 因为-r已被占用; 'Ppp'是角色名称中三个
+       或更多字母的缩写, 例如Val代表女武神; 与-p本身不同, Ppp的大小写不区分
+  '-r Rrr' 指定种族或物种: Hum[an], Elf, Orc, Dwa[rf], Gno[me]; 
+  '-@' 强制以非交互方式启动; 角色, 种族, 性别和阵营中, 凡是在命令行或运行时
+       配置文件中未指定的项, 将不经提示随机选择; 可能需要在"@"符号前加反斜
+       杠进行转义. 
 
-  The old form for role is also still accepted:  -A or -Arc[heologist],
-  -B or -Bar[barian], -C or -Cav[eman] or -Cavew[oman], -H or -Hea[ler],
-  -K or -Kni[ght], -M or -Mon[k], -P or -Pri[est] or -Prieste[ss],
-  -Ran[ger], -R or -Rog[ue], -S or -Sam[urai], -T or -Tou[rist],
-  -V or -Val[kyrie], -W or -Wiz[ard].  The single-letter form must be in
-  uppercase, the three or more letter form can be in any case.  There is
-  no single-letter option for the Ranger role.
+  角色旧格式仍被接受: -A或-Arc[heologist], -B或-Bar[barian], -C或-Cav[eman]
+  或-Cavew[oman], -H或-Hea[ler], -K或-Kni[ght], -M或-Mon[k], -P或-Pri[est]
+  或-Prieste[ss], -Ran[ger], -R或-Rog[ue], -S或-Sam[urai], -T或-Tou[rist], 
+  -V或-Val[kyrie], -W或-Wiz[ard]. 单字母形式必须为大写, 三字母及以上形式可
+  使用任意大小写. 游侠角色没有单字母选项. 
 
 nethack -DEC[graphics]
 nethack -IBM[graphics]
-  selects the DEC or IBM symbol set to use line-drawing characters on a
-  text map; might be ignored depending on interface, or ineffective or
-  even scrambled depending on display capability; -DECgraphics and
-  -IBMgraphics are mutually exclusive; they can be any case but must use
-  at least three letters.
+  选择要使用的DEC或IBM字符集, 以便在文本映射上使用绘线字符; 根据接口的不同,
+  该选项可能会被忽略; 根据显示能力的不同, 该选项也可能无效, 甚至导致字符乱
+  码;-DECgraphics和-IBMgraphics互斥; 选项名称可使用任意大小写, 但必须包含至
+  少三个字母. 
 
 nethack -wIii
 nethack --windowtype:Iii
-  where 'Iii' represents an interface designation:  tty, curses, X11, or
-  Qt; only useful if the program was built to support more than one
-  interface (the game's '#version' command will disclose that); overrides
-  OPTIONS=windowtype:Iii in run-time configuration file and build-time
-  default; '-w' or '--windowtype' must be lowercase, the interface
-  designation itself may be any case; variations '--windowtype Iii' and
-  '-w Iii' work too.
+  其中"Iii"代表接口标识: tty, curses, X11或Qt; 仅当程序在构建时支持多个接口
+  时才有效(可通过游戏的"#version"命令查看); 这将覆盖运行时配置文件中的
+  OPTIONS=windowtype:Iii以及编译时的默认值; '-w'或'--windowtype'必须为小写,
+  而接口标识本身可使用任意大小写; '--windowtype Iii'和'-w Iii'这种写法同样
+  有效. 
 
-  On Windows, nethack.exe supports tty or curses or both depending on
-  settings at the time the program is built from source; nethackW.exe
-  supports mswin (also referred to as Win GUI) and optionally curses.
-  For MS-DOS, the program supports tty or curses or both.
+  在Windows系统上, nethack.exe支持tty或curses, 或两者兼有, 具体取决于从源代
+  码编译程序时的设置; nethackW.exe支持mswin(也称为Win GUI), 并可选支持
+  curses. 对于MS-DOS, 该程序支持tty, curses或两者兼有. 
 
-nethack -n
-  don't show the 'news' file if one is present in nethack's directory.
+'nethack -n'
+  如果nethack目录中存在'news'文件, 则不显示该文件. 
 
 nethack --nethackrc:RC-file
-  use RC-file instead of the default run-time configuration file (which is
-  usually '~/.nethackrc'); the file name should include full path unless
-  located in nethack's directory;
+  使用RC文件代替默认的运行时配置文件(通常为'~/.nethackrc'); 除非文件位于
+  nethack目录中, 否则文件名应包含完整路径; 
 nethack --no-nethackrc
-  don't use any run-time configuration file; equivalent to
-  --nethackrc:/dev/null which behaves as if an empty file.
+  不使用任何运行时配置文件; 等同于--nethackrc:/dev/null, 其行为等同于指定一
+  个空文件. 
 
 nethack -dDir
 nethack --directory:Dir
-  could be used to override the build-time value of NETHACKDIR with
-  location Dir; if used, it should precede other command line arguments.
+  可用于将NETHACKDIR的编译时值覆盖为位置Dir; 若使用此选项, 应将其置于其他命
+  令行参数之前. 
 
-The assorted options above can be combined on a single command line;
-they're listed separately for readability.
+上述各种选项可以在同一条命令行中组合使用; 
+为便于阅读, 此处将其分别列出. 
 
 *******
+  show scores for specific roles or races; multiple instances can be used;
 
-Other options which perform some action and then exit rather than play
-the game:
+其他选项: 执行某些操作后退出, 而非运行游戏: 
 
 nethack -s
 nethack --scores
-  show scores for the default character; optional additional arguments:
+  显示默认角色的得分; 可选附加参数: 
 nethack -s -v
-  show scores for all versions present in the high scores file (record)
-  if it contains scores for any older versions; by default, only scores
-  for current version of nethack are shown; when '-v' is used, it should
-  immediately follow -s or --scores, preceding any name(s) or -p or -r;
-nethack -s character-name [character-name2 [character-name3 [...]]]
-  show scores for one or more specific character names (might not be
-  effective if PERS_IS_UID=1 is specified in nethack's sysconf file);
-  character names may be preceded by '-u' but that isn't required;
-  special character-name "all" is used to display all scores that pass
-  other criteria;
+  显示高分文件(记录)中所有版本的得分(如果其中包含任何旧版本的分数); 默认情
+  况下, 仅显示当前版本nethack的分数; 使用'-v'时, 该参数应紧跟在-s或--scores
+  之后, 位于任何角色名, -p或-r之前; 
+nethack -s 角色名 [角色名2 [角色名3 [...]]]
+  显示一个或多个特定角色名称的分数(如果在nethack的sysconf文件中指定了
+  PERS_IS_UID=1, 则可能无效); 
+  角色名称前可加'-u', 但并非必需; 特殊角色名称"all"用于显示满足其他条件
+  的所有分数; 
 nethack -s -p Ppp -r Rrr
-  show scores for specific roles or races; multiple instances can be used;
-  if both '-p' and '-r' are used, scores that match either will be shown
-  rather than scores that match both;
+  显示特定职业或种族的得分; 可多次使用; 若同时使用'-p'和'-r', 将显示符合其
+  中任一条件的得分, 而非同时符合两者的得分; 
 nethack -dDir -s
 nethack --directory:Dir -s
-  as above; alternate directory, if specified, should come first.
+  如上所述; 若指定了备用目录, 应将其置于首位. 
 
-nethack --version or --version:copy or --version:dump or --version:show
-  '--version' display the program's version number plus the date and
-  time it was built from source code, then exit;
-  '--version:copy' display version number and also copy it into system
-  pasteboard (should work on macOS and Windows; might not work on other
-  systems) so that it could be pasted from there into a subsequent email
-  or web contact form, then exit;
-  '--version:dump' display several internal values, then exit;
-  '--version:show' same as '--version'.
+nethack --version或--version:copy或--version:dump或--version:show
+  '--version'显示程序的版本号以及从源代码编译的日期和时间, 然后退出; 
+  '--version:copy'显示版本号, 并将其复制到系统剪贴板(应可在macOS和Windows
+  上使用; 在其他系统上可能无法使用), 以便随后可将其粘贴到电子邮件或web联系
+  表单中, 然后退出; 
+  '--version:dump'显示若干内部值, 然后退出; 
+  '--version:show'与'--version'相同. 
 
 nethack --showpaths
-  list expected locations for various files and directories, then exit;
-  includes the name and location for the run-time configuration file which
-  can vary from platform to platform.
+  列出各种文件和目录的预期位置, 然后退出; 
+  其中包括运行时配置文件的名称和位置, 该文件在不同平台上的位置可能有所不同. 
 
 nethack --usage
 nethack --help
-  show this text; 'nethack -?' and 'nethack ?' also work but the question
-  mark may need to be quoted to prevent the shell from intercepting it.
+  显示此文本; 'nethack-?'和'nethack ?'同样有效, 但问号可能需要加引号, 以防
+  止终端将其拦截. 
 
 *******
 
-This text is available during play in the menu for the game's '?' command
-or can be viewed via 'nethack --usage | more' at the shell prompt.
+在游戏过程中, 可通过游戏菜单中的'?'命令查看此文本, 
+或通过终端提示符下输入'nethack --usage | more'进行查看. 
 

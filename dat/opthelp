@@ -1,393 +1,358 @@
-Boolean options not under specific compile flags (with default values in []):
-(You can learn which options exist in your version by checking your current
-option setting, which is reached via the 'O' command.)
+不属于特定编译标志的布尔选项(默认值用[]括起): 
+(你可以通过查看当前选项设置来了解你所用版本中有哪些选项, 通过"O"命令. )
 
-acoustics      can your character hear anything                    [True]
-armorstatus    show extra status field summarizing worn armor     [False]
-autodescribe   describe the terrain under cursor                  [False]
-autodig        dig if moving and wielding digging tool            [False]
-autoopen       walking into a door attempts to open it             [True]
-autopickup     automatically pick up objects you move over         [True]
-autoquiver     when firing with an empty quiver, select some      [False]
-               suitable inventory weapon to fill the quiver
-BIOS           allow the use of IBM ROM BIOS calls                [False]
-blind          your character is permanently blind                [False]
-bones          allow loading bones files                           [True]
-clicklook      look at map by clicking right mouse button         [False]
-cmdassist      give help for errors on direction & other commands  [True]
-color          use different colors for objects on screen  [True for micros]
-confirm        ask before hitting tame or peaceful monsters        [True]
-dark_room      show floor not in sight in different color          [True]
-dropped_nopick exclude dropped objects from autopickup             [True]
-eight_bit_tty  send 8-bit characters straight to terminal         [False]
-extmenu        tty, curses: use menu for # (extended commands)    [False]
-               X11: menu has all commands (T) or traditional subset (F)
-female         deprecated; use compound option gender:female      [False]
-fixinv         try to retain the same letter for the same object   [True]
-force_invmenu  commands asking for inventory item show a menu     [False]
-goldX          when filtering objects by bless/curse state,       [False]
-               whether to classify gold as X (unknown) or U (uncursed)
-help           print all available info when using the / command   [True]
-herecmd_menu   show menu of some possible commands when clicking
-               on yourself or next to you with mouse              [False]
-hilite_pet     display pets in a highlighted manner               [False]
-hilite_pile    display item piles in a highlighted manner         [False]
-ignintr        ignore interrupt signal, including breaks          [False]
-implicit_uncursed  omit "uncursed" from inventory, if possible     [True]
-legacy         print introductory message                          [True]
-lit_corridor   show a dark corridor as lit if in sight            [False]
-lootabc        use a/b/c rather than o/i/b when looting           [False]
-mail           enable the mail daemon                              [True]
-mention_decor  give feedback when walking across stairs, altars,  [False]
-               fountains, and such even when not obscured by objects
-mention_walls  give feedback when walking against a wall          [False]
-menu_overlay   overlay menus on the screen and align to right      [True]
-menucolors     enable MENUCOLOR pattern matching to highlight     [False]
-               lines in object menus like inventory; might highlight with
-               bold, inverse, &c even when color is unavailable or toggled off
-nudist         start your character without armor                 [False]
-null           allow nulls to be sent to your terminal             [True]
-               try turning this option off (forcing NetHack to use its own
-               delay code) if moving objects seem to teleport across rooms
-pauper         start your character with no possessions           [False]
-perm_invent    keep inventory in a permanent window               [False]
-pickup_stolen  override pickup_types for stolen objects            [True]
-pickup_thrown  override pickup_types for thrown objects            [True]
-price_quotes   show remembered price quotes for unIDed items      [False]
-pushweapon     when wielding a new weapon, put your previously    [False]
-               wielded weapon into the secondary weapon slot
-quick_farsight usually skip the chance to browse the map when     [False]
-               randomly triggered clairvoyance takes place
-rawio          allow the use of raw I/O                           [False]
-reroll         allow rerolling of starting inventory              [False]
-rest_on_space  count the space bar as a rest character            [False]
-safe_pet       prevent you from (knowingly) attacking your pet(s)  [True]
-safe_wait      require use of 'm' prefix before '.' or 's' to      [True]
-               wait or search when adjacent to a hostile monster
-sanity_check   perform data sanity checks                         [False]
-showexp        display your accumulated experience points         [False]
-showrace       show yourself by your race rather than by role     [False]
-showvers       show version number on status lines                [False]
-silent         don't use your terminal's bell sound                [True]
-sortpack       group similar kinds of objects in inventory         [True]
-sparkle        display sparkly effect for resisted magical         [True]
-               attacks (e.g. fire attack on fire-resistant monster)
-standout       use standout mode for --More-- on messages         [False]
-status_updates update the status lines                             [True]
-terrainstatus  show extra status field describing current location  [False]
-time           display elapsed game time, in moves                [False]
-tips           show some helpful tips during gameplay              [True]
-tombstone      print tombstone when you die                        [True]
-toptenwin      print topten in a window rather than stdout        [False]
-travel         enables travelling via mouse click if supported;    [True]
-               can be toggled off to prevent mouse clicks on the map from
-               attempting to move the hero; does not affect travel via '_'
-use_darkgray   use bold black instead of blue for black glyphs.    [True]
-use_inverse    display detected monsters in highlighted manner    [False]
-verbose        print more commentary during the game               [True]
-weaponstatus   show extra status field listing wielded weapon(s)  [False]
-whatis_menu    show menu when getting a map location              [False]
-whatis_moveskip skip same glyphs when getting a map location      [False]
+acoustics      你的角色的听觉                                      [True]
+armorstatus    显示额外状态栏, 汇总所穿护甲信息                   [False]
+autodescribe   描述光标下的地形                                   [False]
+autodig        若正在移动且手持挖掘工具, 则进行挖掘               [False]
+autoopen       走到门前时会尝试打开它                              [True]
+autopickup     自动拾取角色经过的物品                              [True]
+autoquiver     当箭袋空了仍要射箭时, 选择一件                     [False]
+               适合的背包中的武器来填满箭袋   
+BIOS           允许使用IBM ROM BIOS调用                           [False]
+blind          你的角色永久失明                                   [False]
+bones          允许加载遗骨文件                                    [True]
+clicklook      通过点击鼠标右键查看地图                           [False]
+cmdassist      针对方向及其他命令的错误提供帮助                    [True]
+color          为屏幕上的物体使用不同颜色               [True for micros]
+confirm        驯服或将怪物设为和平模式前进行确认                  [True]
+dark_room      以不同颜色显示视野外的地面                          [True]
+dropped_nopick 将掉落的物品排除在自动拾取之外                      [True]
+eight_bit_tty  将8位字符直接发送至终端                            [False]
+extmenu        tty, curses: 使用菜单访问#(扩展命令)               [False]
+               X11: 菜单包含所有命令(T)或传统子集(F)
+female         已弃用; 请使用复合选项gender:female                [False]
+fixinv         尝试为同一对象保留相同的字母                        [True]
+force_invmenu  查询背包物品的命令显示菜单                         [False]
+goldX          按祝福/诅咒状态筛选对象时,                         [False]
+               是否将金币归类为X(未知)或U(无诅咒)
+help           使用/命令时打印所有可用信息                         [True]
+herecmd_menu   使用鼠标点击自己或身边位置时显示部分可用命令菜单   [False]
+hilite_pet     以突出显示的方式显示宠物                           [False]
+hilite_pile    以突出显示的方式显示物品堆                         [False]
+ignintr        忽略中断信号, 包括按Break键                        [False]
+implicit_uncursed  如果可能, 从物品栏中省略"无诅咒"的标记          [True]
+legacy         显示欢迎信息                                        [True]
+lit_corridor   如果视野内有黑暗的走廊, 将其显示为有光             [False]
+lootabc        拾取战利品时使用a/b/c代替o/i/b                     [False]
+mail           启用邮件守护进程                                    [True]
+mention_decor  在穿越楼梯, 祭坛, 喷泉等区域时提供反馈,            [False]
+               即使未被物品遮挡
+mention_walls  沿墙行走时提供反馈                                 [False]
+menu_overlay   在屏幕上叠加菜单并右对齐                            [True]
+menucolors     启用MENUCOLOR模式匹配以突出显示                    [False]
+               物品菜单(如"库存")中的行; 即使无法使用颜色或已关
+               闭颜色显示, 也可能使用加粗, 反白等方式进行突出显示
+nudist         角色开始时不穿戴防具                               [False]
+null           允许将空值发送到终端                                [True]
+               如果移动中的物品似乎会瞬间传送到其他房间, 
+               请尝试关闭此选项(强制NetHack使用其自身的延迟代码)
+pauper         角色初始时不携带任何物品                           [False]
+perm_invent    在固定窗口中显示背包                               [False]
+pickup_stolen  为被盗物品覆盖pickup_types                         [True]
+pickup_thrown  为被投掷的物品覆盖pickup_types                     [True]
+price_quotes   显示未识别物品的已保存价格报价                     [False]
+pushweapon     装备新武器时, 将之前装备的武器放入副武器槽中       [False]
+quick_farsight 当随机触发的千里眼发生时, 总是跳过浏览地图的机会   [False]
+rawio          允许使用原始I/O                                   [False]
+reroll         允许重掷初始装备                                   [False]
+rest_on_space  将空格键视为休息字符                               [False]
+safe_pet       防止你故意攻击自己的宠物                            [True]
+safe_wait      当与敌对怪物相邻时,                                 [True]
+               必须输入'm'前缀再输入'.'或's'才能等待或搜索
+sanity_check   执行数据有效性检查                                 [False]
+showexp        显示累计经验值                                     [False]
+showrace       按种族而非角色显示自身形象                         [False]
+showvers       在状态行上显示版本号                               [False]
+silent         不使用终端的蜂鸣声                                  [True]
+sortpack       将背包中同类物品分组                                [True]
+sparkle        对被抵抗的魔法攻击显示闪烁效果                      [True]
+               (例如对防火怪物发动的火焰攻击)
+standout       在消息中对--More--使用突出显示模式                 [False]
+status_updates 更新状态行                                          [True]
+terrainstatus  显示描述当前位置的额外状态字段                     [False]
+time           显示已过去的游戏时间(以步数计)                     [False]
+tips           在游戏过程中显示一些有用的提示                      [True]
+tombstone      死亡时显示墓志铭                                    [True]
+toptenwin      在前十名列表中使用窗口显示而非标准输出             [False]
+travel         若系统支持, 启用通过鼠标点击移动的功能;             [True]
+               可关闭此选项以防止在地图上点击鼠标时尝试移动英雄; 
+               不影响通过'_'移动
+use_darkgray   对黑色符文使用加粗黑色字体代替蓝色.                 [True]
+use_inverse    以高亮方式显示已探测到的怪物                       [False]
+verbose        在游戏过程中打印更多评论                            [True]
+weaponstatus   显示额外状态栏, 列出装备的武器                     [False]
+whatis_menu    获取地图位置时显示菜单                             [False]
+whatis_moveskip 获取地图位置时跳过相同的图标                      [False]
 
 
-There are further boolean options controlled by compilation flags.
+还有一些由编译标志控制的布尔选项. 
 
-Boolean option if INSURANCE was set at compile time:
-checkpoint     save game state after each level change, for        [True]
-               possible recovery after program crash
+若编译时设置了INSURANCE, 则可用的布尔选项:
+checkpoint     每次关卡切换后保存游戏状态, 以便                    [True]
+               在程序崩溃后可能恢复游戏状态
 
-Boolean option if NEWS was set at compile time:
-news           print any news from game administrator on startup   [True]
+若编译时设置了NEWS, 则可用的布尔选项:
+news           启动时打印游戏管理员发布的任何公告                  [True]
 
-Boolean option if SCORE_ON_BOTL was set at compile time:
-showscore      display your approximate accumulated score         [False]
+若编译时设置了SCORE_ON_BOTL, 则可用的布尔选项:
+showscore      显示近似累计得分                                   [False]
 
-Boolean option if TIMED_DELAY was set at compile time (tty or curses only):
-timed_delay    on unix and VMS, use a timer instead of sending     [True]
-               extra screen output when attempting to pause for
-               display effect.  on MSDOS without the termcap
-               lib, whether or not to pause for visual effect.
+若在编译时设置了TIMED_DELAY, 则可用的布尔选项(仅限tty或curses): 
+timed_delay    在Unix和VMS系统上, 使用定时器代替在尝试暂停以显示视 [True]
+               觉效果时发送额外的屏幕输出. 在未安装termcap库的MSDOS
+               系统上, 是否为视觉效果而暂停. 
 
-Boolean option if ALTMETA was set at compile time:
-altmeta        For unix and VMS, treat two character sequence
-               "ESC c" as M-c (Meta+c, 8th bit set) when nethack  [False]
-               obtains a command from player's keyboard.
+若编译时设置了 ALTMETA, 则可用的布尔选项:
+altmeta        在Unix和VMS系统上, 当nethack从玩家键盘获取命令时, 
+               将两个字符序列"ESC c"视为M-c(Meta+c, 第8位设置).   [False]
 
-Boolean option if TILES_IN_GLYPHMAP set at compile time (MSDOS):
-preload_tiles  control whether tiles get pre-loaded into RAM at    [True]
-               the start of the game.  Doing so enhances performance
-               of the tile graphics, but uses more memory.
+若编译时设置了TILES_IN_GLYPHMAP(仅限MSDOS), 则可用的布尔选项: 
+preload_tiles  控制是否在游戏开始时将地块预加载到RAM中             [True]
+               这样做可提升地块图形的性能, 但会占用更多内存. 
 
-Boolean option if TTY_TILES_ESCCODES was set at compile time (tty only):
-vt_tiledata    insert extra data escape code markers into output  [False]
+若在编译时设置了TTY_TILES_ESCCODES则可用的布尔选项(仅限tty): 
+vt_tiledata    在输出中插入额外的数据转义码标记                   [False]
 
-Boolean option if TTY_SOUND_ESCCODES was set at compile time (tty only):
-vt_sounddata   insert sound data escape code markers into output  [False]
+若在编译时设置了TTY_SOUND_ESCCODES则可用的布尔选项(仅限tty): 
+vt_sounddata   在输出中插入声音数据转义码标记                     [False]
 
-Boolean options which may be available depending upon which interfaces
-the program has been built to support.  If it supports multiple such,
-some of these may show as available for setting but not do anything if
-you happen to be using a different interface than the one(s) they're for:
-ascii_map      show map as text, forces tiles_map Off; Qt, X11
+布尔选项, 其可用性取决于程序构建时所支持的接口. 若程序支持多种接口, 当你
+使用的接口与这些选项所针对的接口不一致时, 部分选项可能显示为可设置, 但实
+际不会产生任何效果: 
+ascii_map      以文本形式显示地图, 强制关闭tiles_map; Qt, X11
 guicolor       curses
-hitpointbar    curses, tty, Windows GUI if statushilites enabled;
-               Qt without statushilites; X11 if 'fancy_status' disabled
-               (via X application defaults) and statushilities enabled
-popup_dialog   curses, Qt, Windows GUI
-selectsaved    tty (Qt and Windows GUI do this unconditionally)
-splash_screen  curses, Qt, Windows GUI
-tiled_map      show map as tiles, forces ascii_map Off; Qt, X11
+hitpointbar    curses, tty, Windows GUI(若启用了statushilites); 
+               未启用statushilites的Qt; 若禁用'fancy_status'则为X11
+               (通过X应用程序默认设置)且已启用statushilites时; 
+popup_dialog   curses, Qt, Windows GUI; 
+selectsaved    tty(Qt和Windows GUI无条件执行此操作); 
+splash_screen  curses, Qt, Windows GUI; 
+tiled_map      以图块形式显示地图, 强制关闭ascii_map; Qt, X11
 
-Boolean options available when running in debug mode (aka wizard mode):
-menu_tab_sep   menu formatting--do not touch
-monpolycontrol have player choose shape-changing monsters' new shapes
-montelecontrol let player choose destination for teleported monsters
-travel_debug   show state of travel pathfinding algorithm on the map
-wizweight      include item weights in inventory display
+在调试模式(又称巫师模式)下可用的布尔选项: 
+menu_tab_sep   菜单格式--请勿修改
+monpolycontrol 允许玩家选择形状可变怪物的全新形态
+montelecontrol 允许玩家选择传送后怪物的目的地
+travel_debug   在地图上显示旅行路径规划算法的状态
+wizweight      在背包显示中包含物品重量
 
-Any Boolean option can be set to True by including it among options being
-set, or negated (set to False) by prefixing its name with a '!' or 'no'.
-Alternatively, the compound option syntax can be used: 'optname:true' and
-'optname:false'.
+任何布尔选项均可通过将其包含在要设置的选项中来设为True, 或通过在其名称前添加'!'或'no'来否定(设为False). 
+此外, 还可以使用复合选项语法: 'optname:true'和'optname:false'. 
 
  - - - - -
 
-Compound options are written as option_name:option_value.
+复杂选项的写法为option_name:option_value. 
 
-Compound options which can be set during the game are:
+游戏中可以设置的复杂选项包括: 
+autounlock    在尝试打开上锁的门或搜刮                          [Apply-Key]
+              上锁的容器时, 指定要执行的操作: 可以是"none", 或"Untrap"+
+              "Apply-Key"+"Kick"+"Force"中的一项或多项; 
+              如果包含"解除陷阱", 则会优先处理该操作; 当被问及"检查里面
+              有没有陷阱? "时回答"否", 则其他操作才会生效; 
+              若回答"yes", 即使恰好存在陷阱, 也未必会发现任何东西, 且无
+              论是否发现物品, 都会消耗当前行动的剩余时间; 
+              "踢"仅对门有效, "强行打开"仅对容器有效; 只有当"解除陷阱"
+              被省略或跳过, 且"Apply-Key"被省略, 或者你未携带解锁工具, 
+              或拒绝使用解锁工具时, 才会尝试使用; 
+boulder       覆盖默认的巨石符号                                        [`]
+crash_email   填写崩溃报告时使用的电子邮件地址                           []
+crash_name    填写崩溃报告时使用的名称                                   []
+crash_urlmax  为崩溃报告生成的最长URL长度                                []
+disclose      你希望在游戏结束时披露的信息类型          [ni na nv ng nc no]
+              (以空格分隔的双字符值列表; 
+              前缀:'+'始终披露, '-'绝不披露, 
+              'n'提示时默认"no", 'y'提示时默认"yes", 
+              'a'提示选择排序顺序(仅适用于后缀'v'); 
+              后缀: 'i'物品栏, 'a'属性, 'v'被击败的怪物, 
+              'g'被灭绝的怪物, 'c'行为和成就, 'o'地牢概览
+fruit         你喜欢吃的一种水果的名称                               [黏菌]
+              (基本上是NetHack偶尔会用到的一个奇思妙想). 
+hilite_status 指定用于突出显示状态字段的规则                             []
+              (允许多个实例)
+menustyle     用于选择多个对象的用户界面:                            [Full]
+              Traditional -- 先提示感兴趣的类别, 
+                             然后逐项提示这些类别中的项目; 
+              Combination -- 先提示感兴趣的类别, 
+                             然后使用菜单选择项目; 
+              Full        -- 先显示感兴趣类别的菜单, 然后显示项目菜单; 
+              Partial     -- 跳过类别筛选, 直接显示所有项目的菜单; 
+              仅首字母('T', 'C', 'F', 'P')有效
+              (在"传统"模式下, 许多操作允许使用伪类"m"来
+              请求显示用于选择项目的菜单: 即"组合"模式的单次操作. )
+menu_objsyms  是否在菜单中包含对象类符号:                               [4]
+              0 - 无       -- 不在菜单中添加对象符号; 
+              1 - 标题行   -- 在菜单标题行末尾附加对象类符号; 
+              2 - 条目行   -- 在每个菜单条目行上显示对象图标
+                              (对于ASCII界面, 即类符号); 
+              3 - 两者兼有 -- 同时启用1和2; 
+              4 - 条件     -- 与2相同, 但仅在没有标题行时生效; 
+              5 - 二选一   -- 1和4结合; 
+              选项0和1应适用于任何界面; 2至5选项由tty和curses支持; 
+msg_window    tty界面中^P消息回溯的行为:                                [s]
+              single      -- 每次显示一条消息
+              full        -- 显示包含所有已保存顶行消息的完整窗口
+              reverse     -- 显示完整窗口, 按最新消息在前排序
+              combination -- 连续的^P命令中前两个显示单条消息, 
+                             第三个显示完整集                            
+msg_window    curses界面中^P消息回溯的行为:                             [r]
+              reverse     -- 显示完整窗口, 最新消息优先显示; 
+              full        -- 显示完整窗口, 按从最旧到最新顺序排列消息, 
+                             初始位置设在最后一页, 以便从最新消息开始显示; 
+                             确保最新消息始终在视图中
+number_pad    字母与数字控制移动方式:                                   [0]
+               0 -- 传统的hjkl+yubn移动方式(默认); 
+               1 -- 数字控制移动, 适用于数字小键盘; 
+               2 -- 与1相同, 但"5"作为"g"的前缀而非"G"; 
+               3 -- 电话键盘数字布局(上方为1, 2, 3, 下方为7, 8, 9); 
+               4 -- 电话键盘(3)与"5"优先级(2)的组合; 
+              -1 -- "qwertz"; 字母移动模式, 但"z"与"y"位置互换. 
+              设置number_pad(设为正值)会影响所有
+              数字键的处理方式, 而不仅仅是数字小键盘上的按键. 
+packorder     一份针对各类物品的默认符号列表               [")[%?+!=/(*`0_]
+              该列表指定了当'sortpack'选项开启时, 你的背包
+              (以及其他某些内容)的显示顺序(若仅指定部分物品类型, 
+              其余类型将按默认顺序附加在末尾. )
+paranoid_confirmation  以空格分隔的列表     [paranoid_confirm:pray swim]
+              用于需要替代提示的情况的列表
+              Confirm -- 当要求输入"yes"时, 也需输入"no"以拒绝; 
+                      祈祷, 陷阱和Autoall操作也需输入"yes"而非"y"; 
+              quit    -- 使用"yes"而非"y"来确认退出或进入探索模式; 
+              die     -- 使用"yes"而非"y"来确认死亡(适用于探索或调试模式); 
+              bones   -- 使用"yes"而非"y"来确认在调试模式下保存骨骼数据; 
+              attack  -- 使用"yes"而非"y"来确认攻击和平怪物
+              wand-break  -- 使用"yes"而非"y"来确认打破魔杖;
+              eating  -- 使用"yes"而非"y"来确认是否继续进食;
+              Were-change -- 当英雄拥有变形控制能力时, 使用"yes"而非"y"
+                      来确认因兽化症而变形;
+              pray    -- 使用"y"来确认尝试祈祷; 默认开启
+              trap    -- 按y键进入已知陷阱(除非该陷阱无害); 
+              swim    -- 当英雄已看到水域或熔岩且状态正常时, 
+                      需输入前缀m才能进入; 默认开启; 
+              AutoAll -- 若使用menustyle:Full且在物品类筛选菜单中选择了
+                      选项'A', 则需按y键确认; 
+              Remove  -- 即使仅装备了一件可移除或脱下的物品, 使用'R'和'T'
+                      时也始终从背包中取物; 
+perminv_mode  如果界面支持持久性背包窗口且perm_invent选项为true,        [a]
+              则此选项控制将显示的内容: 
+              
+              none/off -- 行为与perm_invent为false时相同
+              all/on   -- 显示除金币外的全部背包内容(默认)
+              full     -- 显示包括金币在内的全部背包内容
+              in-use   -- 仅显示已穿戴和已持有的物品
+              (tty界面可选的perm_invent支持包含
+              几个与all和full不同的额外选项)
+pickup_burden 当你拾取的物品超过此负重等级                              [S]
+              (无负重, 负重, 吃力, 受压, 高压, 超载)
+              时, 系统会询问你是否要继续. 
+pickup_types  用于在启用autopickup选项时, 指定物品类型的默认符号列表     []
+              空列表表示"全部"
+pile_limit    穿越地面物品时的反馈, 显示"这里有数个物品"而非逐一列出物  [5]
+              品的阈值. (0表示"始终列出物品". )
+runmode       控制地图窗口在多步移动(各种奔跑模式或旅行命令)          [run]
+              时的更新频率: 
+              teleport -- 直到移动停止才更新地图; 
+              run      -- 定期更新地图(间隔为七步); 
+              walk     -- 每走一步后更新地图; 
+              crawl    -- 与walk类似, 但在每走一步后会有延迟. 
+              (这仅影响屏幕显示, 不影响实际移动. )
+scores        游戏结束时希望看到的得分列表部分.       [!own/3 top/2 around]
+              你可以选择以下组合: 
+              最高分, 最高分周围的分数, 以及你所有的个人分数. 
+sortdiscoveries 查看已发现物品列表时的优先排序顺序                      [o]
+              o -- 按每个类别内的发现顺序排序
+              s -- 按sortloot的"战利品"排序顺序
+              c -- 按每个类别内的字母顺序排序
+              a -- 跨所有类别按字母顺序排序
+sortloot      查看一组物品时的首选排序方式                              [n]
+              none -- 不排序
+              loot -- 按地面和容器中的物品堆进行排序
+              full -- "loot"排序加上背包中的物品
+sortvanquished 查看被击败怪物列表时的排序优先级                         [t]
+              t -- 传统排序, 按怪物等级排序
+              d -- 按怪物难度评级排序
+              a -- 按字母顺序排列, 先显示所有独特怪物, 然后是其他怪物
+              c -- 按职业排序, 每个职业内从低到高排序
+              n -- 按数量排序, 从高到低
+              z -- 按数量排序, 从低到高
+statushilites 是否显示状态高亮(当值不为零时)以及                      [0]
+              以及临时高亮状态的显示时长(适用于
+              'up', 'down'和'changed'状态高亮规则)
+statuslines   是否使用扩展(3)或压缩(2)状态行                        [2]
+              (适用于tty和curses; 2为传统模式, 3为推荐模式; 
+              也适用于Qt, 其中3为传统模式, 2为推荐模式)
+suppress_alert 禁用各种与版本相关的变更警告, 例如针对'Q'命令显示的提示,  []
+              说明退出现在通过#quit实现, 
+              (例如, 使用suppress_alert:3.3.1可停止该提示以及该版本或
+              更早版本中添加的任何其他通知)
+versinfo      选择在showvers为真时显示哪些信息                     [1 or 4]
+              (默认值取决于程序开发状态)
+whatis_coord  控制在"/"和";"命令启用自动描述功能时, 是否包含地图坐标.   [n]
+              该值为以下选项之一的首字母: 
+              compass      -- (相对于你所在位置; 'east'或'3s'或'2n,4w')
+              full compass -- ('east'或'3south'或'2north,4west')
+              map          -- <x,y>        (地图列x=0不被使用)
+              screen       -- [行,列] (行偏移量需与tty用法匹配)
+              none         -- 不显示坐标. 
+whatis_filter 控制在获取地图位置(如"travel"命令)时如何过滤符合条件的    [n]
+              地图坐标. 
+              取值为以下之一: 
+              n - 不进行过滤
+              v - 仅显示视野内的位置
+              a - 仅显示同一区域(房间, 走廊等)内的位置
 
-autounlock    when attempting to open a locked door or loot     [Apply-Key]
-              a locked container, specifies an action to take: can be
-              None, or one or more of Untrap + Apply-Key + Kick + Force;
-              if Untrap is included, it will be handled first; the
-              others apply if you answer "no" to "check for traps?";
-              for "yes", it won't necessary find anything even when a
-              trap happens to be present and will use up the rest of
-              the current move regardless of whether it finds anything;
-              Kick is only useful for doors and Force is only useful for
-              containers; either will only be attempted if Untrap is
-              omitted or skipped and Apply-Key is omitted or you aren't
-              carrying an unlocking tool or you decline to use one
-boulder       override the default boulder symbol                       [`]
-crash_email   email address to use when filling in crash reports         []
-crash_name    name to use when filling in crash reports                  []
-crash_urlmax  length of longest url we can generate for a crash report   []
-disclose      the types of information you want         [ni na nv ng nc no]
-              offered at the end of the game
-              (space separated list of two-character values;
-              prefix: '+' always disclose, '-' never disclose,
-              'n' prompt with default "no", 'y' prompt with default "yes",
-              'a' prompt to select sorting order (for suffix 'v' only);
-              suffix: 'i' inventory, 'a' attributes, 'v' vanquished
-              monsters, 'g' genocided and extinct monsters, 'c' conduct
-              and achievements, 'o' dungeon overview)
-fruit         the name of a fruit you enjoy eating             [slime mold]
-              (basically a whimsy which NetHack uses from time to time).
-hilite_status specifies a rule for highlighting a status field           []
-              (multiple instances are allowed)
-menustyle     user interface for selection of multiple objects:      [Full]
-              Traditional -- prompt for classes of interest, then
-                             prompt item-by-item for those classes;
-              Combination -- prompt for classes of interest, then
-                             use a menu for choosing items;
-              Full        -- menu for classes of interest, then item menu;
-              Partial     -- skip class filtering, use menu of all items;
-              only the first letter ('T','C','F','P') matters
-              (With Traditional, many actions allow pseudo-class 'm' to
-              request a menu for choosing items: one-shot Combination.)
-menu_objsyms  whether to include object class symbols in menus:         [4]
-              0 - none    -- don't add object symbols to menus;
-              1 - headers -- append object class symbol to menu header lines;
-              2 - entries -- show object glyphs (same as class symbol
-                             for ASCII interfaces) on each menu entry line;
-              3 - both    -- 1 and 2 combined;
-              4 - conditional  -- as 2 but only if no headers are present;
-              5 - one-or-other -- 1 and 4 combined;
-              choices 0 and 1 should work with any interface; 2 through 5
-              are supported by tty and curses
-msg_window    behavior of ^P message recall for tty interface:          [s]
-              single      -- one message at a time
-              full        -- full window with all saved top line messages
-              reverse     -- full with messages printed most-recent-first
-              combination -- first two of consecutive ^P commands show
-                             single messages, third yields full set
-msg_window    behavior of ^P message recall for curses interface:       [r]
-              reverse     -- full window, most recent first
-              full        -- full with messages printed least recent first,
-                             initially positioned on last page to start
-                             with most recent messages in view
-number_pad    alphabetic versus numeric control over movement:          [0]
-               0 -- traditional hjkl + yubn movement (default);
-               1 -- digits control movement, for use with numeric keypad;
-               2 -- same as 1, but '5' works as 'g' prefix rather than 'G';
-               3 -- numeric for phone keypad (1,2,3 above, 7,8,9 below);
-               4 -- phone keypad (3) combined with '5' preference (2);
-              -1 -- "qwertz"; alphabetic movement but 'z' swapped with 'y'.
-              Setting number_pad (to a positive value) affects how all
-              digit keys are handled, not just those on numeric keypad.
-packorder     a list of default symbols for kinds of       [")[%?+!=/(*`0_]
-              objects that gives the order in which your inventory (and
-              some other things) gets shown if the 'sortpack' option is on
-              (If you specify only some kinds of items, the others from the
-              default order will be appended to the end.)
-paranoid_confirmation  space separated list    [paranoid_confirm:pray swim]
-              of situations where alternate prompting is desired
-              Confirm -- when requiring "yes", also require "no" to reject;
-                      also requires yes rather than y for pray, trap, Autoall
-              quit    -- yes vs y to confirm quitting or to enter explore mode
-              die     -- yes vs y to confirm dying (for explore or debug mode)
-              bones   -- yes vs y to confirm saving bones data in debug mode
-              attack  -- yes vs y to confirm attacking a peaceful monster
-              wand-break  -- yes vs y to confirm breaking a wand
-              eating  -- yes vs y to confirm whether to continue eating
-              Were-change -- yes vs y to confirm changing form due to
-                      lycanthropy when hero has polymorph control;
-              pray    -- y to confirm an attempt to pray; on by default
-              trap    -- y to enter a known trap unless it is harmless;
-              swim    -- require m prefix to move into water or lava when
-                      hero has seen it and isn't impaired; on by default;
-              AutoAll -- y to confirm if using menustyle:Full and choice 'A'
-                      in the object class filtering menu is selected;
-              Remove  -- always pick from inventory for 'R' and 'T' even when
-                      wearing just one applicable item to remove or take off
-perminv_mode  if the interface supports a persistent inventory window   [a]
-              and the perm_invent option is true, this controls what
-              will be shown:
-              none/off -- behave as if perm_invent is false
-              all/on   -- show inventory except for gold (default)
-              full     -- show inventory including gold
-              in-use   -- only show worn and wielded items
-              (the tty interface's optional perm_invent support includes
-              a couple of additional choices that vary all and full)
-pickup_burden when you pick up an item that exceeds this encumbrance    [S]
-              level (Unencumbered, Burdened, streSsed, straiNed, overTaxed,
-              or overLoaded), you will be asked if you want to continue.
-pickup_types  a list of default symbols for kinds of objects to          []
-              autopickup when that option is on; empty list means "all"
-pile_limit    for feedback when walking across floor objects,           [5]
-              threshold at which "there are objects here" is displayed
-              instead of listing them.  (0 means "always list objects.")
-runmode       controls how often the map window is updated for        [run]
-              multi-step movement (various running modes or travel command):
-              teleport -- don't update map until movement stops;
-              run      -- periodically update map (interval is seven steps);
-              walk     -- update map after every step;
-              crawl    -- like walk, but delay after making each step.
-              (This only affects screen display, not actual movement.)
-scores        the parts of the score list you wish    [!own/3 top/2 around]
-              to see when the game ends.  You choose a combination of
-              top scores, scores around the top scores, and all of your
-              own scores.
-sortdiscoveries preferred order when viewing list of discovered objects [o]
-              o -- in order of discovery within each class
-              s -- sortloot's "loot" order
-              c -- alphabetized within each class
-              a -- alphabetized across all classes
-sortloot      preferred order when examining a set of objects           [n]
-              none -- no sorting
-              loot -- sort piles of objects on floor and in containers
-              full -- 'loot' plus objects in inventory
-sortvanquished preferred order when viewing vanquished monsters list    [t]
-              t -- traditional, order by monster level
-              d -- order by monster difficulty rating
-              a -- alphabetical, first any unique monsters then others
-              c -- order by class, low to high level within each class
-              n -- order by count, high to low
-              z -- order by count, low to high
-statushilites whether to display status highlights (when non-zero) and  [0]
-              also how many turns to display temporary highlights (for
-              'up', 'down', and 'changed' hilite_status rules)
-statuslines   whether to use expanded (3) or condensed (2) status       [2]
-              (for tty and curses; 2 is traditional, 3 is recommended;
-              also for Qt, where 3 is traditional and 2 is recommended)
-suppress_alert disable various version-specific warnings about changes   []
-              in game play or the user interface, such as notification given
-              for the 'Q' command that quitting is now done via #quit
-              (e.g., use suppress_alert:3.3.1 to stop that and any other
-              notifications added in that version or earlier)
-versinfo      selects what information is displayed when showvers  [1 or 4]
-              is true (default depends on program development status)
-whatis_coord  controls whether to include map coordinates when          [n]
-              autodescribe is active for the '/' and ';' commands.
-              Value is the first letter of one of
-              compass      -- (relative to you; 'east' or '3s' or '2n,4w')
-              full compass -- ('east' or '3south' or '2north,4west')
-              map          -- <x,y>        (map column x=0 is not used)
-              screen       -- [row,column] (row is offset to match tty usage)
-              none         -- no coordinates shown.
-whatis_filter controls how to filter eligible map coordinates when      [n]
-              getting a map location for eg. the travel command.
-              Value is the one of
-              n - no filtering
-              v - locations in view only
-              a - locations in same area (room, corridor, etc)
+仅可在启动时设置的复杂选项包括: 
 
-Compound options which may be set only on startup are:
+align      你的初始阵营(守序, 中立, 混沌或随机).                   [random]
+           许多角色会将选择范围限制在子集内. 你可以只指定首字母. 
+catname    如果初始宠物是小猫, 则为其命名                            [none]
+dogname    如果初始宠物是小狗, 则为其命名                            [none]
+           部分以狗为起始角色的宠物名称是预设的(如武士角色的"Hachi"), 
+           但如果你指定了dogname, 该名称将被覆盖. 
+gender     你的初始性别(男性, 女性或随机).                         [random]
+           你可以只指定首字母. 虽然你也可使用旧式的"male"和"female"布尔
+           选项来指定性别, 但"gender"选项将具有优先权. 
+horsename  若起始宠物为小马, 则指定其名称                            [none]
+menu_*     为菜单命令指定单字符快捷键. 以下是所有命令及其默认快捷键的列表, 
+           后面是实现这些命令的窗口端口列表: 
+           (t代表tty, c代表curses, w代表Windows GUI, x代表X11, q代表Qt)
+           menu_first_page    跳转到菜单的第一页                   [^](tcwxq)
+           menu_last_page     跳转到菜单的最后一页                 [|](tcwxq)
+           menu_next_page     转到下一页菜单                       [>](tcwxq)
+           menu_previous_page 返回上一页菜单                       [<](tcwxq)
+           menu_shift_left    将视图向左平移(仅限perm_invent)    [{](cx)
+           menu_shift_right   将视图向右平移(仅限perm_invent)    [}](cx)
+           menu_select_all    选中菜单中的所有项目                 [.](tcwxq)
+           menu_select_page   选中本菜单页上的所有项目             [,](tcwq)
+           menu_deselect_all  取消选中菜单中的所有项目             [-](tcwxq)
+           menu_deselect_page 取消选中本菜单页上的所有项目         [\](tcwq)
+           menu_invert_all    反选菜单中的所有项目                 [@](tcwxq)
+           menu_invert_page   反选本菜单页上的所有项目             [~](tcwq)
+           menu_search        提示目标文本, 并将与之匹配的项目反转 [:](tcwxq)
+msghistory 要保存的前几行消息数量                                  [20]
+name       你的角色名称   [在多用户系统上默认使用用户名, 在单用户系统上或当
+                       用户名被归类为"games"等通用名称时, 会提示"你是谁? "]
+           尽管MS Windows支持用户名, 但它仍被视为单用户系统. 如果命令
+           行中指定了角色名称(通常通过'nethack -u myname'实现, 具体
+           取决于系统类型和访问方式), 则该名称将覆盖选项中的'name'.
+pettype    你首选的宠物类型(猫, 狗, 马, 随机, 或无),               [random]
+           如果你的角色允许多种类型(或者如果你希望避免初始宠物).  
+           大多数角色允许选择狗或猫, 但不能选择马. 对于强制指定特定
+           类型的角色, 除非pettype指定为"none", 否则该参数将被忽略. 
+playmode   正常游戏, 不计分的探索模式或调试模式                    [normal]
+race       你的初始种族(例如, race:Human, race:Elf).               [random]
+           大多数角色会将种族选择限制在子集范围内. 
+role       你的初始角色(例如, role:Barbarian, role:Valk).          [random]
+           虽然你可以只指定首字母, 但系统会仅选择第一个匹配的角色; 
+           因此, 建议你尽可能完整地写出角色名称. 你也可以通过将角色
+           名附加到"name"选项后(例如, name:Vic-V)来指定角色, 但
+           "role"选项将具有优先级. 
+windowtype 待使用的窗口系统, 如果有多个选项可用.  取决于操作系统和编译选项]
+           某些程序实例仅支持一种窗口类型; 在这种情况下, 您无需指定
+           任何内容. 程序运行时, 可通过使用#version命令查看程序支持
+           的窗口类型列表, 或从程序外部查阅名为'options'的文本文件
+           (该文件在构建程序时生成). 
 
-align      Your starting alignment (lawful, neutral, chaotic,      [random]
-           or random).  Many roles restrict the choice to a subset.
-           You may specify just the first letter.
-catname    name of your starting pet if it is a kitten               [none]
-dogname    name of your starting pet if it is a little dog           [none]
-           Several roles who start with a dog have one whose name is
-           pre-set (for example, "Hachi" for Samurai), but that name
-           will be overridden if you specify dogname.
-gender     Your starting gender (male, female, or random).         [random]
-           You may specify just the first letter.  Although you can
-           still denote your gender using the old "male" and "female"
-           boolean options, the "gender" option will take precedence.
-horsename  name of your starting pet if it is a pony                 [none]
-menu_*     specify single character accelerators for menu commands.
-           Here is a list of all commands with their default keystroke
-           followed by a list of window-ports that implement them:
-           (t is tty, c is curses, w is Windows GUI, x is X11, q is Qt)
-           menu_first_page    jump to the first page in a menu     [^](tcwxq)
-           menu_last_page     jump to the last page in a menu      [|](tcwxq)
-           menu_next_page     advance to the next menu page        [>](tcwxq)
-           menu_previous_page back up to the previous menu page    [<](tcwxq)
-           menu_shift_left    pan view to left (perm_invent only)  [{](cx)
-           menu_shift_right   pan view to right (perm_invent only) [}](cx)
-           menu_select_all    select all items in a menu           [.](tcwxq)
-           menu_select_page   select all items on this menu page   [,](tcwq)
-           menu_deselect_all  deselect all items in a menu         [-](tcwxq)
-           menu_deselect_page deselect all items on this menu page [\](tcwq)
-           menu_invert_all    invert all items in a menu           [@](tcwxq)
-           menu_invert_page   invert all items on this menu page   [~](tcwq)
-           menu_search        prompt for target text and invert    [:](tcwxq)
-                              items which match that
-msghistory number of top line messages to save                         [20]
-name       the name of your character      [defaults to username on multi-
-           user systems, asks "who are you?" on single-user systems or if
-           the username is classified as generic like "games"]
-           MS Windows is treated as single-user even though it supports
-           usernames.  If character name is specified on the command
-           line (typically via 'nethack -u myname' depending upon type
-           of system and method of access to it), that name overrides
-           'name' from your options.
-pettype    your preferred type of pet (cat, dog, horse, random,    [random]
-           or none), if your role allows more than one type (or if you
-           want to avoid a starting pet).  Most roles allow dog or cat
-           but not horse.  For roles which force a particular type,
-           pettype is ignored unless it specifies 'none'.
-playmode   normal play or non-scoring explore mode or debug mode   [normal]
-race       Your starting race (e.g., race:Human, race:Elf).        [random]
-           Most roles restrict race choice to a subset.
-role       Your starting role (e.g., role:Barbarian, role:Valk).   [random]
-           Although you can specify just the first letter(s), it will
-           choose only the first role it finds that matches; thus, it
-           is recommended that you spell out as much of the role name
-           as possible.  You can also still denote your role by
-           appending it to the "name" option (e.g., name:Vic-V), but
-           the "role" option will take precedence.
-windowtype windowing system to be used    [depends on operating system and
-           compile-time setup]    if more than one choice is available.
-           Some instances of the program support only one window-type;
-           when that is the case, you don't need to specify anything.
-           The list of supported window-types in your program can be
-           seen while the program is running by using the #version
-           command or from outside the program by examining the text file
-           named 'options' which is generated when building it.
-
-Some sample options lists are:
+以下是一些选项列表的示例: 
 !autopickup,!tombstone,name:Gandalf,scores:own/3 top/2 around
 female,nonews,dogname:Rover,rest_on_space,!verbose,menustyle:traditional

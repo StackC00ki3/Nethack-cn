@@ -418,11 +418,11 @@ savebones(int how, time_t when, struct obj *corpse)
     if (nhfp) {
         close_nhfile(nhfp);
         if (wizard) {
-            if (y_n("骨档文件已经存在. 替换它?") == 'y') {
+            if (y_n("遗骨文件已经存在. 替换它?") == 'y') {
                 if (delete_bonesfile(&u.uz))
                     goto make_bones;
                 else
-                    pline("无法删除旧骨档文件。");
+                    pline("无法删除旧遗骨文件.");
             }
         }
         /* compression can change the file's name, so must
@@ -579,9 +579,9 @@ savebones(int how, time_t when, struct obj *corpse)
        gender and alignment reflect final values rather than what the
        character started out as, same as topten and logfile entries */
     Sprintf(newbones->who, "%s-%.3s-%.3s-%.3s-%.3s",
-            svp.plname, gu.urole.efilecode,
-            gu.urace.efilecode, genders[flags.female].efilecode,
-            aligns[1 - u.ualign.type].efilecode);
+            svp.plname, gu.urole.filecode,
+            gu.urace.filecode, genders[flags.female].filecode,
+            aligns[1 - u.ualign.type].filecode);
     formatkiller(newbones->how, sizeof newbones->how, how, TRUE);
     Strcpy(newbones->when, yyyymmddhhmmss(when));
     /* final resting place, used to decide when bones are discovered */
@@ -662,13 +662,13 @@ getbones(void)
     program_state.reading_bonesfile = 1;
     if (validate(nhfp, gb.bones, FALSE) != SF_UPTODATE) {
         if (!wizard)
-            pline("已丢弃不可用的骨档文件, 无需惊慌……");
+            pline("已丢弃不可用的遗骨文件, 无需惊慌...");
         ok = FALSE;
         program_state.reading_bonesfile = 0;
     } else {
         ok = TRUE;
         if (wizard) {
-            if (y_n("获取骨档?") == 'n') {
+            if (y_n("获取遗骨?") == 'n') {
                 close_nhfile(nhfp);
                 compress_bonesfile();
                 program_state.reading_bonesfile = 0;
@@ -693,7 +693,7 @@ getbones(void)
         if (strcmp(bonesid, oldbonesid) != 0) {
             char errbuf[BUFSZ];
 
-            Sprintf(errbuf, "这是骨档层'%s', 不是'%s'!",
+            Sprintf(errbuf, "这是遗骨层'%s', 不是'%s'!",
                     oldbonesid, bonesid);
             if (wizard) {
                 pline1(errbuf);
@@ -737,7 +737,7 @@ getbones(void)
     u.uroleplay.numbones++;
 
     if (wizard) {
-        if (y_n("Unlink bones?") == 'n') {
+        if (y_n("删除遗骨?") == 'n') {
             compress_bonesfile();
             return ok;
         }
@@ -804,7 +804,7 @@ fix_ghostly_obj(struct obj *obj)
         case ORCISH_BOW:
         case YUMI:
         case BOOMERANG:
-            You("调整%s以适应你的%s手。",
+            You("调整%s以适应你的%s手.",
                 the(xname(obj)),
                 URIGHTY ? "右" : "左");
             break;

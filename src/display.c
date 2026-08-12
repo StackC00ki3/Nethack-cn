@@ -925,6 +925,9 @@ newsym(coordxy x, coordxy y)
     /* don't try to produce map output when level is in a state of flux */
     if (_suppress_map_output())
         return;
+    /* vault guards are parked at <0,0> -- just silently ignore */
+    if (x == 0 && y == 0)
+        return;
     /* should never happen; same error handling as u_on_newpos() */
     if (!isok(x, y)) {
         void (*errfunc)(const char *, ...) PRINTF_F_PTR(1, 2);

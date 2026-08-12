@@ -16,7 +16,7 @@ staticfn void maybewakesteed(struct monst *);
 void
 rider_cant_reach(void)
 {
-    You("还不够熟练,无法从%s上够到.", y_monnam(u.usteed));
+    You("还不够熟练, 无法从%s上够到.", y_monnam(u.usteed));
 }
 
 /*** Putting the saddle on ***/
@@ -246,7 +246,7 @@ mount_steed(
         return (FALSE);
     }
     if (!force && (near_capacity() > SLT_ENCUMBER)) {
-        You_cant("在携带这么多物品时这么做.");
+        You("携带的物品太多, 做不了."); /*换pline:You_cant*/
         return (FALSE);
     }
 
@@ -273,7 +273,7 @@ mount_steed(
         if (Punished || !(u.uswallow || u.ustuck || u.utrap))
             You("挪不动你的%s.", body_part(LEG));
         else
-            You("暂时被困在这儿.");
+            You("暂时被困在这里.");
         return (FALSE);
     }
 
@@ -343,7 +343,7 @@ mount_steed(
             pline("%s从你身边溜走了.", Monnam(mtmp));
             return FALSE;
         }
-        You("在试图骑上%s时滑了下来.", mon_nam(mtmp));
+        You("试图骑上%s, 但滑了下来.", mon_nam(mtmp));
 
         Sprintf(buf, "在试图骑上%s时滑倒",
                 /* "a saddled mumak" or "a saddled pony called Dobbin" */

@@ -1,4 +1,4 @@
-/* NetHack 5.0	wintty.c	$NHDT-Date: 1737691300 2025/01/23 20:01:40 $  $NHDT-Branch: NetHack-3.7 $:$NHDT-Revision: 1.420 $ */
+﻿/* NetHack 5.0	wintty.c	$NHDT-Date: 1737691300 2025/01/23 20:01:40 $  $NHDT-Branch: NetHack-3.7 $:$NHDT-Revision: 1.420 $ */
 /* Copyright (c) David Cohrs, 1991                                */
 /* NetHack may be freely redistributed.  See license for details. */
 
@@ -183,7 +183,7 @@ static char obuf[BUFSIZ]; /* BUFSIZ is defined in stdio.h */
 
 static const char winpanicstr[] = "Bad window Id %d (%s)";
 #define ttywindowpanic() panic(winpanicstr, window, __func__)
-char defmorestr[] = "--More--";
+char defmorestr[] = "--更多--";
 
 #ifdef CLIPPING
 #if defined(TILES_IN_GLYPHMAP) && defined(MSDOS)
@@ -461,7 +461,7 @@ resize_tty(void)
                 /* cop-out */
                 oldtoplin = TOPLINE_EMPTY; /* don't restore it below */
                 ttyDisplay->toplin = TOPLINE_NON_EMPTY;
-                addtopl("Press a key to continue: ");
+                addtopl("按任意键继续: ");
                 resize_mesg++;
                 break;
             }
@@ -664,7 +664,7 @@ tty_player_selection(void)
 void
 tty_askname(void)
 {
-    static const char who_are_you[] = "Who are you? ";
+    static const char who_are_you[] = "你是谁? ";
     int c, ct, tryct = 0;
 #ifdef WIN32CON
     int old_in_getlin;
@@ -674,7 +674,7 @@ tty_askname(void)
     if (iflags.wc2_selectsaved && !iflags.renameinprogress)
         switch (restore_menu(BASE_WINDOW)) {
         case -1:
-            bail("Until next time then..."); /* quit */
+            bail("那么, 下次见..."); /* quit */ //中文乱码
             /*NOTREACHED*/
             break;
         case 0:
@@ -692,14 +692,14 @@ tty_askname(void)
     do {
         if (++tryct > 1) {
             if (tryct > 10)
-                bail("Giving up after 10 tries.\n");
+                bail("10次尝试, 已放弃.\n"); //中文乱码
             tty_curs(BASE_WINDOW, 1, wins[BASE_WINDOW]->cury - 1);
-            tty_putstr(BASE_WINDOW, 0, "Enter a name for your character...");
+            tty_putstr(BASE_WINDOW, 0, "为你的角色输入名字...");
             /* erase previous prompt (in case of ESC after partial response) */
             tty_curs(BASE_WINDOW, 1, wins[BASE_WINDOW]->cury), cl_end();
         }
         tty_putstr(BASE_WINDOW, 0, who_are_you);
-        tty_curs(BASE_WINDOW, (int) (sizeof who_are_you),
+        tty_curs(BASE_WINDOW, (int) (sizeof who_are_you) - 3, //别问, 问就是-3就能对齐
                  wins[BASE_WINDOW]->cury - 1);
         ct = 0;
         while ((c = tty_nhgetch()) != '\n') {
@@ -1234,8 +1234,7 @@ dmore(
              (int) ttyDisplay->cury);
     if (flags.standout)
         standoutbeg();
-    xputs(prompt);
-    ttyDisplay->curx += strlen(prompt);
+    putsyms(prompt);
     if (flags.standout)
         standoutend();
 
@@ -1780,7 +1779,7 @@ process_menu_window(winid window, struct WinDesc *cw)
             dmore(cw, resp);
         } else {
             /* just put the cursor back... */
-            tty_curs(window, (int) strlen(cw->morestr) + 2, page_lines);
+            tty_curs(window, (int) utf8str_width(cw->morestr) + 2, page_lines);
             xwaitforspace(resp);
         }
 
@@ -1939,7 +1938,7 @@ process_menu_window(winid window, struct WinDesc *cw)
                 boolean on_curr_page = FALSE;
                 int lineno = 0;
 
-                tty_getlin("Search for:", tmpbuf);
+                tty_getlin("查找:", tmpbuf);
                 if (!tmpbuf[0] || tmpbuf[0] == '\033')
                     break;
                 Sprintf(searchbuf, "*%s*", tmpbuf);
@@ -2602,9 +2601,27 @@ tty_putstr(winid window, int attr, const char *str)
         tty_curs(window, cw->curx + 1, cw->cury);
         term_start_attr(attr);
         while (*str && (int) ttyDisplay->curx < (int) ttyDisplay->cols - 1) {
+#ifdef WIN32CON
+            wchar_t wch;
+            int srclen = 1, charwidth = 1;
+
+            if (decode_utf8_char(str, &wch, &srclen, &charwidth)) {
+                if ((int) ttyDisplay->curx + charwidth
+                    > (int) ttyDisplay->cols - 1)
+                    break;
+                (void) putchar((int) wch);
+                str += srclen;
+                ttyDisplay->curx += charwidth;
+            } else {
+                (void) putchar((unsigned char) *str);
+                str++;
+                ttyDisplay->curx++;
+            }
+#else
             (void) putchar(*str);
             str++;
             ttyDisplay->curx++;
+#endif
         }
         cw->curx = 0;
         cw->cury++;
@@ -2619,9 +2636,32 @@ tty_putstr(winid window, int attr, const char *str)
                 cw->cury++;
                 tty_curs(window, cw->curx + 1, cw->cury);
             }
+#ifdef WIN32CON
+            {
+                wchar_t wch;
+                int srclen = 1, charwidth = 1;
+
+                if (decode_utf8_char(str, &wch, &srclen, &charwidth)) {
+                    if ((int) ttyDisplay->curx + charwidth
+                        > (int) ttyDisplay->cols - 1) {
+                        cw->curx = 0;
+                        cw->cury++;
+                        tty_curs(window, cw->curx + 1, cw->cury);
+                    }
+                    (void) putchar((int) wch);
+                    str += srclen;
+                    ttyDisplay->curx += charwidth;
+                } else {
+                    (void) putchar((unsigned char) *str);
+                    str++;
+                    ttyDisplay->curx++;
+                }
+            }
+#else
             (void) putchar(*str);
             str++;
             ttyDisplay->curx++;
+#endif
         }
         cw->curx = 0;
         cw->cury++;
@@ -2699,7 +2739,7 @@ tty_display_file(
 
         if (fd < 0) {
             if (complain)
-                pline("Cannot open %s.", fname);
+                pline("无法打开%s.", fname);
             else /* [is this refresh actually necessary?] */
                 docrt();
             return;
@@ -2711,11 +2751,11 @@ tty_display_file(
             (void) close(0);
             if (dup(fd)) {
                 if (complain)
-                    raw_printf("Cannot open %s as stdin.", fname);
+                    raw_printf("无法打开%s作为stdin.", fname);
             } else {
                 (void) execlp(gc.catmore, "page", (char *) 0);
                 if (complain)
-                    raw_printf("Cannot exec %s.", gc.catmore);
+                    raw_printf("无法运行%s.", gc.catmore);
             }
             if (complain)
                 sleep(10); /* want to wait_synch() but stdin is gone */
@@ -2740,7 +2780,7 @@ tty_display_file(
                 tty_wait_synch(); /* "Hit <space> to continue: " */
                 if (u.ux) /* if hero is on map, refresh the screen */
                     docrt();
-                pline("Cannot open \"%s\".", fname);
+                pline("无法打开\"%s\".", fname);
             }
         } else {
             winid datawin = tty_create_nhwindow(NHW_TEXT);
@@ -3007,11 +3047,11 @@ tty_end_menu(
     if (cw->npages > 1) {
         char buf[QBUFSZ];
         /* produce the largest demo string */
-        Sprintf(buf, "(%ld of %ld) ", cw->npages, cw->npages);
+        Sprintf(buf, "(页数%ld/%ld) ", cw->npages, cw->npages); /*(%ld %ld)*/
         len = strlen(buf);
         cw->morestr = dupstr("");
     } else {
-        cw->morestr = dupstr("(end) ");
+        cw->morestr = dupstr("(结尾) "); /*(end)*/
         len = strlen(cw->morestr);
     }
 
@@ -3897,7 +3937,7 @@ tty_wait_synch(void)
     } else {
         tty_display_nhwindow(WIN_MAP, FALSE);
         if (ttyDisplay->inmore) {
-            addtopl("--More--");
+            addtopl(defmorestr);
             (void) fflush(stdout);
         } else if (ttyDisplay->inread > program_state.gameover) {
             /* this can only happen if we were reading and got interrupted */
@@ -5554,6 +5594,16 @@ render_status(void)
                     }
                     tty_putstatusfield(text, x, y);
                     x += (int) strlen(text);
+                    /* when a field's value shrinks (e.g. AC 10->9),
+                       fill the gap with spaces so that stale bytes
+                       from the previous rendering are cleared */
+                    if (tlth < tty_status[BEFORE][idx].lth
+                        && tty_status[NOW][idx].x
+                           == tty_status[BEFORE][idx].x) {
+                        int gap = tty_status[BEFORE][idx].lth - tlth;
+                        while (gap-- > 0)
+                            tty_putstatusfield(" ", x++, y);
+                    }
                     if (iflags.hilite_delta) {
                         if (coloridx != NO_COLOR)
                             term_end_color();

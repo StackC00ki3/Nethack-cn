@@ -275,8 +275,8 @@ erode_obj(
 
         return ER_NOTHING;
     } else if (erosion < MAX_ERODE) {
-        const char *adverb = (erosion + 1 == MAX_ERODE) ? " 完全"
-                             : erosion ? " 进一步"
+        const char *adverb = (erosion + 1 == MAX_ERODE) ? "完全"
+                             : erosion ? "进一步"
                                : "";
 
         if (uvictim || vismon || visobj)
@@ -372,7 +372,7 @@ grease_protect(
             pline("%s的%s%s%s", Monnam(victim),
                   ostr, vtense(ostr, "受到"), txt);
     } else if (victim == &gy.youmonst || vismon) {
-        pline("%s%s", Yobjnam2(otmp, "收到"), txt);
+        pline("%s%s", Yobjnam2(otmp, "受到"), txt);
     }
     if (!rn2(2)) {
         otmp->greased = 0;
@@ -1228,7 +1228,7 @@ trapeffect_arrow_trap(
         if (trap->once && trap->tseen && !rn2(15)) {
             if (in_sight && see_it)
                 pline_mon(mtmp,
-                      "%s触发了一个陷阱,但什么都没有发生.",
+                      "%s触发了一个陷阱, 但什么都没有发生.",
                       Monnam(mtmp));
             deltrap(trap);
             newsym(mtmp->mx, mtmp->my);
@@ -1299,7 +1299,7 @@ trapeffect_dart_trap(
         if (trap->once && trap->tseen && !rn2(15)) {
             if (in_sight && see_it)
                 pline_mon(mtmp,
-                      "%s触发了一个陷阱,但什么都没有发生.",
+                      "%s触发了一个陷阱, 但什么都没有发生.",
                       Monnam(mtmp));
             deltrap(trap);
             newsym(mtmp->mx, mtmp->my);
@@ -1380,7 +1380,7 @@ trapeffect_rocktrap(
         if (trap->once && trap->tseen && !rn2(15)) {
             if (in_sight && see_it)
                 pline_mon(mtmp,
-                      "%s上的陷阱门打开了,但是没有东西落下!",
+                      "%s顶上的陷阱门打开了, 但是没有东西落下!",
                       mon_nam(mtmp));
             deltrap(trap);
             newsym(mtmp->mx, mtmp->my);
@@ -1928,18 +1928,18 @@ trapeffect_pit(
                           death reason will be overridden with
                           "killed while stuck in creature form" */
                        plunged
-                       ? "故意走到了一排锋利的尖刺上"
+                       ? "故意扑到一个有刺的坑里"
                        : (conj_pit || deliberate)
-                         ? "踩到了一排锋利的尖刺上"
+                         ? "踩到一个有刺的坑里"
                          : adj_pit
-                           ? "跌到了一排锋利的尖刺上"
-                           : "掉到了一排锋利的尖刺上",
+                           ? "跌到一个有刺的坑里"
+                           : "掉到一个有刺的坑里",
                        NO_KILLER_PREFIX);
                 if (!rn2(6))
                     poisoned("尖刺", A_STR,
                              (conj_pit || adj_pit || deliberate)
-                             ? "踩到了一排锋利的尖刺上"
-                             : "掉到了一排锋利的尖刺上",
+                             ? "踩到一排有毒的尖刺"
+                             : "掉到一排有毒的尖刺",
                              /* if damage triggered life-saving,
                                 poison is limited to attrib loss */
                              (u.umortality > oldumort) ? 0 : 8, FALSE);
@@ -1948,8 +1948,8 @@ trapeffect_pit(
                 if (!conj_pit && !deliberate
                     && !(plunged && (Flying || is_clinger(gy.youmonst.data))))
                     losehp(Maybe_Half_Phys(rnd(adj_pit ? 3 : 6)),
-                           plunged ? "故意扑到了一排锋利的尖刺"
-                           : "掉进了一个坑里",
+                           plunged ? "故意扑到一个坑里"
+                           : "掉到一个坑里",
                            NO_KILLER_PREFIX);
             }
             if (Punished && !carried(uball)) {
@@ -1958,7 +1958,7 @@ trapeffect_pit(
                 placebc();
             }
             if (!conj_pit)
-                selftouch("掉下去时,你");
+                selftouch("掉下去时, 你");
             gv.vision_full_recalc = 1; /* vision limits change */
             exercise(A_STR, FALSE);
             exercise(A_DEX, FALSE);
@@ -1997,7 +1997,7 @@ trapeffect_pit(
                 pline("坑爹啊. 这简直是个坑中坑!");
             seetrap(trap);
         }
-        mselftouch(mtmp, "掉下去时,", FALSE);
+        mselftouch(mtmp, "掉下去时, ", FALSE);
         if (wearing_iron_shoes(mtmp)) relevant_spikes = FALSE;
         if (DEADMONSTER(mtmp) || thitm(0, mtmp, (struct obj *) 0,
                                        rnd(relevant_spikes ? 10 : 6), FALSE))
@@ -2485,7 +2485,7 @@ trapeffect_poly_trap(
                 prinv(NULL, uarmf, 0);
         } else if (Antimagic || Unchanging) {
             shieldeff(u.ux, u.uy);
-            You_feel("不一样了一刹那.");
+            You("刹那间感觉异样."); /*危险:You_feel*/
             /* Trap did nothing; don't remove it --KAA */
         } else {
             (void) steedintrap(trap, (struct obj *) 0);
@@ -2691,7 +2691,7 @@ trapeffect_rolling_boulder_trap(
             if (in_sight)
                 pline_mon(mtmp, "%s%s触发了%s.",
                       !Deaf ? "咔哒! " : "", Monnam(mtmp),
-                      trap->tseen ? "一个滚石陷阱" : something);
+                      trap->tseen ? "一个滚石陷阱" : "什么东西"); /*修改语序:something*/
             if (launch_obj(BOULDER, trap->launch.x, trap->launch.y,
                            trap->launch2.x, trap->launch2.y, style)) {
                 if (in_sight)
@@ -3018,7 +3018,7 @@ dotrap(struct trap *trap, unsigned trflags)
          * reason why the player cannot escape the trap with a dexterity
          * check, clinging to the ceiling, etc.
          */
-        pline("气流把你拉进%%s!",
+        pline("气流把你拉进%s%s!",
               a_your[trap->madeby_u],
               trapname(ttype, TRUE)); /* do force "pit" while hallucinating */
         /* then proceed to normal trap effect */
@@ -3036,7 +3036,7 @@ dotrap(struct trap *trap, unsigned trflags)
             && ttype != ANTI_MAGIC && !forcebungle && !plunged
             && !conj_pit && !adj_pit
             && (!rn2(5) || (is_pit(ttype) && is_clinger(gy.youmonst.data)))) {
-                You("逃脱了%s%s.", (ttype == ARROW_TRAP && !trap->madeby_u)
+                You("躲开了%s%s.", (ttype == ARROW_TRAP && !trap->madeby_u)
                                      ? "一个"
                                      : a_your[trap->madeby_u],
                 trapname(ttype, FALSE));
@@ -3493,7 +3493,7 @@ launch_obj(
                     /* the boulder won't be used up if there is a
                        monster in the trap; stop rolling anyway */
                     x2 = x, y2 = y; /* stops here */
-                    if (flooreffects(singleobj, x2, y2, "落")) {
+                    if (flooreffects(singleobj, x2, y2, "掉")) {
                         used_up = TRUE;
                         launch_drop_spot((struct obj *) 0, 0, 0);
                     }
@@ -3506,7 +3506,7 @@ launch_obj(
                 if (used_up || dist == -1)
                     break; /* from 'while' loop */
             }
-            if (flooreffects(singleobj, x, y, "落")) {
+            if (flooreffects(singleobj, x, y, "掉")) {
                 used_up = TRUE;
                 launch_drop_spot((struct obj *) 0, 0, 0);
                 break;
@@ -3940,7 +3940,7 @@ float_up(void)
     if (u.utrap) {
         if (u.utraptype == TT_PIT) {
             reset_utrap(FALSE);
-            You("漂浮起来, 脱离了%s!", trapname(PIT, FALSE));
+            You("飘浮起来, 脱离了%s!", trapname(PIT, FALSE));
             gv.vision_full_recalc = 1; /* vision limits change */
             fill_pit(u.ux, u.uy);
         } else if (u.utraptype == TT_LAVA /* molten lava */
@@ -4015,7 +4015,7 @@ fill_pit(coordxy x, coordxy y)
     if ((t = t_at(x, y)) != 0 && (is_pit(t->ttyp) || is_hole(t->ttyp))
         && (otmp = sobj_at(BOULDER, x, y)) != 0) {
         obj_extract_self(otmp);
-        (void) flooreffects(otmp, x, y, "停在");
+        (void) flooreffects(otmp, x, y, "停");
     }
 }
 
@@ -4089,7 +4089,7 @@ float_down(
                 You("无法继续抓住%s.",
                     mon_nam(u.ustuck));
             else
-                pline("%s吃了一惊,无法继续抓住你!",
+                pline("%s吃了一惊, 无法继续抓住你!",
                       mon_nam(u.ustuck));
             set_ustuck((struct monst *) 0);
         }
@@ -4221,11 +4221,11 @@ climb_pit(void)
            many times without further user intervention by using a run
            attempt to keep retrying to escape from the pit) */
         if (u.usteed)
-            Norep("%s仍然在洞里.", YMonnam(u.usteed));
+            Norep("%s仍然在坑里.", YMonnam(u.usteed));
         else
             Norep((Hallucination && !rn2(5))
                       ? "你掉下去了, 而且起不来."
-                      : "你仍然在洞里.");
+                      : "你仍然在坑里.");
     }
 }
 
@@ -4245,7 +4245,7 @@ dofiretrap(
         pline("一股瀑布状的气泡从%s中喷出!",
               the(box ? xname(box) : surface(u.ux, u.uy)));
         if (Fire_resistance)
-            You("未受伤害");
+            You("未受伤害.");
         else
             losehp(rnd(3), "沸水", KILLED_BY);
         return;
@@ -4392,7 +4392,7 @@ domagictrap(void)
         case 15:
             if (on_level(&u.uz, &qstart_level))
                 You_feel(
-                    "你像个浪子.%s.",
+                    "你像个浪子. %s.",
                     (flags.female || (Upolyd && is_neuter(gy.youmonst.data)))
                         ? "挺奇怪的"
                         : "");
@@ -4691,7 +4691,7 @@ pot_acid_damage(
         bufp = simpleonames(obj);
         pline("%s%s%s!", /* "A potion explodes!" */
                 !exploded ? (one ? "一瓶" : "几瓶")
-                        : (one ? "又一瓶 " : "更多的"),
+                        : (one ? "又一瓶" : "更多的"),
             bufp, vtense(bufp, "爆炸了"));
     }
     if (ga.acid_ctx.ctx_valid) {
@@ -4782,7 +4782,7 @@ water_damage(
 #endif
            ) return 0;
         if (in_invent)
-            Your("你的%s%s.", ostr, vtense(ostr, "洇了"));
+            Your("%s%s.", ostr, vtense(ostr, "洇了"));
 
         obj->otyp = SCR_BLANK_PAPER;
         obj->dknown = 0;
@@ -5035,7 +5035,7 @@ rescued_from_terrain(int how)
     case DISSOLVED: /* sunk into lava while fire resistant */
         if (is_pool(u.ux, u.uy)) {
             You("%s在%s%s.", find_yourself,
-                hliquid("水"), u.uinwater ? "中" : "上"); /*修改语序:u.uinwater ? "在" : "在...上", hliquid("水"));*/
+                hliquid("水"), u.uinwater ? "中" : "上"); /*修改语序:u.uinwater ? "在" : "在。。。上", hliquid("水"));*/
             mesggiven = TRUE;
         } else if (is_lava(u.ux, u.uy)) {
             You("%s在%s上.", find_yourself, hliquid("熔岩"));
@@ -5454,7 +5454,7 @@ try_disarm(
     }
     /* We might be forced to move onto the trap's location. */
     if (sobj_at(BOULDER, ttmp->tx, ttmp->ty) && !Passes_walls && !under_u) {
-        There("有个巨石挡在你前面.");
+        There("有一个巨石挡在你前面.");
         return 0;
     }
     /* duplicate tight-space checks from test_move */
@@ -5681,8 +5681,8 @@ try_lift(
     boolean stuff) /* False: monster w/o minvent; True: w/ minvent */
 {
     if (calc_capacity(xtra_wt) >= HVY_ENCUMBER) {
-        pline("你%s%s搬不起来.", Monnam(mtmp),
-              stuff ? "携带的物品太多" : "太重了");
+        pline("你%s, 搬不起来%s.", stuff ? "携带的物品太多" : "太重了", /*修改语序:pline("你%s搬不起来%s.", Monnam(mtmp),*/
+              Monnam(mtmp)); /*修改语序:stuff ? "携带的物品太多" : "太重了");*/
         if (!ttmp->madeby_u && !mtmp->mpeaceful && mtmp->mcanmove
             && !mindless(mtmp->data) && mtmp->data->mlet != S_HUMAN
             && rnl(10) < 3) {
@@ -5828,9 +5828,9 @@ untrap_box(
         || box->tknown
         || (!force && confused && !rn2(3))) {
         if (!(box->tknown && box->dknown))
-            You("发现在%s上有个陷阱!", the(xname(box)));
+            You("发现%s上有一个陷阱!", the(xname(box)));
         else
-            pline("%s上有个陷阱.", the(xname(box)));
+            pline("%s上有一个陷阱.", the(xname(box)));
         box->tknown = 1;
         observe_object(box);
         if (!confused)
@@ -5884,7 +5884,7 @@ untrap(
         autounlock_door = TRUE;
     }
     if (!isok(x, y)) {
-        pline_The("潜伏在那里的危险超出了你的掌握范围.");
+        pline_The("潜伏在那里的危险超出了你的掌握.");
         return 0;
     }
 
@@ -5915,7 +5915,7 @@ untrap(
         useplural = ((ttmp && boxcnt > 0) || boxcnt > 1);
         /* note: boxcnt and useplural will always be 0 for !here case */
         if (ttmp || boxcnt)
-            There("%s%s%s, 但是你%s够不到%s.",
+            pline("%s%s%s, 但是你%s够不到%s.", /*换pline:There*/
                   useplural ? "有一些" : "有一个", the_trap, here ? "在这里" : "在那里",
                   u.usteed ? "在骑乘时" : "", /*修改语序:useplural ? "它们" : "它",*/
                   useplural ? "它们" : "它"); /*修改语序:u.usteed ? "在骑乘时" : "");*/
@@ -5926,9 +5926,9 @@ untrap(
             Strcpy(the_trap, the(trapdescr));
             if (boxcnt) {
                 if (is_pit(ttmp->ttyp)) {
-                    You_cant("接触%s, %s.", the_trap,
-                             u.utrap ? "因为你卡在里面"
-                                     : "当站在它的边缘的时候");
+                    You_cant("%s%s%s.", u.utrap ? "接触" : "在", the_trap, /*修改语序:自己看*/
+                             u.utrap ? ", 因为你卡在里面"
+                                     : "的边缘接触它");
                     trap_skipped = TRUE;
                     deal_with_floor_trap = FALSE;
                 } else {
@@ -6006,7 +6006,7 @@ untrap(
                                      otmp, xname, ansimpleoname, "盒子");
                 else
                     (void) safe_qbuf(qbuf, "这里有",
-                                     ". 检查一下有没有陷阱?", otmp,
+                                     ". 检查里面有没有陷阱?", otmp,
                                      doname, ansimpleoname, "盒子");
                 switch (ynq(qbuf)) {
                     case 'q':
@@ -6020,7 +6020,7 @@ untrap(
                     }
                     /* 'n' => continue to next box */
             }
-            There("这里没有其他箱子或盒子了.");
+            There("没有其他箱子或盒子了.");
         }
 
         if (stumble_on_door_mimic(x, y))
@@ -6327,7 +6327,7 @@ chest_trap(
         case 6:
         case 5:
         case 4:
-            msg = "毒针没有打中你";
+            msg = "毒针没有击中你";
             break;
         case 3:
         case 2:
@@ -6969,7 +6969,7 @@ lava_effects(void)
                                                       : rn1(4, 12)) << 8)),
                   TT_LAVA);
         You("沉入%s中%s!", waterbody_name(u.ux, u.uy),
-            !boil_away ? ",但只是轻微灼烧"
+            !boil_away ? ", 但只是轻微灼烧"
                        : "并且即将被烧死");
         if (Fire_resistance)
             monstseesu(M_SEEN_FIRE);

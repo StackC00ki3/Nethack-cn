@@ -36,7 +36,7 @@ des.stair("up")
 -- Non diggable walls
 des.non_diggable(selection.area(00,00,75,19))
 -- Objects
-des.object({ id = "mace", x=23, y=10, buc="blessed", spe=0, name="The Sceptre of Might" })
+des.object({ id = "mace", x=23, y=10, buc="blessed", spe=0, name="力量权杖" })
 des.object()
 des.object()
 des.object()

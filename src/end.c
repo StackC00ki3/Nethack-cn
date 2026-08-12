@@ -43,21 +43,21 @@ staticfn void bel_copy1(char **, char *);
  */
 static NEARDATA const char *deaths[] = {
     /* the array of death */
-    "died", "choked", "poisoned", "starvation", "drowning", "burning",
-    "dissolving under the heat and pressure", "crushed", "turned to stone",
-    "turned into slime", "genocided", "panic", "trickery", "quit",
-    "escaped", "ascended"
+    "死", "噎死", "被毒死", "饿死", "淹死", "烧死",
+    "在高温高压下溶解", "被挤死", "变成石头",
+    "变成黏液", "被灭绝", "恐慌", "作弊", "退出游戏",
+    "逃离地牢", "升天"
 };
 
 static NEARDATA const char *ends[] = {
     /* "when you %s" */
-    "died", "choked", "were poisoned",
-    "starved", "drowned", "burned",
-    "dissolved in the lava",
-    "were crushed", "turned to stone",
-    "turned into slime", "were genocided",
-    "panicked", "were tricked", "quit",
-    "escaped", "ascended"
+    "死去", "噎死", "被毒死",
+    "饿死", "淹死", "烧死",
+    "溶于熔岩",
+    "被挤死", "变成石头",
+    "变成黏液", "被灭绝",
+    "恐慌", "作弊", "退出游戏",
+    "逃离", "升天"
 };
 
 static boolean Schroedingers_cat = FALSE;
@@ -92,11 +92,11 @@ done2(void)
     boolean abandon_tutorial = FALSE;
 
     if (In_tutorial(&u.uz)
-        && y_n("Switch from the tutorial back to regular play?") == 'y')
+        && y_n("从教程切换回正常游戏?") == 'y')
         abandon_tutorial = TRUE;
 
     if (abandon_tutorial || !paranoid_query(
-            ParanoidQuit, "Really quit without saving?")) {
+            ParanoidQuit, "确定不保存直接退出?")) {
 #ifndef NO_SIGNAL
         (void) signal(SIGINT, (SIG_RET_TYPE) done1);
 #endif
@@ -114,7 +114,7 @@ done2(void)
             /* mention_decor can be processed now */
             rcfile_only_this_option(opt_mention_decor);
             schedule_goto(&u.ucamefrom, UTOTYPE_ATSTAIRS,
-                          "Resuming regular play.", (char *) 0);
+                          "恢复正常游戏.", (char *) 0);
         }
         return ECMD_OK;
     }
@@ -195,7 +195,7 @@ done_in_by(struct monst *mtmp, int how)
             mimicker = (M_AP_TYPE(mtmp) == M_AP_MONSTER),
             imitator = (mptr != champtr || mimicker);
 
-    You((how == STONING) ? "变成石头..." : "死了...");
+    You((how == STONING) ? "变成了石头..." : "死了...");
     mark_synch(); /* flush buffered screen output */
     buf[0] = '\0';
     svk.killer.format = KILLED_BY_AN;
@@ -204,7 +204,7 @@ done_in_by(struct monst *mtmp, int how)
     if ((mptr->geno & G_UNIQ) != 0 && !(imitator && !mimicker)
         && !(mptr == &mons[PM_HIGH_CLERIC] && !mtmp->ispriest)) {
         if (!type_is_pname(mptr))
-            Strcat(buf, "这个 ");
+            Strcat(buf, "");
         svk.killer.format = KILLED_BY;
     }
     /* _the_ <invisible> <distorted> ghost of Dudley */
@@ -214,14 +214,14 @@ done_in_by(struct monst *mtmp, int how)
 #else
     if (mptr == &mons[PM_GHOST] && has_mgivenname(mtmp)) {
 #endif
-        Strcat(buf, "the ");
+        Strcat(buf, "");
         svk.killer.format = KILLED_BY;
     }
     (void) monhealthdescr(mtmp, TRUE, eos(buf));
     if (mtmp->minvis)
-        Strcat(buf, "隐形 ");
+        Strcat(buf, "隐形的");
     if (distorted)
-        Strcat(buf, "迷幻扭曲的");
+        Strcat(buf, "扭曲的");
 
     if (imitator) {
         char shape[BUFSZ];
@@ -234,11 +234,11 @@ done_in_by(struct monst *mtmp, int how)
                set up fake mptr for type_is_pname/the_unique_pm */
             mptr = &mons[mtmp->mappearance];
             fakenm = pmname(mptr, Mgender(mtmp));
-        } else if (alt && strstri(realnm, "vampire")
-                   && !strcmp(fakenm, "vampire bat")) {
+        } else if (alt && strstri(realnm, "吸血鬼")
+                   && !strcmp(fakenm, "吸血蝙蝠")) {
             /* special case: use "vampire in bat form" in preference
                to redundant looking "vampire in vampire bat form" */
-            fakenm = "bat";
+            fakenm = "蝙蝠";
         }
         /* for the alternate format, always suppress any article;
            pname and the_unique should also have s_suffix() applied,
@@ -246,14 +246,14 @@ done_in_by(struct monst *mtmp, int how)
         if (alt || type_is_pname(mptr)) /* no article */
             Strcpy(shape, fakenm);
         else if (the_unique_pm(mptr)) /* "the"; don't use the() here */
-            Sprintf(shape, "这个 %s", fakenm);
+            Sprintf(shape, "%s", fakenm);
         else /* "a"/"an" */
             Strcpy(shape, an(fakenm));
         /* omit "called" to avoid excessive verbosity */
         Sprintf(eos(buf),
-                alt ? "%s是%s的形态"
-                    : mimicker ? "%s伪装为%s"
-                               : "%s模仿%s",
+                alt ? "%s(处于%s形态)"
+                    : mimicker ? "%s(伪装成%s)"
+                               : "%s(模仿%s)",
                 realnm, shape);
         mptr = mtmp->data; /* reset for mimicker case */
 #if 0  /* hardfought */
@@ -263,25 +263,25 @@ done_in_by(struct monst *mtmp, int how)
     } else if (mptr == &mons[PM_GHOST]) {
         Strcat(buf, "鬼魂");
         if (has_mgivenname(mtmp))
-            Sprintf(eos(buf), " 的%s", MGIVENNAME(mtmp));
+            Sprintf(eos(buf), "的%s", MGIVENNAME(mtmp));
     } else if (mtmp->isshk) {
         const char *shknm = shkname(mtmp),
                    *honorific = shkname_is_pname(mtmp) ? ""
-                                   : mtmp->female ? "Ms. " : "Mr. ";
+                                   : mtmp->female ? "先生" : "女生";
 
-        Sprintf(eos(buf), "%s%s 店主", honorific, shknm);
+        Sprintf(eos(buf), "店主%s%s", shknm, honorific); /*修改语序:Sprintf(eos(buf), "%s%s 店主", honorific, shknm);*/
         svk.killer.format = KILLED_BY;
     } else if (mtmp->ispriest || mtmp->isminion) {
         /* m_monnam() suppresses "the" prefix plus "invisible", and
            it overrides the effect of Hallucination on priestname() */
         Strcat(buf, m_monnam(mtmp));
     } else {
-        Strcat(buf, pmname(mptr, Mgender(mtmp)));
         if (has_mgivenname(mtmp)) {
-            Sprintf(eos(buf), " %s %s",
-                    has_ebones(mtmp) ? "之" : "叫",
+            Sprintf(eos(buf), "%s%s的", /*换pline:Sprintf*/
+                    has_ebones(mtmp) ? "" : "叫",
                     MGIVENNAME(mtmp));
         }
+        Strcat(buf, pmname(mptr, Mgender(mtmp))); /*修改语序:挪到if (has_mgivenname(mtmp)) {后*/
     }
 
     Strcpy(svk.killer.name, buf);
@@ -356,11 +356,11 @@ static const struct {
     /* "petrified by <foo>, while getting stoned" -- "while getting stoned"
        prevented any last-second recovery, but it was not the cause of
        "petrified by <foo>" */
-    { STONING, 1, "getting stoned", (char *) 0 },
+    { STONING, 1, "变成石头", (char *) 0 },
     /* "died of starvation, while fainted from lack of food" is accurate
        but sounds a fairly silly (and doesn't actually appear unless you
        splice together death and while-helpless from xlogfile) */
-    { STARVING, 0, "fainted from lack of food", "fainted" },
+    { STARVING, 0, "因饥饿而晕厥", "晕厥" },
 };
 
 /* clear away while-helpless when the cause of death caused that
@@ -627,7 +627,7 @@ disclose(int how, boolean taken)
 
     if (gi.invent && !done_stopprint) {
         if (taken)
-            Sprintf(qbuf, "你想查看在你%s时本来有什么吗?",
+            Sprintf(qbuf, "你想查看你%s时本来有什么吗?",
                     (how == QUIT) ? "退出" : "死亡");
         else
             Strcpy(qbuf, "你想鉴明你的全部物品吗?");
@@ -647,7 +647,7 @@ disclose(int how, boolean taken)
 
     if (!done_stopprint) {
         ask = should_query_disclose_option('a', &defquery);
-        c = ask ? yn_function("Do you want to see your attributes?", ynqchars,
+        c = ask ? yn_function("你想查看你的属性吗?", ynqchars,
                               defquery, TRUE)
                 : defquery;
         if (c == 'y')
@@ -672,7 +672,7 @@ disclose(int how, boolean taken)
         if (should_query_disclose_option('c', &defquery)) {
             int acnt = count_achievements();
 
-            Sprintf(qbuf, "你想看你的行为%s吗？",
+            Sprintf(qbuf, "你想查看你达成的挑战%s吗?",
                     /* this was distinguishing between one achievement and
                        multiple achievements, but "conduct and achievement"
                        looked strange if multiple conducts got shown (which
@@ -692,7 +692,7 @@ disclose(int how, boolean taken)
 
     if (!done_stopprint) {
         ask = should_query_disclose_option('o', &defquery);
-        c = ask ? yn_function("Do you want to see the dungeon overview?",
+        c = ask ? yn_function("你想查看地牢概览吗?",
                               ynqchars, defquery, TRUE)
                 : defquery;
         if (c == 'y')
@@ -735,8 +735,8 @@ savelife(int how)
        again (perhaps due to zap rebound); this text will be appended to
           "killed by <something>, while "
        in high scores entry, if any, and in logfile (but not on tombstone) */
-    gm.multi_reason = Role_if(PM_TOURIST) ? "being toyed with by Fate"
-                                          : "attempting to cheat Death";
+    gm.multi_reason = Role_if(PM_TOURIST) ? "被命运戏弄"
+                                          : "试图逃脱死神之手";
 
     if (u.utrap && u.utraptype == TT_LAVA)
         reset_utrap(FALSE);
@@ -751,9 +751,9 @@ savelife(int how)
         expels(u.ustuck, u.ustuck->data, TRUE);
     } else if (u.ustuck) {
         if (Upolyd && sticks(gy.youmonst.data))
-            You("释放%s。", mon_nam(u.ustuck));
+            You("释放了%s.", mon_nam(u.ustuck));
         else
-            pline("%s放开了你.", Monnam(u.ustuck));
+            pline("%s释放了你.", Monnam(u.ustuck));
         unstuck(u.ustuck);
     }
 }
@@ -929,8 +929,8 @@ artifact_score(
                 /* not observe_object; dead characters don't observe */
                 otmp->known = otmp->dknown = otmp->bknown = otmp->rknown = 1;
                 /* assumes artifacts don't have quan > 1 */
-                Sprintf(pbuf, "%s%s (价值%ld %s和%ld分数)",
-                        the_unique_obj(otmp) ? "这个" : "",
+                Sprintf(pbuf, "%s%s (价值%ld %s, 分数%ld)",
+                        the_unique_obj(otmp) ? "" : "",
                         otmp->oartifact ? artiname(otmp->oartifact)
                                         : OBJ_NAME(objects[otmp->otyp]),
                         value, currency(value), points);
@@ -1030,7 +1030,7 @@ done(int how)
             svk.killer.name[0] = '\0';
         }
         if (wizard) {
-            You("似乎是个非常狡猾的巫师。");
+            You("似乎是个非常狡猾的巫师.");
             svk.killer.format = KILLED_BY_AN; /* reset to 0 */
             return;
         }
@@ -1085,18 +1085,18 @@ done(int how)
         pline("但是等等...");
         /* assumes that only one type of item confers LifeSaved property */
         makeknown(AMULET_OF_LIFE_SAVING);
-        Your("勋章 %s！", !Blind ? "开始发光" : "感觉温暖");
+        Your("吊坠%s!", !Blind ? "开始发光" : "感觉很热");
         if (how == CHOKING)
-            You("呕吐 ...");
-        You_feel("好多了！");
-        pline_The("挂饰化为了尘埃!");
+            You("开始呕吐...");
+        You_feel("好多了!");
+        pline_The("吊坠化为了尘土!");
         if (uamul)
             useup(uamul);
 
         (void) adjattrib(A_CON, -1, TRUE);
         savelife(how);
         if (how == GENOCIDED) {
-            pline("不幸的是，你仍然被种族灭绝了...");
+            pline("不幸的是, 你仍然被灭绝了...");
         } else {
             char killbuf[BUFSZ];
             formatkiller(killbuf, BUFSZ, how, FALSE);
@@ -1112,8 +1112,8 @@ done(int how)
            accept it more than once if there's no user supplying it */
         && !(program_state.done_hup && gd.done_seq++ == gh.hero_seq)
 #endif
-        && !paranoid_query(ParanoidDie, "Die?")) {
-        pline("好吧，那你就别%s了。", (how == CHOKING) ? "噎死" : "死掉");
+        && !paranoid_query(ParanoidDie, "要死吗?")) {
+        pline("好吧, 那你就别%s了.", (how == CHOKING) ? "噎死" : "死");
         iflags.last_msg = PLNMSG_OK_DONT_DIE;
         savelife(how);
         survive = TRUE;
@@ -1187,7 +1187,7 @@ really_done(int how)
      * smiling... :-)  -3.
      */
     if (svm.moves <= 1 && how < PANICKED && !done_stopprint)
-        pline("不要经过起点。  不要领取 200 %s。", currency(200L));
+        pline("不要经过起点. 不要拿超过200 %s.", currency(200L));
 
     if (have_windows)
         wait_synch(); /* flush screen output */
@@ -1226,7 +1226,7 @@ really_done(int how)
         if (u.uhp < 1) {
             how = DIED;
             u.umortality++; /* skipped above when how==QUIT */
-            Strcpy(svk.killer.name, "退出了卡隆的小船");
+            Strcpy(svk.killer.name, "退出了卡戎的小船");
         }
     }
     if (how == ESCAPED || how == PANICKED)
@@ -1355,16 +1355,16 @@ really_done(int how)
         /* give this feedback even if bones aren't going to be created,
            so that its presence or absence doesn't tip off the player to
            new bones or their lack; it might be a lie if makemon fails */
-        Your("%s 作为 %s...",
+        Your("%s, 变成%s...",
              (u.ugrave_arise != PM_GREEN_SLIME)
                  ? "尸体从死亡中站起"
-                 : "复仇者持续",
+                 : "复仇还在持续",
              an(pmname(&mons[u.ugrave_arise], Ugender)));
         display_nhwindow(WIN_MESSAGE, FALSE);
     }
 
     if (bones_ok) {
-        if (!wizard || paranoid_query(ParanoidBones, "Save bones?"))
+        if (!wizard || paranoid_query(ParanoidBones, "保留遗骨?"))
             savebones(how, endtime, corpse);
         /* corpse may be invalid pointer now so
             ensure that it isn't used again */
@@ -1418,12 +1418,12 @@ really_done(int how)
         /* don't bother counting to see whether it should be plural */
     }
 
-    Sprintf(pbuf, "%s %s the %s...", Goodbye(), svp.plname,
+    Sprintf(pbuf, "%s, %s%s...", Goodbye(), /*修改语序:Sprintf(pbuf, "%s, %s%s...", Goodbye(), svp.plname,*/
             (how != ASCENDED)
                 ? (const char *) ((flags.female && gu.urole.name.f)
                     ? gu.urole.name.f
                     : gu.urole.name.m)
-                : (const char *) (flags.female ? "半女神" : "半神"));
+                : (const char *) (flags.female ? "半神" : "半神"), svp.plname); /*修改语序:: (const char *) (flags.female ? "半神" : "半神")*/
     dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
     dump_forward_putstr(endwin, 0, "", done_stopprint);
 
@@ -1468,17 +1468,17 @@ really_done(int how)
 
                 mhp = d(m_lev, 8);
                 u.urexp = nowrap_add(u.urexp, mhp);
-                Strcat(eos(pbuf), " 和薛定谔的猫");
+                Strcat(eos(pbuf), "和薛定谔的猫");
             }
             dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
             pbuf[0] = '\0';
         } else {
-            Strcat(pbuf, " ");
+            Strcat(pbuf, "");
         }
-        Sprintf(eos(pbuf), "%s带着%ld点%s,",
-                (how == ASCENDED) ? "得到了回报"
-                                  : "从地牢中逃脱",
-                u.urexp, plur(u.urexp));
+        Sprintf(eos(pbuf), "带着%ld点%s, %s",
+                u.urexp, plur(u.urexp), /*修改语序:(how == ASCENDED) ? "得到了应有的回报"*/
+                (how == ASCENDED) ? "得到了应有的回报" /*修改语序:  : "逃离了地牢",*/
+                : "逃离了地牢"); /*修改语序:u.urexp, plur(u.urexp));*/
         dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
 
         if (!done_stopprint)
@@ -1514,7 +1514,7 @@ really_done(int how)
                             currency(2L));
                     obfree(otmp, (struct obj *) 0);
                 } else {
-                    Sprintf(pbuf, "%8ld 块不值钱的彩色玻璃碎片%s,",
+                    Sprintf(pbuf, "%8ld 个不值钱的彩色玻璃碎片%s,",
                             count, plur(count));
                 }
                 dump_forward_putstr(endwin, 0, pbuf, 0);
@@ -1526,30 +1526,30 @@ really_done(int how)
         if (u.uz.dnum == 0 && u.uz.dlevel <= 0) {
             /* level teleported out of the dungeon; `how' is DIED,
                due to falling or to "arriving at heaven prematurely" */
-            Sprintf(pbuf, "你在地下城的界限之外 %s",
+            Sprintf(pbuf, "你在地牢的界限之外%s",
                     (u.uz.dlevel < 0) ? "去世" : ends[how]);
         } else {
             /* more conventional demise */
-            const char *where = svd.dungeons[u.uz.dnum].dname;
+            const char *where = svd.dungeons[u.uz.dnum].dcname;
 
             if (Is_astralevel(&u.uz))
-                where = "The Astral Plane";
-            Sprintf(pbuf, "你%s在%s", ends[how], where);
+                where = "星界";
+            Sprintf(pbuf, "你在%s%s", where, ends[how]); /*修改语序:Sprintf(pbuf, "你%s在%s", ends[how], where);*/
             if (!In_endgame(&u.uz) && !single_level_branch(&u.uz))
-                Sprintf(eos(pbuf), ", 地牢第 %d 层, ",
+                Sprintf(eos(pbuf), " (地牢第%d层), ",
                         In_quest(&u.uz) ? dunlev(&u.uz) : depth(&u.uz));
         }
 
-        Sprintf(eos(pbuf), "获得了 %ld 点分数%s", u.urexp, plur(u.urexp));
+        Sprintf(eos(pbuf), "获得了%ld点分数%s", u.urexp, plur(u.urexp));
         dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
     }
 
-    Sprintf(pbuf, "以及 %ld 块%s 金币，历经 %ld 步%s。", umoney,
+    Sprintf(pbuf, "以及%ld%s金币, 历经%ld步%s.", umoney,
             plur(umoney), svm.moves, plur(svm.moves));
     dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
     Sprintf(pbuf,
-            "你是%d级，最大生命值为%d点%s，当你%s时。",
-            u.ulevel, u.uhpmax, plur(u.uhpmax), ends[how]);
+            "你%s时, 你的等级为%d, 最大生命值为%d%s.", /*修改语序:"你的等级为%d, 最大生命值为%d%s, 当你%s时.",*/
+            ends[how], u.ulevel, u.uhpmax, plur(u.uhpmax)); /*修改语序:u.ulevel, u.uhpmax, plur(u.uhpmax), ends[how]);*/
     dump_forward_putstr(endwin, 0, pbuf, done_stopprint);
     dump_forward_putstr(endwin, 0, "", done_stopprint);
     if (!done_stopprint)
@@ -1627,7 +1627,7 @@ container_contents(
                    reports the box as containing "1 item" */
                 cat = SchroedingersBox(box);
 
-                Sprintf(buf, "%s里面有:", the(xname(box)));
+                Sprintf(buf, "%s的内容物:", the(xname(box)));
                 putstr(tmpwin, 0, buf);
                 if (!dumping)
                     putstr(tmpwin, 0, "");
@@ -1663,7 +1663,7 @@ container_contents(
                     container_contents(box->cobj, identified, TRUE,
                                        reportempty);
             } else if (reportempty) {
-                pline("%s 是空的.", upstart(thesimpleoname(box)));
+                pline("%s是空的.", upstart(thesimpleoname(box)));
                 display_nhwindow(WIN_MESSAGE, FALSE);
             }
         }

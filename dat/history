@@ -1,360 +1,285 @@
-NetHack History file for release 5.0
-
-Behold, mortal, the origins of NetHack...
-
-Jay Fenlason wrote the original Hack, with help from Kenny Woodland,
-Mike Thome, and Jon Payne.
-
-Andries Brouwer did a major re-write while at Stichting Mathematisch Centrum
-(now Centrum Wiskunde & Informatica), transforming Hack into a very different
-game.  He published the Hack source code for use on UNIX(tm) systems by
-posting that to Usenet newsgroup net.sources (later renamed comp.sources)
-releasing version 1.0 in December of 1984, then versions 1.0.1, 1.0.2, and
-finally 1.0.3 in July of 1985.  Usenet newsgroup net.games.hack (later
-renamed rec.games.hack, eventually replaced by rec.games.roguelike.nethack)
-was created for discussing it.
-
-Don G. Kneller ported Hack 1.0.3 to Microsoft(tm) C and MS-DOS(tm), producing
-PC HACK 1.01e, added support for DEC Rainbow graphics in version 1.03g, and
-went on to produce at least four more versions (3.0, 3.2, 3.51, and 3.6;
-note that these are old Hack version numbers, not contemporary NetHack ones).
-
-R. Black ported PC HACK 3.51 to Lattice(tm) C and the Atari 520/1040ST,
-producing ST Hack 1.03.
-
-Mike Stephenson merged these various versions back together, incorporating
-many of the added features, and produced NetHack version 1.4 in 1987.  He
-then coordinated a cast of thousands in enhancing and debugging NetHack 1.4
-and released NetHack versions 2.2 and 2.3.  Like Hack, they were released by
-posting their source code to Usenet where they remained available in various
-archives accessible via ftp and uucp after expiring from the newsgroup.
-
-Later, Mike coordinated a major re-write of the game, heading a team which
-included Ken Arromdee, Jean-Christophe Collet, Steve Creps, Eric Hendrickson,
-Izchak Miller, Eric S. Raymond, John Rupley, Mike Threepoint, and Janet Walz,
-to produce NetHack 3.0c.
-
-NetHack 3.0 was ported to the Atari by Eric R. Smith, to OS/2 by Timo
-Hakulinen, and to VMS by David Gentzel.  The three of them and Kevin Darcy
-later joined the main NetHack Development Team to produce subsequent
-revisions of 3.0.
-
-Olaf Seibert ported NetHack 2.3 and 3.0 to the Amiga.  Norm Meluch, Stephen
-Spackman and Pierre Martineau designed overlay code for PC NetHack 3.0.
-Johnny Lee ported NetHack 3.0 to the Macintosh.  Along with various other
-Dungeoneers, they continued to enhance the PC, Macintosh, and Amiga ports
-through the later revisions of 3.0.
-
-Version 3.0 went through ten relatively rapidly released "patch-level"
-revisions.  Versions at the time were known as 3.0 for the base release
-and variously as "3.0a" through "3.0j", "3.0 patchlevel 1" through
-"3.0 patchlevel 10", or "3.0pl1" through "3.0pl10" rather than 3.0.0 and
-3.0.1 through 3.0.10; the three component numbering scheme began to be used
-with 3.1.0.
-
-Headed by Mike Stephenson and coordinated by Izchak Miller and Janet Walz,
-the NetHack Development Team which now included Ken Arromdee, David Cohrs,
-Jean-Christophe Collet, Kevin Darcy, Matt Day, Timo Hakulinen, Steve Linhart,
-Dean Luick, Pat Rankin, Eric Raymond, and Eric Smith undertook a radical
-revision of 3.0.  They re-structured the game's design, and re-wrote major
-parts of the code.  They added multiple dungeons, a new display, special
-individual character quests, a new endgame and many other new features, and
-produced NetHack 3.1.  Version 3.1.0 was released in January of 1993.
-
-Ken Lorber, Gregg Wonderly and Greg Olson, with help from Richard Addison,
-Mike Passaretti, and Olaf Seibert, developed NetHack 3.1 for the Amiga.
-
-Norm Meluch and Kevin Smolkowski, with help from Carl Schelin, Stephen
-Spackman, Steve VanDevender, and Paul Winner, ported NetHack 3.1 to the PC.
-
-Jon W{tte and Hao-yang Wang, with help from Ross Brown, Mike Engber, David
-Hairston, Michael Hamel, Jonathan Handler, Johnny Lee, Tim Lennan, Rob Menke,
-and Andy Swanson, developed NetHack 3.1 for the Macintosh, porting it for
-MPW.  Building on their development, Bart House added a Think C port.
-
-Timo Hakulinen ported NetHack 3.1 to OS/2.  Eric Smith ported NetHack 3.1
-to the Atari.  Pat Rankin, with help from Joshua Delahunty, was responsible
-for the VMS version of NetHack 3.1.  Michael Allison ported NetHack 3.1 to
-Windows NT.
-
-Dean Luick, with help from David Cohrs, developed NetHack 3.1 for X11.
-It drew the map as text rather than graphically but included nh10.bdf, an
-optionally used custom X11 font which has tiny images in place of letters and
-punctuation, a precursor of tiles.  Those images don't extend to individual
-monster and object types, just replacements for monster and object classes
-(so one custom image for all "a" insects and another for all "[" armor and
-so forth, not separate images for beetles and ants or for cloaks and boots).
-
-Warwick Allison wrote a graphically displayed version of NetHack for the
-Atari where the tiny pictures were described as "icons" and were distinct
-for specific types of monsters and objects rather than just their classes.
-He contributed them to the NetHack Development Team which rechristened them
-"tiles", original usage which has subsequently been picked up by various
-other games.  NetHack's tiles support was then implemented on other platforms
-(initially MS-DOS but eventually Windows, Qt, and X11 too).
-
-The 3.2 NetHack Development Team, comprised of Michael Allison, Ken Arromdee,
-David Cohrs, Jessie Collet, Steve Creps, Kevin Darcy, Timo Hakulinen, Steve
-Linhart, Dean Luick, Pat Rankin, Eric Smith, Mike Stephenson, Janet Walz,
-and Paul Winner, released version 3.2.0 in April of 1996.
-
-Version 3.2 marked the tenth anniversary of the formation of the development
-team.  In a testament to their dedication to the game, all thirteen members
-of the original NetHack Development Team remained on the team at the start
-of work on that release.  During the interval between the release of 3.1.3
-and 3.2.0, one of the founding members of the NetHack Development Team,
-Dr. Izchak Miller, was diagnosed with cancer and passed away.  That release
-of the game was dedicated to him by the development and porting teams.
-
-Version 3.2 proved to be more stable than previous versions.  Many bugs
-were fixed, abuses eliminated, and game features tuned for better game
-play.
-
-During the lifespan of NetHack 3.1 and 3.2, several enthusiasts of the game
-added their own modifications to the game and made these "variants" publicly
-available:
-
-Tom Proudfoot and Yuval Oren created NetHack++, which was quickly renamed
-NetHack-- when some people incorrectly assumed that it was a conversion
-of the C source code to C++.  Working independently, Stephen White wrote
-NetHack Plus.  Tom Proudfoot later merged NetHack Plus and his own NetHack--
-to produce SLASH.  Larry Stewart-Zerba and Warwick Allison improved the
-spell casting system with the Wizard Patch.  Warwick Allison also ported
-NetHack to use the Qt interface.
-
-Warren Cheung combined SLASH with the Wizard Patch to produce Slash'EM, and
-with the help of Kevin Hugo, added more features.  Kevin later joined the
-NetHack Development Team and incorporated the best of these ideas into
-NetHack 3.3.
-
-The final update to 3.2 was the bug fix release 3.2.3, which was released
-simultaneously with 3.3.0 in December 1999 just in time for the Year 2000.
-Because of the newer version, 3.2.3 was released as a source code patch only,
-without any ready-to-play distribution for systems that usually had such.
-
-(To anyone considering resurrecting an old version:  all versions before
-3.2.3 had a Y2K bug.  The high scores file and the log file contained dates
-which were formatted using a two-digit year, and 1999's year 99 was followed
-by 2000's year 100.  That got written out successfully but it unintentionally
-introduced an extra column in the file layout which prevented score entries
-from being read back in correctly, interfering with insertion of new high
-scores and with retrieval of old character names to use for random ghost and
-statue names in the current game.)
-
-The 3.3 NetHack Development Team, consisting of Michael Allison, Ken Arromdee,
-David Cohrs, Jessie Collet, Steve Creps, Kevin Darcy, Timo Hakulinen,
-Kevin Hugo, Steve Linhart, Ken Lorber, Dean Luick, Pat Rankin, Eric Smith,
-Mike Stephenson, Janet Walz, and Paul Winner, released 3.3.0 in
-December 1999 and 3.3.1 in August of 2000.
-
-Version 3.3 offered many firsts.  It was the first version to separate race
-and profession.  The Elf class was removed in preference to an elf race,
-and the races of dwarves, gnomes, and orcs made their first appearance in
-the game alongside the familiar human race.  Monk and Ranger roles joined
-Archeologists, Barbarians, Cavemen, Healers, Knights, Priests, Rogues,
-Samurai, Tourists, Valkyries and of course, Wizards.  It was also the first
-version to allow you to ride a steed, and was the first version to have a
-publicly available web-site listing all the bugs that had been discovered.
-Despite that constantly growing bug list, 3.3 proved stable enough to last
-for more than a year and a half.
-
-The 3.4 NetHack Development Team initially consisted of Michael Allison,
-Ken Arromdee, David Cohrs, Jessie Collet, Kevin Hugo, Ken Lorber, Dean Luick,
-Pat Rankin, Mike Stephenson, Janet Walz, and Paul Winner, with Warwick Allison
-joining just before the release of NetHack 3.4.0 in March 2002.
-
-As with version 3.3, various people contributed to the game as a whole as
-well as supporting ports on the different platforms that NetHack runs on:
-
-Pat Rankin maintained 3.4 for VMS.
-
-Michael Allison maintained NetHack 3.4 for the MS-DOS platform.
-Paul Winner and Yitzhak Sapir provided encouragement.
-
-Dean Luick, Mark Modrall, and Kevin Hugo maintained and enhanced the
-Macintosh port of 3.4.
-
-Michael Allison, David Cohrs, Alex Kompel, Dion Nicolaas, and Yitzhak Sapir
-maintained and enhanced 3.4 for the Microsoft Windows platform.  Alex Kompel
-contributed a new graphical interface for the Windows port.  Alex Kompel also
-contributed a Windows CE port for 3.4.1.
-
-Ron Van Iwaarden was the sole maintainer of NetHack for OS/2 the past several
-releases. Unfortunately Ron's last OS/2 machine stopped working in early
-2006. A great many thanks to Ron for keeping NetHack alive on OS/2 all these
-years.
-
-Janne Salmijarvi and Teemu Suikki maintained and enhanced the
-Amiga port of 3.4 after Janne Salmijarvi resurrected it for 3.3.1.
-
-Christian "Marvin" Bressler maintained 3.4 for the Atari after he
-resurrected it for 3.3.1.
-
-The release of NetHack 3.4.3 in December 2003 marked the beginning of a
-long release hiatus.  3.4.3 proved to be a remarkably stable version that
-provided continued enjoyment by the community for more than a decade.  The
-NetHack Development Team slowly and quietly continued to work on the game
-behind the scenes during the tenure of 3.4.3.  It was during that same
-period that several new variants emerged within the NetHack community.
-Notably sporkhack by Derek S. Ray, unnethack by Patric Mueller, nitrohack
-and its successors originally by Daniel Thaler and then by Alex Smith, and
-Dynahack by Tung Nguyen.  Some of those variants continue to be developed,
-maintained, and enjoyed by the community to this day.
-
-In September 2014, an interim snapshot of the code under development was
-released publicly by other parties.  Since that code was a work-in-progress
-and had not gone through the process of debugging it as a suitable release,
-it was decided that the version numbers present on that code snapshot would
-be retired and never used in an official NetHack release.  An announcement
-was posted on the NetHack Development Team's official nethack.org website
-to that effect, stating that there would never be a 3.4.4, 3.5, or 3.5.0
-official release version.
-
-In January 2015, preparation began for the release of NetHack 3.6.
-
-At the beginning of development for what would eventually get released
-as 3.6.0, the NetHack Development Team consisted of Warwick Allison,
-Michael Allison, Ken Arromdee, David Cohrs, Jessie Collet, Ken Lorber,
-Dean Luick, Pat Rankin, Mike Stephenson, Janet Walz, and Paul Winner.
-In early 2015, ahead of the release of 3.6.0, new members Sean Hunt,
-Pasi Kallinen, and Derek S. Ray joined the NetHack Development Team.
-
-Near the end of the development of 3.6.0, one of the significant inspirations
-for many of the humorous and fun features found in the game, author
-Terry Pratchett, passed away.  NetHack 3.6.0 introduced a tribute to him.
-
-3.6.0 was released in December 2015, and merged work done by the development
-team since the release of 3.4.3 with some of the beloved community patches.
-Many bugs were fixed and some code was restructured.
-
-The NetHack Development Team, as well as Steve VanDevender and
-Kevin Smolkowski, ensured that NetHack 3.6 continued to operate on various
-UNIX flavors and maintained the X11 interface.
-
-Ken Lorber, Haoyang Wang, Pat Rankin, and Dean Luick maintained the port
-of NetHack 3.6 for MacOS.
-
-Michael Allison, David Cohrs, Bart House, Pasi Kallinen, Alex Kompel,
-Dion Nicolaas, Derek S. Ray and Yitzhak Sapir maintained the port of
-NetHack 3.6 for Microsoft Windows.
-
-Pat Rankin attempted to keep the VMS port running for NetHack 3.6,
-hindered by limited access.  Kevin Smolkowski has updated and tested it
-for the most recent version of OpenVMS (V8.4 as of this writing) on Alpha
-and Integrity (aka Itanium aka IA64) but not VAX.
-
-Ray Chason resurrected the MS-DOS port for 3.6 and contributed the
-necessary updates to the community at large.
-
-In late April 2018, several hundred bug fixes for 3.6.0 and some new
-features were assembled and released as NetHack 3.6.1.
-The NetHack Development Team at the time of release of 3.6.1 consisted of
-Warwick Allison, Michael Allison, Ken Arromdee, David Cohrs, Jessie Collet,
-Pasi Kallinen, Ken Lorber, Dean Luick, Patric Mueller, Pat Rankin,
-Derek S. Ray, Alex Smith, Mike Stephenson, Janet Walz, and Paul Winner.
-
-In early May 2019, another 320 bug fixes along with some enhancements and
-the adopted curses window port, were released as 3.6.2.
-
-Bart House, who had contributed to the game as a porting team participant
-for decades, joined the NetHack Development Team in late May 2019.
-
-NetHack 3.6.3 was released on December 5, 2019 containing over 190 bug
-fixes to NetHack 3.6.2.
-
-NetHack 3.6.4 was released on December 18, 2019 containing a security
-fix and a few bug fixes.
-
-NetHack 3.6.5 was released on January 27, 2020 containing some security fixes
-and a small number of bug fixes.
-
-NetHack 3.6.6 was released on March 8, 2020 containing a security fix and
-some bug fixes.
-
-NetHack 3.6.7 was released on February 16, 2023 containing a security fix and
-some bug fixes.
-
-Development work for the major release to follow NetHack 3.6 began in 2015
-around the same time as NetHack 3.6.0 was being released. That development
-work continued in parallel to each of the NetHack 3.6 releases from 2015
-through 2023, and continued until the end of April 2026.  For the first time,
-that development was shared publicly on GitHub and SourceForge as it occurred.
-It was done under the label NetHack-3.7 work-in-progress (WIP), although the
-version number for the next release had not yet been solidified.
-
-Exposure of the development to the public brought many good things, and some
-challenges. People were able to observe and criticize changes and new features
-almost immediately, and they often did. The GitHub pull request system made
-it straightforward for people to contribute directly to development.
-Contributions resolved many, many bugs in the game and we thank all the
-contributors.
-
-In early 2026, with the game development getting stable enough to consider
-initiating an official release, the devteam reviewed the nature and number of
-changes in the game. It was clear that there was sufficient depth and
-breadth to warrant a major release and version 5.0 was decided on.
-That's a new major release over 3.x, without opening up any ambiguity
-or confusion with existing variants that there might have been had it
-been released as version 4.0.
-
-NetHack 5.0.0 was released on May 2, 2026.
-
-The source code for NetHack 5.0.0 was modified and modernized to be compliant
-with the C99 standard. The 5.0.0 release contained over 3100 fixes,changes,
-and updated features.
-
-NetHack 5.0 was the first version to replace the lex and yacc level
-and dungeon compilers of past versions, with a new Lua interpreter-based
-approach to provide those elements. Lua is also used for the quest texts
-in NetHack 5.0.0. The entire development team acknowledges the work
-done by Pasi Kallinen to make that happen.
-
-At the time of the NetHack 5.0 release, the core development team,
-active and erstwhile, included Warwick Allison, Michael Allison,
-Ken Arromdee, David Cohrs, Jessie Collet, Bart House, Kevin Hugo,
-Pasi Kallinen, Ken Lorber, Dean Luick, Pat Rankin, Derek S. Ray,
-Alex Smith, Patric Mueller, Mike Stephenson, Janet Walz, Paul Winner.
-
-Ken Lorber, Pat Rankin, Patrick Mueller and Michael Allison helped ensure
-that NetHack 5.0 would run on macOS.
-
-Ingo Paschke somehow managed to revive a NetHack 5.0 port for the Amiga,
-using a cross-compiler on a modern platform to do so. His work was shared
-so others can straightforwardly produce NetHack 5.0 for the Amiga thanks
-to his efforts.
-
-Ray Chason contributed the majority of maintenance work for the NetHack 5.0
-MS-DOS port, including porting the curses interface to it.
-Michael Allison ensured that NetHack 5.0 core changes continued to work
-with the msdos port and keep it alive.  Cross-compiling the MS-DOS port
-has helped make that possible and mostly painless.
-
-People that contributed to the Windows port of NetHack 5.0 since the
-development of NetHack 5.0 begain over eleven years ago, included
-Michael Allison, David Cohrs, Bart House, Pasi Kallinen, Alex Kompel,
-Dion Nicolaas, Derek S. Ray and Yitzhak Sapir.
-
-With sadness, the devteam would like to acknowledge and remember the past
-contributions from the late Ron Van Iwaarden, who was the sole maintainer
-of NetHack for OS/2 for several past NetHack releases. Ron will be missed.
-
-The official NetHack web site is maintained by Ken Lorber at
-https://www.nethack.org/.
-
-On behalf of the NetHack community, thank you very much once again  to
-M.  Drew  Streib and Pasi Kallinen for providing a public NetHack server
-at nethack.alt.org. Thanks to  Keith  Simpson  and Andy Thomson for
-hardfought.org. Thanks to all those unnamed dungeoneers who invest their
-time and  effort  into  annual  NetHack tournaments such as Junethack,
-The November NetHack Tournament, and in days past, devnull.net (gone for
-now, but not forgotten).
+NetHack5.0版本的历史文件
+
+凡人啊, 请看, 这就是NetHack的起源......
+
+Jay Fenlason在Kenny Woodland, Mike Thome和Jon Payne的协助下编写了最初的Hack.
+
+Andries Brouwer在Stichting Mathematisch Centrum(现为Centrum Wiskunde &
+Informatica, 荷兰国家数学与计算机科学研究中心)工作期间, 对Hack进行了大规模重
+写, 将其转变为一款截然不同的游戏. 他通过在Usenet新闻组net.sources(后更名为
+comp.sources)上发布源代码, 使Hack源代码可在UNIX(tm)系统上使用, 于1984年12月发
+布了1.0版, 随后又发布了1.0.1版, 1.0.2版, 并于1985年7月最终发布了1.0.3版. 
+Usenet新闻组net.games.hack(后来更名为rec.games.hack, 最终被
+rec.games.roguelike.nethack取代)正是为了讨论该游戏而创建的. 
+
+Don G. Kneller将Hack 1.0.3移植到了Microsoft(tm) C和MS-DOS(tm)平台, 推出了PC
+HACK 1.01e, 并在1.03g版本中增加了对DEC Rainbow图形的支持, 随后又开发了至少四
+个版本(3.0, 3.2, 3.51和3.6; 请注意, 这些是旧版的Hack版本号, 而非现行的NetHack
+版本号).
+
+R. Black将PC HACK 3.51移植到了Lattice(tm) C和Atari 520/1040ST平台, 从而诞生了
+ST Hack 1.03. 
+
+Mike Stephenson将这些不同版本重新合并, 整合了许多新增功能, 并于1987年推出了
+NetHack 1.4版. 随后, 他协调了数千名开发者对NetHack 1.4进行增强和调试, 并发布
+了NetHack 2.2和2.3版本. 与Hack一样, 这些版本是通过将源代码发布到Usenet上发布
+的, 在新闻组过期后, 这些源代码仍可在各种可通过ftp和uucp访问的存档中获取. 
+
+后来, Mike协调了一次对游戏的大规模重写, 领导了一个团队, 该团队成员包括Ken
+Arromdee, Jean-Christophe Collet, Steve Creps, Eric Hendrickson, Izchak
+Miller, Eric S. Raymond, John Rupley, Mike Threepoint, 以及Janet Walz, 最终推
+出了NetHack 3.0c. 
+
+NetHack 3.0由Eric R. Smith移植到Atari平台, 由Timo Hakulinen移植到OS/2平台, 由
+David Gentzel移植到VMS平台. 这三人与Kevin Darcy后来加入了NetHack主要开发团队, 
+共同开发了3.0版本的后续修订版. 
+
+Olaf Seibert将NetHack 2.3和3.0移植到了Amiga平台. Norm Meluch, Stephen
+Spackman和Pierre Martineau为PC版NetHack 3.0设计了叠加层代码. Johnny Lee将
+NetHack 3.0移植到了Macintosh平台. 他们与其他多位"地牢探险家"一起, 在3.0后续修
+订版中持续优化了PC, Macintosh和Amiga版本. 
+
+3.0版本经历了十次发布相对较快的"补丁级别"修订. 当时, 基础版本被称为3.0, 而后
+续版本则有"3.0a"至"3.0j",  "3.0补丁级别1"至"3.0补丁级别10", 或"3.0pl1"至
+"3.0pl10", 而非3.0.0和3.0.1至3.0.10; 这种三部分编号方案从3.1.0版本开始使用. 
+
+在Mike Stephenson的领导下, 由Izchak Miller和Janet Walz)协调, NetHack开发团队
+--此时成员包括Ken Arromdee, David Cohrs, Jean-Christophe Collet, Kevin Darcy,
+Matt Day, Timo Hakulinen, Steve Linhart), Dean Luick, Pat Rankin, Eric
+Raymond和Eric Smith--对3.0版本进行了彻底的修订. 他们重新构建了游戏的设计架构,
+并重写了代码的主要部分. 他们添加了多个地牢, 新的界面, 特殊的个人角色任务, 新
+的结局以及许多其他新功能, 并推出了NetHack 3.1. 3.1.0版本于1993年1月发布.
+
+Ken Lorber, Gregg Wonderly和Greg Olson在Richard Addison, Mike Passaretti, 和
+Olaf Seibert的协助下, 为Amiga平台开发了NetHack 3.1. 
+
+Norm Meluch和Kevin Smolkowski在Carl Schelin, Stephen Spackman, Steve
+VanDevender, 和Paul Winner的协助下, 将NetHack 3.1移植到了PC平台. 
+
+Jon W{tte和Hao-yang Wang在Ross Brown, Mike Engber, David Hairston, Michael
+Hamel, Jonathan Handler, Johnny Lee, Tim Lennan, Rob Menke, 和Andy Swanson的
+协助下, 开发了适用于Macintosh的NetHack 3.1, 并将其移植到MPW平台. 在此基础上, 
+Bart House添加了一个Think C版本. 
+
+Timo Hakulinen将NetHack 3.1移植到了OS/2平台. Eric Smith将NetHack 3.1移植到了
+Atari平台. Pat Rankin在Joshua Delahunty的协助下, 负责了NetHack 3.1的VMS版本. 
+Michael Allison将Net Hack3.1移植到了Windows NT平台. 
+
+Dean Luick在David Cohrs的协助下, 开发了适用于X11的NetHack 3.1. 该版本以文本形
+式而非图形形式绘制地图, 但包含nh10.bdf--一种可选使用的自定义X11字体, 其中用微
+型图像代替了字母和标点符号, 这是"tiles"概念的先驱. 这些图像并未细化到具体的
+怪物和物品类型, 仅用于替换怪物和物品的类别(即, 所有以"a"开头的昆虫共用一幅自
+定义图像, 所有以"["开头的盔甲共用另一幅, 以此类推, 而非为甲虫和蚂蚁, 或斗篷和
+靴子分别制作独立图像). 
+
+Warwick Allison为Atari开发了一款带图形界面的NetHack版本, 其中那些微小的图片被
+称为"icons", 且针对特定类型的怪物和物品各有不同, 而不仅仅按其类别区分. 他将这
+些图标贡献给了NetHack开发团队, 该团队将其重新命名为"tiles", 这一原始用法随后
+被各种其他游戏所沿用. NetHack的图块支持随后也被移植到其他平台上(最初是MS-DOS,
+但最终也扩展到了Windows, Qt和X11). 
+
+由Michael Allison, Ken Arromdee, David Cohrs, Jessie Collet, Steve Creps,
+Kevin Darcy, Timo Hakulinen, Steve Linhart, Dean Luick, Pat Rankin, Eric
+Smith, Mike Stephenson, Janet Walz, and Paul Winner组成的3.2版NetHack开发团队
+于1996年4月发布了3.2.0版本. 
+
+3.2版标志着开发团队成立十周年. 为了证明他们对游戏的奉献精神, 最初的NetHack开
+发团队全部十三名成员, 在开始开发该版本时仍留在团队中. 在3.1.3版与3.2.0版发布
+的间隔期间, NetHack开发团队的创始成员之一, Izchak Miller博士被诊断出患有癌症,
+并最终离世. 该版本游戏由开发和移植团队特此献给他. 
+
+3.2版被证明比之前的版本更加稳定. 许多错误被修复, 滥用机制被消除, 游戏功能也经
+过调整以提升游戏体验. 
+
+在 NetHack 3.1 和 3.2 的生命周期内, 几位游戏爱好者对游戏进行了自己的修改, 并
+将这些"变体"公开发布: 
+
+Tom Proudfoot和Yuval Oren创建了NetHack++, 后来因部分人误以为这是将C源代码转换
+为C++的版本, 该版本很快被更名为NetHack--. Stephen White独立开发了NetHack Plus.
+Tom Proudfoot后来将NetHack Plus与他自己的NetHack--合并, 从而诞生了SLASH. 
+Larry Stewart-Zerba和Warwick Allison"巫师补丁"(Wizard Patch)改进了法术施放系
+统. 沃里克·艾利森还对NetHack进行了移植, 使其支持Qt界面. 
+
+Warren Cheung将SLASH与"巫师补丁"结合, 开发出了Slash'EM, 并在Kevin Hugo的协助
+下, 添加了更多功能. 凯文后来加入了NetHack开发团队, 并将这些创意中的精华融入了
+NetHack 3.3. 
+
+3.2版本的最后一次更新是错误修复版本3.2.3, 该版本于1999年12月与3.3.0版本同时发
+布, 恰逢2000年到来. 由于新版本已发布, 3.2.3仅以源代码补丁形式发布, 未提供通常
+应有的可直接运行的发行版. 
+
+(致考虑重温旧版本的玩家: 所有早于3.2.3的版本均存在千年虫问题. 高分记录文件和
+日志文件中的日期格式为两位数年份, 1999年的"99"之后紧接着是2000年的"100". 虽然
+这些数据被成功写入, 但这无意中在文件布局中引入了一列, 导致分数条目无法被正确
+读取, 从而干扰了新最高分的插入以及旧角色名称的检索--这些名称本应用于当前游戏
+中随机生成的幽灵和雕像名称. )
+
+3.3版NetHack开发团队由Michael Allison, Ken Arromdee, David Cohrs, Jessie
+Collet, Steve Creps, Kevin Darcy, Timo Hakulinen, Kevin Hugo, Steve Linhart, 
+Ken Lorber, Dean Luick, Pat Rankin, Eric Smith, Mike Stephenson, Janet Walz, 
+和Paul Winner组成, 该团队于1999年12月发布了3.3.0版本, 并于2000年8月发布了
+3.3.1版本. 
+
+3.3版本带来了许多创新. 这是首个将种族与职业分离的版本. 精灵职业被移除, 取而代
+之的是精灵种族, 矮人, 地精和兽人种族也首次在游戏中亮相, 与大家熟悉的人类种族
+并存. 在考古学家, 野蛮人, 穴居人, 治疗者, 骑士, 牧师, 盗贼, 武士, 游客, 女武
+神, 当然还有巫师的基础上加入了武僧和游侠这两个职业. 这也是首个允许玩家骑乘坐
+骑的版本, 同时也是首个拥有公开网站, 列出所有已发现漏洞的版本. 尽管bug列表不断
+增长, 3.3版仍表现得足够稳定, 持续运行了一年半以上. 
+
+3.4版NetHack开发团队最初由Michael Allison, Ken Arromdee, David Cohrs, Jessie
+Collet, Kevin Hugo, Ken Lorber, Dean Luick, Pat Rankin, Mike Stephenson, 
+Janet Walz, 和Paul Winner组成, Warwick Allison在2002年3月NetHack 3.4.0发布前
+夕加入. 
+
+与3.3版本一样, 众多人士不仅为游戏整体做出了贡献, 还支持了NetHack运行的各个平
+台上的移植版本: 
+
+Pat Rankin负责维护VMS平台的3.4版本. 
+
+Michael Allison负责维护MS-DOS平台的NetHack 3.4. Paul Winner和Yitzhak Sapir提
+供了鼓励. 
+
+Dean Luick, Mark Modrall, 和Kevin Hugo负责维护并增强了3.4版的Macintosh移植版.
+
+Michael Allison, David Cohrs, Alex Kompel, Dion Nicolaas, 和Yitzhak Sapir负责
+维护并增强了 3.4 版的 Microsoft Windows 平台移植版. Alex Kompel为Windows移植
+版贡献了一个新的图形界面. 亚历克斯·康佩尔还为3.4.1版本贡献了Windows CE移植版.
+
+在过去的几个版本中, Ron Van Iwaarden是OS/2版NetHack的唯一维护者. 遗憾的是, 
+Ron的最后一台OS/2机器于2006年初停止工作. 非常感谢罗恩这些年来一直让NetHack在
+OS/2上保持活跃. 
+
+在Janne Salmijarvi为3.3.1版本重启Amiga移植版后, Janne Salmijarvi和Teemu
+Suikki 共同维护并增强了3.4版本的Amiga移植版.
+
+Christian "Marvin" Bressler在为3.3.1版本重启Atari移植版后, 负责维护了3.4版本
+的Atari移植版. 
+
+2003年12月NetHack 3.4.3的发布标志着一段漫长发布空窗期的开始. 3.4.3被证明是一
+个极其稳定的版本, 在随后的十多年里持续为社区带来了乐趣. 在3.4.3版本的整个生命
+周期内, NetHack开发团队一直在幕后缓慢而默默地继续着对游戏的工作. 正是在这一时
+期, NetHack 社区内涌现出若干新变体. 其中值得注意的有: Derek S. Ray开发的
+sporkhack, Patric Mueller开发的 unnethack, 最初由Daniel Thaler开发, 随后由
+Alex Smith接手开发的nitrohack及其后续版本, 以及Tung Nguyen开发的Dynahack. 
+其中部分变体至今仍在持续开发, 维护, 并受到社区的喜爱. 
+
+2014年9月, 其他方将正在开发的代码的一个临时快照公开发布. 由于该代码尚处于开发
+阶段, 且未经过作为正式发布版本所需的调试流程, 因此决定将该代码快照上的版本号
+废止, 且永远不会在官方NetHack发布版本中使用. NetHack开发团队在其官方网站
+nethack.org上发布了一则公告说明此事, 声明将永远不会有3.4.4, 3.5或3.5.0的官方
+发布版本. 
+
+2015年1月, NetHack 3.6的发布准备工作正式启动. 
+
+在最终发布为3.6.0的版本开发初期, NetHack开发团队由Warwick Allison, Michael
+Allison, Ken Arromdee, David Cohrs, Jessie Collet, Ken Lorber, Dean Luick, 
+Pat Rankin, Mike Stephenson, Janet Walz, 和Paul Winner组成. 2015年初, 在3.6.0
+发布之前, 新成员肖恩·亨特, 帕西·卡利宁和德里克·S·雷加入了NetHack开发团队. 
+
+在3.6.0开发接近尾声时, 游戏中有许多幽默有趣的特色功能的重要灵感来源之一--作家
+Terry Pratchett--去世了. NetHack 3.6.0版本中特别加入了一项向他致敬的内容. 
+
+3.6.0于2015年12月发布, 整合了开发团队自3.4.3发布以来完成的工作, 以及部分深受
+社区喜爱的补丁. 修复了大量错误, 并对部分代码进行了重构. 
+
+NetHack开发团队, 以及Steve VanDevender和Kevin Smolkowski, 确保了NetHack 3.6能
+够继续在各种UNIX变体上运行, 并保留了X11接口. 
+
+Michael Allison, David Cohrs, Bart House, Pasi Kallinen, Alex Kompel, Dion 
+Nicolaas, Derek S. Ray和Yitzhak Sapir负责维护NetHack 3.6在Microsoft Windows
+上的移植版本. 
+
+Pat Rankin曾尝试维持NetHack 3.6在VMS上的移植版本正常运行, 但因访问权限受限而
+受阻. Kevin Smolkowski已针对最新版本的OpenVMS(截至本文撰写时为V8.4)在Alpha和
+Integrity(又称 Itanium 或 IA64)平台上对其进行了更新和测试, 但未在 VAX 平台上
+进行. 
+
+雷·查森重启了3.6版的 MS-DOS 移植版, 并向整个社区贡献了必要的更新. 
+
+2018年4月下旬, 针对3.6.0的数百项错误修复以及一些新功能被整合并发布为
+NetHack 3.6.1. 3.6.1发布时, NetHack开发团队成员包括: Warwick Allison, Michael
+Allison, Ken Arromdee, David Cohrs, Jessie Collet, Pasi Kallinen, Ken Lorber,
+Dean Luick, Patric Mueller, Pat Rankin, Derek S. Ray, Alex Smith, Mike
+Stephenson, Janet Walz, 和Paul Winner.
+
+2019年5月初, 又发布了320项错误修复, 以及一些增强功能和已采用的curses窗口移植
+版本, 作为3.6.2版本发布. 
+
+Bart House作为移植团队成员, 数十年来一直为游戏做出贡献, 于2019年5月下旬加入了
+NetHack开发团队. 
+
+NetHack 3.6.3于2019年12月5日发布, 包含针对NetHack 3.6.2的190多项错误修复.
+
+NetHack3.6.4于2019年12月18日发布, 包含一项安全修复和若干错误修复. 
+
+NetHack3.6.5于2020年1月27日发布, 包含一些安全修复和少量错误修复. 
+
+NetHack3.6.6于2020年3月8日发布, 包含一项安全修复和若干错误修复. 
+
+NetHack3.6.7于2023年2月16日发布, 包含一项安全修复和若干错误修复. 
+
+NetHack 3.6之后的主要版本的开发工作始于2015年, 大约与NetHack 3.6.0发布同期. 
+这项开发工作在2015年至2023年间与每次NetHack 3.6版本的发布并行进行, 并持续至
+2026 年 4 月底. 这是首次, 该开发工作在进行过程中便通过GitHub和SourceForge向公
+众公开. 该项目以"NetHack-3.7 WIP"为标签进行, 尽管当时下一个版本的版本号尚未最
+终确定. 
+
+向公众公开开发过程带来了许多好处, 但也带来了一些挑战. 人们能够几乎立即观察并
+评论更改和新功能, 而且他们确实经常这样做. GitHub的Pull Request系统使人们能够
+直接参与开发. 这些贡献修复了游戏中数不胜数的bug, 我们感谢所有贡献者. 
+
+2026年初, 随着游戏开发趋于稳定, 可以考虑启动正式发布, 开发团队审查了游戏中的
+变更性质和数量. 显然, 游戏已具备足够的深度和广度, 足以支持一次重大版本发布, 
+因此决定将其定为5.0版. 这是继3.x系列之后的新主要版本, 避免了若以4.0版发布时可
+能与现有变体产生的任何歧义或混淆. 
+
+NetHack 5.0.0于2026年5月2日发布. 
+
+NetHack 5.0.0 的源代码经过修改和现代化改造, 以符合C99标准. 5.0.0版本包含超过
+3100项修复, 更改和更新功能. 
+
+NetHack 5.0 是首个取代以往版本中lex和yacc层以及地牢编译器的版本, 转而采用基于
+Lua解释器的全新方法来实现这些功能. NetHack 5.0.0中的任务文本也使用了Lua编写. 
+整个开发团队对Pasi Kallinen为实现这一目标所做的工作表示感谢. 
+
+在NetHack 5.0发布之时, 核心开发团队(包括现任和前任成员)有: Warwick Allison,
+Michael Allison, Ken Arromdee, David Cohrs, Jessie Collet, Bart House, Kevin
+Hugo, Pasi Kallinen, Ken Lorber, Dean Luick, Pat Rankin, Derek S. Ray, Alex
+Smith, Patric Mueller, Mike Stephenson, Janet Walz, Paul Winner.
+
+Ken Lorber, Pat Rankin, Patrick Mueller和Michael Allison共同确保了NetHack 5.0
+能在macOS上运行. 
+
+Ingo Paschke设法重启了NetHack 5.0针对Amiga的移植工作, 他利用现代平台上的交叉编
+译器完成了这一任务. 他的工作成果已被分享, 因此得益于他的努力, 其他人现在可以轻
+松地为Amiga平台构建NetHack 5.0. 
+
+Ray Chason承担了NetHack 5.0MS-DOS 移植版的大部分维护工作, 包括将curses接口移植
+到该版本. Michael Allison确保了NetHack 5.0核心的变更仍能与MS-DOS移植版兼容, 并
+使其得以延续. 对MS-DOS移植版的交叉编译使这一目标得以实现, 且过程基本顺畅. 
+
+自十一年前NetHack 5.0开始开发以来, 为NetHack 5.0的Windows移植版做出贡献的人士
+包括: Michael Allison, David Cohrs, Bart House, Pasi Kallinen, Alex Kompel,
+Dion Nicolaas, Derek S. Ray和Yitzhak Sapir.
+
+开发团队怀着沉痛的心情, 谨此致敬并缅怀已故的Ron Van Iwaarden过去所作的贡献, 
+他曾是过去数个NetHack版本中OS/2版NetHack的唯一维护者. 我们将永远怀念Ron. 
+
+NetHack 官方网站由Ken Lorber维护, 地址为https://www.nethack.org/. 
+
+代表 NetHack 社区, 再次衷心感谢M. Drew Streib和Pasi Kallinen在nethack.alt.org
+提供公共 NetHack 服务器. 感谢Keith Simpson和Andy Thomson运营hardfought.org. 
+感谢所有未具名的地下城探险者, 他们将自己的时间和精力投入到诸如Junethack, 十一
+月NetHack锦标赛等年度NetHack赛事中, 以及过去曾举办的devnull.net(虽然现已关闭,
+但我们不会忘记). 
+
 
                            - - - - - - - - - -
 
-From time to time, some depraved individual out there in netland sends a
-particularly intriguing modification to help out with the game.  The
-NetHack Development Team sometimes makes note of the names of the worst
-of these miscreants in this, the list of Dungeoneers:
+时不时地, 网络世界里总会有某个堕落的家伙发送一个特别引人入胜的修改版本,
+以帮助改进游戏. NetHack开发团队有时会将这些捣乱分子中最为恶劣的几位的名
+字记录在此--即“地牢探险者”名单中:
 
     Adam Aronow               Irina Rempt-Drijfhout     Mike Gallop
     Alex Kompel               Izchak Miller             Mike Passaretti

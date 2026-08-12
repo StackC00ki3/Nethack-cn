@@ -440,7 +440,7 @@ fix_worst_trouble(int trouble)
     case TROUBLE_COLLAPSING:
         /* override Fixed_abil; uncurse that if feasible */
         You_feel("强壮%s了.",
-                 (AMAX(A_STR) - ABASE(A_STR) > 6) ? "多 " : "些");
+                 (AMAX(A_STR) - ABASE(A_STR) > 6) ? "多" : "些");
         ABASE(A_STR) = AMAX(A_STR);
         disp.botl = TRUE;
         if (Fixed_abil) {
@@ -624,7 +624,7 @@ god_zaps_you(aligntyp resp_god)
         } else
             pline("%s看起来未受影响.", Monnam(u.ustuck));
     } else {
-        pline("突然,一道闪电击中你!");
+        pline("突然, 一道闪电击中了你!");
         if (Reflecting) {
             shieldeff(u.ux, u.uy);
             if (Blind)
@@ -1174,7 +1174,7 @@ pleased(aligntyp g_align)
 
                 *repair_buf = '\0';
                 if (uwep->oeroded || uwep->oeroded2)
-                    Sprintf(repair_buf, ",%s像新的一样",
+                    Sprintf(repair_buf, ", %s像新的一样",
                             otense(uwep, "就"));
 
                 if (uwep->cursed) {
@@ -1402,7 +1402,7 @@ water_prayer(boolean bless_water)
             other = TRUE;
     }
     if (!Blind && changed) {
-        pline("%s药水%s落在祭坛上的片刻, 发出了%s%s光芒.",
+        pline("%s药水%s落在祭坛上的片刻, 发出了%s%s光.",
               ((other && changed > 1L) ? "其中一些"
                                        : (other ? "其中一瓶" : "")),
               ((other || changed > 1L) ? "" : ""), (changed > 1L ? "" : ""),
@@ -1671,7 +1671,7 @@ offer_different_alignment_altar(
                 levl[u.ux][u.uy].altarmask |= AM_SHRINE;
             newsym(u.ux, u.uy); /* in case Invisible to self */
             if (!Blind)
-                pline_The("祭坛发出了%s光芒.",
+                pline_The("祭坛发出了%s光.",
                           hcolor((u.ualign.type == A_LAWFUL) ? NH_WHITE
                                  : u.ualign.type ? NH_BLACK
                                    : (const char *) "灰色"));
@@ -1684,7 +1684,7 @@ offer_different_alignment_altar(
                 && !p_coaligned(pri))
                 angry_priest();
         } else {
-            pline("不幸的是,你感觉%s的力量在减少.", u_gname());
+            pline("不幸的是, 你感觉%s的力量在减少.", u_gname());
             change_luck(-1);
             exercise(A_WIS, FALSE);
             if (rnl(u.ulevel) > 6 && u.ualign.record > 0
@@ -1819,9 +1819,9 @@ bestow_artifact(uchar max_giftvalue)
             u.ublesscnt = rnz(300 + (50 * nartifacts));
             exercise(A_WIS, TRUE);
             livelog_printf (LL_DIVINEGIFT | LL_ARTIFACT,
-                            "被%s授予了%s", /*修改语序:"被授予了%s,通过%s",*/
-                            align_gname(u.ualign.type)), /*修改语序:artiname(otmp->oartifact),*/
-                            artiname(otmp->oartifact); /*修改语序:align_gname(u.ualign.type));*/
+                            "被%s授予了%s", /*修改语序:"被授予了%s, 通过%s",*/
+                            align_gname(u.ualign.type), /*修改语序:artiname(otmp->oartifact),*/
+                            artiname(otmp->oartifact)); /*修改语序:align_gname(u.ualign.type));*/
             /* make sure we can use this weapon */
             unrestrict_weapon_skill(weapon_type(otmp));
             if (!Hallucination && !Blind) {
@@ -1867,7 +1867,7 @@ dosacrifice(void)
     }
     highaltar = (levl[u.ux][u.uy].altarmask & AM_SANCTUM);
 
-    otmp = floorfood("sacrifice", 1);
+    otmp = floorfood("献祭什么", 1); /*危险:sacrifice*/
     if (!otmp)
         return ECMD_OK;
 
@@ -2265,7 +2265,7 @@ dopray(void)
     if (gp.p_type == 3 && !Inhell) {
         /* if you've been true to your god you can't die while you pray */
         if (!Blind)
-            You("被微弱的光所环绕.");
+            You("被一圈闪光所环绕.");
         u.uinvulnerable = TRUE;
     }
 
@@ -2448,7 +2448,7 @@ doturn(void)
         return ECMD_TIME;
     }
     if (Inhell) {
-        pline("因为你在地狱, %s也无能为力.",
+        pline("因为你在地狱, %s%s帮助你.",
               /* not actually calling upon Moloch but use alternate
                  phrasing anyway if hallucinatory feedback says it's him */
               Gname, !strcmp(Gname, Moloch) ? "不会" : "不能");

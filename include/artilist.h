@@ -6,28 +6,28 @@
 #if defined(MAKEDEFS_C) || defined (MDLIB_C)
 /* in makedefs.c, all we care about is the list of names */
 
-#define A(nam, typ, s1, s2, mt, atk, dfn, cry, inv, al, cl, rac, \
+#define A(nam, enam, typ, s1, s2, mt, atk, dfn, cry, inv, al, cl, rac, \
           gs, gv, cost, clr, bn) nam
 
 static const char *const artifact_names[] = {
 
 #elif defined(ARTI_ENUM)
-#define A(nam, typ, s1, s2, mt, atk, dfn, cry, inv, al, cl, rac, \
+#define A(nam, enam, typ, s1, s2, mt, atk, dfn, cry, inv, al, cl, rac, \
           gs, gv, cost, clr, bn)                                 \
     ART_##bn
 
 #elif defined(DUMP_ARTI_ENUM)
-#define A(nam, typ, s1, s2, mt, atk, dfn, cry, inv, al, cl, rac, \
+#define A(nam, enam, typ, s1, s2, mt, atk, dfn, cry, inv, al, cl, rac, \
           gs, gv, cost, clr, bn)                                 \
     { ART_##bn, "ART_" #bn }
 #else
 /* in artifact.c, set up the actual artifact list structure;
    color field is for an artifact when it glows, not for the item itself */
 
-#define A(nam, typ, s1, s2, mt, atk, dfn, cry, inv, al, cl, rac, \
+#define A(nam, enam, typ, s1, s2, mt, atk, dfn, cry, inv, al, cl, rac, \
           gs, gv, cost, clr, bn)                                 \
     {                                                            \
-        typ, nam, s1, s2, mt, atk, dfn, cry, inv, al, cl, rac,   \
+        typ, nam, enam, s1, s2, mt, atk, dfn, cry, inv, al, cl, rac,   \
         gs, gv, cost, clr                                        \
     }
 
@@ -78,11 +78,11 @@ static NEARDATA struct artifact artilist[] = {
      */
 
     /*  dummy element #0, so that all interesting indices are non-zero */
-    A("", STRANGE_OBJECT, 0, 0, 0, NO_ATTK, NO_DFNS, NO_CARY, 0, A_NONE,
+    A("", "", STRANGE_OBJECT, 0, 0, 0, NO_ATTK, NO_DFNS, NO_CARY, 0, A_NONE,
       NON_PM, NON_PM,
       0, 0, 0L, NO_COLOR, NONARTIFACT),
 
-    A("Excalibur", LONG_SWORD, (SPFX_NOGEN | SPFX_RESTR | SPFX_SEEK
+    A("誓约胜利之剑", "Excalibur", LONG_SWORD, (SPFX_NOGEN | SPFX_RESTR | SPFX_SEEK
                                 | SPFX_DEFN | SPFX_INTEL | SPFX_SEARCH),
       0, 0, PHYS(5, 10), DRLI(0, 0), NO_CARY, 0, A_LAWFUL, PM_KNIGHT, NON_PM,
       0, 10, 4000L, NO_COLOR, EXCALIBUR),
@@ -90,7 +90,7 @@ static NEARDATA struct artifact artilist[] = {
      *      Stormbringer only has a 2 because it can drain a level,
      *      providing 8 more.
      */
-    A("Stormbringer", RUNESWORD,
+    A("兴风者", "Stormbringer", RUNESWORD,
       (SPFX_RESTR | SPFX_ATTK | SPFX_DEFN | SPFX_INTEL | SPFX_DRLI), 0, 0,
       DRLI(5, 2), DRLI(0, 0), NO_CARY, 0, A_CHAOTIC, NON_PM, NON_PM,
       0, 9, 8000L, NO_COLOR, STORMBRINGER),
@@ -106,12 +106,12 @@ static NEARDATA struct artifact artilist[] = {
      *      Monsters don't throw Mjollnir regardless of strength (not even
      *      fake-player valkyries).
      */
-    A("Mjollnir", WAR_HAMMER, /* Mjo:llnir */
+    A("雷神之锤", "Mjollnir", WAR_HAMMER, /* Mjo:llnir */
       (SPFX_RESTR | SPFX_ATTK), 0, 0, ELEC(5, 24), NO_DFNS, NO_CARY, 0,
       A_NEUTRAL, PM_VALKYRIE, NON_PM,
       0, 8, 4000L, NO_COLOR, MJOLLNIR),
 
-    A("Cleaver", BATTLE_AXE, SPFX_RESTR, 0, 0, PHYS(3, 6), NO_DFNS, NO_CARY,
+    A("撕裂者", "Cleaver", BATTLE_AXE, SPFX_RESTR, 0, 0, PHYS(3, 6), NO_DFNS, NO_CARY,
       0, A_NEUTRAL, PM_BARBARIAN, NON_PM,
       0, 8, 1500L, NO_COLOR, CLEAVER),
 
@@ -120,7 +120,7 @@ static NEARDATA struct artifact artilist[] = {
      *      damage bonus applies to all targets rather than just elves
      *      (handled as special case in spec_dbon()).
      */
-    A("Grimtooth", ORCISH_DAGGER, (SPFX_RESTR | SPFX_WARN | SPFX_DFLAG2),
+    A("邪兽之牙", "Grimtooth", ORCISH_DAGGER, (SPFX_RESTR | SPFX_WARN | SPFX_DFLAG2),
       0, M2_ELF, PHYS(2, 6), POIS(0,0),
       NO_CARY, FLING_POISON, A_CHAOTIC, NON_PM, PM_ORC,
       0, 5, 1200L, CLR_RED, GRIMTOOTH),
@@ -131,55 +131,55 @@ static NEARDATA struct artifact artilist[] = {
      *      EWarn_of_mon for all monsters that have the M2_value flag.
      *      Sting and Orcrist will warn of M2_ORC monsters.
      */
-    A("Orcrist", ELVEN_BROADSWORD, (SPFX_WARN | SPFX_DFLAG2), 0, M2_ORC,
+    A("杀兽剑", "Orcrist", ELVEN_BROADSWORD, (SPFX_WARN | SPFX_DFLAG2), 0, M2_ORC,
       PHYS(5, 0), NO_DFNS, NO_CARY, 0, A_CHAOTIC, NON_PM, PM_ELF,
       3, 4, 2000L, CLR_BRIGHT_BLUE, ORCRIST), /* actually light blue */
 
-    A("Sting", ELVEN_DAGGER, (SPFX_WARN | SPFX_DFLAG2), 0, M2_ORC,
+    A("杀兽针", "Sting", ELVEN_DAGGER, (SPFX_WARN | SPFX_DFLAG2), 0, M2_ORC,
       PHYS(5, 0), NO_DFNS, NO_CARY, 0, A_CHAOTIC, NON_PM, PM_ELF,
       3, 1, 800L, CLR_BRIGHT_BLUE, STING),
     /*
      *      Magicbane is a bit different!  Its magic fanfare
      *      unbalances victims in addition to doing some damage.
      */
-    A("Magicbane", ATHAME, (SPFX_RESTR | SPFX_ATTK | SPFX_DEFN), 0, 0,
+    A("神魔克星", "Magicbane", ATHAME, (SPFX_RESTR | SPFX_ATTK | SPFX_DEFN), 0, 0,
       STUN(3, 4), DFNS(AD_MAGM), NO_CARY, 0, A_NEUTRAL, PM_WIZARD, NON_PM,
       0, 7, 3500L, NO_COLOR, MAGICBANE),
 
-    A("Frost Brand", LONG_SWORD, (SPFX_RESTR | SPFX_ATTK | SPFX_DEFN), 0, 0,
+    A("霜铭", "Frost Brand", LONG_SWORD, (SPFX_RESTR | SPFX_ATTK | SPFX_DEFN), 0, 0,
       COLD(5, 0), COLD(0, 0), NO_CARY, SNOWSTORM, A_NONE, NON_PM, NON_PM,
       0, 9, 3000L, NO_COLOR, FROST_BRAND),
 
-    A("Fire Brand", LONG_SWORD, (SPFX_RESTR | SPFX_ATTK | SPFX_DEFN), 0, 0,
+    A("焰铭", "Fire Brand", LONG_SWORD, (SPFX_RESTR | SPFX_ATTK | SPFX_DEFN), 0, 0,
       FIRE(5, 0), FIRE(0, 0), NO_CARY, FIRESTORM, A_NONE, NON_PM, NON_PM,
       0, 5, 3000L, NO_COLOR, FIRE_BRAND),
 
-    A("Dragonbane", BROADSWORD,
+    A("屠龙剑", "Dragonbane", BROADSWORD,
       (SPFX_RESTR | SPFX_DCLAS | SPFX_REFLECT), 0, S_DRAGON,
       PHYS(5, 0), NO_DFNS, NO_CARY, 0, A_NONE, NON_PM, NON_PM,
       2, 5, 500L, NO_COLOR, DRAGONBANE),
 
-    A("Demonbane", SILVER_MACE, (SPFX_RESTR | SPFX_DFLAG2), 0, M2_DEMON,
+    A("除魔之杖", "Demonbane", SILVER_MACE, (SPFX_RESTR | SPFX_DFLAG2), 0, M2_DEMON,
       PHYS(5, 0), NO_DFNS, NO_CARY, BANISH, A_LAWFUL, PM_CLERIC, NON_PM,
       1, 3, 2500L, NO_COLOR, DEMONBANE),
 
-    A("Werebane", SILVER_SABER, (SPFX_RESTR | SPFX_DFLAG2), 0, M2_WERE,
+    A("化兽克星", "Werebane", SILVER_SABER, (SPFX_RESTR | SPFX_DFLAG2), 0, M2_WERE,
       PHYS(5, 0), DFNS(AD_WERE), NO_CARY, 0, A_NONE, NON_PM, NON_PM,
       1, 4, 1500L, NO_COLOR, WEREBANE),
 
-    A("Grayswandir", SILVER_SABER, (SPFX_RESTR | SPFX_HALRES), 0, 0,
+    A("夜刃", "Grayswandir", SILVER_SABER, (SPFX_RESTR | SPFX_HALRES), 0, 0,
       PHYS(5, 0), NO_DFNS, NO_CARY, 0, A_LAWFUL, NON_PM, NON_PM,
       0, 10, 8000L, NO_COLOR, GRAYSWANDIR),
 
-    A("Giantslayer", LONG_SWORD, (SPFX_RESTR | SPFX_DFLAG2), 0, M2_GIANT,
+    A("巨人杀手", "Giantslayer", LONG_SWORD, (SPFX_RESTR | SPFX_DFLAG2), 0, M2_GIANT,
       PHYS(5, 0), NO_DFNS, NO_CARY, 0, A_NEUTRAL, NON_PM, NON_PM,
       2, 4, 200L, NO_COLOR, GIANTSLAYER),
 
-    A("Ogresmasher", WAR_HAMMER, (SPFX_RESTR | SPFX_DCLAS), 0, S_OGRE,
+    A("食人魔粉碎者", "Ogresmasher", WAR_HAMMER, (SPFX_RESTR | SPFX_DCLAS), 0, S_OGRE,
       PHYS(5, 0), NO_DFNS, NO_CARY, 0, A_NONE, NON_PM, NON_PM,
       2, 1, 200L, NO_COLOR, OGRESMASHER),
 
-    A("Trollsbane", MORNING_STAR, (SPFX_RESTR | SPFX_DCLAS | SPFX_REGEN), 0,
+    A("巨魔克星", "Trollsbane", MORNING_STAR, (SPFX_RESTR | SPFX_DCLAS | SPFX_REGEN), 0,
       S_TROLL, PHYS(5, 0), NO_DFNS, NO_CARY, 0, A_NONE, NON_PM, NON_PM,
       2, 1, 200L, NO_COLOR, TROLLSBANE),
 
@@ -188,7 +188,7 @@ static NEARDATA struct artifact artilist[] = {
      *      2) doesn't give unusual message for 2-headed monsters (but
      *      allowing those at all causes more problems than worth the effort).
      */
-    A("Vorpal Blade", LONG_SWORD, (SPFX_RESTR | SPFX_BEHEAD), 0, 0,
+    A("斩首剑", "Vorpal Blade", LONG_SWORD, (SPFX_RESTR | SPFX_BEHEAD), 0, 0,
       PHYS(5, 1), NO_DFNS, NO_CARY, 0, A_NEUTRAL, NON_PM, NON_PM,
       1, 5, 4000L, NO_COLOR, VORPAL_BLADE),
 
@@ -200,13 +200,13 @@ static NEARDATA struct artifact artilist[] = {
      *                      --Ko-Ko, Lord high executioner of Titipu
      *                        (From Sir W.S. Gilbert's "The Mikado")
      */
-    A("Snickersnee", KATANA, SPFX_RESTR, 0, 0, PHYS(0, 8), NO_DFNS, NO_CARY,
+    A("村雨", "Snickersnee", KATANA, SPFX_RESTR, 0, 0, PHYS(0, 8), NO_DFNS, NO_CARY, /*待写:我知道这个不是,但先找个有名的日本刀吧*/
       0, A_LAWFUL, PM_SAMURAI, NON_PM,
       0, 8, 1200L, NO_COLOR, SNICKERSNEE),
 
     /* Sunsword emits light when wielded (handled in the core rather than
        via artifact fields), but that light has no particular color */
-    A("Sunsword", LONG_SWORD, (SPFX_RESTR | SPFX_DFLAG2), 0, M2_UNDEAD,
+    A("旭日剑", "Sunsword", LONG_SWORD, (SPFX_RESTR | SPFX_DFLAG2), 0, M2_UNDEAD,
       PHYS(5, 0), DFNS(AD_BLND), NO_CARY, BLINDING_RAY, A_LAWFUL, NON_PM,
       NON_PM,
       0, 6, 1500L, NO_COLOR, SUNSWORD),
@@ -216,20 +216,20 @@ static NEARDATA struct artifact artilist[] = {
      *      gen_spe should be 0; gift_value irrelevant and set to 12.
      */
 
-    A("The Orb of Detection", CRYSTAL_BALL,
+    A("探测之球", "The Orb of Detection", CRYSTAL_BALL,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_INTEL), (SPFX_ESP | SPFX_HSPDAM), 0,
       NO_ATTK, NO_DFNS, CARY(AD_MAGM), INVIS, A_LAWFUL, PM_ARCHEOLOGIST,
       NON_PM,
       0, 12, 2500L, NO_COLOR, ORB_OF_DETECTION),
 
-    A("The Heart of Ahriman", LUCKSTONE,
+    A("阿里曼之心", "The Heart of Ahriman", LUCKSTONE,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_INTEL), SPFX_STLTH, 0,
       /* this stone does double damage if used as a projectile weapon */
       PHYS(5, 0), NO_DFNS, NO_CARY, LEVITATION, A_NEUTRAL, PM_BARBARIAN,
       NON_PM,
       0, 12, 2500L, NO_COLOR, HEART_OF_AHRIMAN),
 
-    A("The Sceptre of Might", MACE,
+    A("力量权杖", "The Sceptre of Might", MACE,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_INTEL | SPFX_DALIGN), 0, 0, PHYS(5, 0),
       DFNS(AD_MAGM), NO_CARY, CONFLICT, A_LAWFUL, PM_CAVE_DWELLER, NON_PM,
       0, 12, 2500L, NO_COLOR, SCEPTRE_OF_MIGHT),
@@ -238,37 +238,37 @@ static NEARDATA struct artifact artilist[] = {
          * Elf role; in 3.3.0 elf became a race available to several roles
          * and the Elf role along with its quest was eliminated; it's a bit
          * overpowered to be an ordinary artifact so leave it excluded */
-    A("The Palantir of Westernesse", CRYSTAL_BALL,
+    A("努门诺尔的水晶球", "The Palantir of Westernesse", CRYSTAL_BALL,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_INTEL),
                                      (SPFX_ESP | SPFX_REGEN | SPFX_HSPDAM), 0,
       NO_ATTK, NO_DFNS, NO_CARY, TAMING, A_CHAOTIC, NON_PM, PM_ELF,
       0, 12, 8000L, NO_COLOR, PALANTIR_OF_WESTERNESSE),
 #endif
 
-    A("The Staff of Aesculapius", QUARTERSTAFF,
+    A("阿斯克勒庇俄斯之杖", "The Staff of Aesculapius", QUARTERSTAFF,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_ATTK | SPFX_INTEL | SPFX_DRLI
        | SPFX_REGEN),
       0, 0, DRLI(0, 0), DRLI(0, 0), NO_CARY, HEALING, A_NEUTRAL, PM_HEALER,
       NON_PM,
       0, 12, 5000L, NO_COLOR, STAFF_OF_AESCULAPIUS),
 
-    A("The Magic Mirror of Merlin", MIRROR,
+    A("梅林的魔镜", "The Magic Mirror of Merlin", MIRROR,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_INTEL | SPFX_SPEAK), SPFX_ESP, 0,
       NO_ATTK, NO_DFNS, CARY(AD_MAGM), 0, A_LAWFUL, PM_KNIGHT, NON_PM,
       0, 12, 1500L, NO_COLOR, MAGIC_MIRROR_OF_MERLIN),
 
-    A("The Eyes of the Overworld", LENSES,
+    A("上界之眼", "The Eyes of the Overworld", LENSES,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_INTEL | SPFX_XRAY), 0, 0, NO_ATTK,
       DFNS(AD_MAGM), NO_CARY, ENLIGHTENING, A_NEUTRAL, PM_MONK, NON_PM,
       0, 12, 2500L, NO_COLOR, EYES_OF_THE_OVERWORLD),
 
-    A("The Mitre of Holiness", HELM_OF_BRILLIANCE,
+    A("圣洁冠冕", "The Mitre of Holiness", HELM_OF_BRILLIANCE,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_DFLAG2 | SPFX_INTEL | SPFX_PROTECT), 0,
       M2_UNDEAD, NO_ATTK, NO_DFNS, CARY(AD_FIRE), ENERGY_BOOST, A_LAWFUL,
       PM_CLERIC, NON_PM,
       0, 12, 2000L, NO_COLOR, MITRE_OF_HOLINESS),
 
-    A("The Longbow of Diana", BOW,
+    A("狄安娜的长弓", "The Longbow of Diana", BOW,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_INTEL | SPFX_REFLECT), SPFX_ESP, 0,
       PHYS(5, 0), NO_DFNS, NO_CARY, CREATE_AMMO, A_CHAOTIC, PM_RANGER, NON_PM,
       0, 12, 4000L, NO_COLOR, LONGBOW_OF_DIANA),
@@ -276,31 +276,31 @@ static NEARDATA struct artifact artilist[] = {
     /* MKoT has an additional carry property if the Key is not cursed (for
        rogues) or blessed (for non-rogues):  #untrap of doors and chests
        will always find any traps and disarming those will always succeed */
-    A("The Master Key of Thievery", SKELETON_KEY,
+    A("盗窃专用万能钥匙", "The Master Key of Thievery", SKELETON_KEY,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_INTEL | SPFX_SPEAK),
       (SPFX_WARN | SPFX_TCTRL | SPFX_HPHDAM), 0, NO_ATTK, NO_DFNS, NO_CARY,
       UNTRAP, A_CHAOTIC, PM_ROGUE, NON_PM,
       0, 12, 3500L, NO_COLOR, MASTER_KEY_OF_THIEVERY),
 
-    A("The Tsurugi of Muramasa", TSURUGI,
+    A("村正", "The Tsurugi of Muramasa", TSURUGI,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_INTEL | SPFX_BEHEAD | SPFX_LUCK
        | SPFX_PROTECT),
       0, 0, PHYS(0, 8), NO_DFNS, NO_CARY, 0, A_LAWFUL, PM_SAMURAI, NON_PM,
       0, 12, 4500L, NO_COLOR, TSURUGI_OF_MURAMASA),
 
-    A("The Platinum Yendorian Express Card", CREDIT_CARD,
+    A("岩德利亚至尊白金卡", "The Platinum Yendorian Express Card", CREDIT_CARD,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_INTEL | SPFX_DEFN),
       (SPFX_ESP | SPFX_HSPDAM), 0, NO_ATTK, NO_DFNS, CARY(AD_MAGM),
       CHARGE_OBJ, A_NEUTRAL, PM_TOURIST, NON_PM,
       0, 12, 7000L, NO_COLOR, YENDORIAN_EXPRESS_CARD),
 
-    A("The Orb of Fate", CRYSTAL_BALL,
+    A("命运之球", "The Orb of Fate", CRYSTAL_BALL,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_INTEL | SPFX_LUCK),
       (SPFX_WARN | SPFX_HSPDAM | SPFX_HPHDAM), 0, NO_ATTK, NO_DFNS, NO_CARY,
       LEV_TELE, A_NEUTRAL, PM_VALKYRIE, NON_PM,
       0, 12, 3500L, NO_COLOR, ORB_OF_FATE),
 
-    A("The Eye of the Aethiopica", AMULET_OF_ESP,
+    A("埃塞俄比亚之眼", "The Eye of the Aethiopica", AMULET_OF_ESP,
       (SPFX_NOGEN | SPFX_RESTR | SPFX_INTEL), (SPFX_EREGEN | SPFX_HSPDAM), 0,
       NO_ATTK, DFNS(AD_MAGM), NO_CARY, CREATE_PORTAL, A_NEUTRAL, PM_WIZARD,
       NON_PM,
@@ -310,7 +310,7 @@ static NEARDATA struct artifact artilist[] = {
     /*
      *  terminator; otyp must be zero
      */
-    A(0, 0, 0, 0, 0, NO_ATTK, NO_DFNS, NO_CARY, 0, A_NONE, NON_PM, NON_PM,
+    A(0, 0, 0, 0, 0, 0, NO_ATTK, NO_DFNS, NO_CARY, 0, A_NONE, NON_PM, NON_PM,
       0, 0, 0L, NO_COLOR, TERMINATOR)
 
 }; /* artilist[] (or artifact_names[]) */

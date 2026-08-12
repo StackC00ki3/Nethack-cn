@@ -44,7 +44,7 @@ static const struct propname {
     { SLEEPY, "困倦" },
     { TELEPORT, "传送" },
     { POLYMORPH, "变形" },
-    { LEVITATION, "悬浮" },
+    { LEVITATION, "飘浮" },
     { FAST, "加速" }, /* timed 'FAST' is very fast */
     { CLAIRVOYANT, "超视" },
     { DETECT_MONSTERS, "感知怪物" },
@@ -189,7 +189,7 @@ static NEARDATA const char *const vomiting_texts[] = {
     "感到有点恶心.", /* 14 */
     "感到有些困惑.",       /* 11 */
     "的脑子好像转不过来.", /* 8 */
-    "感到十分不是.",         /* 5 */
+    "感到十分不适.",         /* 5 */
     "马上就要吐了."            /* 2 */
 };
 
@@ -345,7 +345,7 @@ sickness_dialogue(void)
 }
 
 static NEARDATA const char *const levi_texts[] = {
-    "你悬浮得稍微低一些.",
+    "你飘浮得稍微低一些.",
     "你在%s%s摇摇晃晃."
 };
 
@@ -1449,7 +1449,7 @@ burn_object(anything *arg, long timeout)
                 FALLTHROUGH;
                 /*FALLTHRU*/
             case OBJ_MINVENT:
-                pline("%s的油烧光了.", whose);
+                pline("%s油烧光了.", whose);
                 break;
             case OBJ_FLOOR:
                 You_see("一瓶油烧光了.");
@@ -1514,7 +1514,7 @@ burn_object(anything *arg, long timeout)
                     /*FALLTHRU*/
                 case OBJ_MINVENT:
                     if (obj->otyp == BRASS_LANTERN)
-                        pline("%s的灯笼燃尽了.", whose);
+                        pline("%s灯笼燃尽了.", whose);
                     else
                         pline("%s燃尽了.", Yname2(obj));
                     break;
@@ -1552,7 +1552,7 @@ burn_object(anything *arg, long timeout)
                 switch (obj->where) {
                 case OBJ_INVENT:
                 case OBJ_MINVENT:
-                    pline("%s的%s蜡烛%s在变短.", whose,
+                    pline("%s%s蜡烛%s在变短.", whose,
                           menorah ? "烛台上的" : "",
                           many ? "" : "");
                     break;
@@ -1570,7 +1570,7 @@ burn_object(anything *arg, long timeout)
                 switch (obj->where) {
                 case OBJ_INVENT:
                 case OBJ_MINVENT:
-                    pline("%s的%s蜡烛%s的火焰%s闪烁%s变暗!", whose,
+                    pline("%s%s蜡烛%s的火焰%s闪烁%s变暗!", whose,
                           menorah ? "烛台上的" : "", many ? "" : "",
                           many ? "" : "", many ? "" : "");
                     break;
@@ -1593,7 +1593,7 @@ burn_object(anything *arg, long timeout)
                         FALLTHROUGH;
                         /*FALLTHRU*/
                     case OBJ_MINVENT:
-                        pline("%s的烛台的火焰%s.", whose,
+                        pline("%s烛台的火焰%s.", whose,
                               many ? "熄灭了" : "熄灭了");
                         break;
                     case OBJ_FLOOR:

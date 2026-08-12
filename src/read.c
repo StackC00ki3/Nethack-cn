@@ -111,7 +111,7 @@ tshirt_text(struct obj *tshirt, char *buf)
         "我活过了岩德军队新兵训练营",
         "吕底俄斯会计学校校内长曲棍球队",
         "Oracle(TM) Fountains第十届湿身T恤大赛",
-        "来啊,黑龙! 有本事就分解这个!",
+        "来啊, 黑龙! 有本事就分解这个!",
         "我跟蠢货在一起 -->",
         "别怪我, 我投给了Izchak!",
         "别慌", /* HHGTTG */
@@ -121,7 +121,7 @@ tshirt_text(struct obj *tshirt, char *buf)
         "100%地精毛 - 请勿洗涤",
         "LI-MING",
         "cK -- 鸡蛇碰到了警察",
-        "别问我,我只是个探险者",
+        "别问我, 我只是个探险者",
         "死时还穿着裤子!",
         "d, 你的狗还是杀手?",
         "*免费的小狗和蝾螈*!",
@@ -384,7 +384,7 @@ doread(void)
         /* can't read shirt worn under suit (under cloak is ok though) */
         if ((otyp == T_SHIRT || otyp == HAWAIIAN_SHIRT) && uarm
             && scroll == uarmu) {
-            pline("%s衬衫被%s的%s盖住了.",
+            pline("%s衬衫被%s%s盖住了.",
                   scroll->unpaid ? "那个" : "你的", shk_your(buf, uarm),
                   suit_simple_name(uarm));
             return ECMD_OK;
@@ -434,7 +434,7 @@ doread(void)
                      simpleonames(scroll));
             return ECMD_OK;
         }
-        pline("%s%s上面%s:%s.", /*修改语序:pline("%s%s上面写着":"%s.",*/
+        pline("%s%s上面%s: %s.", /*修改语序:pline("%s%s上面写着":"%s.",*/
               !Blind ? "你看到" : "你摸到",
               simpleonames(scroll), !Blind ? "写着" : "的字", cap_text); /*危险,修改语序:simpleonames(scroll), cap_text);*/
         if (!u.uconduct.literate++)
@@ -655,7 +655,7 @@ stripspe(struct obj *obj)
         pline1(nothing_happens);
     } else {
         /* order matters: message, shop handling, actual transformation */
-        pline("%s了一下.", Yobjnam2(obj, "短暂地振动"));
+        pline("%s了一下.", Yobjnam2(obj, "短暂振动"));
         costly_alteration(obj, COST_UNCHRG);
         obj->spe = 0;
         if (obj->otyp == OIL_LAMP || obj->otyp == BRASS_LANTERN)
@@ -666,22 +666,22 @@ stripspe(struct obj *obj)
 staticfn void
 p_glow1(struct obj *otmp)
 {
-    pline("%s了片刻.", Yobjnam2(otmp, Blind ? "振动" : "发光"));
+    pline("%s%s.", Yobjnam2(otmp, Blind ? "短暂振动了一下" : "发出了短暂"));
 }
 
 staticfn void
 p_glow2(struct obj *otmp, const char *color)
 {
-    pline("%s%s%s了一刹那.", Yobjnam2(otmp, Blind ? "振动" : "发光"),
-          Blind ? "" : hcolor(color), Blind ? "" : "光");
+    pline("%s了片刻%s%s%s.", Yobjnam2(otmp, Blind ? "振动" : "发出"),
+          Blind ? "" : "的", Blind ? "" : hcolor(color), Blind ? "" : "光");
 }
 
 staticfn void
 p_glow3(struct obj *otmp, const char *color)
 {
-    pline("%s微弱地%s%s了一刹那.",
-          Yobjnam2(otmp, Blind ? "振动" : "发光"),
-          Blind ? "" : hcolor(color), Blind ? "" : "光");
+    pline("%s了片刻%s%s.",
+          Yobjnam2(otmp, Blind ? "微弱地振动" : "发出"),
+          Blind ? "" : "微弱的", Blind ? "" : hcolor(color), Blind ? "" : "光");
 }
 
 /* getobj callback for object to charge */
@@ -924,7 +924,7 @@ recharge(struct obj *obj, int curse_bless)
                     p_glow2(obj, NH_BLACK);
                     curse(obj);
                 } else {
-                    pline("%s了片刻.", Yobjnam2(obj, "振动"));
+                    pline("短暂%s了一下.", Yobjnam2(obj, "振动"));
                 }
                 if (obj->spe > 0)
                     costly_alteration(obj, COST_UNCHRG);
@@ -1127,7 +1127,7 @@ seffect_enchant_armor(struct obj **sobjp)
     if (!otmp) {
         strange_feeling(sobj, !Blind
                         ? "你的皮肤亮了一下, 然后变暗."
-                        : "你感到皮肤温暖了一刹那.");
+                        : "你感到皮肤温暖了片刻.");
         *sobjp = 0; /* useup() in strange_feeling() */
         exercise(A_CON, !scursed);
         exercise(A_STR, !scursed);
@@ -1139,10 +1139,10 @@ seffect_enchant_armor(struct obj **sobjp)
         otmp->oerodeproof = 0; /* for messages */
         if (Blind) {
             otmp->rknown = FALSE;
-            pline("%s温暖了一刹那.", Yobjnam2(otmp, "感觉"));
+            pline("%s温暖了片刻.", Yobjnam2(otmp, "感觉"));
         } else {
             otmp->rknown = TRUE;
-            pline("%s被一层%s%s%s覆盖!", Yobjnam2(otmp, ""),
+            pline("%s一层%s%s%s覆盖!", Yobjnam2(otmp, "被"),
                   scursed ? "斑驳的" : "闪烁的",
                   hcolor(scursed ? NH_BLACK : NH_GOLDEN),
                   scursed ? "光芒"
@@ -1178,11 +1178,12 @@ seffect_enchant_armor(struct obj **sobjp)
     s = scursed ? -otmp->spe : otmp->spe;
     if (s > (special_armor ? 5 : 3) && rn2(s)) {
         otmp->in_use = TRUE;
-        pline("%s猛烈地%s%s%s了一会儿, 然后%s了.", Yname2(otmp),
-              otense(otmp, Blind ? "振动" : "发光"),
-              (!Blind && !same_color) ? " " : "",
+        pline("%s猛烈地%s了一会%s%s, 然后%s了.", Yname2(otmp), /*修改语序:自己看*/
+              otense(otmp, Blind ? "振动" : "发出"),
               (Blind || same_color) ? "" : hcolor(scursed ? NH_BLACK
                                                   : NH_SILVER),
+
+              (Blind || same_color) ? "" : "光",
               otense(otmp, "蒸发"));
         remove_worn_item(otmp, FALSE);
         useup(otmp);
@@ -1250,11 +1251,11 @@ seffect_enchant_armor(struct obj **sobjp)
             maybe_adjust_light(otmp, old_light);
         return;
     }
-    pline("%s%s%s%s了%s%s%s.", Yname2(otmp), /*修改语序:多了一个%s*/
+    pline("%s%s%s%s了%s%s%s%s.", Yname2(otmp), /*修改语序:多了一个%s*/
           (s == 0) ? "猛烈地" : "",
-          otense(otmp, Blind ? "振动" : "闪"),
+          otense(otmp, Blind ? "振动" : "发出"),
           (!Blind && !same_color) ? "" : "",
-          (s * s > 1) ? "一会儿" : "一刹那",  /*修改语序:(Blind || same_color);*/
+          (s * s > 1) ? "一会" : "片刻", (Blind || same_color) ? "" : ((s * s > 1) ? "" : "的"), /*修改语序:(Blind || same_color);*/
           (Blind || same_color) ? "" : hcolor(scursed ? NH_BLACK : NH_SILVER), /*修改语序:? "" : hcolor(scursed ? NH_BLACK : NH_SILVER), (Blind || same_color) ? "" : "光",*/ /*修改语序:? "" : hcolor(scursed ? NH_BLACK : NH_SILVER),*/
           (Blind || same_color) ? "" : "光"); /*修改语序:(s * s > 1) ? "一会儿" : "一刹那");*/
     /* [this cost handling will need updating if shop pricing is
@@ -1429,7 +1430,7 @@ seffect_confuse_monster(struct obj **sobjp)
             if (altfeedback)
                 Your("%s%s发麻.", hands, u.umconf ? "更加" : "开始");
             else if (!u.umconf)
-                Your("你的%s开始发出%s光.", hands, hcolor(NH_RED));
+                Your("%s开始发出%s光.", hands, hcolor(NH_RED));
             else
                 pline_The("%s的%s光增强了.", hcolor(NH_RED),
                           hands);
@@ -1586,7 +1587,7 @@ seffect_remove_curse(struct obj **sobjp)
                 /* like rndcurse(sit.c), effect on regular inventory
                    doesn't show things glowing but saddle does */
                 if (!Blind) {
-                    pline("%s%s光.", Yobjnam2(obj, "发出了"),
+                    pline("%s了%s色光.", Yobjnam2(obj, "发出"),
                               hcolor("琥珀"));
                     obj->bknown = Hallucination ? 0 : 1;
                 } else {
@@ -1643,10 +1644,10 @@ seffect_enchant_weapon(struct obj **sobjp)
         uwep->oerodeproof = 0; /* for messages */
         if (Blind) {
             uwep->rknown = FALSE;
-            Your("武器暖和了一会儿.");
+            Your("武器暖和了一会.");
         } else {
             uwep->rknown = TRUE;
-            pline("%s被一层%s%s%s覆盖!", Yobjnam2(uwep, "是"),
+            pline("%s一层%s%s%s覆盖!", Yobjnam2(uwep, "被"),
                   scursed ? "斑驳的" : "闪烁的",
                   hcolor(scursed ? NH_PURPLE : NH_GOLDEN),
                   scursed ? "光芒" : "护盾");
@@ -1707,7 +1708,7 @@ seffect_taming(struct obj **sobjp)
             }
     }
     if (!results) {
-        pline("%s没有任何有趣的事发生.",
+        pline("%s没有任何值得关注的事情发生.",
               !candidates ? "" : "看起来");
     } else {
         pline_The("附近%s更%s友好了.",
@@ -1897,7 +1898,7 @@ seffect_fire(struct obj **sobjp)
             pline("你想把爆炸的中心放在哪里?");
             getpos_sethilite(display_stinking_cloud_positions,
                              can_center_cloud);
-            (void) getpos(&cc, TRUE, "想要的爆炸中心");
+            (void) getpos(&cc, TRUE, "目标位置");
             if (!can_center_cloud(cc.x, cc.y)) {
                 /* try to reach too far, get burned */
                 cc.x = u.ux;
@@ -2328,7 +2329,7 @@ drop_boulder_on_player(
         dmg = 0;
     wake_nearto(u.ux, u.uy, 4 * 4);
     /* Must be before the losehp(), for bones files */
-    if (!flooreffects(otmp2, u.ux, u.uy, "落")) {
+    if (!flooreffects(otmp2, u.ux, u.uy, "掉")) {
         place_object(otmp2, u.ux, u.uy);
         stackobj(otmp2);
         newsym(u.ux, u.uy);
@@ -2362,7 +2363,7 @@ drop_boulder_on_monster(coordxy x, coordxy y, boolean confused, boolean byu)
             if (mtmp->minvis && !canspotmon(mtmp))
                 map_invisible(mtmp->mx, mtmp->my);
         } else if (engulfing_u(mtmp))
-            You_hear("在你的%s上有东西打中了%s的%s!",
+            You_hear("在你的%s上有东西击中了%s的%s!",
                      body_part(HEAD), s_suffix(mon_nam(mtmp)), /*修改语序:s_suffix(mon_nam(mtmp)), mbodypart(mtmp, STOMACH),*/
                      mbodypart(mtmp, STOMACH)); /*修改语序:body_part(HEAD));*/
 
@@ -2401,7 +2402,7 @@ drop_boulder_on_monster(coordxy x, coordxy y, boolean confused, boolean byu)
         return 1;
     }
     /* Drop the rock/boulder to the floor */
-    if (!flooreffects(otmp2, x, y, "落")) {
+    if (!flooreffects(otmp2, x, y, "掉")) {
         place_object(otmp2, x, y);
         stackobj(otmp2);
         newsym(x, y); /* map the rock */
@@ -2661,7 +2662,7 @@ do_class_genocide(void)
         if (!*buf) {
             pline("%s.", (j + 1 < 5)
                          ? "输入字母(或标点符号)"
-                           "或者一类怪物的名称,或者'none'"
+                           "或者一类怪物的名称, 或者'none'"
                          /* next iteration gives "that's enough tries"
                             so don't suggest typing anything this time */
                          : "未指定怪物类别");
@@ -2857,7 +2858,7 @@ do_genocide(
                 Snprintf(eos(promptbuf), sizeof promptbuf - strlen(promptbuf),
                          " [输入%s]",
                          iflags.cmdassist
-                           ? "输入你想灭绝的怪物的名称或其符号,或者'?'"
+                           ? "输入你想灭绝的怪物的名称或其符号, 或者'?'"
                            : "输入'?'以查看已灭绝物种");
             getlin(promptbuf, buf);
             (void) mungspaces(buf);
@@ -3036,7 +3037,7 @@ punish(struct obj *sobj)
     if (amorphous(gy.youmonst.data) || is_whirly(gy.youmonst.data)
         || unsolid(gy.youmonst.data)) {
         if (!reuse_ball) {
-            pline("一个球和链出现了,然后松开了.");
+            pline("一个球和链出现了, 然后松开了.");
             dropy(mkobj(BALL_CLASS, TRUE));
         } else {
             dropy(reuse_ball);
@@ -3088,7 +3089,7 @@ do_stinking_cloud(struct obj *sobj, boolean mention_stinking)
     cc.x = u.ux;
     cc.y = u.uy;
     getpos_sethilite(display_stinking_cloud_positions, can_center_cloud);
-    if (getpos(&cc, TRUE, "想要的臭云中心") < 0) {
+    if (getpos(&cc, TRUE, "目标位置") < 0) {
         pline1(Never_mind);
         return;
     } else if (!can_center_cloud(cc.x, cc.y)) {
@@ -3391,7 +3392,7 @@ create_particular(void)
         if (*bufp || altmsg || tryct < 2) {
             pline("我从未听说过这种怪物.");
         } else {
-            pline("再试一次(输入*随机选择,按ESC取消).");
+            pline("再试一次(输入*随机选择, 按ESC取消).");
             ++altmsg;
         }
         /* when a second try is needed, expand the prompt */

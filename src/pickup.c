@@ -238,7 +238,7 @@ query_classes(
                         where = !strcmp(action, "pick up") ? "这里"
                                 : !strcmp(action, "take out") ? "里面" : "";
                     if (*where)
-                        There("没有%c在%s.", sym, where); /*修改语序:There("没有%c 在%s.", sym, where);*/
+                        pline("%s没有%c.", where, sym); /*修改语序:There("没有%c 在%s.", sym, where);*/
                     else
                         You("没有%c.", sym);
                     not_everything = TRUE;
@@ -305,7 +305,7 @@ rider_corpse_revival(struct obj *obj, boolean remotely)
     if (!obj || obj->otyp != CORPSE || !is_rider(&mons[obj->corpsenm]))
         return FALSE;
 
-    pline("在你%s尸体的时候, 它突然移动了...",
+    pline("你%s尸体时, 它突然动了起来...",
           remotely ? "试图拿起" : "触碰");
     (void) revive_corpse(obj);
     exercise(A_WIS, FALSE);
@@ -704,7 +704,7 @@ pickup(int what) /* should be a long */
                            || is_lava(u.ux, u.uy))) {
             if (flags.mention_decor)
                 (void) describe_decor();
-            read_engr_at(u.ux, u.uy);
+            read_engr_at(u.ux, u.uy); //debugfuzzer有问题
             return 0;
         }
         /* no pickup if levitating & not on air or water level */
@@ -1327,11 +1327,11 @@ query_category(
         if (!verify_All) {
             if (!ga.A_first_hint++ || iflags.cmdassist)
                 add_menu_str(win,
-                   "    (除非还选择了其他选项,否则将被忽略)");
+                   "    (除非还选择了其他选项, 否则将被忽略)");
         } else if (show_a) {
             if (!ga.A_second_hint++ || iflags.cmdassist)
                 add_menu_str(win,
-                      "    (如果未选择其他选项,则默认选择'a')");
+                      "    (如果未选择其他选项, 则默认选择'a')");
         }
         /* blank separator */
         add_menu_str(win, "");
@@ -1662,11 +1662,11 @@ carry_count(struct obj *obj,            /* object to pick up... */
         /* some message will be given */
         Strcpy(obj_nambuf, doname(obj));
         if (container) {
-            Sprintf(where, "在%s里面", the(xname(container)));
+            Sprintf(where, "%s里", the(xname(container)));
             verb = "拿";
             verb2 = "出";
         } else {
-            Strcpy(where, "放在这里");
+            Strcpy(where, "这里"); /*危险:lying here*/
             verb = telekinesis ? "吸" : "拿";
             verb2 = "起";
         }
@@ -1686,7 +1686,7 @@ carry_count(struct obj *obj,            /* object to pick up... */
     }
 
     if (!container)
-        Strcpy(where, "在这儿"); /* slightly shorter form */
+        Strcpy(where, "这里"); /* slightly shorter form */
     if (gi.invent || umoney) {
         prefx1 = "你一点也";
         prefx2 = "";
@@ -1696,7 +1696,7 @@ carry_count(struct obj *obj,            /* object to pick up... */
         prefx2 = (obj->quan == 1L) ? "" : "一个都";
         suffx = "来了";
     }
-    There("%s%s%s, 但%s%s%s不%s%s.", otense(obj, "有"), obj_nambuf, where,
+    pline("%s%s%s, 但%s%s%s不%s%s.", where, otense(obj, "有"), obj_nambuf, /*换pline,修改语序:There,自己看*/
           prefx1, prefx2, verb, verb2, suffx);
 
     /* *wt_after = iw; */
@@ -1731,7 +1731,7 @@ lift_object(
            [this was using simpleonames(obj) for shortest description, but
            that's suboptimal for loadstones because it omits user-assigned
            type name which is something of interest for gray stones] */
-        You("携带了太多的东西, 不能再拾取%s%s.",
+        You("携带的物品太多, 不能再拾取%s%s.",
             (obj->quan == 1L) ? "另一个" : "更多的", xname(obj));
         return -1;
     }
@@ -1773,7 +1773,7 @@ lift_object(
                         : (next_encumbr >= HVY_ENCUMBER) ? nearloadpfx
                           : (next_encumbr >= MOD_ENCUMBER) ? moderateloadpfx
                             : slightloadpfx, 
-                        !container ? "拿得动" : "拿出"); /*修改语序:交换*/
+                        !container ? "拿起" : "拿出"); /*修改语序:交换*/
                 (void) safe_qbuf(qbuf, qbuf, ". 继续?", obj, doname,
                                  ansimpleoname, something);
                 obj->quan = savequan;
@@ -1854,7 +1854,7 @@ pickup_object(
         } else if (!obj->spe && !obj->cursed) {
             obj->spe = 1;
         } else {
-            pline_The("当你%s起卷轴时, %s%s%s为了尘土", telekinesis ? "升" : "捡", /*修改语序:pline_The("卷轴%s%s为了尘土当你%s起来%s时.", plur(obj->quan),*/
+            pline_The("当你%s起卷轴时, %s%s%s为了尘土.", telekinesis ? "升" : "捡", /*修改语序:pline_The("卷轴%s%s为了尘土当你%s起来%s时.", plur(obj->quan),*/
                       (obj->quan == 1L) ? "它" : "它们", plur(obj->quan), /*修改语序:otense(obj, "化"), telekinesis ? "升" : "捡",*/
                       otense(obj, "化")); /*修改语序:(obj->quan == 1L) ? "它" : "它们");*/
             trycall(obj);
@@ -1883,7 +1883,7 @@ pickup_object(
 
     if (uwep && uwep == obj)
         gm.mrg_to_wielded = TRUE;
-    pickup_prinv(obj, count, "升起"); /*危险:可能吧*/
+    pickup_prinv(obj, count, "拿起"); /*危险:可能吧*/
     if (obj->ghostly)
         fix_ghostly_obj(obj);
     gm.mrg_to_wielded = FALSE;
@@ -2298,7 +2298,7 @@ doloot_core(void)
  lootmon:
     if (c != 'y' && (mon_beside(u.ux, u.uy) || iflags.menu_requested)) {
         boolean looted_mon = FALSE;
-        if (!get_adjacent_loc("搜刮拿个方向?",
+        if (!get_adjacent_loc("搜刮哪个方向?",
                               "无效的搜刮方向", u.ux, u.uy, &cc))
             return ECMD_OK;
         underfoot = u_at(cc.x, cc.y);
@@ -2335,14 +2335,14 @@ doloot_core(void)
                     You("只能搜刮有容器的格子.");
                 }
             } else {
-                You("在%s搜刮%s%s东西.", !underfoot ? "那里" : "这里", /*修改语序:You("%s%s%s里搜刮.", dont_find_anything,*/
+                You("在%s%s%s东西可以搜刮.", !underfoot ? "那里" : "这里", /*修改语序:You("%s%s%s里搜刮.", dont_find_anything,*/
                     dont_find_anything, /*修改语序:(prev_inquiry || prev_loot) ? "别的" : "",*/
                     (prev_inquiry || prev_loot) ? "别的" : ""); /*修改语序:!underfoot ? "那" : "这");*/
                 return (timepassed ? ECMD_TIME : ECMD_OK);
             }
         }
     } else if (c != 'y' && c != 'n') {
-        You("在%s东西%s可供搜刮.", underfoot ? "这里" : "那里", /*修改语序:You("%s%s可供搜刮。", dont_find_anything,*/
+        You("在%s%s东西可以搜刮.", underfoot ? "这里" : "那里", /*修改语序:You("%s%s可供搜刮。", dont_find_anything,*/
             dont_find_anything); /*修改语序:underfoot ? "这里" : "那里");*/
     }
     return (timepassed ? ECMD_TIME : ECMD_OK);
@@ -2575,7 +2575,7 @@ in_container(struct obj *obj)
         return 0;
     } else if (obj->owornmask & (W_ARMOR | W_ACCESSORY)) {
         Norep("你不能%s你正在穿戴的东西.",
-              Icebox ? "冷藏" : "藏入", something); /*Icebox ? "冷藏" : "藏入", something);*/
+              Icebox ? "冷藏" : "藏入"); /*修改语序:Icebox ? "冷藏" : "藏入", something);*/
         return 0;
     } else if ((obj->otyp == LOADSTONE) && obj->cursed) {
         set_bknown(obj, 1);
@@ -2923,7 +2923,7 @@ explain_container_prompt(boolean more_containers)
         " r -- 反向: 先放进去, 再拿出来",
         " s -- 藏入: 把一个物品藏进去", "",
         " n -- 下一个: 移动到下一个选择的容器",
-        " q -- 推出: 结束",
+        " q -- 退出: 结束",
         " ? -- 帮助: 显示该文本.",
         "", 0
     };
@@ -3437,14 +3437,14 @@ in_or_out_menu(
     }
     if (outokay) {
         any.a_int = 4; /* 'b' */
-        Sprintf(buf, "%s拿出来, 再放进去", inokay ? "先 " : "");
+        Sprintf(buf, "%s拿出来, 再放进去", inokay ? "先" : "");
         add_menu(win, &nul_glyphinfo, &any, menuselector[any.a_int], 0,
                  ATR_NONE, clr, buf, MENU_ITEMFLAGS_NONE);
     }
     if (inokay) {
         any.a_int = 5; /* 'r' */
         Sprintf(buf, "%s先放进去, 再拿出来",
-                outokay ? "反过来;" : "");
+                outokay ? "反过来; " : "");
         add_menu(win, &nul_glyphinfo, &any, menuselector[any.a_int], 0,
                  ATR_NONE, clr, buf, MENU_ITEMFLAGS_NONE);
         any.a_int = 6; /* 's' */
@@ -3592,7 +3592,7 @@ dotip(void)
     if (boxes > 0
         && (!iflags.menu_requested
             || (flags.menu_style == MENU_TRADITIONAL && boxes > 1))) {
-        Sprintf(buf, "在携带这么多物品时倒空%s.",
+        Sprintf(buf, "携带的物品太多, 无法倒空%s.",
                 !flags.verbose ? "一个箱子" : (boxes > 1) ? "其中的一个" : "它");
         if (!check_capacity(buf) && able_to_loot(cc.x, cc.y, FALSE)) {
             if (boxes > 1) {
@@ -3673,7 +3673,7 @@ dotip(void)
     else if (uarmh && cobj == uarmh)
         return tiphat() ? ECMD_TIME : ECMD_OK;
     else if (cobj->otyp == STATUE)
-        pline("没有什么有趣的事情发生.");
+        pline("没有什么值得关注的事情发生.");
     else
         pline1(nothing_happens);
     return ECMD_OK;

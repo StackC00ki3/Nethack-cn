@@ -2858,7 +2858,7 @@ lifesaved_monster(struct monst *mtmp)
                 else
                     pline("%s看上去好多了!", Monnam(mtmp));
             }
-            pline_The("吊坠化为了尘埃!");
+            pline_The("吊坠化为了尘土!");
         }
         m_useup(mtmp, lifesave);
         /* equip replacement amulet, if any, on next move */
@@ -2913,7 +2913,7 @@ vamprises(struct monst *mtmp)
         Snprintf(action, sizeof action, "%s%s%s起来, %s成了",
                  Unaware ? "你梦到" : "",
                  x_monnam(mtmp, ARTICLE_THE,
-                          spec_mon ? (char *) 0 : "看上去已经死了的",
+                          spec_mon ? (char *) 0 : "看上去已经死掉的",
                           (SUPPRESS_INVISIBLE | AUGMENT_IT), FALSE),
                  Unaware ? "" : "突然",
                  spec_death ? "复原" : "转变");
@@ -3210,7 +3210,7 @@ corpse_chance(
                 /* mdef is a gas spore (AT_BOOM) that is exploding inside an
                    engulfer; suppress usual explosion since it's contained */
                 if (magr == &gy.youmonst) {
-                    pline("你的%s里有一个东西爆炸了!", body_part(STOMACH)); /*危险:There("你的%s里有一个东西爆炸了!", body_part(STOMACH));*/
+                    pline("你的%s里有一个东西爆炸了!", body_part(STOMACH)); /*换pline:There("你的%s里有一个东西爆炸了!", body_part(STOMACH));*/
                     Sprintf(svk.killer.name, "%s的爆炸",
                             s_suffix(pmname(mdat, Mgender(mon))));
                     losehp(Maybe_Half_Phys(tmp), svk.killer.name,

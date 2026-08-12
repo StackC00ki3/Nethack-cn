@@ -25,21 +25,21 @@ static const struct innate {
     long *ability;
     const char *gainstr, *losestr;
 } arc_abil[] = { { 1, &(HSearching), "", "" },
-                 { 5, &(HStealth), "轻捷的", "" },
+                 { 5, &(HStealth), "轻捷", "" },
                  { 10, &(HFast), "敏捷", "笨拙" },
                  { 0, 0, 0, 0 } },
 
   bar_abil[] = { { 1, &(HPoison_resistance), "", "" },
                  { 7, &(HFast), "敏捷", "笨拙" },
-                 { 15, &(HStealth), "轻捷的", "" },
+                 { 15, &(HStealth), "轻捷", "" },
                  { 0, 0, 0, 0 } },
 
   cav_abil[] = { { 7, &(HFast), "敏捷", "笨拙" },
-                 { 15, &(HWarning), "敏感的", "" },
+                 { 15, &(HWarning), "敏感", "" },
                  { 0, 0, 0, 0 } },
 
   hea_abil[] = { { 1, &(HPoison_resistance), "", "" },
-                 { 15, &(HWarning), "敏感的", "" },
+                 { 15, &(HWarning), "敏感", "" },
                  { 0, 0, 0, 0 } },
 
   kni_abil[] = { { 7, &(HFast), "敏捷", "笨拙" }, { 0, 0, 0, 0 } },
@@ -47,44 +47,44 @@ static const struct innate {
   mon_abil[] = { { 1, &(HFast), "", "" },
                  { 1, &(HSleep_resistance), "", "" },
                  { 1, &(HSee_invisible), "", "" },
-                 { 3, &(HPoison_resistance), "健康的", "" },
-                 { 5, &(HStealth), "轻捷的", "" },
-                 { 7, &(HWarning), "敏感的", "" },
-                 { 9, &(HSearching), "有感知的", "无知的" },
-                 { 11, &(HFire_resistance), "冷的", "热的" },
-                 { 13, &(HCold_resistance), "暖和的", "寒冷的" },
-                 { 15, &(HShock_resistance), "绝缘的", "导电的" },
-                 { 17, &(HTeleport_control), "可控的", "失控的" },
+                 { 3, &(HPoison_resistance), "健康", "" },
+                 { 5, &(HStealth), "轻捷", "" },
+                 { 7, &(HWarning), "敏感", "" },
+                 { 9, &(HSearching), "有感知", "无知" },
+                 { 11, &(HFire_resistance), "凉快", "热" },
+                 { 13, &(HCold_resistance), "暖和", "冷" },
+                 { 15, &(HShock_resistance), "绝缘", "导电" },
+                 { 17, &(HTeleport_control), "可控", "失控" },
                  { 0, 0, 0, 0 } },
 
-  pri_abil[] = { { 15, &(HWarning), "敏感的", "" },
-                 { 20, &(HFire_resistance), "寒冷的", "温暖的" },
+  pri_abil[] = { { 15, &(HWarning), "敏感", "" },
+                 { 20, &(HFire_resistance), "凉快", "热" },
                  { 0, 0, 0, 0 } },
 
   ran_abil[] = { { 1, &(HSearching), "", "" },
-                 { 7, &(HStealth), "轻捷的", "" },
+                 { 7, &(HStealth), "轻捷", "" },
                  { 15, &(HSee_invisible), "", "" },
                  { 0, 0, 0, 0 } },
 
   rog_abil[] = { { 1, &(HStealth), "", "" },
-                 { 10, &(HSearching), "有感知的", "" },
+                 { 10, &(HSearching), "有感知", "" },
                  { 0, 0, 0, 0 } },
 
   sam_abil[] = { { 1, &(HFast), "", "" },
-                 { 15, &(HStealth), "轻捷的", "" },
+                 { 15, &(HStealth), "轻捷", "" },
                  { 0, 0, 0, 0 } },
 
-  tou_abil[] = { { 10, &(HSearching), "有感知的", "" },
-                 { 20, &(HPoison_resistance), "强壮的", "" },
+  tou_abil[] = { { 10, &(HSearching), "有感知", "" },
+                 { 20, &(HPoison_resistance), "强壮", "" },
                  { 0, 0, 0, 0 } },
 
   val_abil[] = { { 1, &(HCold_resistance), "", "" },
-                 { 3, &(HStealth), "轻捷的", "" },
-                 { 7, &(HFast), "快的", "慢的" },
+                 { 3, &(HStealth), "轻捷", "" },
+                 { 7, &(HFast), "很快", "慢" },
                  { 0, 0, 0, 0 } },
 
-  wiz_abil[] = { { 15, &(HWarning), "敏感的", "" },
-                 { 17, &(HTeleport_control), "可控的", "失控的" },
+  wiz_abil[] = { { 15, &(HWarning), "敏感", "" },
+                 { 17, &(HTeleport_control), "可控", "失控" },
                  { 0, 0, 0, 0 } },
 
   /* Intrinsics conferred by race */
@@ -92,7 +92,7 @@ static const struct innate {
                  { 0, 0, 0, 0 } },
 
   elf_abil[] = { { 1, &HInfravision, "", "" },
-                 { 4, &HSleep_resistance, "警惕的", "困倦的" },
+                 { 4, &HSleep_resistance, "警惕", "困倦" },
                  { 0, 0, 0, 0 } },
 
   gno_abil[] = { { 1, &HInfravision, "", "" },
@@ -128,7 +128,7 @@ adjattrib(
 
     if ((ndx == A_INT || ndx == A_WIS) && uarmh && uarmh->otyp == DUNCE_CAP) {
         if (msgflg == 0)
-            Your("帽子短暂的收缩，然后放松了。");
+            Your("头皮短暂地收紧了一下, 随后又放松下来.");
         return FALSE;
     }
 
@@ -175,7 +175,7 @@ adjattrib(
     if (ACURR(ndx) == old_acurr) {
         if (msgflg == 0 && flags.verbose) {
             if (ABASE(ndx) == old_abase && AMAX(ndx) == old_amax) {
-                pline("你%s不能再%s.",
+                pline("你%s不能再%s了.",
                       abonflg ? "现在" : "已经", attrstr);
             } else {
                 /* current stayed the same but base value changed, or
@@ -192,7 +192,7 @@ adjattrib(
 
     disp.botl = TRUE;
     if (msgflg <= 0)
-        You_feel("%s%s!", (incr > 1 || incr < -1) ? "非常" : "", attrstr);
+        You_feel("%s%s!", (incr > 1 || incr < -1) ? "非常" : "很", attrstr);
     if (program_state.in_moveloop && (ndx == A_STR || ndx == A_CON))
         encumber_msg();
     return TRUE;
@@ -281,12 +281,12 @@ static const struct poison_effect_message {
     void (*delivery_func)(const char *, ...);
     const char *effect_msg;
 } poiseff[] = {
-    { You_feel, "虚弱" },             /* A_STR */
-    { Your, "大脑着火" },       /* A_INT */
-    { Your, "判断力减弱" },  /* A_WIS */
-    { Your, "无法控制肌肉" }, /* A_DEX */
+    { You_feel, "很虚弱" },             /* A_STR */
+    { Your, "大脑着火了" },       /* A_INT */
+    { Your, "判断力减弱了" },  /* A_WIS */
+    { You, "无法控制肌肉了" }, /* A_DEX */
     { You_feel, "非常不健康" },          /* A_CON */
-    { You, "发麻疹" }       /* A_CHA */
+    { You, "发麻疹了" }       /* A_CHA */
 };
 
 /* feedback for attribute loss due to poisoning */
@@ -322,12 +322,12 @@ poisoned(
     boolean thrown_weapon) /* thrown weapons are less deadly */
 {
     int i, loss, kprefix = KILLED_BY_AN;
-    boolean blast = !strcmp(reason, "blast");
+    boolean blast = (!strcmp(reason, "blast")) || (!strcmp(reason, "冲"));
 
     /* inform player about being poisoned unless that's already been done;
        "blast" has given a "blast of poison gas" message; "poison arrow",
        "poison dart", etc have implicitly given poison messages too... */
-    if (!blast && !strstri(reason, "poison")) {
+    if (!blast && (!strstri(reason, "poison") || !strstri(reason, "毒"))) {
         boolean plural = (reason[strlen(reason) - 1] == 's') ? 1 : 0;
 
         /* avoid "The" Orcus's sting was poisoned... */
@@ -586,11 +586,11 @@ exerper(void)
 /* exercise/abuse text (must be in attribute order, not botl order);
    phrased as "You must have been [][0]." or "You haven't been [][1]." */
 static NEARDATA const char *const exertext[A_MAX][2] = {
-    { "在努力地锻炼", "适当的锻炼" },           /* Str */
+    { "在努力地锻炼", "适当锻炼" },           /* Str */
     { 0, 0 },                                                     /* Int */
     { "非常细心", "用心" },                     /* Wis */
-    { "在练习你的反应能力", "在最近练习反应能力" }, /* Dex */
-    { "在以一个健康的生活方式过着", "注意你的健康" },   /* Con */
+    { "在练习你的反应能力", "练习反应能力" }, /* Dex */
+    { "活得很健康", "注意你的健康" },   /* Con */
     { 0, 0 },                                                     /* Cha */
 };
 
@@ -661,8 +661,8 @@ exerchk(void)
                 /* if you actually changed an attrib - zero accumulation */
                 AEXE(i) = ax = 0;
                 /* then print an explanation */
-                You("%s %s.",
-                    (mod_val > 0) ? "一定" : "没有",
+                You("%s%s.",
+                    (mod_val > 0) ? "一定" : "最近没有",
                     exertext[i][(mod_val > 0) ? 0 : 1]);
             }
  nextattrib:
@@ -912,7 +912,7 @@ from_what(
      * Restrict the source of the attributes just to debug mode for now
      */
     if (wizard) {
-        static NEARDATA const char because_of[] = ",因为%s";
+        static NEARDATA const char because_of[] = ", 因为%s";
 
         if (propidx >= 0) {
             char *p;
@@ -935,17 +935,17 @@ from_what(
              */
             if ((propidx == BLINDED && u.uroleplay.blind)
                 || (propidx == DEAF && u.uroleplay.deaf))
-                Sprintf(buf, " 从出生就有");
+                Sprintf(buf, "从出生就有");
             else if (innateness == FROM_ROLE || innateness == FROM_RACE)
-                Strcpy(buf, " 天赋");
+                Strcpy(buf, "天赋");
             else if (innateness == FROM_INTR) /* [].intrinsic & FROMOUTSIDE */
-                Strcpy(buf, " 内在");
+                Strcpy(buf, "内在属性");
             else if (innateness == FROM_EXP)
-                Strcpy(buf, " 是因为你的经验");
+                Strcpy(buf, ", 因为你的经验");
             else if (innateness == FROM_LYCN)
-                Strcpy(buf, " 是由于兽化病");
+                Strcpy(buf, ", 因为兽化病");
             else if (innateness == FROM_FORM)
-                Strcpy(buf, " 来自你的生物形态");
+                Strcpy(buf, ", 来自你的变形形态");
             else if (propidx == FAST && Very_fast)
                 Sprintf(buf, because_of,
                         ((HFast & TIMEOUT) != 0L) ? "药水或魔法"
@@ -964,7 +964,7 @@ from_what(
             else if (propidx == BLINDED && u.ucreamed
                      && BlindedTimeout == (long) u.ucreamed
                      && !EBlinded && !(HBlinded & ~TIMEOUT))
-                Sprintf(buf, "由于粘液覆盖了你的%s",
+                Sprintf(buf, ", 因为黏液覆盖了你的%s",
                         body_part(FACE));
 
             /* remove some verbosity and/or redundancy */
@@ -1049,15 +1049,15 @@ adjabil(int oldlevel, int newlevel)
                 *(abil->ability) |= mask;
             if (!(*(abil->ability) & INTRINSIC & ~mask)) {
                 if (*(abil->gainstr))
-                    You_feel("%s!", abil->gainstr);
+                    You_feel("很%s!", abil->gainstr);
             }
         } else if (oldlevel >= abil->ulevel && newlevel < abil->ulevel) {
             *(abil->ability) &= ~mask;
             if (!(*(abil->ability) & INTRINSIC)) {
                 if (*(abil->losestr))
-                    You_feel("%s!", abil->losestr);
+                    You_feel("更%s了!", abil->losestr);
                 else if (*(abil->gainstr))
-                    You_feel("不那么%s!", abil->gainstr);
+                    You_feel("不那么%s了!", abil->gainstr);
             }
         }
         if (prevabil != *(abil->ability)) /* it changed */

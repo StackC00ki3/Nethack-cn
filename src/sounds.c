@@ -77,7 +77,7 @@ beehive_mon_sound(struct monst *mtmp)
         case 2:
             Soundeffect(se_bees, 100);
             You_hear("蜜蜂飞进了你的%s帽子里!",
-                     uarmh ? "" : "(不存在的) ");
+                     uarmh ? "" : "(不存在的)");
             break;
         }
         return TRUE;
@@ -145,7 +145,7 @@ temple_priest_sound(struct monst *mtmp)
            priest is not currently standing on the altar; he's mobile). */
         static const char *const temple_msg[] = {
             "*有人在赞美%s.", "*有人在祈求%s.",
-            "#一个动物尸体被献为祭品",
+            "#一个动物尸体被献为祭品.",
             "*有人在恳切地呼吁捐款.",
         };
         const char *msg;
@@ -164,7 +164,7 @@ temple_priest_sound(struct monst *mtmp)
                 continue;
             break; /* msg is acceptable */
         } while (++trycount < 50);
-        while (!letter(*msg))
+        while (!letter1(*msg))
             ++msg; /* skip control flags */
         if (strchr(msg, '%')) {
             DISABLE_WARNING_FORMAT_NONLITERAL
@@ -413,7 +413,7 @@ growl(struct monst *mtmp)
         growl_verb = growl_sound(mtmp);
     if (growl_verb) {
         if (canseemon(mtmp) || !Deaf) {
-            pline("%s发出%s!", Monnam(mtmp), vtense((char *) 0, growl_verb));
+            pline("%s发出%s声!", Monnam(mtmp), vtense((char *) 0, growl_verb));
             iflags.last_msg = PLNMSG_GROWL;
             if (svc.context.run)
                 nomul(0);
@@ -778,7 +778,7 @@ domonnoise(struct monst *mtmp)
                         flags.female ? "姐姐" : "哥哥");
                 verbl_msg = verbuf;
             } else if (nightchild && isnight) {
-                Sprintf(verbuf, "很高兴听到你的声音,夜之子!");
+                Sprintf(verbuf, "很高兴听到你的声音, 夜之子!");
                 verbl_msg = verbuf;
             } else
                 verbl_msg = "我只喝... 药水.";
@@ -990,7 +990,7 @@ domonnoise(struct monst *mtmp)
         break;
     case MS_DJINNI:
         if (mtmp->mtame) {
-            verbl_msg = "抱歉,我的愿望已经用完了.";
+            verbl_msg = "抱歉, 我的愿望已经用完了.";
         } else if (mtmp->mpeaceful) {
             if (ptr == &mons[PM_WATER_DEMON])
                 pline_msg = "咕噜叫.";
@@ -998,7 +998,7 @@ domonnoise(struct monst *mtmp)
                 verbl_msg = "我自由了!";
         } else {
             if (ptr != &mons[PM_PRISONER])
-                verbl_msg = "让你别打扰我,这就给你好好上一课!";
+                verbl_msg = "让你别打扰我, 这就给你好好上一课!";
             else /* vague because prisoner might already be out of cell */
                 verbl_msg = "快把我弄出去.";
         }

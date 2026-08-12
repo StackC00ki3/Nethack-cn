@@ -37,7 +37,7 @@ des.stair("up", 03,08)
 -- Non diggable walls
 des.non_diggable(selection.area(00,00,75,19))
 -- Objects
-des.object({ id = "mirror", x=50,y=06, buc="blessed", spe=0, name="The Magic Mirror of Merlin" })
+des.object({ id = "mirror", x=50,y=06, buc="blessed", spe=0, name="梅林的魔镜" })
 des.object({ coord = { 33, 01 } })
 des.object({ coord = { 33, 02 } })
 des.object({ coord = { 33, 03 } })

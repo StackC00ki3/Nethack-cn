@@ -1027,7 +1027,7 @@ outentry(int rank, struct toptenentry *t1, boolean so)
             }
             Sprintf(eos(linebuf), fmt, arg);
         } else {
-            Sprintf(eos(linebuf), " 于%s中", svd.dungeons[t1->deathdnum].dname);
+            Sprintf(eos(linebuf), " 在%s中", svd.dungeons[t1->deathdnum].dcname);
             if (t1->deathdnum != knox_level.dnum)
                 Sprintf(eos(linebuf), " 于第%d层", t1->deathlev);
             if (t1->deathlev != t1->maxlvl)

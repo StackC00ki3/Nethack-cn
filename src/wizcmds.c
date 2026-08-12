@@ -246,7 +246,7 @@ wiz_kill(void)
     coord cc;
     int ans;
     char c, qbuf[QBUFSZ];
-    const char *prompt = "Pick first monster to slay";
+    const char *prompt = "选择要杀死的第一个怪物";
     boolean save_verbose = flags.verbose,
             save_autodescribe = iflags.autodescribe;
     d_level uarehere = u.uz;
@@ -254,11 +254,11 @@ wiz_kill(void)
     cc.x = u.ux, cc.y = u.uy;
     for (;;) {
         pline("%s:", prompt);
-        prompt = "Next monster";
+        prompt = "下一个怪物";
 
         flags.verbose = FALSE;
         iflags.autodescribe = TRUE;
-        ans = getpos(&cc, TRUE, "a monster");
+        ans = getpos(&cc, TRUE, "一个怪物");
         flags.verbose = save_verbose;
         iflags.autodescribe = save_autodescribe;
         if (ans < 0 || cc.x < 1)
@@ -267,14 +267,14 @@ wiz_kill(void)
         mtmp = 0;
         if (u_at(cc.x, cc.y)) {
             if (u.usteed) {
-                Sprintf(qbuf, "杀死%.110s？", mon_nam(u.usteed));
+                Sprintf(qbuf, "杀死%.110s?", mon_nam(u.usteed));
                 if ((c = ynq(qbuf)) == 'q')
                     break;
                 if (c == 'y')
                     mtmp = u.usteed;
             }
             if (!mtmp) {
-                Sprintf(qbuf, "%s?", Role_if(PM_SAMURAI) ? "切腹自尽"
+                Sprintf(qbuf, "%s吗?", Role_if(PM_SAMURAI) ? "切腹自尽"
                                                          : "自杀");
                 if (paranoid_query(TRUE, qbuf)) {
                     Sprintf(svk.killer.name, "%s自己的玩家", uhis());
@@ -305,13 +305,13 @@ wiz_kill(void)
                         | ((tame && has_mgivenname(mtmp)) ? SUPPRESS_SADDLE
                            : 0)),
                 articl = tame ? ARTICLE_YOUR : seen ? ARTICLE_THE : ARTICLE_A;
-            const char *adjs = tame ? (!seen ? "poor, unseen" : "poor")
-                                    : (!seen ? "unseen" : (const char *) 0);
+            const char *adjs = tame ? (!seen ? "看不见的可怜的" : "可怜的")
+                                    : (!seen ? "看不见的" : (const char *) 0);
             char *Mn = x_monnam(mtmp, articl, adjs, flgs, FALSE);
 
             if (!iflags.menu_requested) {
                 /* normal case: hero is credited/blamed */
-                You("%s%s!", nonliving(mtmp->data) ? "消灭" : "杀死", Mn);
+                You("%s了%s!", nonliving(mtmp->data) ? "摧毁" : "杀死", Mn);
                 xkilled(mtmp, XKILL_NOMSG);
             } else { /* 'm'-prefix */
                 /* we know that monsters aren't moving because player has
@@ -320,7 +320,7 @@ wiz_kill(void)
                    need to have the mon_moving flag be True in order to
                    avoid blaming or crediting hero for their deaths */
                 svc.context.mon_moving = TRUE;
-                pline("%s被%s.", upstart(Mn),
+                pline("%s被%s了.", upstart(Mn),
                       nonliving(mtmp->data) ? "摧毁" : "杀死");
                 /* Null second arg suppresses the usual message */
                 monkilled(mtmp, (char *) 0, AD_PHYS);
@@ -331,7 +331,7 @@ wiz_kill(void)
             if (u.utotype || !on_level(&u.uz, &uarehere))
                 break;
         } else {
-            There("那里没有怪物.");
+            pline("那里没有怪物."); /*换pline:There*/
             break;
         }
     }
@@ -360,7 +360,7 @@ wiz_load_lua(void)
                 16*1024*1024, 0, 16*1024*1024};
 
         buf[0] = '\0';
-        getlin("Load which lua file?", buf);
+        getlin("加载哪个lua文件?", buf);
         if (buf[0] == '\033' || buf[0] == '\0')
             return ECMD_CANCEL;
         if (!strchr(buf, '.'))
@@ -379,7 +379,7 @@ wiz_load_splua(void)
         char buf[BUFSZ];
 
         buf[0] = '\0';
-        getlin("Load which des lua file?", buf);
+        getlin("加载哪个关卡lua文件?", buf);
         if (buf[0] == '\033' || buf[0] == '\0')
             return ECMD_CANCEL;
         if (!strchr(buf, '.'))
@@ -412,7 +412,7 @@ int
 wiz_flip_level(void)
 {
     static const char choices[] = "0123",
-        prmpt[] = "Flip 0=randomly, 1=vertically, 2=horizontally, 3=both:";
+        prmpt[] = "翻转(0=随机, 1=垂直, 2=水平, 3=同时):";
 
     /*
      * Does not handle
@@ -450,7 +450,7 @@ wiz_level_change(void)
     int ret;
 
     buf[0] = '\0'; /* in case EDIT_GETLIN is enabled */
-    getlin("To what experience level do you want to be set?", buf);
+    getlin("你想把经验等级设置为多少?", buf);
     (void) mungspaces(buf);
     if (buf[0] == '\033' || buf[0] == '\0')
         ret = 0;
@@ -465,7 +465,7 @@ wiz_level_change(void)
         You("已经是那个等级了.");
     } else if (newlevel < u.ulevel) {
         if (u.ulevel == 1) {
-            You("已经达到最低等级.");
+            You("已经达到最低等级了.");
             return ECMD_OK;
         }
         if (newlevel < 1)
@@ -474,7 +474,7 @@ wiz_level_change(void)
             losexp("#levelchange");
     } else {
         if (u.ulevel >= MAXULEV) {
-            You("已经达到最高等级.");
+            You("已经达到最高等级了.");
             return ECMD_OK;
         }
         if (newlevel > MAXULEV)
@@ -500,15 +500,15 @@ wiz_telekinesis(void)
     cc.x = u.ux;
     cc.y = u.uy;
 
-    pline("选择一个怪物来投掷.");
+    pline("选择一个怪物来远程操纵.");
     do {
-        ans = getpos(&cc, TRUE, "a monster");
+        ans = getpos(&cc, TRUE, "一个怪物");
         if (ans < 0 || cc.x < 1)
             return ECMD_CANCEL;
 
         if ((((mtmp = m_at(cc.x, cc.y)) != 0) && canspotmon(mtmp))
             || u_at(cc.x, cc.y)) {
-            if (!getdir("which direction?"))
+            if (!getdir("哪个方向?"))
                 return ECMD_CANCEL;
 
             if (mtmp) {
@@ -539,7 +539,7 @@ wiz_panic(void)
         return ECMD_OK;
     }
     if (paranoid_query(TRUE,
-                       "Do you want to call panic() and end your game?"))
+                       "你想要调用panic()结束游戏吗?"))
         panic("Crash test (#panic).");
     return ECMD_OK;
 }
@@ -549,12 +549,12 @@ int
 wiz_fuzzer(void)
 {
     if (flags.suppress_alert < FEATURE_NOTICE_VER(3,7,0)) {
-        pline("模糊测试器将使 NetHack 执行随机按键.");
-        There("没有常规方式退出此模式.");
+        pline("模糊测试将使NetHack执行随机按键.");
+        pline("没有常规方式可以退出此模式."); /*换pline:There*/
     }
-    if (paranoid_query(TRUE, "Do you want to start fuzz testing?")) {
+    if (paranoid_query(TRUE, "你想开始模糊测试吗")) {
         /* Thoth, take the reins */
-        if (y_n("Do you want to call panic() after impossible()?") == 'n') {
+        if (y_n("你想在impossible()后panic()吗?") == 'n') {
             iflags.debug_fuzzer = fuzzer_impossible_continue;
         } else {
             iflags.debug_fuzzer = fuzzer_impossible_panic;
@@ -626,7 +626,7 @@ wiz_show_vision(void)
     char row[COLNO + 1];
 
     win = create_nhwindow(NHW_TEXT);
-    Sprintf(row, "标志: 0x%x 可见, 0x%x 在视线内, 0x%x 临时照亮",
+    Sprintf(row, "标志: 0x%x可见, 0x%x在视线内, 0x%x临时照亮",
             COULD_SEE, IN_SIGHT, TEMP_LIT);
     putstr(win, 0, row);
     putstr(win, 0, "");
@@ -727,11 +727,11 @@ wiz_map_levltyp(void)
         char dsc[COLBUFSZ];
         s_level *slev = Is_special(&u.uz);
 
-        Sprintf(dsc, "地牢:%d,层:%d", u.uz.dnum, u.uz.dlevel);
+        Sprintf(dsc, "地牢:%d, 层:%d", u.uz.dnum, u.uz.dlevel);
         /* [dungeon branch features currently omitted] */
         /* special level features */
         if (slev) {
-            Sprintf(eos(dsc), " \" %s\"", slev->proto);
+            Sprintf(eos(dsc), " \"%s\"", slev->proto);
             /* special level flags (note: dungeon.def doesn't set `maze'
                or `hell' for any specific levels so those never show up) */
             if (slev->flags.maze_like)
@@ -741,7 +741,7 @@ wiz_map_levltyp(void)
             if (slev->flags.town)
                 Strcat(dsc, " 城镇");
             if (slev->flags.rogue_like)
-                Strcat(dsc, " 类roguelike");
+                Strcat(dsc, " roguelike");
             /* alignment currently omitted to save space */
         }
         /* level features */
@@ -773,9 +773,9 @@ wiz_map_levltyp(void)
         if (svl.level.flags.noteleport)
             Strcat(dsc, " 禁止传送");
         if (svl.level.flags.hardfloor)
-            Strcat(dsc, " 禁挖");
+            Strcat(dsc, " 禁止挖掘");
         if (svl.level.flags.nommap)
-            Strcat(dsc, " 无地图");
+            Strcat(dsc, " 禁止魔法地图");
         if (!svl.level.flags.hero_memory)
             Strcat(dsc, " 无记忆");
         if (svl.level.flags.shortsighted)
@@ -787,7 +787,7 @@ wiz_map_levltyp(void)
         if (svl.level.flags.is_cavernous_lev)
             Strcat(dsc, " 洞穴");
         if (svl.level.flags.arboreal)
-            Strcat(dsc, " 树木");
+            Strcat(dsc, " 森林");
         if (Sokoban)
             Strcat(dsc, " 推箱子规则");
         /* non-flag info; probably should include dungeon branching
@@ -802,13 +802,13 @@ wiz_map_levltyp(void)
         else if (u.uz.dnum == mines_dnum)
             Strcat(dsc, " 矿井");
         else if (In_sokoban(&u.uz))
-            Strcat(dsc, " 索科班");
+            Strcat(dsc, " 推箱子");
         else if (u.uz.dnum == quest_dnum)
             Strcat(dsc, " 任务");
         else if (Is_knox(&u.uz))
-            Strcat(dsc, " 路迪奥斯");
+            Strcat(dsc, " 吕底俄斯");
         else if (u.uz.dnum == 1)
-            Strcat(dsc, " 吉汉诺姆");
+            Strcat(dsc, " 地狱");
         else if (u.uz.dnum == tower_dnum)
             Strcat(dsc, " 弗拉德");
         else if (In_endgame(&u.uz))
@@ -818,7 +818,7 @@ wiz_map_levltyp(void)
             const char *brname = svd.dungeons[u.uz.dnum].dname;
 
             if (!brname || !*brname)
-                brname = "unknown";
+                brname = "未知";
             if (!strncmpi(brname, "the ", 4))
                 brname += 4;
             Sprintf(eos(dsc), " %s", brname);
@@ -893,14 +893,14 @@ wiz_smell(void)
     cc.x = u.ux;
     cc.y = u.uy;
     if (!olfaction(gy.youmonst.data)) {
-        You("以你的当前形态无法探测气味.");
+        You("的当前形态无法探测气味.");
         return ECMD_OK;
     }
 
     You("可以将光标移动到你想闻的怪物上.");
     do {
         pline("选择一个怪物来闻.");
-        ans = getpos(&cc, TRUE, "a monster");
+        ans = getpos(&cc, TRUE, "一个怪物");
         if (ans < 0 || cc.x < 0) {
             return ECMD_CANCEL; /* done */
         }
@@ -930,7 +930,7 @@ wiz_smell(void)
             if (!glyph_is_monster(glyph))
                 map_invisible(cc.x, cc.y);
         } else {
-            You("那里没有闻到任何怪物.");
+            You("在那里没有闻到任何怪物.");
             if (glyph_is_invisible(glyph))
                 unmap_invisible(cc.x, cc.y);
         }
@@ -950,7 +950,7 @@ wiz_intrinsic(void)
 {
     if (wizard) {
         static const char wizintrinsic[] = "#wizintrinsic";
-        static const char fmt[] = "You are%s %s.";
+        static const char fmt[] = "你%s%s.";
         winid win;
         anything any;
         char buf[BUFSZ];
@@ -966,7 +966,7 @@ wiz_intrinsic(void)
         if (iflags.cmdassist) {
             /* start menu with a subtitle */
             Sprintf(buf,
-        "[在任何选择前加上一个计数，以使用不同于%d的增量.]",
+        "[在任何选择前加上一个计数, 以使用不同于%d的增量. ]",
                     DEFAULT_TIMEOUT_INCR);
             add_menu_str(win, buf);
         }
@@ -993,7 +993,7 @@ wiz_intrinsic(void)
             add_menu(win, &nul_glyphinfo, &any, 0, 0, ATR_NONE, clr, buf,
                      MENU_ITEMFLAGS_NONE);
         }
-        end_menu(win, "选择哪些内在能力？");
+        end_menu(win, "选择哪些内在属性?");
         n = select_menu(win, PICK_ANY, &pick_list);
         destroy_nhwindow(win);
 
@@ -1038,19 +1038,19 @@ wiz_intrinsic(void)
                 break;
             case SLIMED:
                 Sprintf(buf, fmt,
-                        !Slimed ? "" : " still", "turning into slime");
+                        !Slimed ? "正在" : "仍然在", "变成黏液");
                 make_slimed(newtimeout, buf);
                 break;
             case STONED:
                 Sprintf(buf, fmt,
-                        !Stoned ? "" : " still", "turning into stone");
+                        !Stoned ? "正在" : "仍然在", "变成石头");
                 make_stoned(newtimeout, buf, KILLED_BY, wizintrinsic);
                 break;
             case STUNNED:
                 make_stunned(newtimeout, TRUE);
                 break;
             case VOMITING:
-                Sprintf(buf, fmt, !Vomiting ? "" : " still", "vomiting");
+                Sprintf(buf, fmt, !Vomiting ? "正在" : "仍然在", "呕吐");
                 make_vomiting(newtimeout, FALSE);
                 pline1(buf);
                 break;
@@ -1073,7 +1073,7 @@ wiz_intrinsic(void)
                 if (p != GLIB)
                     incr_itimeout(&u.uprops[p].intrinsic, amt);
                 disp.botl = TRUE; /* have pline() do a status update */
-                pline("超时时间 %s %s %d.", propname,
+                pline("倒计时%s%s%d.", propname,
                       oldtimeout ? "增加" : "设为", amt);
                 break;
             }
@@ -1303,19 +1303,19 @@ misc_stats(
     }
     *total_count += count;
     *total_size += size;
-    Sprintf(hdrbuf, "陷阱，大小 %ld", (long) sizeof (struct trap));
+    Sprintf(hdrbuf, "陷阱, 大小%ld", (long) sizeof (struct trap));
     Sprintf(buf, template, hdrbuf, count, size);
     putstr(win, 0, buf);
 
     count = size = 0L;
-    engr_stats("engravings, size %ld+text", hdrbuf, &count, &size);
+    engr_stats("刻字, 大小%ld+text", hdrbuf, &count, &size);
     *total_count += count;
     *total_size += size;
     Sprintf(buf, template, hdrbuf, count, size);
     putstr(win, 0, buf);
 
     count = size = 0L;
-    light_stats("light sources, size %ld", hdrbuf, &count, &size);
+    light_stats("光源, 大小%ld", hdrbuf, &count, &size);
     if (count || size) {
         *total_count += count;
         *total_size += size;
@@ -1324,7 +1324,7 @@ misc_stats(
     }
 
     count = size = 0L;
-    timer_stats("timers, size %ld", hdrbuf, &count, &size);
+    timer_stats("计时器, 大小%ld", hdrbuf, &count, &size);
     if (count || size) {
         *total_count += count;
         *total_size += size;
@@ -1340,14 +1340,14 @@ misc_stats(
     if (count || size) {
         *total_count += count;
         *total_size += size;
-        Sprintf(hdrbuf, "商店损坏记录，大小 %ld",
+        Sprintf(hdrbuf, "商店损坏记录, 大小%ld",
                 (long) sizeof (struct damage));
         Sprintf(buf, template, hdrbuf, count, size);
         putstr(win, 0, buf);
     }
 
     count = size = 0L;
-    region_stats("regions, size %ld+%ld*rect+N", hdrbuf, &count, &size);
+    region_stats("区域, 大小%ld+%ld*rect+N", hdrbuf, &count, &size);
     if (count || size) {
         *total_count += count;
         *total_size += size;
@@ -1363,7 +1363,7 @@ misc_stats(
     if (count || size) {
         *total_count += count;
         *total_size += size;
-        Sprintf(hdrbuf, "延迟击杀者%s，大小 %ld",
+        Sprintf(hdrbuf, "慢性击杀%s, 大小%ld",
                 plur(count), (long) sizeof (struct kinfo));
         Sprintf(buf, template, hdrbuf, count, size);
         putstr(win, 0, buf);
@@ -1377,7 +1377,7 @@ misc_stats(
     if (count || size) {
         *total_count += count;
         *total_size += size;
-        Sprintf(hdrbuf, "骨头历史记录，大小 %ld",
+        Sprintf(hdrbuf, "遗骨历史, 大小%ld",
                 (long) sizeof (struct cemetery));
         Sprintf(buf, template, hdrbuf, count, size);
         putstr(win, 0, buf);
@@ -1392,7 +1392,7 @@ misc_stats(
     if (count || size) {
         *total_count += count;
         *total_size += size;
-        Strcpy(hdrbuf, "对象类型名称，文本");
+        Strcpy(hdrbuf, "物品类型名称, 文本");
         Sprintf(buf, template, hdrbuf, count, size);
         putstr(win, 0, buf);
     }
@@ -1527,7 +1527,7 @@ list_migrating_mons(
         pline("当前没有怪物正在迁移.");
     } else {
         pline(
-      "%d 个怪物%s等待进入当前层，%d个等待进入下一层，%d个等待进入其他层.",
+      "%d个怪物%s等待进入当前层, %d个等待进入下一层, %d个等待进入其他层.",
               here, plur(here), nxtlv, other);
         prmpt[0] = xtra[0] = '\0';
         (void) strkitten(here ? prmpt : xtra, 'c');
@@ -1536,7 +1536,7 @@ list_migrating_mons(
         Strcat(prmpt, "a q");
         if (*xtra)
             Sprintf(eos(prmpt), "%c%s", '\033', xtra);
-        c = yn_function("List which?", prmpt, 'q', TRUE);
+        c = yn_function("列举哪种?", prmpt, 'q', TRUE);
         n = (c == 'c') ? here
             : (c == 'n') ? nxtlv
               : (c == 'o') ? other
@@ -1548,13 +1548,13 @@ list_migrating_mons(
             case 'c':
             case 'n':
             case 'o':
-                Sprintf(buf, "怪物%s正在迁移到%s：", plur(n),
+                Sprintf(buf, "%s正在迁移到%s的怪物:", plur(n),
                         (c == 'c') ? "当前层"
                         : (c == 'n') ? "下一层"
                           : "'其他'层");
                 break;
             default:
-                Strcpy(buf, "所有迁移中的怪物：");
+                Strcpy(buf, "所有正在迁移的怪物:");
                 break;
             }
             putstr(win, 0, buf);
@@ -1588,14 +1588,14 @@ list_migrating_mons(
                 /* minimal_monnam() appends map coordinates; strip that */
                 (void) strsubst(buf, " <0,0>", "");
                 if (has_mgivenname(mtmp)) /* if mtmp is named, include that */
-                    Sprintf(eos(buf), " 名为 %s", MGIVENNAME(mtmp));
+                    Sprintf(eos(buf), "(名为%s)", MGIVENNAME(mtmp));
                 if (c == 'o' || c == 'a')
-                    Sprintf(eos(buf), "到 %d:%d", mtmp->mux, mtmp->muy);
+                    Sprintf(eos(buf), ", 到%d:%d", mtmp->mux, mtmp->muy);
                 xyloc = mtmp->mtrack[0].x; /* (for legibility) */
                 if (xyloc == MIGR_EXACT_XY) {
                     x = mtmp->mtrack[1].x;
                     y = mtmp->mtrack[1].y;
-                    Sprintf(eos(buf), " 在<%d,%d>", (int) x, (int) y);
+                    Sprintf(eos(buf), ", 在<%d,%d>", (int) x, (int) y);
                 }
                 putstr(win, 0, buf);
             }
@@ -1627,7 +1627,7 @@ wiz_show_stats(void)
 
     total_obj_count = total_obj_size = 0L;
     putstr(win, 0, stats_hdr);
-    Sprintf(buf, "  对象，基础大小 %ld", (long) sizeof (struct obj));
+    Sprintf(buf, "  物品, 基础大小 %ld", (long) sizeof (struct obj));
     putstr(win, 0, buf);
     obj_chain(win, "invent", gi.invent, TRUE,
               &total_obj_count, &total_obj_size);
@@ -1648,7 +1648,7 @@ wiz_show_stats(void)
 
     total_mon_count = total_mon_size = 0L;
     putstr(win, 0, "");
-    Sprintf(buf, "  怪物，基础大小 %ld", (long) sizeof (struct monst));
+    Sprintf(buf, "  怪物, 基础大小 %ld", (long) sizeof (struct monst));
     putstr(win, 0, buf);
     mon_chain(win, "fmon", fmon, TRUE, &total_mon_count, &total_mon_size);
     mon_chain(win, "migrating", gm.migrating_mons, FALSE,
@@ -1659,28 +1659,28 @@ wiz_show_stats(void)
         mon_chain(win, "mydogs", gm.mydogs, FALSE,
                   &total_mon_count, &total_mon_size);
     putstr(win, 0, stats_sep);
-    Sprintf(buf, template, "  Mon total", total_mon_count, total_mon_size);
+    Sprintf(buf, template, "  怪物合计", total_mon_count, total_mon_size);
     putstr(win, 0, buf);
 
     total_ovr_count = total_ovr_size = 0L;
     putstr(win, 0, "");
-    putstr(win, 0, "  Overview");
+    putstr(win, 0, "  概览");
     overview_stats(win, template, &total_ovr_count, &total_ovr_size);
     putstr(win, 0, stats_sep);
-    Sprintf(buf, template, "  Over total", total_ovr_count, total_ovr_size);
+    Sprintf(buf, template, "  概览合计", total_ovr_count, total_ovr_size);
     putstr(win, 0, buf);
 
     total_misc_count = total_misc_size = 0L;
     putstr(win, 0, "");
-    putstr(win, 0, "  Miscellaneous");
+    putstr(win, 0, "  杂项");
     misc_stats(win, &total_misc_count, &total_misc_size);
     putstr(win, 0, stats_sep);
-    Sprintf(buf, template, "  Misc total", total_misc_count, total_misc_size);
+    Sprintf(buf, template, "  杂项合计", total_misc_count, total_misc_size);
     putstr(win, 0, buf);
 
     putstr(win, 0, "");
     putstr(win, 0, stats_sep);
-    Sprintf(buf, template, "  Grand total",
+    Sprintf(buf, template, "  总合计",
             (total_obj_count + total_mon_count
              + total_ovr_count + total_misc_count),
             (total_obj_size + total_mon_size
@@ -1704,7 +1704,7 @@ RESTORE_WARNING_FORMAT_NONLITERAL
 int
 wiz_display_macros(void)
 {
-    static const char display_issues[] = "Display macro issues:";
+    static const char display_issues[] = "显示宏问题:";
     char buf[BUFSZ];
     winid win;
     int glyph, test, trouble = 0, no_glyph = NO_GLYPH, max_glyph = MAX_GLYPH;
@@ -1729,7 +1729,7 @@ wiz_display_macros(void)
                 if (!trouble++)
                     putstr(win, 0, display_issues);
                 Sprintf(buf,
-                        "glyph_is_cmap_zap(glyph=%d) 返回了非 zap 的 cmap %d",
+                        "glyph_is_cmap_zap(glyph=%d) returned non-zap cmap %d",
                         glyph, test);
                  putstr(win, 0, buf);
             }
@@ -1771,7 +1771,7 @@ wiz_display_macros(void)
         }
     }
     if (!trouble)
-        putstr(win, 0, "No display macro issues detected.");
+        putstr(win, 0, "未检测到显示宏问题.");
     display_nhwindow(win, FALSE);
     destroy_nhwindow(win);
     return ECMD_OK;
@@ -1781,7 +1781,7 @@ wiz_display_macros(void)
 int
 wiz_show_nhuuid(void)
 {
-    pline("本游戏的 NHUUID 为 { %s }.", svn.nhuuid);
+    pline("本游戏的NHUUID为{ %s }.", svn.nhuuid);
     return ECMD_OK;
 }
 
@@ -1789,7 +1789,7 @@ wiz_show_nhuuid(void)
 int
 wiz_mon_diff(void)
 {
-    static const char window_title[] = "Review of monster difficulty ratings"
+    static const char window_title[] = "怪物难度评级回顾"
                                        " [index:level]:";
     char buf[BUFSZ];
     winid win;
@@ -1821,7 +1821,7 @@ wiz_mon_diff(void)
         }
     }
     if (!trouble)
-        putstr(win, 0, "No monster difficulty discrepancies were detected.");
+        putstr(win, 0, "未检测到怪物难度差异.");
     display_nhwindow(win, FALSE);
     destroy_nhwindow(win);
     return ECMD_OK;
@@ -1894,7 +1894,7 @@ wiz_migrate_mons(void)
 #ifdef DEBUG_MIGRATING_MONS
     inbuf[0] = inbuf[1] = '\0';
     if (tolevel.dnum || tolevel.dlevel)
-        getlin("How many random monsters to migrate to next level? [0]",
+        getlin("需要多少个怪物迁移到下一层? [0]",
                inbuf);
     else
         pline("无法从这里到达那里.");
@@ -1953,14 +1953,14 @@ wiz_custom(void)
         add_menu_heading(win,
                          "    glyph  glyph identifier                        "
                          "     sym   clr customcolor unicode utf8");
-        Sprintf(bufa, "%s: 颜色计数=%ld %s", wizcustom,
+        Sprintf(bufa, "%s: colorcount=%ld %s", wizcustom,
                 (long) iflags.colorcount,
                 gs.symset[PRIMARYSET].name ? gs.symset[PRIMARYSET].name
-                                          : "默认");
+                                          : "default");
         if (gc.currentgraphics == PRIMARYSET && gs.symset[PRIMARYSET].name)
-            Strcat(bufa, ", 活跃");
+            Strcat(bufa, ", active");
         if (gs.symset[PRIMARYSET].handling) {
-            Sprintf(eos(bufa), ", 处理程序=%s",
+            Sprintf(eos(bufa), ", handler=%s",
                     known_handling[gs.symset[PRIMARYSET].handling]);
         }
         Sprintf(buf, "%s", bufa);

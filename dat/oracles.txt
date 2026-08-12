@@ -1,105 +1,78 @@
 -----
-If thy wand hath run out of charges, thou mayst zap it again and again; though
-naught will happen at first, verily, thy persistence shall be rewarded, as
-one last charge may yet be wrested from it!
+魔杖法尽, 苟屡挥之, 初虽无状, 然久试不怠, 
+必获其报. 盖极力逼之, 尚可余一击也. 
 -----
-Though the shopkeepers be wary, thieves have nevertheless stolen much by using
-their digging wands to hasten exits through the pavement.
+贾肆之主虽警, 然穿窬之徒, 多以掘石之杖, 
+毁砌穿隧而遁, 所窃甚众. 
 -----
-If thou hast had trouble with rust on thine armor or weapons, thou shouldst
-know that thou canst prevent this by, while in a confused state, reading the
-magical parchments which normally are used to cause their enchantment.
-Unguents of lubrication may provide similar protection, albeit of a
-transitory nature.
+兵甲若患生衣, 当于神识迷惘之际, 诵甲胄祝
+印之卷, 可防锖蚀. 涂敷膏脂亦有护卫之效, 
+然暂存而已, 弗能久长. 
 -----
-Behold the cockatrice, whose diminutive stature belies its hidden might.  The
-cockatrice can petrify any ordinary being it contacts--save those wise
-adventurers who eat a dead lizard or blob of acid when they feel themselves
-slowly turning to stone.
+有兽曰鸡蛇, 其形虽眇, 其威大怖. 凡肉身触
+之者, 立化顽石. 唯智者觉肌骨将僵, 急啖死
+蜥蜴, 或饮烈酸, 方可自免. 
 -----
-While some wayfarers rely on scrounging finished armour in the dungeon, the
-resourceful know the mystical means by which mail may be fashioned out of
-scales from a dragon's hide.
+羁客多于地牢拾弃甲以为防, 然智通造化之士, 
+能取巨龙之皮, 缀其鳞以为坚铠. 
 -----
-It is customarily known among travelers that extra-healing draughts may clear
-thy senses when thou art addled by delusory visions.  But never forget, the
-lowly potion which makes one sick may be used for the same purpose.
+羁旅皆知, 大愈之剂可清神解幻. 然毋忘也, 
+使人饮致疾之水, 亦具同功. 
 -----
-While the consumption of lizard flesh or water beloved of the gods may clear
-the muddled head, the application of the horn of a creature of utmost purity
-can alleviate many other afflictions as well.
+啖蜥蜴之肉, 或饮神祇所钟之水, 皆可清其神
+昧. 若施至洁瑞兽之角, 则百疾可平矣. 
 -----
-If thou wouldst travel quickly between distant locations, thou must be
-able to control thy teleports, and in a confused state misread the scroll
-which usually teleports thyself locally.  Daring adventurers have also
-performed the same feat sans need for scrolls or potions by stepping into
-a particular ambuscade.
+欲倏忽万里, 必精驭移之术；当于神惑之际, 
+误诵移形之卷, 可达远方. 勇夫不假符药, 
+蹈特异之暗阱, 亦能成此奇功. 
 -----
-Almost all adventurers who come this way hope to pass the dread Medusa.  To
-do this, the best advice is to keep thine eyes blindfolded and to cause the
-creature to espy its own reflection in a mirror.
+涉险之客, 皆欲过蛇发妖女之关. 上策无他, 
+蔽己双目, 持明镜令妖自窥其影, 则妖自毙矣. 
 -----
-And where it is written "ad aerarium", diligent searching will often reveal
-the way to a trap which sends one to the Magic Memory Vault, where the riches
-of Croesus are stored; however, escaping from the vault with its gold is much
-harder than getting in.
+若见"ad aerarium"之铭, 穷搜其地, 多得一
+阱. 堕之者, 即入蕴识魔库, Croesus之金皆
+聚于此. 然携金以出, 艰于入之百倍也. 
 -----
-It is well known that wily shopkeepers raise their prices whene'er they
-espy the garish apparel of the approaching tourist or the countenance of a
-disfavored patron.  They favor the gentle of manner and the fair of face.
-The boor may expect unprofitable transactions.
+狡贾逢服饰浮华之游客, 或见貌恶失宠之人, 
+必昂其直. 彼喜容止温雅, 面貌姝好之客. 
+狂鄙之夫, 市易必亏. 
 -----
-The cliche of the kitchen sink swallowing any unfortunate rings that contact
-its pernicious surface reflecteth greater truth than many homilies, yet
-even so, few have developed the skill to identify enchanted rings by the
-transfigurations effected upon the voracious device's frame.
+"维指有环, 濯槽吞之. "此言虽为俗谚, 实含
+至理. 然能察此贪器吞物之异状, 以辨戒之性
+相者, 世所罕有. 
 -----
-The meat of enchanted creatures ofttimes conveyeth magical properties
-unto the consumer.  A fresh corpse of floating eye doth fetch a high
-price among wizards for its utility in conferring Telepathy, by which
-the sightless may locate surrounding minds.
+啖灵怪之肉, 常获其神通. 有兽曰空游之目, 
+其新丧之尸, 巫师悬以重金. 盖食之可通心源, 
+虽双目皆盲, 亦可洞鉴周遭之神识. 
 -----
-The detection of blessings and curses is in the domain of the gods.  They will
-make this information available to mortals who request it at their places of
-worship, or elsewhere for those mortals who devote themselves to the service
-of the gods.
+察赐福与降诅, 乃神明之权柄. 凡人诣神廷而
+祈, 神必启之. 若乃终身奉神之徒, 纵在旷野, 
+亦蒙神谕. 
 -----
-At times, the gods may favor worthy supplicants with named blades whose
-powers echo throughout legend.  Learned wayfarers can reproduce blades of
-elven lineage, hated of the orcs, without the need for such intervention.
+神若悦祈者, 或赐以威震千古之名剑. 然博学
+之士, 弗假神恩, 亦能自铸精灵之刃, 此乃兽
+人所极恶者也. 
 -----
-There are many stories of a mighty amulet, the origins of which are said
-to be ancient Yendor.  This amulet doth have awesome power, and the gods
-desire it greatly.  Mortals mayst tap only portions of its terrible
-abilities.  The stories tell of mortals seeing what their eyes cannot
-see and seeking places of magical transportation, while having this
-amulet in their possession.  Others say a mortal must wear the amulet to
-obtain these powers.  But verily, such power comes at great cost, to
-preserve the balance.
+传有至尊之护符, 出于上古岩德. 其威莫测, 
+神明亦垂涎之, 凡人仅可窥其威之毫末. 语云, 
+怀此符者, 能视目之所不可见, 能觅遁移之法
+门. 或曰必佩之方生效. 然诚哉, 得此伟力必
+索重赀, 以维天地之大平. 
 -----
-It is said that thou mayst gain entry to Moloch's sanctuary, if thou
-darest, from a place where the ground vibrateth in the deepest depths of
-Gehennom.  Thou needs must have the aid of three magical items.  The
-pure sound of a silver bell shall announce thee.  The terrible runes,
-read from Moloch's book, shall cause the earth to tremble mightily.  The
-light of an enchanted candelabrum shall show thee the way.
+若胆气充沛, 可自幽冥地动之原, 直入摩洛之
+禁宫. 必藉三神器之助：振清冽之银铃以启户, 
+诵摩洛之秘典以震地, 燃施法之烛台以明道. 
 -----
-In the deepest recesses of the Dungeons of Doom, guarding access to the
-nether regions, there standeth a castle, wherein lieth a wand of wishes.
-If thou wouldst gain entry, bear with thee an instrument of music, for the
-pontlevis may be charmed down with the proper melody.  What notes comprise
-it only the gods know, but a musical mastermind may yet succeed by witful
-improvisation.  However, the less perspicacious are not without recourse,
-should they be prepared to circumambulate the castle to the postern.
+命运地牢之极深处, 有坚垒峙焉, 扼守九泉之
+要冲, 内藏如意之杖. 若欲入之, 必携丝竹, 
+盖悬门可凭雅音而降. 其宫商之理唯神祇知之, 
+然知音之士即兴奏弄, 或可巧成. 若不辨宫商
+者, 亦非无策, 绕城跋涉以寻后门可也. 
 -----
-The gods are said to be pleased when offerings are given to the
-priests who attend their temples, and they may grant various favors to
-those who do so.  But beware!  To be young and frugal is better than to
-be old and miserly.
+献牢醴金玉于庙中巫祝, 可悦神明, 蒙其多福. 
+然当慎之! 齿少而献微, 犹胜于年迈而怀吝. 
 -----
-The name of Elbereth may strike fear into the hearts of thine enemies, if
-thou dost write it upon the ground at thy feet.  If thou maintainest the
-utmost calm, thy safety will be aided greatly, but beware lest thy clumsy
-feet scuff the inscription, cancelling its potence, or thy wayward
-sword-arm break the truce.
+铭Elbereth之尊名于足下之地, 可褫群敌之魄. 
+若持极静之神, 大有护佑. 然防笨足践灭字迹, 
+致威灵尽失, 亦忌妄动干戈, 坏此休战之局. 
 -----

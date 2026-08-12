@@ -656,9 +656,9 @@ peffect_restore_ability(struct obj *otmp)
            does not recover temporary strength loss due to hunger
            or temporary dexterity loss due to wounded legs */
         pline("哇! 这让你感觉%s!",
-              (!otmp->blessed) ? "挺好"
-              : unfixable_trouble_count(FALSE) ? "极好"
-                : "很好");
+              (!otmp->blessed) ? "挺棒"
+              : unfixable_trouble_count(FALSE) ? "非常棒"
+                : "很棒");
         i = rn2(A_MAX); /* start at a random point */
         for (ii = 0; ii < A_MAX; ii++) {
             int lim = AMAX(i);
@@ -708,7 +708,7 @@ peffect_hallucination(struct obj *otmp)
         You("感知着你自己...");
         display_nhwindow(WIN_MESSAGE, FALSE);
         enlightenment(MAGICENLIGHTENMENT, ENL_GAMEINPROGRESS);
-        Your("你的意识恢复正常了.");
+        Your("意识恢复正常了.");
         exercise(A_WIS, TRUE);
     }
 }
@@ -772,7 +772,7 @@ peffect_booze(struct obj *otmp)
 {
     gp.potion_unkn++;
     pline("呼! 这尝起来像%s%s!",
-          otmp->odiluted ? "掺水的 " : "",
+          otmp->odiluted ? "掺水的" : "",
           Hallucination ? "蒲公英酒" : "液态的火");
     if (!otmp->blessed) {
         /* booze hits harder if drinking on an empty stomach */
@@ -814,7 +814,7 @@ peffect_invisibility(struct obj *otmp)
 
     /* spell cannot penetrate mummy wrapping */
     if (is_spell && BInvis && uarmc->otyp == MUMMY_WRAPPING) {
-        You_feel("你的%s下面有点痒.", yname(uarmc));
+        You_feel("%s下面有点痒.", yname(uarmc));
         return;
     }
     if (Invis || Blind || BInvis) {
@@ -884,7 +884,7 @@ peffect_paralysis(struct obj *otmp)
         You("僵住了一刹那.");
     } else {
         if (Levitation || Is_airlevel(&u.uz) || Is_waterlevel(&u.uz))
-            You("静止悬浮着.");
+            You("静止飘浮着.");
         else if (u.usteed)
             You("在原地僵住!");
         else
@@ -2569,7 +2569,7 @@ potion_dip(struct obj *obj, struct obj *potion)
             default:
                 useupall(obj);
                 pline_The("混合物%s蒸发了.",
-                          !Blind ? "发出明亮的光芒并" : "");
+                          !Blind ? "发出明亮的光并" : "");
                 return ECMD_TIME;
             }
         }

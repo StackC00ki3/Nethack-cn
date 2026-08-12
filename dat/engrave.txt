@@ -59,29 +59,29 @@ Dig for Victory here
 Gaius Julius Primigenius was here.  Why are you late?
 
 # Helpful guiding
-Don't go this way
-Go left --->
-<--- Go right
-X marks the spot
-X <--- You are here.
-Here be dragons
-Save now, and do your homework!
-There was a hole here.  It's gone now.
-The Vibrating Square
-This is a pit!
-This is not the dungeon you are looking for.
-Watch out, there's a gnome with a wand of death behind that door!
+不要走这里
+向左 --->
+<--- 向右
+X即为地点
+X <--- 你在这里.
+龙出没
+现在保存, 回去做你的作业!
+这里有洞. 点在没有了.
+振动方格
+这里有坑!
+这不是你要找的地牢.
+当心, 那扇门后面有个拿着死亡魔杖的侏儒!
 
 # Misc fun
-This square deliberately left blank.
+此处特意留空.
 
 # Viking graffiti
 Haermund Hardaxe carved these runes
 
 # Advertising
-Need a light?  Come visit the Minetown branch of Izchak's Lighting Store!
+需要灯具? 快来参观Izchak灯具店的矿洞镇分店吧!
 Snakes on the Astral Plane - Soon in a dungeon near you
-You are the one millionth visitor to this place!  Please wait 200 turns for your wand of wishing.
+您是这里的一百万位访客! 请等待200回合, 即可领取您的许愿魔杖.
 
 # DnD
 Warning, Exploding runes!

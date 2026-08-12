@@ -6,7 +6,7 @@
 #include "hack.h"
 
 static const char brief_feeling[] =
-    "一时感到%s,但很快就过去了.";
+    "一时感到%s, 但很快就过去了.";
 
 staticfn boolean mhitm_mgc_atk_negated(struct monst *, struct monst *,
                                      boolean) NONNULLPTRS;
@@ -118,7 +118,7 @@ dynamic_multi_reason(struct monst *mon, const char *verb, boolean by_gaze)
     p = eos(p);
     Sprintf(p, "被%s%s%s", !by_gaze ? who : s_suffix(who), /*危险.修改语序:Sprintf(p, "%s by %s%s", verb,*/
             !by_gaze ? "" : "的注视", /*修改语序:!by_gaze ? who : s_suffix(who),*/
-            (!strcmp(verb, "paralyzed")) ? "麻痹" : ((!strcmp(verb, "frozen")) ? "冻结" : "")); /*修改语序:!by_gaze ? "" : " gaze");*/
+            (!strcmp(verb, "paralyzed")) ? "麻痹" : ((!strcmp(verb, "frozen")) ? "定住" : "")); /*修改语序:!by_gaze ? "" : " gaze");*/
     gm.multi_reason = p;
 }
 
@@ -230,7 +230,7 @@ attack_checks(
     if (!canspotmon(mtmp)
         && !glyph_is_warning(glyph) && !glyph_is_invisible(glyph)
         && !(!Blind && mtmp->mundetected && hides_under(mtmp->data))) {
-        pline("等等! 那里有%s你看不见!", something);
+        pline("等等! 那里有什么东西你看不见!"); /*修改语序:something*/
         map_invisible(gb.bhitpos.x, gb.bhitpos.y);
         /* if it was an invisible mimic, treat it as if we stumbled
          * onto a visible mimic
@@ -287,7 +287,7 @@ attack_checks(
                       notseen ? "生物" : (const char *) lmonbuf,
                       notseen ? "在那里" : "出现了");
             else if (Blind || (is_pool(mtmp->mx, mtmp->my) && !Underwater))
-                pline("等等! 那里有个隐藏的怪物!");
+                pline("等等! 那里有一个隐藏的怪物!");
             else if ((obj = svl.level.objects[mtmp->mx][mtmp->my]) != 0)
                 pline("等等! 有%s藏在%s底下!",
                       notseen ? something : (const char *) an(lmonbuf),
@@ -540,7 +540,7 @@ do_attack(struct monst *mtmp)
         gu.unweapon = FALSE;
         if (flags.verbose) {
             if (uwep)
-                You("开始用你的%s打击怪物.", yname(uwep));
+                You("开始用%s打击怪物.", yname(uwep));
             else if (!cantwield(gy.youmonst.data))
                 You("开始用你%s的%s%s怪物.",
                     uarmg ? "戴手套" : "裸露", /*修改语序:ing_suffix(Role_if(PM_MONK) ? "猛击" : "打击")*/
@@ -903,8 +903,8 @@ hmon_hitmon_weapon_ranged(
         boolean more_than_1 = (obj->quan > 1L);
 
         pline("当你击中%s时, %s%s破成了碎片.",
-              mon_nam(mon), more_than_1 ? "其中一个" : "",
-              yname(obj));
+              yname(obj),
+              mon_nam(mon), more_than_1 ? "中的一个" : ""); /*修改语序:反过来*/
         if (!more_than_1)
             uwepgone(); /* set gu.unweapon */
         useup(obj);
@@ -1625,8 +1625,8 @@ hmon_hitmon_splitmon(
         if ((mclone = clone_mon(mon, 0, 0)) != 0) {
             withwhat[0] = '\0';
             if (u.twoweap && flags.verbose)
-                Sprintf(withwhat, " 用%s", yname(obj));
-            pline("%s在被你用%s击中后分裂开来!", Monnam(mon), withwhat);
+                Sprintf(withwhat, "用%s", yname(obj));
+            pline("%s在被你%s击中后分裂开来!", Monnam(mon), withwhat);
             hmd->hittxt = TRUE;
             (void) mintrap(mclone, NO_TRAP_FLAGS);
         }
@@ -2075,7 +2075,7 @@ m_slips_free(struct monst *mdef, struct attack *mattk)
         && (!obj->cursed || rn2(3))) {
         You("%s%s%s%s!",
             (mattk->adtyp == AD_WRAP) ? "滑过"
-                                      : "抓住,但不能持续控制",
+                                      : "抓住, 但不能持续控制",
             s_suffix(mon_nam(mdef)), obj->greased ? "上油的" : "光滑的",
             /* avoid "slippery slippery cloak"
                for undiscovered oilskin cloak */
@@ -2159,7 +2159,7 @@ theft_petrifies(struct obj *otmp)
 #endif
 
     /* stealing this corpse is fatal... */
-    instapetrify(corpse_xname(otmp, "偷窃", CXN_ARTICLE));
+    instapetrify(corpse_xname(otmp, "偷来的", CXN_ARTICLE));
     /* apparently wasn't fatal after all... */
     return TRUE;
 }
@@ -2209,7 +2209,7 @@ steal_it(struct monst *mdef, struct attack *mattk)
             && gy.youmonst.data->mlet == S_NYMPH)
             You("迷住了%s. %s乐意地交出了%s的%s财物.",
                 mon_nam(mdef), upstart(strcpy(heshe, mhe(mdef))),
-                mhis(mdef)), !gold ? "" : "大部分"; /*修改语序!gold ? "" : "大部分", mhis(mdef));*/
+                mhis(mdef), !gold ? "" : "大部分"); /*修改语序!gold ? "" : "大部分", mhis(mdef));*/
         else
             You("勾引%s然后%s开始脱下%s的衣服.",
                 mon_nam(mdef), mhe(mdef), mhis(mdef));
@@ -2709,7 +2709,7 @@ mhitm_ad_elec(
         if (!mhitm_mgc_atk_negated(magr, mdef, TRUE)) {
             You("被电击了!");
             if (Shock_resistance) {
-                pline_The("电流没有电击到你!");
+                pline_The("电流没有冲击到你!");
                 monstseesu(M_SEEN_ELEC);
                 mhm->damage = 0;
             } else {
@@ -2805,7 +2805,7 @@ mhitm_ad_sgld(
                 addinv(mongold);
                 Your("钱包感觉更沉了.");
             } else {
-                You("抓住%s的金币,但背包已经满了.",
+                You("抓住%s的金币, 但背包已经满了.",
                     mon_nam(mdef));
                 dropy(mongold);
             }
@@ -2890,7 +2890,7 @@ mhitm_ad_tlpt(
             You("未受影响.");
         } else {
             if (flags.verbose)
-                Your("你的位置突然变得%s不确定!",
+                Your("位置突然变得%s不确定!",
                      (Teleport_control && !Stunned && !unconscious()) ? ""
                      : "非常");
             tele();
@@ -3195,7 +3195,7 @@ mhitm_ad_drin(
             mhm->damage = 0;
             if (!Unchanging && pd == &mons[PM_GREEN_SLIME]) {
                 if (!Slimed) {
-                    You("吸入了一些黏液,感觉不是很舒服.");
+                    You("吸入了一些黏液, 感觉不是很舒服.");
                     make_slimed(10L, (char *) 0);
                 }
             }
@@ -3666,7 +3666,7 @@ mhitm_ad_slow(
 
             mon_adjust_speed(mdef, -1, (struct obj *) 0);
             if (mdef->mspeed != oldspeed && canseemon(mdef))
-                pline("%s速度变慢了.", Monnam(mdef));
+                pline("%s的速度变慢了.", Monnam(mdef));
         }
     } else if (mdef == &gy.youmonst) {
         /* mhitu */
@@ -3681,7 +3681,7 @@ mhitm_ad_slow(
             mon_adjust_speed(mdef, -1, (struct obj *) 0);
             mdef->mstrategy &= ~STRAT_WAITFORU;
             if (mdef->mspeed != oldspeed && gv.vis && canspotmon(mdef))
-                pline_mon(mdef, "%s速度变慢了.", Monnam(mdef));
+                pline_mon(mdef, "%s的速度变慢了.", Monnam(mdef));
         }
     }
 }
@@ -3788,7 +3788,7 @@ mhitm_ad_famn(
         goto mhitm_famn;
     } else if (mdef == &gy.youmonst) {
         /* mhitu */
-        pline_mon(magr, "%s伸过手来,你的身体更加干瘪.",
+        pline_mon(magr, "%s伸过手来, 你的身体更加干瘪.",
                   Monnam(magr));
         exercise(A_CON, FALSE);
         if (!is_fainted())
@@ -3819,7 +3819,7 @@ mhitm_ad_pest(
         goto mhitm_pest;
     } else if (mdef == &gy.youmonst) {
         /* mhitu */
-        pline_mon(magr, "%s伸过手来,你感到颠寒作热.",
+        pline_mon(magr, "%s伸过手来, 你感到颠寒作热.",
                   Monnam(magr));
         (void) diseasemu(pa);
         /* plus the normal damage */
@@ -3877,7 +3877,7 @@ mhitm_ad_deth(
         case 0:
             if (Antimagic)
                 shieldeff(u.ux, u.uy);
-            pline("算你走运,你对它免疫!");
+            pline("算你走运, 你对它免疫!");
             mhm->damage = 0;
             return;
         }
@@ -6267,7 +6267,7 @@ that_is_a_mimic(
     }
 
     if (what) {
-        int i = (omit_wait && !strncmp(fmtbuf, "等等 ", strlen("等等 "))) ? strlen("等等 ") : 0; /*待写:int i = (omit_wait && !cnstrncmp(fmtbuf, "等等!", 3)) ? 3 : 0;*/
+        int i = (omit_wait && !strncmp(fmtbuf, "等等! ", strlen("等等! "))) ? strlen("等等! ") : 0; /*待写:int i = (omit_wait && !cnstrncmp(fmtbuf, "等等!", 3)) ? 3 : 0;*/
 
         pline(&fmtbuf[i], what);
     }

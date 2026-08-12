@@ -5,7 +5,7 @@
 -- The dungeon description file.
 dungeon = {
    {
-      name = "The Dungeons of Doom",
+      name = "The Dungeons of Doom", cname = "命运地牢",
       bonetag = "D",
       base = 25,
       range = 5,
@@ -13,37 +13,37 @@ dungeon = {
       themerooms = "themerms.lua",
       branches = {
          {
-            name = "The Gnomish Mines",
+            name = "The Gnomish Mines", cname = "侏儒矿坑",
             base = 2,
             range = 3
          },
          {
-            name = "Sokoban",
+            name = "Sokoban", cname = "推箱子",
             chainlevel = "oracle",
             base = 1,
             direction = "up"
          },
          {
-            name = "The Quest",
+            name = "The Quest", cname = "任务",
             chainlevel = "oracle",
             base = 6,
             range = 2,
             branchtype = "portal"
          },
          {
-            name = "Fort Ludios",
+            name = "Fort Ludios", cname = "吕底俄斯堡",
             base = 18,
             range = 4,
             branchtype = "portal"
          },
          {
-            name = "Gehennom",
+            name = "Gehennom", cname = "地狱",
             chainlevel = "castle",
             base = 0,
             branchtype = "no_down"
          },
          {
-            name = "The Elemental Planes",
+            name = "The Elemental Planes", cname = "元素位面",
             base = 1,
             branchtype = "no_down",
             direction = "up"
@@ -51,21 +51,21 @@ dungeon = {
       },
       levels = {
          {
-            name = "rogue",
+            name = "rogue", cname = "rogue",
             bonetag = "R",
             base = 15,
             range = 4,
             flags = "roguelike",
          },
          {
-            name = "oracle",
+            name = "oracle", cname = "神谕",
             bonetag = "O",
             base = 5,
             range = 5,
             alignment = "neutral"
          },
          {
-            name = "bigrm",
+            name = "bigrm", cname = "大房间",
             bonetag = "B",
             base = 10,
             range = 3,
@@ -73,20 +73,20 @@ dungeon = {
             nlevels = 13
          },
          {
-            name = "medusa",
+            name = "medusa", cname = "美杜莎",
             base = -5,
             range = 4,
             nlevels = 4,
             alignment = "chaotic"
          },
          {
-            name = "castle",
+            name = "castle", cname = "城堡",
             base = -1
          }
       }
    },
    {
-      name = "Gehennom",
+      name = "Gehennom", cname = "地狱",
       bonetag = "G",
       base = 20,
       range = 5,
@@ -95,7 +95,7 @@ dungeon = {
       alignment = "noalign",
       branches = {
          {
-            name = "Vlad's Tower",
+            name = "Vlad's Tower", cname = "弗拉德塔",
             base = 9,
             range = 5,
             direction = "up"
@@ -103,63 +103,63 @@ dungeon = {
       },
       levels = {
          {
-            name = "valley",
+            name = "valley", cname = "山谷",
             bonetag = "V",
             base = 1
          },
          {
-            name = "sanctum",
+            name = "sanctum", cname = "圣所",
             base = -1
          },
          {
-            name = "juiblex",
+            name = "juiblex", cname = "朱庇莱克斯",
             bonetag = "J",
             base = 4,
             range = 4
          },
          {
-            name = "baalz",
+            name = "baalz", cname = "别西卜",
             bonetag = "B",
             base = 6,
             range = 4
          },
          {
-            name = "asmodeus",
+            name = "asmodeus", cname = "阿斯莫德",
             bonetag = "A",
             base = 2,
             range = 6
          },
          {
-            name = "wizard1",
+            name = "wizard1", cname = "巫师塔1",
             base = 11,
             range = 6
          },
          {
-            name = "wizard2",
+            name = "wizard2", cname = "巫师塔2",
             bonetag = "X",
             chainlevel = "wizard1",
             base = 1
          },
          {
-            name = "wizard3",
+            name = "wizard3", cname = "巫师塔3",
             bonetag = "Y",
             chainlevel = "wizard1",
             base = 2
          },
          {
-            name = "orcus",
+            name = "orcus", cname = "奥迦斯",
             bonetag = "O",
             base = 10,
             range = 6
          },
          {
-            name = "fakewiz1",
+            name = "fakewiz1", cname = "假巫师塔1",
             bonetag = "F",
             base = -6,
             range = 4
          },
          {
-            name = "fakewiz2",
+            name = "fakewiz2", cname = "假巫师塔2",
             bonetag = "G",
             base = -6,
             range = 4
@@ -167,7 +167,7 @@ dungeon = {
       }
    },
    {
-      name = "The Gnomish Mines",
+      name = "The Gnomish Mines", cname = "侏儒矿坑",
       bonetag = "M",
       base = 8,
       range = 2,
@@ -193,7 +193,7 @@ dungeon = {
       }
    },
    {
-      name = "The Quest",
+      name = "The Quest", cname = "任务",
       bonetag = "Q",
       base = 5,
       range = 2,
@@ -216,7 +216,7 @@ dungeon = {
       }
    },
    {
-      name = "Sokoban",
+      name = "Sokoban", cname = "推箱子",
       base = 4,
       alignment = "neutral",
       flags = { "mazelike" },
@@ -245,7 +245,7 @@ dungeon = {
       }
    },
    {
-      name = "Fort Ludios",
+      name = "Fort Ludios", cname = "吕底俄斯堡",
       base = 1,
       bonetag = "K",
       flags = { "mazelike" },
@@ -259,7 +259,7 @@ dungeon = {
       }
    },
    {
-      name = "Vlad's Tower",
+      name = "Vlad's Tower", cname = "弗拉德塔",
       base = 3,
       bonetag = "T",
       protofile = "tower",
@@ -282,7 +282,7 @@ dungeon = {
       }
    },
    {
-      name = "The Elemental Planes",
+      name = "The Elemental Planes", cname = "元素位面",
       bonetag = "E",
       base = 6,
       alignment = "unaligned",
@@ -316,7 +316,7 @@ dungeon = {
       }
    },
    {
-      name = "The Tutorial",
+      name = "The Tutorial", cname = "任务",
       base = 2,
       flags = { "mazelike", "unconnected" },
       levels = {

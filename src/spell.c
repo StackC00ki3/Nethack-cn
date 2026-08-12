@@ -296,7 +296,7 @@ deadbook(struct obj *book2)
             if (!u.udg_cnt || u.udg_cnt > soon)
                 u.udg_cnt = soon;
         } else { /* at least one relic not prepared properly */
-            You("感觉好像缺少%s...", something);
+            You("感觉好像缺少什么..."); /*修改语序:something*/
             goto raise_dead;
         }
         return;
@@ -589,7 +589,7 @@ study_book(struct obj *spellbook)
 
                     Sprintf(qbuf,
                     "这本魔法书%s难理解. 继续吗?",
-                            (read_ability < 12 ? "非常 " : "很"));
+                            (read_ability < 12 ? "非常" : "很"));
                     if (y_n(qbuf) != 'y') {
                         spellbook->in_use = FALSE;
                         return 1;
@@ -1161,7 +1161,7 @@ cast_protection(void)
                                      : IS_TREE(rmtyp) ? "你周围的植被"
                                        : IS_STWALL(rmtyp) ? "你周围的石头"
                                          : "空气");
-                pline_The("%s开始发出微弱的暗淡%s色.",
+                pline_The("%s开始泛起微弱的暗淡%s色.",
                           atmosphere, an(hgolden));
             }
         }
@@ -1670,7 +1670,7 @@ throwspell(void)
     cc.y = u.uy;
     getpos_sethilite(display_spell_target_positions,
                      can_center_spell_location);
-    if (getpos(&cc, TRUE, "想要施放的位置") < 0)
+    if (getpos(&cc, TRUE, "目标位置") < 0)
         return 0; /* user pressed ESC */
     clear_nhwindow(WIN_MESSAGE); /* discard any autodescribe feedback */
 
@@ -2033,7 +2033,7 @@ dovspell(void)
                 if (spellsortmenu())
                     sortspells();
             } else {
-                Sprintf(qbuf, "重新排序;'%c'交换",
+                Sprintf(qbuf, "重新排序; '%c'交换",
                         spellet(splnum));
                 if (!dospellmenu(qbuf, splnum, &othnum))
                     break;

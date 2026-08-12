@@ -7,7 +7,7 @@
 #include "artifact.h"
 
 static const char brief_feeling[] =
-    "一时感到%s,但很快就过去了.";
+    "一时感到%s, 但很快就过去了.";
 
 staticfn void noises(struct monst *, struct attack *);
 staticfn void pre_mm_attack(struct monst *, struct monst *);

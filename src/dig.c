@@ -95,10 +95,10 @@ mkcavearea(boolean rockit)
 
     if (rockit) {
         Soundeffect(se_crashing_rock, 100);
-        pline("轰隆!  天花板倒塌到你周围!");
+        pline("轰隆! 你周围的天花板倒塌了!");
     } else {
         pline("一种神秘的力量在你周围%s洞穴!",
-              (levl[u.ux][u.uy].typ == CORR) ? "创建了一个" : "扩充了");
+              (levl[u.ux][u.uy].typ == CORR) ? "创造了一个" : "扩充了");
     }
     display_nhwindow(WIN_MESSAGE, TRUE);
 
@@ -256,34 +256,34 @@ digcheck_fail_message(enum digcheck_result digresult, struct monst *madeby,
                       coordxy x, coordxy y)
 {
     const char *verb =
-        (madeby == BY_YOU && uwep && is_axe(uwep)) ? "chop" : "dig in";
+        (madeby == BY_YOU && uwep && is_axe(uwep)) ? "劈" : "挖";
 
     if (digresult < DIGCHECK_FAILED)
         return;
 
     switch (digresult) {
     case DIGCHECK_FAIL_AIRLEVEL:
-        You("不能在稀薄的空气中%s.", verb);
+        You("不能%s空气.", verb);
         break;
     case DIGCHECK_FAIL_ALTAR:
-        pline_The("祭坛太坚固，无法击碎。");
+        pline_The("祭坛太硬了, 无法破坏.");
         break;
     case DIGCHECK_FAIL_BOULDER:
-        There("没有足够的空间来%s.", verb);
+        There("没有足够的空间来%s它.", verb);
         break;
     case DIGCHECK_FAIL_ONLADDER:
         pline_The("梯子抵抗了你的努力.");
         break;
     case DIGCHECK_FAIL_ONSTAIRS:
-        pline_The("楼梯很难%s.", verb);
+        pline_The("楼梯很难%s开.", verb);
         break;
     case DIGCHECK_FAIL_THRONE:
-        pline_The("王座太硬了，无法砸碎。");
+        pline_The("王座太硬了, 无法破坏.");
         break;
     case DIGCHECK_FAIL_CANTDIG:
     case DIGCHECK_FAIL_TOOHARD:
     case DIGCHECK_FAIL_UNDESTROYABLETRAP:
-        pline_The("%s 很难%s.", surface(x, y), verb);
+        pline_The("%s很难%s开.", surface(x, y), verb);
         break;
     case DIGCHECK_FAIL_WATERLEVEL:
         pline_The("%s飞溅起来然后又落下.", hliquid("水"));
@@ -302,7 +302,7 @@ dig(void)
     struct rm *lev;
     coordxy dpx = svc.context.digging.pos.x, dpy = svc.context.digging.pos.y;
     boolean ispick = uwep && is_pick(uwep);
-    const char *verb = (!uwep || is_pick(uwep)) ? "dig into" : "chop through";
+    const char *verb = (!uwep || is_pick(uwep)) ? "挖" : "劈";
     enum digcheck_result dcresult = DIGCHECK_PASSED;
 
     lev = &levl[dpx][dpy];
@@ -328,7 +328,7 @@ dig(void)
         }
         if (IS_OBSTRUCTED(lev->typ) && !may_dig(dpx, dpy)
             && dig_typ(uwep, dpx, dpy) == DIGTYP_ROCK) {
-            pline("这个%s很难%s.",
+            pline("这个%s很难%s开.",
                   is_db_wall(dpx, dpy) ? "吊桥" : "墙", verb);
             return 0;
         }
@@ -341,22 +341,22 @@ dig(void)
                 dropx(uwep);
             } else {
                 if (u.usteed)
-                    pline("%s并%s %s!", Yobjnam2(uwep, "反弹"),
-                          otense(uwep, "打中"), mon_nam(u.usteed));
+                    pline("%s出去并%s了%s!", Yobjnam2(uwep, "反弹"),
+                          otense(uwep, "击中"), mon_nam(u.usteed));
                 else
-                    pline("哎哟!  %s并%s你!", Yobjnam2(uwep, "反弹"),
-                          otense(uwep, "打中"));
+                    pline("哎哟! %s出去并%s了你!", Yobjnam2(uwep, "反弹"),
+                          otense(uwep, "击中"));
                 set_wounded_legs(RIGHT_SIDE, 5 + rnd(5));
             }
             break;
         case 1:
             Soundeffect(se_bang_weapon_side, 100);
-            pline("巨响!  你用宽边的%s来攻击!",
+            pline("邦! 你用%s的宽面击中了!",
                   the(xname(uwep)));
             wake_nearby(FALSE);
             break;
         default:
-            Your("挥舞没打中它的标记.");
+            Your("挥杆没有击中目标.");
             break;
         }
         return 0;
@@ -398,7 +398,7 @@ dig(void)
                     dmg = 1;
                 else if (uarmf)
                     dmg = (dmg + 1) / 2;
-                You("打中你的%s.", body_part(FOOT));
+                You("打到了你的%s.", body_part(FOOT));
                 Sprintf(kbuf, "砍掉%s自己的%s", uhis(),
                         body_part(FOOT));
                 losehp(Maybe_Half_Phys(dmg), kbuf, KILLED_BY);
@@ -415,9 +415,9 @@ dig(void)
             const char *ttmpname = trapname(ttmp->ttyp, FALSE);
 
             if (ispick)
-                You("你摧毁了%s，用%s.",
-                    ttmp->tseen ? the(ttmpname) : an(ttmpname),
-                    yobjnam(uwep, (const char *) 0));
+                You("用%s摧毁了%s.",
+                    yobjnam(uwep, (const char *) 0), /*修改语序:ttmp->tseen ? the(ttmpname) : an(ttmpname),*/
+                    ttmp->tseen ? the(ttmpname) : an(ttmpname)); /*修改语序:yobjnam(uwep, (const char *) 0));*/
             deltrap(ttmp);
             /* we haven't made any progress toward a pit yet */
             svc.context.digging.effort = 0;
@@ -447,7 +447,7 @@ dig(void)
         if (digtyp == DIGTYP_STATUE
             && (obj = sobj_at(STATUE, dpx, dpy)) != 0) {
             if (break_statue(obj))
-                digtxt = "The statue shatters.";
+                digtxt = "雕像碎裂了.";
             else
                 /* it was a statue trap; break_statue()
                    printed a message and updated the screen */
@@ -461,7 +461,7 @@ dig(void)
                 obj_extract_self(bobj);
                 place_object(bobj, dpx, dpy);
             }
-            digtxt = "The boulder falls apart.";
+            digtxt = "巨石碎裂了.";
         } else if (lev->typ == STONE || lev->typ == SCORR
                    || IS_TREE(lev->typ)) {
             if (Is_earthlevel(&u.uz)) {
@@ -475,20 +475,20 @@ dig(void)
                 }
             }
             if (digtyp == DIGTYP_TREE) {
-                digtxt = "You cut down the tree.";
+                digtxt = "你把树砍倒了.";
                 lev->typ = ROOM, lev->flags = 0;
                 if (!rn2(5))
                     (void) rnd_treefruit_at(dpx, dpy);
                 if (Race_if(PM_ELF) || Role_if(PM_RANGER))
                     adjalign(-1);
             } else {
-                digtxt = "You succeed in cutting away some rock.";
+                digtxt = "你成功凿掉了部分岩石.";
                 lev->typ = CORR, lev->flags = 0;
             }
         } else if (IS_WALL(lev->typ)) {
             if (shopedge) {
                 add_damage(dpx, dpy, SHOP_WALL_DMG);
-                dmgtxt = "damage";
+                dmgtxt = "破坏";
             }
             if (svl.level.flags.is_maze_lev) {
                 lev->typ = ROOM, lev->flags = 0;
@@ -498,19 +498,19 @@ dig(void)
             } else {
                 lev->typ = DOOR, lev->doormask = D_NODOOR;
             }
-            digtxt = "You make an opening in the wall.";
+            digtxt = "你在墙上开了一个洞.";
         } else if (lev->typ == SDOOR) {
             cvt_sdoor_to_door(lev); /* ->typ = DOOR */
-            digtxt = "You break through a secret door!";
+            digtxt = "你击破了一扇暗门!";
             if (!(lev->doormask & D_TRAPPED))
                 lev->doormask = D_BROKEN;
         } else if (closed_door(dpx, dpy)) {
-            Sprintf(digbuf, "你用你的%s击破了门。",
+            Sprintf(digbuf, "你用你的%s击破了门.",
                     simpleonames(uwep));
             digtxt = digbuf;
             if (shopedge) {
                 add_damage(dpx, dpy, SHOP_DOOR_COST);
-                dmgtxt = "break";
+                dmgtxt = "击破";
             }
             if (!(lev->doormask & D_TRAPPED))
                 lev->doormask = D_BROKEN;
@@ -529,7 +529,7 @@ dig(void)
             int mndx = rn2(2) ? PM_EARTH_ELEMENTAL : PM_XORN;
 
             if (makemon(&mons[mndx], dpx, dpy, MM_NOMSG))
-                pline_The("你挖掘的碎屑活了过来!");
+                pline_The("你挖掘的碎片活了过来!");
         }
         if (IS_DOOR(lev->typ) && (lev->doormask & D_TRAPPED)) {
             lev->doormask = D_NODOOR;
@@ -544,13 +544,13 @@ dig(void)
         svc.context.digging.level.dlevel = -1;
         return 0;
     } else { /* not enough effort has been spent yet */
-        static const char *const d_target[6] = { "",        "rock", "statue",
-                                                 "boulder", "door", "tree" };
+        static const char *const d_target[6] = { "",    "岩石", "雕像",
+                                                 "巨石", "门",  "树" };
         int dig_target = dig_typ(uwep, dpx, dpy);
 
         if (IS_WALL(lev->typ) || dig_target == DIGTYP_DOOR) {
             if (*in_rooms(dpx, dpy, SHOPBASE)) {
-                pline("这个%s似乎很难%s.",
+                pline("这个%s看上去很难%s开.",
                       IS_DOOR(lev->typ) ? "门" : "墙", verb);
                 return 0;
             }
@@ -559,7 +559,7 @@ dig(void)
             return 0; /* statue or boulder got taken */
 
         if (!gd.did_dig_msg) {
-            You("尽可能地击打%s.", d_target[dig_target]);
+            You("尽你的最大的可能击打%s.", d_target[dig_target]);
             wake_nearby(FALSE);
             gd.did_dig_msg = TRUE;
         }
@@ -674,7 +674,7 @@ digactualhole(coordxy x, coordxy y, struct monst *madeby, int ttyp)
     if (IS_FURNITURE(lev->typ)) {
         /* should mirror the word used by surface() for normal floor */
         surface_type = (IS_ROOM(lev->typ) && !Is_earthlevel(&u.uz)
-                         ? "floor" : "ground");
+                         ? "地板" : "地面");
         if (IS_ALTAR(lev->typ)) {
             old_aligntyp = Amask2align(levl[x][y].altarmask & AM_MASK);
             Strcpy(furniture, align_str(old_aligntyp));
@@ -699,23 +699,23 @@ digactualhole(coordxy x, coordxy y, struct monst *madeby, int ttyp)
         feeltrap(ttmp);
 
     tname = trapname(ttyp, TRUE);
-    in_thru = (ttyp == HOLE ? "through" : "in");
+    in_thru = (ttyp == HOLE ? "上" : "里");
     if (madeby_u) {
         if (x != u.ux || y != u.uy)
-            You("挖开了一个相邻的 %s。", tname);
+            You("挖出了一个相邻的%s.", tname);
         else
-            You("挖了%s %s %s.", an(tname), in_thru, surface_type);
+            You("在%s%s挖出了%s.", surface_type, in_thru, an(tname)); /*修改语序:You("挖到了%s%s%s.", an(tname), in_thru, surface_type);*/
     } else if (!madeby_obj && canseemon(madeby)) {
-        pline("%s 挖出 %s %s %s。", Monnam(madeby), an(tname), in_thru,
+        pline("%s挖出了%s%s%s.", Monnam(madeby), an(tname), in_thru,
               surface_type);
     } else if (cansee(x, y) && flags.verbose) {
         if (IS_STWALL(old_typ))
-            pline_The("%s 崩塌成了 %s。", surface_type, an(tname));
+            pline_The("%s倒塌成了%s.", surface_type, an(tname));
         else
-            pline("在 %s 中出现了一个 %s。", An(tname), surface_type);
+            pline("在%s中出现了一个%s.", An(tname), surface_type);
     }
     if (IS_FURNITURE(old_typ) && cansee(x, y))
-        pline_The("%s 落进%s!", furniture, tname);
+        pline_The("%s掉进了%s里!", furniture, tname);
     /* wrath should immediately follow altar destruction message */
     if (heros_fault && old_typ == ALTAR)
         desecrate_altar(FALSE, old_aligntyp);
@@ -723,7 +723,7 @@ digactualhole(coordxy x, coordxy y, struct monst *madeby, int ttyp)
     /* now deal with actual post-trap creation effects */
     if (ttyp == PIT) {
         if (shopdoor && heros_fault)
-            pay_for_damage("ruin", FALSE);
+            pay_for_damage("毁掉", FALSE);
         else
             add_damage(x, y, heros_fault ? SHOP_PIT_COST : 0L);
         if (madeby_u)
@@ -745,7 +745,7 @@ digactualhole(coordxy x, coordxy y, struct monst *madeby, int ttyp)
         } else if (mtmp) {
             if (is_flyer(mtmp->data) || is_floater(mtmp->data)) {
                 if (canseemon(mtmp))
-                    pline("%s %s在坑上.", Monnam(mtmp),
+                    pline("%s%s在坑上.", Monnam(mtmp),
                           (is_flyer(mtmp->data)) ? "飞" : "飘");
             } else if (mtmp != madeby)
                 (void) mintrap(mtmp, NO_TRAP_FLAGS);
@@ -760,7 +760,7 @@ digactualhole(coordxy x, coordxy y, struct monst *madeby, int ttyp)
 
             /* check for leashed pet that can't fall right now */
             if (!u.ustuck && !wont_fall && !next_to_u()) {
-                You("被你的宠物急拉回来!");
+                You("被你的宠物猛地拉了回来!");
                 wont_fall = TRUE;
             }
 
@@ -774,14 +774,14 @@ digactualhole(coordxy x, coordxy y, struct monst *madeby, int ttyp)
                 if (oldobjs != newobjs)
                     (void) pickup(1);
                 if (shopdoor && heros_fault)
-                    pay_for_damage("ruin", FALSE);
+                    pay_for_damage("毁掉", FALSE);
             } else {
                 d_level newlevel;
 
                 if (*u.ushops && heros_fault)
                     shopdig(1); /* shk might snatch pack */
                 else /* handle any earlier hero-caused damage */
-                    pay_for_damage("dig into", TRUE);
+                    pay_for_damage("挖掉", TRUE);
                 You("掉落下去...");
                 /* Earlier checks must ensure that the destination
                  * level exists and is in the present dungeon.
@@ -794,7 +794,7 @@ digactualhole(coordxy x, coordxy y, struct monst *madeby, int ttyp)
             }
         } else {
             if (shopdoor && heros_fault)
-                pay_for_damage("ruin", FALSE);
+                pay_for_damage("毁掉", FALSE);
             if (newobjs)
                 impact_drop((struct obj *) 0, x, y, 0);
             if (mtmp) {
@@ -813,7 +813,7 @@ digactualhole(coordxy x, coordxy y, struct monst *madeby, int ttyp)
                         assign_level(&tolevel, &valley_level);
                     } else if (Is_botlevel(&u.uz)) {
                         if (canseemon(mtmp))
-                            pline("%s 避开了陷阱.", Monnam(mtmp));
+                            pline("%s躲过了陷阱.", Monnam(mtmp));
                         return;
                     } else {
                         get_level(&tolevel, depth(&u.uz) + 1);
@@ -862,7 +862,7 @@ liquid_flow(
     unearth_objs(x, y);
 
     if (fillmsg)
-        pline(fillmsg, hliquid(typ == LAVAPOOL ? "lava" : "water"));
+        pline(fillmsg, hliquid(typ == LAVAPOOL ? "熔岩" : "水"));
     /* handle object damage before hero damage; affects potential bones */
     if ((objchain = svl.level.objects[x][y]) != 0) {
         if (typ == LAVAPOOL)
@@ -913,14 +913,14 @@ dighole(boolean pit_only, boolean by_magic, coord *cc)
     if ((ttmp && (undestroyable_trap(ttmp->ttyp) || nohole))
         || (IS_OBSTRUCTED(old_typ) && old_typ != SDOOR
             && (lev->wall_info & W_NONDIGGABLE) != 0)) {
-        pline_The("%s %s里太硬了，挖不动。", surface(dig_x, dig_y),
+        pline_The("%s%s里太硬了, 无法挖掘.", surface(dig_x, dig_y),
                   (dig_x != u.ux || dig_y != u.uy) ? "那" : "这");
     } else if (ttmp && is_magical_trap(ttmp->ttyp)) {
         explode(dig_x, dig_y, 0, 20 + d(3, 6), TRAP_EXPLODE, EXPL_MAGICAL);
         deltrap(ttmp);
         newsym(dig_x, dig_y);
     } else if (is_pool_or_lava(dig_x, dig_y)) {
-        pline_The("%s片刻剧烈地要晃, 然后平息了.",
+        pline_The("%s剧烈地摇晃了片刻, 然后平息了.",
                   hliquid(is_lava(dig_x, dig_y) ? "熔岩" : "水"));
         wake_nearby(FALSE); /* splashing */
 
@@ -930,7 +930,7 @@ dighole(boolean pit_only, boolean by_magic, coord *cc)
            bridge is extended; drawbridge_wall is the open "doorway" or
            closed "door" where the portcullis/mechanism is located */
         if (pit_only) {
-            pline_The("吊桥似乎很难挖穿.");
+            pline_The("吊桥似乎很难挖开.");
         } else {
             coordxy x = dig_x, y = dig_y;
             /* if under the portcullis, the bridge is adjacent */
@@ -942,7 +942,7 @@ dighole(boolean pit_only, boolean by_magic, coord *cc)
     } else if ((boulder_here = sobj_at(BOULDER, dig_x, dig_y)) != 0) {
         if (ttmp && is_pit(ttmp->ttyp)
             && rn2(2)) {
-            pline_The("巨石安放进%s坑.",
+            pline_The("巨石掉进了%s坑.",
                       (dig_x != u.ux || dig_y != u.uy) ? "相邻的" : "");
             ttmp->ttyp = PIT; /* crush spikes */
         } else {
@@ -951,7 +951,7 @@ dighole(boolean pit_only, boolean by_magic, coord *cc)
              * fills it.  Final outcome:  no hole, no boulder.
              */
             Soundeffect(se_kadoom_boulder_falls_in, 60);
-            pline("咚!  巨石掉了进去!");
+            pline("咚! 巨石掉了进去!");
             wake_nearby(FALSE);
             (void) delfloortrap(ttmp);
         }
@@ -970,23 +970,23 @@ dighole(boolean pit_only, boolean by_magic, coord *cc)
              * We can't dig a hole here since that will destroy
              * the drawbridge.  The following is a cop-out. --dlc
              */
-            pline_The("%s %s这里太硬了无法挖掘。",
+            pline_The("%s%s这里太硬了, 无法挖掘.",
                       surface(dig_x, dig_y),
                       (dig_x != u.ux || dig_y != u.uy) ? "t" : "");
         } else {
             lev->drawbridgemask &= ~DB_UNDER;
             lev->drawbridgemask |= (typ == LAVAPOOL) ? DB_LAVA : DB_MOAT;
             liquid_flow(dig_x, dig_y, typ, ttmp,
-                        "As you dig, the hole fills with %s!");
+                        "你挖掘时, 洞里渗满了%s!");
             retval = TRUE;
         }
 
     /* the following two are here for the wand of digging */
     } else if (IS_THRONE(old_typ)) {
-        pline_The("王座太硬了，无法破坏。");
+        pline_The("王座太硬了, 无法破坏.");
 
     } else if (IS_ALTAR(old_typ)) {
-        pline_The("祭坛太过坚硬，无法破坏。");
+        pline_The("祭坛太硬了, 无法破坏.");
 
     } else {
         typ = fillholetyp(dig_x, dig_y, FALSE);
@@ -996,7 +996,7 @@ dighole(boolean pit_only, boolean by_magic, coord *cc)
             if (!furniture_handled((int) dig_x, (int) dig_y, TRUE)) {
                 lev->typ = typ;
                 liquid_flow(dig_x, dig_y, typ, ttmp,
-                            "As you dig, the hole fills with %s!");
+                            "你挖掘时, 洞里渗满了%s!");
             }
             retval = TRUE;
         } else {
@@ -1044,7 +1044,7 @@ dig_up_grave(coord *cc)
     exercise(A_WIS, FALSE);
     if (Role_if(PM_ARCHEOLOGIST)) {
         adjalign(-sgn(u.ualign.type) * 3);
-        You_feel("像一个卑鄙的坟墓强盗!");
+        You_feel("像一个卑鄙的盗墓者!");
     } else if (Role_if(PM_SAMURAI)) {
         adjalign(-sgn(u.ualign.type));
         You("打扰了可敬的死者!");
@@ -1065,19 +1065,19 @@ dig_up_grave(coord *cc)
         break;
     case 2:
         if (!Blind)
-            pline("%s!", Hallucination ? "老兄！ 活死人"
+            pline("%s!", Hallucination ? "老兄! 活死人"
                                        : "坟墓的主人非常愤怒");
         (void) makemon(mkclass(S_ZOMBIE, 0), dig_x, dig_y, MM_NOMSG);
         break;
     case 3:
         if (!Blind)
-            pline("%s!", Hallucination ? "我要我的木乃伊妈妈"
+            pline("%s!", Hallucination ? "我想我的妈妈了"
                                        : "你打扰了一座坟墓");
         (void) makemon(mkclass(S_MUMMY, 0), dig_x, dig_y, MM_NOMSG);
         break;
     default:
         /* No corpse */
-        pline_The("这座坟墓是空的.  奇怪...");
+        pline_The("这座坟墓是空的, 奇怪...");
         break;
     }
     levl[dig_x][dig_y].typ = ROOM;
@@ -1099,7 +1099,7 @@ use_pick_axe(struct obj *obj)
 
     /* Check tool */
     if (obj != uwep) {
-        if (wield_tool(obj, "swing")) {
+        if (wield_tool(obj, "挥动")) {
             /* we're now wielding it. next turn, apply to dig. */
             cmdq_add_ec(CQ_CANNED, doapply);
             cmdq_add_key(CQ_CANNED, obj->invlet);
@@ -1108,13 +1108,13 @@ use_pick_axe(struct obj *obj)
         return ECMD_OK;
     }
     ispick = is_pick(obj);
-    verb = ispick ? "dig" : "chop";
+    verb = ispick ? "挖" : "劈";
 
     if (u.utrap && u.utraptype == TT_WEB) {
-        pline("%s 你不能%s在被卷入网中的时候.",
+        pline("%s你不能在被卷入网中候%s东西.",
               /* res==0 => no prior message;
                  res==1 => just got "You now wield a pick-axe." message */
-              !res ? "不幸的是," : "但", verb);
+              !res ? "不幸的是, " : "但", verb);
         return res;
     }
 
@@ -1148,7 +1148,7 @@ use_pick_axe(struct obj *obj)
         *dsp++ = dirch;
     }
     *dsp = 0;
-    Sprintf(qbuf, "你想%s哪个方向? [%s]", verb, dirsyms);
+    Sprintf(qbuf, "你想%s哪里? [%s]", verb, dirsyms);
     if (!getdir(qbuf))
         return (res|ECMD_CANCEL);
 
@@ -1166,12 +1166,12 @@ use_pick_axe2(struct obj *obj)
     struct trap *trap, *trap_with_u;
     int dig_target;
     boolean ispick = is_pick(obj);
-    const char *verbing = ispick ? "digging" : "chopping";
+    const char *verbing = ispick ? "挖" : "劈";
 
     if (u.uswallow && do_attack(u.ustuck)) {
         ; /* return 1 */
     } else if (Underwater) {
-        pline("湍流破坏了你的%s行动.", verbing);
+        pline("湍流让你没有办法%s.", verbing);
     } else if (u.dz < 0) {
         if (Levitation)
             You("没有后力.");
@@ -1184,7 +1184,7 @@ use_pick_axe2(struct obj *obj)
         dam = rnd(2) + dbon() + obj->spe;
         if (dam <= 0)
             dam = 1;
-        You("用%s打你自己.", yname(uwep));
+        You("用%s打到了你自己.", yname(uwep));
         Sprintf(buf, "%s自己的%s", uhis(), OBJ_NAME(objects[obj->otyp]));
         losehp(Maybe_Half_Phys(dam), buf, KILLED_BY);
         disp.botl = TRUE;
@@ -1195,7 +1195,7 @@ use_pick_axe2(struct obj *obj)
         ry = u.uy + u.dy;
         if (!isok(rx, ry)) {
             Soundeffect(se_clash, 40);
-            pline("碰撞声!");
+            pline("铿!");
             return ECMD_TIME;
         }
         lev = &levl[rx][ry];
@@ -1212,38 +1212,38 @@ use_pick_axe2(struct obj *obj)
                     seetrap(trap);
                     There("有蜘蛛网!");
                 }
-                pline("%s 被卷入网中.", Yobjnam2(obj, "变得"));
+                pline("%s卷入网中.", Yobjnam2(obj, "被"));
                 /* you ought to be able to let go; tough luck */
                 /* (maybe `move_into_trap()' would be better) */
                 nomul(-d(2, 2));
-                gm.multi_reason = "stuck in a spider web";
-                gn.nomovemsg = "You pull free.";
+                gm.multi_reason = "卡在蜘蛛网里";
+                gn.nomovemsg = "你挣脱了出来.";
             } else if (lev->typ == IRONBARS) {
                 pline("铛!");
                 wake_nearby(FALSE);
             } else if (IS_WATERWALL(lev->typ)) {
-                pline("飞溅!");
+                pline("哗啦!");
             } else if (lev->typ == LAVAWALL) {
-                pline("飞溅!");
+                pline("哗啦!");
                 (void) fire_damage(uwep, FALSE, rx, ry);
             } else if (IS_TREE(lev->typ)) {
-                You("需要一把斧头来砍树.");
+                You("需要斧头来砍树.");
             } else if (IS_OBSTRUCTED(lev->typ)) {
                 You("需要鹤嘴锄来挖掘岩石.");
             } else if ((boulder = sobj_at(BOULDER, rx, ry)) != 0
                        || sobj_at(STATUE, rx, ry)) {
                 /* if both boulders and statues are present, the topmost
                    boulder will be shown on the map so treat it as target */
-                const char *what = boulder ? "boulder" : "statue";
+                const char *what = boulder ? "巨石" : "雕像";
 
                 if (!ispick) {
                     boolean vibrate = !rn2(3);
 
-                    pline("你猛击%s时火花四溅.%s", what,
-                          vibrate ? "  斧柄剧烈震动！"
+                    pline("%s在你敲击时火花四溅.%s", what,
+                          vibrate ? " 斧柄剧烈振动!"
                                   : "");
                     if (vibrate)
-                        losehp(Maybe_Half_Phys(2), "axing a hard object",
+                        losehp(Maybe_Half_Phys(2), "用斧头砍硬物",
                                KILLED_BY);
                     wake_nearby(FALSE);
                 } else {
@@ -1263,21 +1263,21 @@ use_pick_axe2(struct obj *obj)
 
                     trap_with_u->conjoined |= (1 << idx);
                     trap->conjoined |= (1 << adjidx);
-                    You("清除两个坑洞之间的碎片。");
+                    You("清除了两个坑之间的碎片.");
                 }
             } else if (u.utrap && u.utraptype == TT_PIT
                        && (trap_with_u = t_at(u.ux, u.uy)) != 0) {
-                You("挥舞%s, 但碎石没有地方可去.",
+                You("挥动%s, 但碎石无处可去.",
                     yobjnam(obj, (char *) 0));
             } else {
-                You("在空中虚挥 %s。", yobjnam(obj, (char *) 0));
+                You("对空气挥动%s.", yobjnam(obj, (char *) 0));
             }
         } else {
-            static const char *const d_action[6] = { "swinging", "digging",
-                                                     "chipping the statue",
-                                                     "hitting the boulder",
-                                                     "chopping at the door",
-                                                     "cutting the tree" };
+            static const char *const d_action[6] = { "挥动", "挖掘",
+                                                     "敲碎雕像",
+                                                     "敲击巨石",
+                                                     "切开门",
+                                                     "砍树" };
 
             gd.did_dig_msg = FALSE;
             svc.context.digging.quiet = FALSE;
@@ -1302,9 +1302,9 @@ use_pick_axe2(struct obj *obj)
                 assign_level(&svc.context.digging.level, &u.uz);
                 svc.context.digging.effort = 0;
                 if (!svc.context.digging.quiet)
-                    You("开始 %s.", d_action[dig_target]);
+                    You("开始%s.", d_action[dig_target]);
             } else {
-                You("%s %s.", svc.context.digging.chew ? "开始" : "继续",
+                You("%s%s.", svc.context.digging.chew ? "开始" : "继续",
                     d_action[dig_target]);
                 svc.context.digging.chew = FALSE;
             }
@@ -1312,7 +1312,7 @@ use_pick_axe2(struct obj *obj)
         }
     } else if (Is_airlevel(&u.uz) || Is_waterlevel(&u.uz)) {
         /* it must be air -- water checked above */
-        You("对着稀薄的空气挥舞%s。", yobjnam(obj, (char *) 0));
+        You("对着空气挥动%s.", yobjnam(obj, (char *) 0));
     } else if (!can_reach_floor(FALSE)) {
         cant_reach_floor(u.ux, u.uy, FALSE, FALSE, FALSE);
     } else if (is_pool_or_lava(u.ux, u.uy)) {
@@ -1330,7 +1330,7 @@ use_pick_axe2(struct obj *obj)
                   trigger or disarm a trap here */
                && (!trap || (trap->ttyp != LANDMINE
                              && trap->ttyp != BEAR_TRAP))) {
-        pline("%s 仅仅在%s上划出痕迹.", Yobjnam2(obj, (char *) 0),
+        pline("%s只能在%s上划出几道划痕.", Yobjnam2(obj, (char *) 0),
               surface(u.ux, u.uy));
         u_wipe_engr(3);
     } else {
@@ -1387,20 +1387,20 @@ watch_dig(struct monst *mtmp, coordxy x, coordxy y, boolean zap)
         if (mtmp) {
             SetVoice(mtmp, 0, 80, 0);
             if (zap || svc.context.digging.warned) {
-                verbalize("Halt, vandal!  You're under arrest!");
+                verbalize("站住, 破坏者! 你被捕了!");
                 (void) angry_guards(!!Deaf);
             } else {
                 const char *str;
 
                 if (IS_DOOR(lev->typ))
-                    str = "door";
+                    str = "门";
                 else if (IS_TREE(lev->typ))
-                    str = "tree";
+                    str = "树";
                 else if (IS_OBSTRUCTED(lev->typ))
-                    str = "wall";
+                    str = "墙";
                 else
-                    str = "fountain";
-                verbalize("Hey, stop damaging that %s!", str);
+                    str = "喷泉";
+                verbalize("嘿, 别破坏那个%s!", str);
                 svc.context.digging.warned = TRUE;
             }
             if (is_digging())
@@ -1512,12 +1512,12 @@ draft_message(boolean unexpected)
 
     if (unexpected) {
         if (!Hallucination)
-            You_feel("到一股突然的气流.");
+            You_feel("到一股激荡的风."); /*待写:这个双关叫我怎么写？？？*/
         else
             /* U.S. classification system uses 1-A for eligible to serve
                and 4-F for ineligible due to physical or mental defect;
                some intermediate values exist but are rarely seen */
-            You_feel("你像是%s 等级.",
+            You_feel("你的征兵等级是%s.",
                      (ACURR(A_STR) < 6 || ACURR(A_DEX) < 6
                       || ACURR(A_CON) < 6 || ACURR(A_CHA) < 6
                       || ACURR(A_INT) < 6 || ACURR(A_WIS) < 6) ? "4-F"
@@ -1529,7 +1529,7 @@ draft_message(boolean unexpected)
             /* "marching" is deliberately ambiguous; it might mean drills
                 after entering military service or mean engaging in protests */
             static const char *const draft_reaction[] = {
-                "enlisting", "marching", "protesting", "fleeing",
+                "应征入伍", "行军", "抗议", "当逃兵",
             };
             int dridx;
 
@@ -1538,7 +1538,7 @@ draft_message(boolean unexpected)
             if (u.ualign.record < STRIDENT)
                 /* L: +(0..2), N: +(-1..1), C: +(-2..0); all: 0..3 */
                 dridx += rn1(3, sgn(u.ualign.type) - 1);
-            You_feel("像是在%s.", draft_reaction[dridx]);
+            You_feel("你好像在%s.", draft_reaction[dridx]);
         }
     }
 }
@@ -1570,7 +1570,7 @@ zap_dig(void)
 
         if (!is_whirly(mtmp->data)) {
             if (digests(mtmp->data))
-                You("刺穿了%s %s墙壁!", s_suffix(mon_nam(mtmp)),
+                You("刺穿了%s%s的墙壁!", s_suffix(mon_nam(mtmp)),
                     mbodypart(mtmp, STOMACH));
             if (unique_corpstat(mtmp->data))
                 mtmp->mhp = (mtmp->mhp + 1) / 2;
@@ -1587,11 +1587,11 @@ zap_dig(void)
                 int dmg;
                 if (On_stairs(u.ux, u.uy)) {
                     stairway *stway = stairway_at(u.ux, u.uy);
-                    pline_The("光束反弹在%s上并打中了%s.",
+                    pline_The("光束反弹到了%s上, 并击中了%s.",
                               stway->isladder ? "梯子" : "楼梯",
                               ceiling(u.ux, u.uy));
                 }
-                You("松动了%s的岩石.", ceiling(u.ux, u.uy));
+                You("从%s上翘下一块岩石.", ceiling(u.ux, u.uy));
                 pline("它掉到了你的%s上!", body_part(HEAD));
                 dmg = rnd(hard_helmet(uarmh) ? 2 : 6);
                 losehp(Maybe_Half_Phys(dmg), "falling rock", KILLED_BY_AN);
@@ -1674,7 +1674,7 @@ zap_dig(void)
             if (room->typ == SDOOR)
                 room->typ = DOOR; /* doormask set below */
             else if (cansee(zx, zy))
-                pline_The("门被夷为平地!");
+                pline_The("门被推倒了!");
             watch_dig((struct monst *) 0, zx, zy, TRUE);
             room->doormask = D_NODOOR;
             recalc_block_point(zx, zy); /* vision */
@@ -1691,21 +1691,21 @@ zap_dig(void)
                     room->typ = ROOM, room->flags = 0;
                     unblock_point(zx, zy); /* vision */
                 } else if (!Blind)
-                    pline_The("墙发光然后暗淡了.");
+                    pline_The("墙亮了一下, 然后变暗.");
                 break;
             } else if (IS_TREE(room->typ)) { /* check trees before stone */
                 if (!(room->wall_info & W_NONDIGGABLE)) {
                     room->typ = ROOM, room->flags = 0;
                     unblock_point(zx, zy); /* vision */
                 } else if (!Blind)
-                    pline_The("树震动但仍无恙的.");
+                    pline_The("树身微微颤抖, 但安然无恙.");
                 break;
             } else if (room->typ == STONE || room->typ == SCORR) {
                 if (!(room->wall_info & W_NONDIGGABLE)) {
                     room->typ = CORR, room->flags = 0;
                     unblock_point(zx, zy); /* vision */
                 } else if (!Blind)
-                    pline_The("岩石发光然后暗淡了.");
+                    pline_The("岩石亮了一下, 然后变暗.");
                 break;
             }
         } else if (IS_OBSTRUCTED(room->typ)) {
@@ -1749,7 +1749,7 @@ zap_dig(void)
     }
 
     if (shopdoor || shopwall)
-        pay_for_damage(shopdoor ? "destroy" : "dig into", FALSE);
+        pay_for_damage(shopdoor ? "摧毁" : "挖掉", FALSE);
     return;
 }
 
@@ -1765,7 +1765,7 @@ adj_pit_checks(coord *cc, char *msg)
     int ltyp;
     struct rm *room;
     const char *foundation_msg =
-                 "The foundation is too hard to dig through from this angle.";
+                 "地基太硬了, 很难从这个角度挖开.";
 
     if (!cc)
         return FALSE;
@@ -1789,11 +1789,11 @@ adj_pit_checks(coord *cc, char *msg)
         return FALSE;
     } else if (IS_TREE(ltyp)) { /* check trees before stone */
         /* if (room->wall_info & W_NONDIGGABLE) */
-        Strcpy(msg, "树根发光然后暗淡了.");
+        Strcpy(msg, "树根亮了一下, 然后变暗.");
         return FALSE;
     } else if (ltyp == STONE || ltyp == SCORR) {
         if (room->wall_info & W_NONDIGGABLE) {
-            Strcpy(msg, "岩石发光然后暗淡了.");
+            Strcpy(msg, "岩石亮了一下, 然后变暗.");
             return FALSE;
         }
     } else if (ltyp == IRONBARS) {
@@ -1810,26 +1810,26 @@ adj_pit_checks(coord *cc, char *msg)
         Strcpy(msg, "一堆杂乱的水管在水槽的下面.");
         return FALSE;
     } else if (On_ladder(cc->x, cc->y)) {
-        Strcpy(msg, "梯子没有受影响.");
+        Strcpy(msg, "梯子未受影响.");
         return FALSE;
     } else {
         const char *supporting = (const char *) 0;
 
         if (IS_FOUNTAIN(ltyp))
-            supporting = "fountain";
+            supporting = "喷泉";
         else if (IS_THRONE(ltyp))
-            supporting = "throne";
+            supporting = "王座";
         else if (IS_ALTAR(ltyp))
-            supporting = "altar";
+            supporting = "祭坛";
         else if (On_stairs(cc->x, cc->y))
             /* staircase up or down. On_ladder handled above. */
-            supporting = "stairs";
+            supporting = "楼梯";
         else if (ltyp == DRAWBRIDGE_DOWN   /* "lowered drawbridge" */
                  || ltyp == DBWALL)        /* "raised drawbridge" */
-            supporting = "drawbridge";
+            supporting = "吊桥";
 
         if (supporting) {
-            Sprintf(msg, "%s的支撑结构保持完好。",
+            Sprintf(msg, "%s的支撑结构保持完好.",
                     s_suffix(supporting));
             return FALSE;
         }
@@ -1857,7 +1857,7 @@ pit_flow(struct trap *trap, schar filltyp)
         levl[t.tx][t.ty].typ = filltyp, levl[t.tx][t.ty].flags = 0;
         liquid_flow(t.tx, t.ty, filltyp, trap,
                     u_at(t.tx, t.ty)
-                        ? "Suddenly %s flows in from the adjacent pit!"
+                        ? "突然, %s从相邻的坑里流进来了!"
                         : (char *) 0);
         for (idx = 0; idx < N_DIRS; ++idx) {
             if (t.conjoined & (1 << idx)) {
@@ -2157,7 +2157,7 @@ rot_corpse(anything *arg, long timeout)
         if (flags.verbose) {
             char *cname = corpse_xname(obj, (const char *) 0, CXN_NO_PFX);
 
-            Your("%s%s %s掉了%c", obj == uwep ? "手持的" : "", cname,
+            Your("%s%s%s了%c", obj == uwep ? "手持的" : "", cname,
                  otense(obj, "腐烂"), obj == uwep ? '!' : '.');
         }
         if (obj->owornmask) {
@@ -2306,16 +2306,16 @@ wiz_debug_cmd_bury(void)
     diff = before - after;
     if (before == 0)
         /* there was nothing here */
-        pline("此处或附近没有可掩埋的物品。");
+        pline("此处或附近没有可掩埋的物品.");
     else if (diff == 0)
         /* before and after will be the same if only unburiable objects are
            present (The Amulet, invocation items, Rider corpses, uchain when
            uball doesn't get buried: carried or floor beyond burial range) */
-        pline("没有物品被埋藏。");
+        pline("没有物品被掩埋.");
     else
         /* usual case; if uball got buried, uchain went away and won't be
            counted as buried */
-        pline("%d 个物体%s被埋藏。", diff, plur(diff));
+        pline("%d个物体%s被掩埋.", diff, plur(diff));
     return ECMD_OK;
 }
 #endif /* DEBUG */

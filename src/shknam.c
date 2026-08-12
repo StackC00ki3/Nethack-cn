@@ -207,7 +207,7 @@ static const char *const shkhealthfoods[] = {
  * generated annotations for #overview.  If Null, the first name gets used.
  */
 const struct shclass shtypes[] = {
-    { "general store", NULL,
+    { "杂货店", NULL,
       RANDOM_CLASS,
       42,
       D_SHOP,

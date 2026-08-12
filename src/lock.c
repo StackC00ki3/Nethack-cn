@@ -433,7 +433,7 @@ pick_lock(
         int count;
 
         if (u.dz < 0 && !autounlock) { /* beware stale u.dz value */
-            There("在%s上方没有任何种类的锁.",
+            pline("%s上方没有任何种类的锁.", /*换pline:There*/
                   Levitation ? "这里" : "那里");
             return PICKLOCK_LEARNED_SOMETHING;
         } else if (is_lava(u.ux, u.uy)) {
@@ -613,7 +613,7 @@ pick_lock(
             }
             /* credit cards are only good for unlocking */
             if (picktyp == CREDIT_CARD && !(door->doormask & D_LOCKED)) {
-                You_cant("不能用信用卡锁门.");
+                You_cant("用信用卡锁门.");
                 return PICKLOCK_LEARNED_SOMETHING;
             }
 
@@ -841,7 +841,7 @@ doopen_indir(coordxy x, coordxy y)
     if (portcullis || !IS_DOOR(door->typ)) {
         /* closed portcullis or spot that opened bridge would span */
         if (is_db_wall(cc.x, cc.y) || door->typ == DRAWBRIDGE_UP)
-            There("没有明显的方式来打开吊桥.");
+            pline("没有明显的方式来打开吊桥."); /*换pline:There*/
         else if (portcullis || door->typ == DRAWBRIDGE_DOWN)
             pline_The("吊桥已经打开了.");
         else if (container_at(cc.x, cc.y, TRUE))
@@ -896,7 +896,7 @@ doopen_indir(coordxy x, coordxy y)
     }
 
     if (verysmall(gy.youmonst.data)) {
-        pline("你的体型太小,拉不开门.");
+        pline("你的体型太小, 拉不开门.");
         return res;
     }
 
@@ -1009,7 +1009,7 @@ doclose(void)
         if (is_db_wall(x, y) || door->typ == DRAWBRIDGE_UP)
             pline_The("吊桥已经关闭了.");
         else if (portcullis || door->typ == DRAWBRIDGE_DOWN)
-            There("没有明显的方式来关闭吊桥.");
+            pline("没有明显的方式来关闭吊桥."); /*换pline:There*/
         else {
  nodoor:
             You("%s那里没有门.", Blind ? "感觉到" : "看到");
@@ -1032,7 +1032,7 @@ doclose(void)
 
     if (door->doormask == D_ISOPEN) {
         if (verysmall(gy.youmonst.data) && !u.usteed) {
-            pline("你太小了,无法把门推上.");
+            pline("你太小了, 无法把门推上.");
             return res;
         }
         if (u.usteed

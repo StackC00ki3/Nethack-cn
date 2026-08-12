@@ -46,7 +46,7 @@ else
    des.drawbridge({ x=17, y=14, dir="north", state="random" })
 end
 -- Objects
-des.object({ id = "crystal ball", x=17, y=08, buc="blessed", spe=5, name="The Orb of Fate" })
+des.object({ id = "crystal ball", x=17, y=08, buc="blessed", spe=5, name="命运之球" })
 des.object()
 des.object()
 des.object()

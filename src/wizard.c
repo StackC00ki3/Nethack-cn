@@ -75,11 +75,11 @@ amulet(void)
             if (ttmp->ttyp == MAGIC_PORTAL) {
                 int du = distu(ttmp->tx, ttmp->ty);
                 if (du <= 9)
-                    pline("%s 烫!", Tobjnam(amu, "感觉"));
+                    pline("%s很烫!", Tobjnam(amu, "感觉"));
                 else if (du <= 64)
-                    pline("%s 非常温暖.", Tobjnam(amu, "感觉"));
+                    pline("%s非常温暖.", Tobjnam(amu, "感觉"));
                 else if (du <= 144)
-                    pline("%s 温暖.", Tobjnam(amu, "感觉"));
+                    pline("%s很温暖.", Tobjnam(amu, "感觉"));
                 /* else, the amulet feels normal */
                 break;
             }
@@ -441,7 +441,7 @@ tactics(struct monst *mtmp)
 
                 if ((otmp = on_ground(which_arti(targ))) != 0) {
                     if (cansee(mtmp->mx, mtmp->my))
-                        pline("%s捡起了%s。", Monnam(mtmp),
+                        pline("%s捡起了%s.", Monnam(mtmp),
                               distant_name(otmp, doname));
                     obj_extract_self(otmp);
                     (void) mpickobj(mtmp, otmp);
@@ -720,7 +720,7 @@ resurrect(void)
 
     if (!svc.context.no_of_wizards) {
         /* make a new Wizard */
-        verb = "kill";
+        verb = "杀";
         mtmp = makemon(&mons[PM_WIZARD_OF_YENDOR], u.ux, u.uy, MM_NOWAIT);
         /* affects experience; he's not coming back from a corpse
            but is subject to repeated killing like a revived corpse */
@@ -728,7 +728,7 @@ resurrect(void)
             mtmp->mrevived = 1;
     } else {
         /* look for a migrating Wizard */
-        verb = "elude";
+        verb = "逸";
         mmtmp = &gm.migrating_mons;
         while ((mtmp = *mmtmp) != 0) {
             if (mtmp->iswiz
@@ -774,7 +774,7 @@ resurrect(void)
         if (!Deaf) {
             pline("一个声音传出...");
             SetVoice(mtmp, 0, 80, 0);
-            verbalize("So thou thought thou couldst %s me, fool.", verb);
+            verbalize("然汝以汝能%s我, 鄙人.", verb);
         }
     }
 }
@@ -822,23 +822,23 @@ wizdeadorgone(void)
 }
 
 static const char *const random_insult[] = {
-    "antic",      "blackguard",   "caitiff",    "chucklehead",
-    "coistrel",   "craven",       "cretin",     "cur",
-    "dastard",    "demon fodder", "dimwit",     "dolt",
-    "fool",       "footpad",      "imbecile",   "knave",
-    "maledict",   "miscreant",    "niddering",  "poltroon",
-    "rattlepate", "reprobate",    "scapegrace", "varlet",
-    "villein", /* (sic.) */
-    "wittol",     "worm",         "wretch",
+    "丑角", "恶少", "愚氓", "痴竖",
+    "驺竖", "懦夫", "下愚", "犬彘",
+    "贱懦", "鬼饵", "愚夫", "顽夫",
+    "愚者", "流贼", "至愚", "奸竖",
+    "凶兆", "不逞之人", "陋懦", "怯夫",
+    "昏人", "悖德之人", "邪奸", "竖子",
+    "恶徒", /* (sic.) */
+    "奸人", "虫豸", "贱虫",
 };
 
 static const char *const random_malediction[] = {
-    "Hell shall soon claim thy remains,", "I chortle at thee, thou pathetic",
-    "Prepare to die, thou", "Resistance is useless,",
-    "Surrender or die, thou", "There shall be no mercy, thou",
-    "Thou shalt repent of thy cunning,", "Thou art as a flea to me,",
-    "Thou art doomed,", "Thy fate is sealed,",
-    "Verily, thou shalt be one dead"
+    "黄泉将速收汝骸, ", "吾嗤尔, 可鄙之",
+    "速就死, 汝", "抗拒无益, 汝",
+    "不降则死, 汝", "必弗宥, 汝",
+    "汝将悔尔诈, ", "汝之于我犹蚤虱也, ",
+    "汝其毙矣, ", "天命诛之, ",
+    "汝诚为尸矣, "
 };
 
 /* Insult or intimidate the player */
@@ -852,19 +852,19 @@ cuss(struct monst *mtmp)
             pline("%s极坏地笑着.", Monnam(mtmp));
         } else if (u.uhave.amulet && !rn2(SIZE(random_insult))) {
             SetVoice(mtmp, 0, 80, 0);
-            verbalize("Relinquish the amulet, %s!",
+            verbalize("速释尔符, %s!",
                       ROLL_FROM(random_insult));
         } else if (u.uhp < 5 && !rn2(2)) { /* Panic */
             SetVoice(mtmp, 0, 80, 0);
-            verbalize(rn2(2) ? "Even now thy life force ebbs, %s!"
-                             : "Savor thy breath, %s, it be thy last!",
+            verbalize(rn2(2) ? "今汝命力衰矣, %s!"
+                             : "嗟, %s! 享汝之息, 此乃尔末息也!",
                       ROLL_FROM(random_insult));
         } else if (mtmp->mhp < 5 && !rn2(2)) { /* Parthian shot */
             SetVoice(mtmp, 0, 80, 0);
-            verbalize(rn2(2) ? "I shall return." : "I'll be back.");
+            verbalize(rn2(2) ? "吾将复还." : "吾必返.");
         } else {
             SetVoice(mtmp, 0, 80, 0);
-            verbalize("%s %s!",
+            verbalize("%s%s!",
                       ROLL_FROM(random_malediction),
                       ROLL_FROM(random_insult));
         }
@@ -875,7 +875,7 @@ cuss(struct monst *mtmp)
           + QT_ANGELIC);*/
     } else {
         if (!rn2(is_minion(mtmp->data) ? 100 : 5))
-            pline("%s诽谤你的祖先.", Monnam(mtmp));
+            pline("%s问候你的祖先.", Monnam(mtmp));
         else
             com_pager("demon_cuss");
     }

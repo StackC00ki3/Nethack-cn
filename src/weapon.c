@@ -456,7 +456,7 @@ silver_sears(struct monst *magr UNUSED, struct monst *mdef,
            silver [see hmonas(uhitm.c) for explanation of 'multi_claw'] */
         both = ((ltyp == rtyp && l_dknown == r_dknown) || (l_ag && r_ag));
         Sprintf(rings, "戒指"); /*修改语序:Sprintf(rings, "戒指%s", both ? "s" : "");*/
-        Your("%s%s%s%s了%s!", both ? "两枚" : "",/*修改语序:Your("%s%s%s了%s!",*/
+        Your("%s%s%s%s%s了%s!", both ? "两枚" : "",/*修改语序:Your("%s%s%s了%s!",*/
              (l_ag || r_ag) ? "银" /*修改语序:(l_ag || r_ag) ? "银"*/
              : both ? "" /*修改语序:: both ? ""*/
                : ((silverhit & W_RINGL) != 0L) ? "左" /*修改语序:: ((silverhit & W_RINGL) != 0L) ? "左" */
@@ -918,7 +918,7 @@ mon_wield_item(struct monst *mon)
         if (artifact_light(obj) && !obj->lamplit) {
             begin_burn(obj, FALSE);
             if (canseemon(mon))
-                pline("%s在%s的%s中照耀出%s的光芒!", Tobjnam(obj, ""), s_suffix(mon_nam(mon)),/*修改语序: pline("%s%s在%s的%s中闪耀！", Tobjnam(obj, "闪耀"),*/
+                pline("%s在%s的%s中出%s的光芒!", Tobjnam(obj, "照耀"), s_suffix(mon_nam(mon)),/*修改语序: pline("%s%s在%s的%s中闪耀！", Tobjnam(obj, "闪耀"),*/
                       mbodypart(mon, HAND), 
                       arti_light_description(obj)); /*修改语序: mbodypart(mon, HAND));*/
             /* 3.6.3: artifact might be getting wielded by invisible monst */
@@ -1361,7 +1361,7 @@ enhance_weapon_skill(void)
            with "*" or "#" below */
         if (eventually_advance > 0 || maxxed_cnt > 0) {
             if (eventually_advance > 0) {
-                Sprintf(buf, "(标有\"*\"的技能%s可在%s时提升.)",
+                Sprintf(buf, "(标有\"*\"的技能%s可在%s时提升. )",
                         plur(eventually_advance),
                         (u.ulevel < MAXULEV)
                             ? "经验值更高时"
@@ -1370,7 +1370,7 @@ enhance_weapon_skill(void)
             }
             if (maxxed_cnt > 0) {
                 Sprintf(buf,
-                 "(标有\"#\"的技能%s无法进一步提升.)",
+                 "(标有\"#\"的技能%s无法进一步提升. )",
                         plur(maxxed_cnt));
                 add_menu_str(win, buf);
             }

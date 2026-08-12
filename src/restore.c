@@ -855,7 +855,7 @@ dorecover(NHFILE *nhfp)
         clear_nhwindow(WIN_MAP);
 #endif
     clear_nhwindow(WIN_MESSAGE);
-    You("回到了%s的%d层%s.", svd.dungeons[u.uz.dnum].dname, /*修改语序:You("return to level %d in %s%s.", depth(&u.uz),*/
+    You("回到了%s的%d层%s.", svd.dungeons[u.uz.dnum].dcname, /*修改语序:You("return to level %d in %s%s.", depth(&u.uz),*/
         depth(&u.uz), /*修改语序:svd.dungeons[u.uz.dnum].dname,*/
         flags.debug ? "(调试模式)"
                     : flags.explore ? "(探索模式)" : "");

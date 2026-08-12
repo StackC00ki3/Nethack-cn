@@ -2010,8 +2010,8 @@ getobj(
             /* guard against the [hypothetical] chance of having more
                than one invent slot of gold and picking the non-'$' one */
             || (otmp && otmp->oclass == COIN_CLASS)) {
-            if (otmp && obj_ok(otmp) <= GETOBJ_EXCLUDE) {
-                You("不能%s.", strsubst(word, "什么", "金币"));
+            if (otmp && obj_ok(otmp) <= GETOBJ_EXCLUDE) { char wordbuf[BUFSZ]; Strcpy(wordbuf, word); /*危险*/
+                You("不能%s.", strsubst(wordbuf, "什么", "金币"));
                 return (struct obj *) 0;
             }
             /*
@@ -2107,7 +2107,7 @@ silly_thing(const char *word,
     if (ocls == ARMOR_CLASS) {
         if (!strcmp(word, "put on") || !strcmp(word, "戴上什么"))
             s1 = "W", s2 = "穿上", s3 = "";
-        else if (!strcmp(word, "remove") || !strcmp(word, "拿下什么"))
+        else if (!strcmp(word, "remove") || !strcmp(word, "摘下什么"))
             s1 = "T", s2 = "脱下", s3 = "";
     } else if ((ocls == RING_CLASS || otyp == MEAT_RING)
                || ocls == AMULET_CLASS
@@ -2115,7 +2115,7 @@ silly_thing(const char *word,
         if (!strcmp(word, "wear") || !strcmp(word, "穿上什么"))
             s1 = "P", s2 = "戴上", s3 = "";
         else if (!strcmp(word, "take off") || !strcmp(word, "脱下什么"))
-            s1 = "R", s2 = "拿下", s3 = "";
+            s1 = "R", s2 = "摘下", s3 = "";
     }
     if (s1)
         pline("使用'%s'键以%s%s%s.", s1, s2,
@@ -2123,13 +2123,15 @@ silly_thing(const char *word,
     else
 #endif
     /* see comment about Amulet of Yendor in objtyp_is_callable(do_name.c);
-       known fakes yield the silly thing feedback */
-    if (!strcmp(word, "call") || !strcmp(word, "叫什么")
+       known fakes yield the silly thing feedback */ char word2[BUFSZ];
+    if ((!strcmp(word, "call") || !strcmp(word, "叫什么"))
         && (otmp->otyp == AMULET_OF_YENDOR
-            || (otmp->otyp == FAKE_AMULET_OF_YENDOR && !otmp->known)))
+            || (otmp->otyp == FAKE_AMULET_OF_YENDOR && !otmp->known))) {
         pline_The("护身符不喜欢被命名.");
-    else
-        pline(silly_thing_to, word);
+    }
+    else { 
+        Strcpy(word2, word); strsubst(word2, "什么", ""); pline(silly_thing_to, word2);
+    }
 }
 
 RESTORE_WARNING_FORMAT_NONLITERAL
@@ -2691,7 +2693,7 @@ menu_identify(int id_limit)
             pline1(thats_enough_tries);
             break;
         } else { /* try again */
-            pline("选择一项;使用Esc来退出.");
+            pline("选择一项; 使用Esc来退出.");
         }
     }
 }
@@ -3219,7 +3221,7 @@ display_pickinv(
             sortedinvent[0].obj = (struct obj *) 0;
     }
 
-    start_menu(win, menu_behavior);
+    start_menu(win, menu_behavior); //debugfuzzer有问题:1
     any = cg.zeroany;
     if (wizid) {
         int unid_cnt;
@@ -4173,7 +4175,7 @@ look_here(
             trap = (struct trap *) NULL;
 
         if (reg || trap)
-            There("这里有%s%s%s.",
+            There("有%s%s%s.",
                   reg ? regbuf : "",
                   (reg && trap) ? "和" : "",
                   trap ? an(trapname(trap->ttyp, FALSE)) : "");
@@ -4187,7 +4189,7 @@ look_here(
     if (Blind) {
         boolean drift = Is_airlevel(&u.uz) || Is_waterlevel(&u.uz);
 
-        if (dfeature && (!strncmp(dfeature, "altar ", 6)) || !strncmp(dfeature, "祭坛", strlen("祭坛"))) {
+        if (dfeature && IS_ALTAR(levl[u.ux][u.uy].typ)) { /*危险:但愿不会出问题*/
             /* don't say "altar" twice, dfeature has more info */
             You("试图感觉这里有什么.");
         } else if (SURFACE_AT(u.ux, u.uy) == ICE) {
@@ -4206,7 +4208,7 @@ look_here(
                                            : "在",
                        *onwhat = cant_reach ? "" : surf;
 
-            You("试图感受%s%s%s的是什么.", drift ? "漂浮在这里" : where,
+            You("试图感受%s%s%s的是什么.", drift ? "飘浮在这里" : where,
                 drift ? "" : onwhat, drift ? "" : "上"); /*修改语序:drift ? "" : onwhat);*/
 
             if (dfeature && !drift && !strcmp(dfeature, surf))
@@ -4303,8 +4305,8 @@ look_here(
             putstr(tmpwin, 0, "");
         }
         Sprintf(buf, "%s这里的%s:",
-                picked_some ? "其他物品" : "物品",
-                Blind ? "你感觉到" : "");
+                Blind ? "你感觉到" : "", /*修改语序:picked_some ? "其他物品" : "物品",*/
+                picked_some ? "其他物品" : "物品"); /*修改语序:Blind ? "你感觉到" : "");*/
         putstr(tmpwin, 0, buf);
         for (; otmp; otmp = otmp->nexthere) {
             if (otmp->otyp == CORPSE && will_feel_cockatrice(otmp, FALSE)) {
@@ -4601,7 +4603,7 @@ noarmor(boolean report_uskin)
             while ((p[1] = p[8]) != '\0')
                 ++p;
 
-        You("没有穿戴防具, 但有%s嵌入在你的皮肤中.",
+        You("没有穿戴防具, 但有%s嵌在你的皮肤中.",
             uskinname);
     }
 }
@@ -4652,7 +4654,7 @@ int
 doprring(void)
 {
     if (!uleft && !uright) {
-        You("没有戴任何戒指.");
+        You("没有戴戒指.");
     } else {
         char lets[3]; /* 3: uright, uleft, terminator */
         boolean use_inuse_mode = FALSE;

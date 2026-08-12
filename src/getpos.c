@@ -180,7 +180,7 @@ getpos_help(boolean force, const char *goal)
             visctrl(cmd_from_func(do_move_east)), goal);
     putstr(tmpwin, 0, sbuf);
     Sprintf(sbuf,
-            "使用'%s', '%s', '%s', '%s'快速移动光标,%s.",
+            "使用'%s', '%s', '%s', '%s'快速移动光标, %s.",
             visctrl(cmd_from_func(do_run_west)),
             visctrl(cmd_from_func(do_run_south)),
             visctrl(cmd_from_func(do_run_north)),
@@ -560,7 +560,7 @@ dxdy_to_dist_descr(coordxy dx, coordxy dy, boolean fulldir)
     int dst;
 
     if (!dx && !dy) {
-        Sprintf(buf, "在这儿");
+        Sprintf(buf, "在这里");
     } else if ((dst = xytodir(dx, dy)) != -1) {
         /* explicit direction; 'one step' is implicit */
         Sprintf(buf, "%s", directionname(dst));
@@ -576,7 +576,7 @@ dxdy_to_dist_descr(coordxy dx, coordxy dy, boolean fulldir)
             if (abs(dy) > 9999)
                 dy = sgn(dy) * 9999;
             Sprintf(eos(buf), "%d%s%s", abs(dy), dirnames[(dy > 0)][fulldir],
-                    dx ? "，" : "");
+                    dx ? ", " : "");
         }
         if (dx) {
             if (abs(dx) > 9999)

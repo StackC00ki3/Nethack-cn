@@ -595,7 +595,7 @@ release_hold(void)
            set_ustuck() will set flag for botl update, You() pline will
            trigger a status update with "UHold" removed */
         set_ustuck((struct monst *) 0);
-        You("释放%s.", mon_nam(mtmp));
+        You("释放了%s.", mon_nam(mtmp));
     } else { /* held but not swallowed */
         char relbuf[BUFSZ];
 
@@ -635,7 +635,7 @@ probe_monster(struct monst *mtmp)
                                   (char *) 0);
     } else {
         pline("%s没有携带任何东西%s.", noit_Monnam(mtmp),
-              engulfing_u(mtmp) ? ",除了你" : "");
+              engulfing_u(mtmp) ? ", 除了你" : "");
     }
 }
 
@@ -1034,18 +1034,18 @@ revive(struct obj *corpse, boolean by_hero)
         if (cansee(x, y)) {
             char buf[BUFSZ];
 
-            Strcpy(buf, one_of ? "其中之一" : "");
+            (void) shk_your(eos(buf), corpse);
+            Strcat(buf, one_of ? "其中一具" : "");
             /* shk_your: "the " or "your " or "<mon>'s " or "<Shk>'s ".
                If the result is "Shk's " then it will be ambiguous:
                is Shk the mon carrying it, or does Shk's shop own it?
                Let's not worry about that... */
-            (void) shk_your(eos(buf), corpse);
             if (one_of)
                 corpse->quan++; /* force plural */
-            Strcat(corpse_xname(corpse, (const char *) 0, CXN_NO_PFX), buf); /*修改语序：Strcat(buf, corpse_xname(corpse, (const char *) 0, CXN_NO_PFX));*/
+            Strcat(buf, corpse_xname(corpse, (const char *) 0, CXN_NO_PFX)); /*修改语序：Strcat(buf, corpse_xname(corpse, (const char *) 0, CXN_NO_PFX));*/
             if (one_of) /* could be simplified to ''corpse->quan = 1L;'' */
                 corpse->quan--;
-            pline("%s发出虹彩的光芒.", upstart(buf));
+            pline("%s发出虹彩色光.", upstart(buf));
             iflags.last_msg = PLNMSG_OBJ_GLOWS; /* usually for BUC change */
         } else if (shkp) {
             /* need some prior description of the corpse since
@@ -1053,9 +1053,9 @@ revive(struct obj *corpse, boolean by_hero)
             pline("一个尸体苏醒了.");
         }
         /* don't charge for shopkeeper's own corpse if we just revived him */
-        if (shkp && mtmp != shkp)
+        if (shkp && mtmp != shkp){
             (void) stolen_value(corpse, x, y, (boolean) shkp->mpeaceful,
-                                FALSE);
+                                FALSE);}
 
         /* [we don't give any comparable message about the corpse for
            the !by_hero case because caller might have already done so] */
@@ -1177,8 +1177,8 @@ unturn_dead(struct monst *mon)
             Strcpy(corpse, corpse_xname(otmp, (const char *) 0, CXN_NORMAL));
             /* shk_your/Shk_Your produces a value with a trailing space */
             if (otmp->quan > 1L) {
-                Strcpy(owner, "其中一具");
                 (void) shk_your(eos(owner), otmp);
+                Strcat(owner, "其中一具");
             } else
                 (void) Shk_Your(owner, otmp);
         }
@@ -2574,7 +2574,7 @@ zapnodir(struct obj *obj)
         break;
     case WAN_WISHING:
         if (Luck + rn2(5) < 0) {
-            pline("不幸地,没有任何事发生.");
+            pline("不幸的是, 没有任何事发生.");
             known = FALSE;
         } else {
             known = !!obj->dknown;
@@ -2737,7 +2737,7 @@ zapyourself(struct obj *obj, boolean ordinary)
             monstunseesu(M_SEEN_ELEC);
         } else {
             shieldeff(u.ux, u.uy);
-            You("朝自己施法,但看起来没有受伤.");
+            You("朝自己施法, 但看起来没有受伤.");
             monstseesu(M_SEEN_ELEC);
             ugolemeffects(AD_ELEC, orig_dmg);
         }
@@ -2830,7 +2830,7 @@ zapyourself(struct obj *obj, boolean ordinary)
 
         if (BInvis && uarmc->otyp == MUMMY_WRAPPING) {
             /* A mummy wrapping absorbs it and protects you */
-            You_feel("在%s下面相当痒.", yname(uarmc));
+            You_feel("%s下面相当痒.", yname(uarmc));
             break;
         }
         incr_itimeout(&HInvis, rn1(15, 31));
@@ -5906,7 +5906,7 @@ maybe_destroy_item(
                    : ((cnt < quan) ? "中有一些"     /* n of N */
                       : (quan == 2L) ? "全都"   /* 2 of 2 */
                         : "全都");               /* N of N */
-            pline("%s%s%s!", (cnt == 1L && quan == 1L) ? Yname2(obj) : yname(obj), /*修改语序:pline("%s%s %s!", mult,*/
+            pline("%s%s%s了!", (cnt == 1L && quan == 1L) ? Yname2(obj) : yname(obj), /*修改语序:pline("%s%s %s!", mult,*/
                   mult, /*修改语序:(cnt == 1L && quan == 1L) ? Yname2(obj) : yname(obj),*/
                   destroy_strings[dindx][(cnt > 1L)]);
         }
@@ -6168,27 +6168,30 @@ wishcmdassist(int triesleft)
         wishinfo[] = {
   "许愿详情:",
   "",
-  "输入物品的名称,例如\"potion of monster detection\", ",
-  "\"scroll labeled README\", \"elven mithril-coat\"或",
-  "\"Grimtooth\"(不带引号). ",
+  "(用汉语或者英语)输入物品的名称, 例如\"怪物探测药水\"(\"potion",
+  "of monster detection\"), \"写着READ ME的卷轴\"(\"scroll labaled",
+  "READ ME\"), \"精灵秘银胶衣\"(\"elven mithril-coat\")或\"邪兽之牙\"",
+  "(\"Grimtooth\")(不带引号). 正常情况下, 原版能够许愿到的输入在",
+  "这里都能许愿到. 请注意游戏的正字法, 以游戏里显示的形式为准.",
   "",
-  "对于成堆出现的物品类型, 可以指定复数名称, 例如\"potions ",
-  "of healing\", 或指定数量, 例如\"1000 gold pieces\",尽",
-  "管这么大的愿望可能无法实现.",
+  "对于成堆出现的物品类型, 可以指定复数名称, 例如\"potions of",
+  "healing\"(药水-复数 属格 治疗-动名词, \"至少2瓶治疗药水\"(然而",
+  "在这里这么写的话识别不出来)), 或指定数量, 例如\"1000金币\", ",
+  "尽管这么大的愿望可能无法实现.",
   "",
-  "也可以指定各种修饰词来修改物品属性, 例如\"解除诅咒\", \"防",
-  "锈\"或\"+1\".",
+  "也可以指定各种修饰词来修改物品属性, 例如\"解除诅咒\"(\"remove",
+  "curse\"), \"防锈\"(\"rustproof\")或\"+1\".",
   "查看物品栏时显示的大多数修饰词均可指定.",
   "",
-  "指定\"nothing\"可以明确拒绝此愿望.",
+  "指定\"无\"(\"nothing\")可以明确拒绝此愿望.",
   0,
     },
         preserve_wishless[] = "这样做不会破坏'禁许愿'挑战.",
         retry_info[] =
-                    "如果你指定一种未鉴定的物品%s%s次%s,",
-        retry_too[] = "你将获得一件随机物品.",
+                    "如果你指定一种未鉴定的物品%s%s次%s, 你将获得一件随机物品.",
+        //冗余:retry_too[] = "你将获得一件随机物品.",
         suppress_cmdassist[] =
-            "(在配置文件中添加!cmdassist以禁用此辅助功能.)",
+            "(在配置文件中添加!cmdassist以禁用此辅助功能. )",
         *cardinals[] = { "零",  "一",  "二", "三", "四", "五" },
         too_many[] = "过多";
     int i;
@@ -6210,7 +6213,7 @@ wishcmdassist(int triesleft)
             (triesleft < MAXWISHTRY) ? "以上" : "",
             plur(triesleft));
     putstr(win, 0, buf);
-    putstr(win, 0, retry_too);
+    //冗余: putstr(win, 0, retry_too);
     putstr(win, 0, "");
     if (iflags.cmdassist)
         putstr(win, 0, suppress_cmdassist);

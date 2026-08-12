@@ -73,7 +73,7 @@ item_naming_classification(
             callname = the(callname);
         else if (!is_plural(obj))
             callname = makeplural(callname);
-        Sprintf(ocallbuf, "%s的类型%s",
+        Sprintf(ocallbuf, "%s%s的类型",
                 (!objects[obj->otyp].oc_uname
                  || !*objects[obj->otyp].oc_uname) ? Call : Recall,
                 callname);
@@ -116,7 +116,7 @@ item_reading_classification(struct obj *obj, char *outbuf)
         Sprintf(outbuf, "%s这本%s",
                 (novel || blank) ? "阅读" : tome ? "审视" : "研读",
                 novel ? simpleonames(obj) /* "novel" or "paperback book" */
-                      : tome ? "典籍" : "法术书");
+                      : tome ? "典籍" : "魔法书");
     } else {
         res = IA_NONE;
     }
@@ -441,14 +441,14 @@ itemactions(struct obj *otmp)
                 surface(u.ux, u.uy),
                 (is_blade(otmp) || otmp->oclass == WAND_CLASS
                  || ((otmp->oclass == GEM_CLASS || otmp->oclass == RING_CLASS)
-                     && objects[otmp->otyp].oc_tough)) ? "刻字" : "写字");
+                     && objects[otmp->otyp].oc_tough)) ? "刻下" : "写下");
         ia_addmenu(win, IA_ENGRAVE_OBJ, 'E', buf);
     }
 
     /* f: fire quivered ammo */
     if (otmp == uquiver) {
         boolean shoot = ammo_and_launcher(otmp, uwep);
-        Sprintf(buf, ""); /*危险:去掉*/
+        //Sprintf(buf, ""); /*危险:去掉*/
         /* FIXME: see the multi-shot FIXME about "one of" for 't: throw' */
         if (shoot) { /*危险:反过来*/
             assert(uwep != NULL);
@@ -601,7 +601,7 @@ itemactions(struct obj *otmp)
            the #invoke command lists them as likely candidates */
         || otmp->otyp == CRYSTAL_BALL)
         ia_addmenu(win, IA_INVOKE_OBJ, 'V',
-                   "尝试激活该对象的独特能力");
+                   "尝试激活该物品的独特能力");
 
     /* w: wield, hold in hands, works on everything but with different
        advice text; not mentioned for things that are already wielded */
@@ -677,7 +677,7 @@ itemactions(struct obj *otmp)
             || (could_twoweap(gy.youmonst.data) && !uarms
                 && uwep && MAYBETWOWEAPON(uwep)
                 && uswapwep && MAYBETWOWEAPON(uswapwep)))) {
-        Sprintf(buf, "%s双武器", u.twoweap ? "关闭" : "开启");
+        Sprintf(buf, "%s双持", u.twoweap ? "关闭" : "开启");
         ia_addmenu(win, IA_TWOWEAPON, 'X', buf);
     }
 

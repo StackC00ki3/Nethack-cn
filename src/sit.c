@@ -505,7 +505,7 @@ dosit(void)
     } else if ((Underwater || Is_waterlevel(&u.uz))
                 && !eggs_in_water(gy.youmonst.data)) {
         if (Is_waterlevel(&u.uz))
-            There("附近没有坐垫漂浮着.");
+            There("附近没有坐垫飘浮着.");
         else
             You("坐在泥泞的底部.");
     } else if (is_pool(u.ux, u.uy) && !eggs_in_water(gy.youmonst.data)) {

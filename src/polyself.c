@@ -645,7 +645,7 @@ polyself(int psflags)
                     /* tricky phrasing; dragon scale mail is singular, dragon
                        scales are plural (note: we don't use "set of scales",
                        which usually overrides the distinction, here) */
-                    Your("在融合的时候, %s恢复成了鳞!", buf);
+                    Your("%s融合时, 恢复成了鳞!", buf);
                     /* uarm->spe enchantment remains unchanged;
                        re-converting scales to mail poses risk
                        of evaporation due to over enchanting */
@@ -978,7 +978,7 @@ polymon(int mntmp)
         if (u.utraptype == TT_INFLOOR) {
             pline_The("岩石似乎不再困住你了.");
         } else {
-            pline_The("掩埋的球不再束缚你了.");
+            pline_The("埋着的球不再束缚你了.");
             buried_ball_to_freedom();
         }
         reset_utrap(TRUE);
@@ -993,7 +993,7 @@ polymon(int mntmp)
             You("滑脱出了铁链.");
             unpunish();
         } else if (u.utrap && u.utraptype == TT_BURIEDBALL) {
-            You("滑脱出了掩埋的球和链.");
+            You("滑脱出了埋着的球和链.");
             buried_ball_to_freedom();
         }
     }
@@ -1043,7 +1043,7 @@ polymon(int mntmp)
         if (attacktype(uptr, AT_GAZE))
             pline(use_thec, monsterc, "注视怪物");
         if (might_hide && webmaker(uptr))
-            pline(use_thec, monsterc, "藏在网里,或者织网");
+            pline(use_thec, monsterc, "藏在网里, 或者织网");
         else if (might_hide)
             pline(use_thec, monsterc, "躲藏");
         else if (webmaker(uptr))
@@ -1278,7 +1278,7 @@ break_armor(void)
             if (is_whirly(uptr))
                 Your("靴子掉了下来!");
             else
-                Your("靴子从%s的双脚上%s!",
+                Your("靴子从双脚上%s!",
                      verysmall(uptr) ? "滑出" : "被蹬开");
             (void) Boots_off();
             dropp(otmp);
@@ -1782,7 +1782,7 @@ dohide(void)
     /* can't hide while being held (or holding) or while trapped
        (except for floor hiders [trapper or mimic] in pits) */
     if (u.ustuck || (u.utrap && (u.utraptype != TT_PIT || on_ceiling))) {
-        You_cant("在你%s的时候躲藏.",
+        You_cant("在%s时躲藏.",
                  !u.ustuck ? "受困"
                    : u.uswallow ? (digests(u.ustuck->data) ? "被吞咽"
                                                            : "被吞没")
@@ -1843,13 +1843,13 @@ dohide(void)
     }
     /* Planes of Air and Water */
     if (on_ceiling && !has_ceiling(&u.uz)) {
-        There("上面无处可藏.");
+        There("上方无处可藏.");
         u.uundetected = 0;
         return ECMD_OK;
     }
     if ((is_hider(gy.youmonst.data) && !Flying) /* floor hider */
         && (Is_airlevel(&u.uz) || Is_waterlevel(&u.uz))) {
-        There("下面无处可藏.");
+        There("上方无处可藏.");
         u.uundetected = 0;
         return ECMD_OK;
     }

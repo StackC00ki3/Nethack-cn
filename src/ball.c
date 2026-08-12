@@ -24,7 +24,7 @@ ballrelease(boolean showmsg)
 {
     if (carried(uball) && !welded(uball)) {
         if (showmsg)
-            pline("吃了一惊, 你掉落了铁球.");
+            pline("你吓了一跳, 从手中掉落了铁球.");
         if (uwep == uball)
             setuwep((struct obj *) 0);
         if (uswapwep == uball)
@@ -53,13 +53,13 @@ ballfall(void)
     if (gets_hit) {
         int dmg = rn1(7, 25);
 
-        pline_The("铁球掉在你的%s上.", body_part(HEAD));
+        pline_The("铁球掉到了你的%s上.", body_part(HEAD));
         if (uarmh) {
             if (hard_helmet(uarmh)) {
                 pline("幸运的是, 你戴着一顶硬头盔.");
                 dmg = 3;
             } else if (flags.verbose)
-                pline("%s没有保护到你.", Yname2(uarmh));
+                pline("%s无法保护你.", Yname2(uarmh));
         }
         losehp(Maybe_Half_Phys(dmg), "被一个铁球砸到头",
                NO_KILLER_PREFIX);
@@ -774,8 +774,8 @@ drag_ball(coordxy x, coordxy y, int *bc_control,
  drag:
 
     if (near_capacity() > SLT_ENCUMBER && dist2(x, y, u.ux, u.uy) <= 2) {
-        You("不能%s拖着沉重的铁球.",
-            gi.invent ? "带着所有这些还要" : "");
+        You("%s拖不动沉重的铁球.",
+            gi.invent ? "负载已经很重了, " : "");
         nomul(0);
         return FALSE;
     }
@@ -913,7 +913,7 @@ drop_ball(coordxy x, coordxy y)
                 pline("%s%s!", pullmsg, "捕兽夹");
                 set_wounded_legs(side, rn1(1000, 500));
                 if (!u.usteed) {
-                    Your("%s%s受到严重的损害.",
+                    Your("%s%s受到严重伤害.",
                          (side == LEFT_SIDE) ? "左" : "右",
                          body_part(LEG));
                     losehp(Maybe_Half_Phys(2),
@@ -971,9 +971,9 @@ litter(void)
         nextobj = otmp->nobj;
         if (otmp != uball && rnd(capacity) <= (int) otmp->owt) {
             if (canletgo(otmp, "")) {
-                You("扔掉%s, %s和你一起从楼梯上%s下来.",
+                You("丢下%s, %s和你一起从楼梯上%s下来.",
                     yname(otmp), (otmp->quan == 1L) ? "它" : "它们",
-                    otense(otmp, "掉落"));
+                    otense(otmp, "掉"));
                 setnotworn(otmp);
                 freeinv(otmp);
                 hitfloor(otmp, FALSE);
@@ -1006,24 +1006,24 @@ drag_down(void)
 
     if (forward) {
         if (rn2(6)) {
-            pline_The("铁球把你拖下了楼梯！");
+            pline_The("铁球把你拖下了楼梯!");
             losehp(Maybe_Half_Phys(rnd(6)),
-                   "被一个铁球拖下楼", NO_KILLER_PREFIX);
+                   "被一个铁球拖下楼梯", NO_KILLER_PREFIX);
             litter();
         }
     } else {
         if (rn2(2)) {
             Soundeffect(se_iron_ball_hits_you, 25);
-            pline_The("铁球撞到你!");
-            losehp(Maybe_Half_Phys(rnd(20)), "铁球碰撞",
+            pline_The("铁球撞到了你!");
+            losehp(Maybe_Half_Phys(rnd(20)), "撞过来的铁球",
                    KILLED_BY_AN);
             exercise(A_STR, FALSE);
             dragchance -= 2;
         }
         if ((int) dragchance >= rnd(6)) {
-            pline_The("铁球把你拖下楼梯！");
+            pline_The("铁球把你拖下楼梯!");
             losehp(Maybe_Half_Phys(rnd(3)),
-                   "被一个铁球拖下楼", NO_KILLER_PREFIX);
+                   "被一个铁球拖下楼梯", NO_KILLER_PREFIX);
             exercise(A_STR, FALSE);
             litter();
         }

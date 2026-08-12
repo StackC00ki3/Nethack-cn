@@ -410,7 +410,7 @@ dowield(void)
         /* offer to split stack if multiple are quivered */
         if (uquiver->quan > 1L && inv_cnt(FALSE) < invlet_basic
                                     && splittable(uquiver)) {
-            Sprintf(qbuf, "你已经准备好了%ld个%s. 要手持其中一个吗?",
+            Sprintf(qbuf, "你已经准备好了%ld %s. 要手持其中一个吗?",
                     uquiver->quan, simpleonames(uquiver));
             switch (ynq(qbuf)) {
             case 'q':
@@ -504,14 +504,14 @@ doswapweapon(void)
 int
 dowieldquiver(void)
 {
-    return doquiver_core("ready");
+    return doquiver_core("准备好什么"); /*危险:"ready"*/
 }
 
 /* guts of #quiver command; also used by #fire when refilling empty quiver */
 int
 doquiver_core(const char *verb) /* "ready" or "fire" */
 {
-    char qbuf[QBUFSZ];
+    char qbuf[QBUFSZ], verb2[BUFSZ]; Strcpy(verb2, verb);
     struct obj *newquiver;
     int res;
     boolean was_uwep = FALSE, was_twoweap = u.twoweap;
@@ -562,8 +562,8 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
  already_quivered:
         pline("发射物已经准备好了!");
         return ECMD_OK;
-    } else if (newquiver->owornmask & (W_ARMOR | W_ACCESSORY | W_SADDLE)) {
-        You("不能%s那个!", !strcmp(verb, "ready") ? "准备" : (!strcmp(verb, "fire") ? "发射" : (!strcmp(verb, "wield") ? "装备" : (!strcmp(verb, "rub") ? "擦" : "")))); /*危险:You("不能%s那个！", verb);*/
+    } else if (newquiver->owornmask & (W_ARMOR | W_ACCESSORY | W_SADDLE)) { strsubst(verb2, "什么", "");/*危险:也许吧*/
+        You("不能%s那个!", verb2);
         return ECMD_OK;
     } else if (newquiver == uwep) {
         int weld_res = !uwep->bknown;
@@ -576,7 +576,7 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
         /* offer to split stack if wielding more than 1 */
         if (uwep->quan > 1L && inv_cnt(FALSE) < invlet_basic
                                     && splittable(uwep)) {
-            Sprintf(qbuf, "你正拿着%ld个%s. 将它们中的%ld个准备?",
+            Sprintf(qbuf, "你正拿着%ld %s. 将它们中的%ld个准备?",
                     uwep->quan, simpleonames(uwep), uwep->quan - 1L);
             switch (ynq(qbuf)) {
             case 'q':
@@ -611,7 +611,7 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
     } else if (newquiver == uswapwep) {
         if (uswapwep->quan > 1L && inv_cnt(FALSE) < invlet_basic
             && splittable(uswapwep)) {
-            Sprintf(qbuf, "%s%ld个%s. 将它们中的%ld个准备?",
+            Sprintf(qbuf, "%s%ld %s. 将它们中的%ld个准备?",
                     u.twoweap ? "你正以副手手持"
                               : "你的备用武器是",
                     uswapwep->quan, simpleonames(uswapwep),
@@ -650,7 +650,7 @@ doquiver_core(const char *verb) /* "ready" or "fire" */
     }
 
  quivering:
-    if (!strcmp(verb, "ready")) {
+    if (!strcmp(verb, "ready") || !cnstrcmp(verb, "准备好什么")) {
         /* place item in quiver before printing so that inventory feedback
            includes "(at the ready)" */
         setuqwep(newquiver);
@@ -696,8 +696,8 @@ wield_tool(struct obj *obj,
                    || strstri(what, "s of ") != 0);
 
     if (obj->owornmask & (W_ARMOR | W_ACCESSORY)) {
-        You_cant("在戴着%s的时候%s%s.", more_than_1 ? "它们" : "它", !strcmp(verb, "ready") ? "准备" : (!strcmp(verb, "fire") ? "发射" : (!strcmp(verb, "wield") ? "装备" : (!strcmp(verb, "rub") ? "擦" : ""))), /*修改语序，危险:You_cant("%s %s while wearing %s.", verb, yname(obj),*/
-                 yname(obj)); /*修改语序:more_than_1 ? "them" : "it");*/
+        You_cant("在戴着%s时%s%s.", yname(obj), verb, /*修改语序，危险:You_cant("%s %s while wearing %s.", verb, yname(obj),*/
+                 more_than_1 ? "它们" : "它"); /*修改语序:more_than_1 ? "them" : "it");*/
         return FALSE;
     }
     if (uwep && welded(uwep)) {
@@ -710,7 +710,7 @@ wield_tool(struct obj *obj,
                 more_than_1 = FALSE;
             pline(
                "因为你的武器粘在你的%s上, 所以你不能%s%s%s.",
-                  hand, !strcmp(verb, "ready") ? "准备" : (!strcmp(verb, "fire") ? "发射" : (!strcmp(verb, "wield") ? "装备" : (!strcmp(verb, "rub") ? "擦" : ""))), more_than_1 ? "那些" : "那个", xname(obj)); /*危险:hand, verb, more_than_1 ? "those" : "that", xname(obj));*/
+                  hand, verb, more_than_1 ? "那些" : "那个", xname(obj)); /*危险:hand, verb, more_than_1 ? "those" : "that", xname(obj));*/
         } else {
             You_cant("做那个.");
         }
@@ -722,7 +722,7 @@ wield_tool(struct obj *obj,
     }
     /* check shield */
     if (uarms && bimanual(obj)) {
-        You("不能在穿戴盾牌的时候%s双手%s.", verb,
+        You("不能在穿戴盾牌时%s双手%s.", verb,
             (obj->oclass == WEAPON_CLASS) ? "武器" : "工具");
         return FALSE;
     }
@@ -999,8 +999,8 @@ chwepon(struct obj *otmp, int amount)
     if (((uwep->spe > 5 && amount >= 0) || (uwep->spe < -5 && amount < 0))
         && rn2(3)) {
         if (!Blind)
-            pline("%s一会%s色的光芒, 然后%s了.",
-                  Yobjnam2(uwep, "爆发出"), color,
+            pline("%s一会%s光, 然后%s了.",
+                  Yobjnam2(uwep, "猛烈地发出"), color,
                   otense(uwep, "蒸发"));
         else
             pline("%s.", Yobjnam2(uwep, "蒸发了"));
@@ -1010,8 +1010,8 @@ chwepon(struct obj *otmp, int amount)
     }
     if (!Blind) {
         xtime = (amount * amount == 1) ? "一瞬" : "一会";
-        pline("%s%s%s色的光芒.",
-              Yobjnam2(uwep, amount == 0 ? "爆发出" : "发出"), xtime, /*修改语序:Yobjnam2(uwep, amount == 0 ? "爆发出" : "发出"), color,*/
+        pline("%s%s%s光.",
+              Yobjnam2(uwep, amount == 0 ? "猛烈地发出" : "发出"), xtime, /*修改语序:Yobjnam2(uwep, amount == 0 ? "爆发出" : "发出"), color,*/
               color); /*修改语序:xtime);*/
         if (otyp != STRANGE_OBJECT && uwep->known
             && (amount > 0 || (amount < 0 && otmp->bknown)))

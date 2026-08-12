@@ -163,7 +163,7 @@ alreadynamed(struct monst *mtmp, char *monnambuf, char *usrbuf)
         boolean name_not_title = (has_mgivenname(mtmp)
                                   || type_is_pname(mtmp->data)
                                   || mtmp->isshk);
-        pline("%s宁可保留%s现有的%s。", upstart(monnambuf),
+        pline("%s宁可保留%s现有的%s.", upstart(monnambuf),
               is_rider(mtmp->data) ? "它的" : mhis(mtmp),
               name_not_title ? "名字" : "头衔");
         return TRUE;
@@ -173,20 +173,20 @@ alreadynamed(struct monst *mtmp, char *monnambuf, char *usrbuf)
                    && fuzzymatch(usrbuf, monnambuf + 4, " -_", TRUE))
                /* catch trying to name "invisible Orcus" as "Orcus" */
                || ((p = strstri(monnambuf, "invisible ")) != 0
-                   && fuzzymatch(usrbuf, p + 10, " -_", TRUE))
+                   && fuzzymatch(usrbuf, p + 10, " -_", TRUE)) || (((p = strstri(monnambuf, "隐形的")) != 0 && fuzzymatch(usrbuf, p + strlen("隐形的"), " -_", TRUE))) /*危险*/
                /* catch trying to name "the priest of Crom" as "Crom" */
                || ((p = strstri(monnambuf, " of ")) != 0
                    && fuzzymatch(usrbuf, p + 4, " -_", TRUE))) {
         if (is_rider(mtmp->data)) {
             /* avoid gendered pronoun for riders */
-            pline("%s 已经被叫做那个名字了。", upstart(monnambuf));
+            pline("%s已经被叫做那个名字了.", upstart(monnambuf));
         } else {
             pline("%s已经被叫做%s了.",
                   upstart(strcpy(pronounbuf, mhe(mtmp))), monnambuf);
         }
         return TRUE;
     } else if (mtmp->data == &mons[PM_JUIBLEX]
-               && strstri(monnambuf, "Juiblex")
+               && (strstri(monnambuf, "Juiblex") || strstri(monnambuf, "朱庇莱克斯")) /*危险:&& strstri(monnambuf, "Juiblex")*/
                && !strcmpi(usrbuf, "Jubilex")) {
         pline("%s不喜欢被叫做%s.", upstart(monnambuf), usrbuf);
         return TRUE;
@@ -205,12 +205,12 @@ do_mgivenname(void)
     boolean do_swallow = FALSE;
 
     if (Hallucination) {
-        You("永远不会认出它无论如何.");
+        You("怎么都认不出它.");
         return;
     }
     cc.x = u.ux;
     cc.y = u.uy;
-    if (getpos(&cc, FALSE, "the monster you want to name") < 0
+    if (getpos(&cc, FALSE, "你想要命名的怪物") < 0
         || !isok(cc.x, cc.y))
         return;
     cx = cc.x, cy = cc.y;
@@ -219,7 +219,7 @@ do_mgivenname(void)
         if (u.usteed && canspotmon(u.usteed)) {
             mtmp = u.usteed;
         } else {
-            pline("这个%s生物叫做%s且不能被改名了.",
+            pline("这个%s的生物叫做%s, 而且不能再改名了.",
                   beautiful(), svp.plname);
             return;
         }
@@ -243,11 +243,11 @@ do_mgivenname(void)
                 || M_AP_TYPE(mtmp) == M_AP_OBJECT
                 || (mtmp->minvis && !See_invisible))))) {
 
-        pline("那里没有怪.");
+        pline("那里没有怪物.");
         return;
     }
     /* special case similar to the one in lookat() */
-    Sprintf(qbuf, "你想命名%s为什么?",
+    Sprintf(qbuf, "你想把%s叫做什么?",
             distant_monnam(mtmp, ARTICLE_THE, monnambuf));
     /* use getlin() to get a name string from the player */
     if (!name_from_player(buf, qbuf,
@@ -264,18 +264,18 @@ do_mgivenname(void)
      */
     if ((mtmp->data->geno & G_UNIQ) && !mtmp->ispriest) {
         if (!alreadynamed(mtmp, monnambuf, buf))
-            pline("%s不喜欢被取名字!", upstart(monnambuf));
+            pline("%s不喜欢被命名!", upstart(monnambuf));
     } else if (mtmp->isshk
                && !(Deaf || helpless(mtmp)
                     || mtmp->data->msound <= MS_ANIMAL)) {
         if (!alreadynamed(mtmp, monnambuf, buf)) {
             SetVoice(mtmp, 0, 80, 0);
-            verbalize("I'm %s, not %s.", shkname(mtmp), buf);
+            verbalize("我是%s, 不是%s.", shkname(mtmp), buf);
         }
     } else if (mtmp->ispriest || mtmp->isminion || mtmp->isshk
                || mtmp->data == &mons[PM_GHOST] || has_ebones(mtmp)) {
         if (!alreadynamed(mtmp, monnambuf, buf))
-            pline("%s不会接受这个名字%s.", upstart(monnambuf), buf);
+            pline("%s不会接受被叫做%s.", upstart(monnambuf), buf);
     } else {
         (void) christen_monst(mtmp, buf);
     }
@@ -295,13 +295,13 @@ do_oname(struct obj *obj)
 
     /* Do this now because there's no point in even asking for a name */
     if (obj->otyp == SPE_NOVEL) {
-        pline("%s 已经有一个出版的名字.", Ysimple_name2(obj));
+        pline("%s已经有出版名称了.", Ysimple_name2(obj));
         return;
     }
 
-    Sprintf(qbuf, "你想要给%s命名为什么 ",
+    Sprintf(qbuf, "你想要把%s",
             is_plural(obj) ? "这些" : "这个");
-    (void) safe_qbuf(qbuf, qbuf, "?", obj, xname, simpleonames, "item");
+    (void) safe_qbuf(qbuf, qbuf, "命名为什么?", obj, xname, simpleonames, "物品");
     /* use getlin() to get a name string from the player */
     if (!name_from_player(buf, qbuf, safe_oname(obj)))
         return;
@@ -319,7 +319,7 @@ do_oname(struct obj *obj)
     if (obj->oartifact) {
         /* this used to give "The artifact seems to resist the attempt."
            but resisting is definite, no "seems to" about it */
-        pline("%s 抵抗了这次尝试。",
+        pline("%s抵抗了这次尝试.",
               /* any artifact should always pass the has_oname() test
                  but be careful just in case */
               has_oname(obj) ? ONAME(obj) : "神器");
@@ -348,9 +348,9 @@ do_oname(struct obj *obj)
         do {
             wipeout_text(bufp, rnd_on_display_rng(2), (unsigned) 0);
         } while (!strcmp(buf, bufcpy));
-        pline("在刻字时，你的%s滑了一下。", body_part(HAND));
+        pline("刻字时, 你的%s滑了一下.", body_part(HAND));
         display_nhwindow(WIN_MESSAGE, FALSE);
-        You("刻写：“%s”。", buf);
+        You("刻下了: \"%s\".", buf);
         /* violate illiteracy conduct since hero attempted to write
            a valid artifact name */
         u.uconduct.literate++;
@@ -412,11 +412,11 @@ oname(
             /* violate illiteracy conduct since successfully wrote arti-name */
             if (!u.uconduct.literate++)
                 livelog_printf(LL_CONDUCT | LL_ARTIFACT,
-                               "became literate by naming %s",
+                               "因命名%s而脱离文盲",
                                bare_artifactname(obj));
             else
                 livelog_printf(LL_ARTIFACT,
-                               "chose %s to be named \"%s\"",
+                               "将一个%s命名成了\"%s\"",
                                ansimpleoname(obj), bare_artifactname(obj));
         }
     }
@@ -522,13 +522,13 @@ docallcmd(void)
     any = cg.zeroany;
     any.a_char = 'm'; /* group accelerator 'C' */
     add_menu(win, &nul_glyphinfo, &any, abc ? 0 : any.a_char, 'C',
-             ATR_NONE, clr, "一只怪物", MENU_ITEMFLAGS_NONE);
+             ATR_NONE, clr, "一个怪物", MENU_ITEMFLAGS_NONE);
     if (gi.invent) {
         /* we use y and n as accelerators so that we can accept user's
            response keyed to old "name an individual object?" prompt */
         any.a_char = 'i'; /* group accelerator 'y' */
         add_menu(win, &nul_glyphinfo, &any, abc ? 0 : any.a_char, 'y',
-                 ATR_NONE, clr, "背包中的一件特定物品",
+                 ATR_NONE, clr, "物品栏中的一件特定物品",
                  MENU_ITEMFLAGS_NONE);
         any.a_char = 'o'; /* group accelerator 'n' */
         add_menu(win, &nul_glyphinfo, &any, abc ? 0 : any.a_char, 'n',
@@ -537,17 +537,17 @@ docallcmd(void)
     }
     any.a_char = 'f'; /* group accelerator ',' (or ':' instead?) */
     add_menu(win, &nul_glyphinfo, &any, abc ? 0 : any.a_char, ',',
-             ATR_NONE, clr, "地板上的物体类型",
+             ATR_NONE, clr, "地板上的物品类型",
              MENU_ITEMFLAGS_NONE);
     any.a_char = 'd'; /* group accelerator '\' */
     add_menu(win, &nul_glyphinfo, &any, abc ? 0 : any.a_char, '\\',
-             ATR_NONE, clr, "发现列表中的物体类型",
+             ATR_NONE, clr, "发现列表中的物品类型",
              MENU_ITEMFLAGS_NONE);
     any.a_char = 'a'; /* group accelerator 'l' */
     add_menu(win, &nul_glyphinfo, &any, abc ? 0 : any.a_char, 'l',
-             ATR_NONE, clr, "为当前层记录注释",
+             ATR_NONE, clr, "标记当前层",
              MENU_ITEMFLAGS_NONE);
-    end_menu(win, "你想要给什么命名?");
+    end_menu(win, "你想要命名什么?");
     if (select_menu(win, PICK_ONE, &pick_list) > 0) {
         ch = pick_list[0].item.a_char;
         free((genericptr_t) pick_list);
@@ -564,12 +564,12 @@ docallcmd(void)
         do_mgivenname();
         break;
     case 'i': /* name an individual object in inventory */
-        obj = getobj("name", name_ok, GETOBJ_PROMPT);
+        obj = getobj("命名什么", name_ok, GETOBJ_PROMPT);
         if (obj)
             do_oname(obj);
         break;
     case 'o': /* name a type of object in inventory */
-        obj = getobj("call", call_ok, GETOBJ_NOFLAGS);
+        obj = getobj("称呼什么", call_ok, GETOBJ_NOFLAGS);
         if (obj) {
             /* behave as if examining it in inventory;
                this might set dknown if it was picked up
@@ -577,7 +577,7 @@ docallcmd(void)
             (void) xname(obj);
 
             if (!obj->dknown) {
-                You("将不会识别出另一个.");
+                You("把这两个再也分不清了.");
 #if 0
             } else if (call_ok(obj) == GETOBJ_EXCLUDE) {
                 You("know those as well as you ever will.");
@@ -629,7 +629,7 @@ docall_xname(struct obj *obj)
     else if (otemp.oclass == FOOD_CLASS && otemp.globby)
         otemp.owt = 120; /* 6*20, neither a small glob nor a large one */
 
-    return an(xname(&otemp));
+    return xname(&otemp);
 }
 
 void
@@ -645,11 +645,11 @@ docall(struct obj *obj)
 
     if (obj->oclass == POTION_CLASS && obj->fromsink)
         /* fromsink: kludge, meaning it's sink water */
-        Sprintf(qbuf, "称一股%s液体为:",
+        Sprintf(qbuf, "把%s液体叫做:",
                 OBJ_DESCR(objects[obj->otyp]));
     else
-        (void) safe_qbuf(qbuf, "Call ", ":", obj,
-                         docall_xname, simpleonames, "thing");
+        (void) safe_qbuf(qbuf, "把", "叫做:", obj,
+                         docall_xname, simpleonames, "东西");
     /* pointer to old name */
     uname_p = &(objects[obj->otyp].oc_uname);
     /* use getlin() to get a name string from the player */
@@ -688,9 +688,9 @@ namefloorobj(void)
     /* "dot for under/over you" only makes sense when the cursor hasn't
        been moved off the hero's '@' yet, but there's no way to adjust
        the help text once getpos() has started */
-    Sprintf(buf, "地图上的东西( 或 '.'  在你%s)",
+    Sprintf(buf, "地图上的东西(或者在你%s的'.')",
             (u.uundetected && hides_under(gy.youmonst.data))
-              ? "上面" : "下面");
+              ? "上方" : "下方");
     if (getpos(&cc, FALSE, buf) < 0 || cc.x <= 0)
         return;
     if (u_at(cc.x, cc.y)) {
@@ -703,8 +703,8 @@ namefloorobj(void)
     }
     if (!obj) {
         /* "under you" is safe here since there's no object to hide under */
-        There("似乎没有任何物体%s。",
-              u_at(cc.x, cc.y) ? "在您下方" : "那里");
+        pline("%s似乎没有任何物品.", /*换pline:There*/
+              u_at(cc.x, cc.y) ? "在你下方" : "那里");
         return;
     }
     /* note well: 'obj' might be an instance of STRANGE_OBJECT if target
@@ -738,14 +738,14 @@ namefloorobj(void)
         unames[4] = roguename();
         /* silly */
         unames[5] = "Wibbly Wobbly";
-        pline("%s%s叫你\"%s.\"",
+        pline("%s%s叫你\"%s\".",
               The(buf), use_plural ? "决定" : "决定",
               unames[rn2_on_display_rng(SIZE(unames))]);
     } else if (call_ok(obj) == GETOBJ_EXCLUDE) {
-        pline("%s%s不能被指定一个类型名字.",
+        pline("%s%s不能被指定类型名字.",
               use_plural ? "那些" : "那个", buf);
     } else if (!obj->dknown) {
-        You("不是很了解%s %s 来命名%s.",
+        You("对%s%s了解不多, 所以不能命名%s.",
             use_plural ? "那些" : "那个", buf, use_plural ? "它们" : "它");
     } else {
         docall(obj);
@@ -928,7 +928,7 @@ x_monnam(
             if (mdat != &mons[PM_SHOPKEEPER] || do_invis){
                 Strcat(buf, "");
                 if (do_invis)
-                    Strcat(buf, "隐形的 ");
+                    Strcat(buf, "隐形的");
                 Strcat(buf, pm_name);
             }
         }
@@ -939,7 +939,7 @@ x_monnam(
     if (adjective)
         Strcat(strcat(buf, adjective), "");
     if (do_invis)
-        Strcat(buf, "隐形的 ");
+        Strcat(buf, "隐形的");
     if (do_saddle && (mtmp->misc_worn_check & W_SADDLE) && !Blind
         && !Hallucination)
         Strcat(buf, "装有鞍的");
@@ -961,10 +961,10 @@ x_monnam(
       if (has_ebones(mtmp)) {
 #endif
         if (mdat == &mons[PM_GHOST]) {
-            Sprintf(eos(buf), "%s鬼魂", s_suffix(name));
+            Sprintf(eos(buf), "%s的鬼魂", s_suffix(name));
             name_at_start = TRUE;
         } else if (called) {
-            Sprintf(eos(buf), "%s 叫做 %s", pm_name, name);
+            Sprintf(eos(buf), "叫做%s的%s", name, pm_name); /*危险:Sprintf(eos(buf), "%s叫做%s", pm_name, name);*/
             name_at_start = (boolean) type_is_pname(mdat);
         } else if (is_mplayer(mdat) && (bp = strstri(name, " the ")) != 0) {
             /* <name> the <adjective> <invisible> <saddled> <rank> */
@@ -1177,8 +1177,8 @@ distant_monnam(
        its own obfuscation) */
     if (mon->data == &mons[PM_HIGH_CLERIC] && !Hallucination
         && Is_astralevel(&u.uz) && !m_next2u(mon)) {
-        Strcpy(outbuf, article == ARTICLE_THE ? "" : "");
-        Strcat(outbuf, mon->female ? "高级女祭司" : "高级祭司");
+        //冗余:Strcpy(outbuf, article == ARTICLE_THE ? "" : "");
+        Strcat(outbuf, "高阶祭司");
     } else {
         Strcpy(outbuf, x_monnam(mon, article, (char *) 0, 0, TRUE));
     }
@@ -1208,7 +1208,7 @@ mon_nam_too(struct monst *mon, struct monst *other_mon)
             Strcpy(outbuf, "它自己");
             break;
         case 3: /* could happen when hallucinating */
-            Strcpy(outbuf, "它们自身");
+            Strcpy(outbuf, "它们自己");
             break;
         }
     }
@@ -1241,10 +1241,10 @@ monverbself(
                 monnamtext[0] = highc(monnamtext[0]);
         }
     }
-    Strcat(strcat(monnamtext, " "), verbs);
+    Strcat(strcat(monnamtext, ""), verbs); /*危险:原本有空格*/
     if (othertext && *othertext)
-        Strcat(strcat(monnamtext, " "), othertext);
-    Strcat(strcat(monnamtext, " "), selfbuf);
+        Strcat(strcat(monnamtext, ""), othertext); /*危险:同上*/
+    Strcat(strcat(monnamtext, ""), selfbuf); /*危险:同上*/
     return monnamtext;
 }
 
@@ -1257,15 +1257,15 @@ minimal_monnam(struct monst *mon, boolean ckloc)
     char *outbuf = nextmbuf();
 
     if (!mon) {
-        Strcpy(outbuf, "[空怪物]");
+        Strcpy(outbuf, "[Null monster]");
     } else if ((ptr = mon->data) == 0) {
-        Strcpy(outbuf, "[空 mon->data]");
+        Strcpy(outbuf, "[Null mon->data]");
     } else if (ptr < &mons[0]) {
-        Sprintf(outbuf, "[无效的mon->data %s < %s]",
+        Sprintf(outbuf, "[Invalid mon->data %s < %s]",
                 fmt_ptr((genericptr_t) mon->data),
                 fmt_ptr((genericptr_t) &mons[0]));
     } else if (ptr >= &mons[NUMMONS]) {
-        Sprintf(outbuf, "[无效的mon->data %s >= %s]",
+        Sprintf(outbuf, "[Invalid mon->data %s >= %s]",
                 fmt_ptr((genericptr_t) mon->data),
                 fmt_ptr((genericptr_t) &mons[NUMMONS]));
     } else if (ckloc && ptr == &mons[PM_LONG_WORM] && mon->mx
@@ -1375,7 +1375,7 @@ bogusmon(char *buf, char *code)
     /* might fail (return empty buf[]) if the file isn't available */
     get_rnd_text(BOGUSMONFILE, buf, rn2_on_display_rng, MD_PAD_BOGONS);
     if (!*mnam) {
-        Strcpy(buf, "乱名");
+        Strcpy(buf, "bogon");
     } else if (strchr(bogon_codes, *mnam)) { /* strip prefix if present */
         if (code)
             *code = *mnam;
@@ -1442,7 +1442,7 @@ static NEARDATA const char *const hcolors[] = {
     "紫外线", "红外线", "蓝橙色", "红绿色", "暗白色",
     "浅黑色", "天蓝粉红", "粉青色", "靛绿黄绿",
     "咸味", "甜味", "酸味", "苦味", "鲜味", /* basic tastes */
-    "条纹", "螺旋", "旋涡", "格子", "棋盘格", "花格", "佩斯利花纹",
+    "条纹", "螺旋", "漩涡", "格子", "棋盘格", "花格", "佩斯利花纹",
     "斑点", "根西斑点", "波点", "方形", "圆形",
     "三角形", "赤霞珠", "桑格利亚", "紫红色", "紫藤色", "柠檬青",
     "草莓香蕉", "薄荷", "浪漫色", "白炽色",
@@ -1477,14 +1477,14 @@ rndcolor(void)
 }
 
 static NEARDATA const char *const hliquids[] = {
-    "yoghurt", "oobleck", "clotted blood", "diluted water", "purified water",
-    "instant coffee", "tea", "herbal infusion", "liquid rainbow",
-    "creamy foam", "mulled wine", "bouillon", "nectar", "grog", "flubber",
-    "ketchup", "slow light", "oil", "vinaigrette", "liquid crystal", "honey",
-    "caramel sauce", "ink", "aqueous humour", "milk substitute",
-    "fruit juice", "glowing lava", "gastric acid", "mineral water",
-    "cough syrup", "quicksilver", "sweet vitriol", "grey goo", "pink slime",
-    "cosmic latte", "bone oil", "custard", "lard", "vinegar", "creosote",
+    "酸奶", "非牛顿流体", "凝结的血液", "稀释水", "纯净水",
+    "速溶咖啡", "茶", "草本茶", "液态彩虹",
+    "奶油泡沫", "热红酒", "高汤", "花蜜", "热酒", "弗拉伯胶",
+    "番茄酱", "慢光", "油", "油醋汁", "液晶", "蜂蜜",
+    "焦糖酱", "墨水", "房水", "代乳品",
+    "果汁", "发光熔岩", "胃酸", "矿泉水",
+    "止咳糖浆", "水银", "甜硫酸", "灰色黏液", "粉红黏液",
+    "宇宙拿铁", "骨油", "蛋奶冻", "猪油", "醋", "焦油",
     /* "new coke (tm)", --better not */
 };
 
@@ -1511,7 +1511,7 @@ hliquid(
 
 /* Aliases for road-runner nemesis
  */
-static const char *const coynames[] = {
+static const char *const coynames[] = { /*伪学名,不用翻*/
     "Carnivorous Vulgaris", "Road-Runnerus Digestus", "Eatibus Anythingus",
     "Famishus-Famishus", "Eatibus Almost Anythingus", "Eatius Birdius",
     "Famishius Fantasticus", "Eternalii Famishiis", "Famishus Vulgarus",
@@ -1572,7 +1572,7 @@ christen_orc(struct monst *mtmp, const char *gang, const char *other)
         boolean nameit = FALSE;
 
         if (gang) {
-            Sprintf(buf, "%s听从于%s", upstart(orcname),
+            Sprintf(buf, "%s (听从于%s)", upstart(orcname),
                     upstart(strcpy(gbuf, gang)));
             nameit = TRUE;
         } else if (other) {

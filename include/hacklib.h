@@ -10,6 +10,7 @@
  */
 extern boolean digit(char);
 extern boolean letter(char);
+extern boolean letter1(char);
 extern char highc(char);
 extern char lowc(char);
 extern char *lcase(char *) NONNULL NONNULLARG1;

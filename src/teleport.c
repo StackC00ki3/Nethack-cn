@@ -784,7 +784,7 @@ teleport_pet(struct monst *mtmp, boolean force_it)
             yelp(mtmp);
             return FALSE;
         } else {
-            Your("皮带松了.");
+            Your("狗链松了.");
         release_it:
             m_unleash(mtmp, FALSE);
             return TRUE;
@@ -863,7 +863,7 @@ scrolltele(struct obj *scroll)
             Strcpy(whobuf, "你");
             if (u.usteed)
                 Sprintf(eos(whobuf), "和%s", mon_nam(u.usteed));
-            pline("想%s传送到哪里?", whobuf);
+            pline("想把%s传送到哪里?", whobuf);
             if (scroll)
                 learnscroll(scroll);
             cc.x = u.ux;
@@ -873,7 +873,7 @@ scrolltele(struct obj *scroll)
                  * pre-suggest this coordinate. */
                 cc = iflags.travelcc;
             }
-            if (getpos(&cc, TRUE, "想要传送到的位置") < 0)
+            if (getpos(&cc, TRUE, "目标位置") < 0)
                 return; /* abort */
             /* possible extensions: introduce a small error if
                magic power is low; allow transfer to solid rock */
@@ -1319,7 +1319,7 @@ level_tele(void)
             Strcpy(svk.killer.name, "永久升入了天堂");
         } else if (newlev == -9) {
             You_feel("非常高兴.");
-            pline("(事实上, 你在9号云上了!)");
+            pline("(事实上, 你在9号云上了! )");
             display_nhwindow(WIN_MESSAGE, FALSE);
         } else
             You("现在在云上...");
@@ -1684,7 +1684,7 @@ rloc_to_core(struct monst *mtmp, coordxy x, coordxy y, unsigned rlocflags)
                   : nearu                               ? nearu
                   : ((olddu = distu(oldx, oldy)) == du) ? ""
                   : (du < olddu)                        ? "更近处"
-                                                        : "得更处");
+                                                        : "更远处");
         } else {
             pline("%s%s%s%s!", appearmsg ? Amonnam(mtmp) : Monnam(mtmp),
                   appearmsg ? "突然" : "", !Blind ? "出现在" : "到达",

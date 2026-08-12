@@ -356,7 +356,7 @@ moverock_core(coordxy sx, coordxy sy)
     while ((otmp = sobj_at(BOULDER, sx, sy)) != 0) {
 
         if (Blind && glyph_to_obj(glyph_at(sx, sy)) != BOULDER) {
-            pline("那和东西感觉像一块巨石.");
+            pline("那个东西感觉像一块巨石.");
             map_object(otmp, TRUE);
             nomul(0);
             return -1;
@@ -459,11 +459,11 @@ moverock_core(coordxy sx, coordxy sy)
                 if (Blind)
                     feel_location(sx, sy);
                 if (canspotmon(mtmp)) {
-                    pline("另一边有一只%s.", a_monnam(mtmp));
+                    pline("另一边有%s.", a_monnam(mtmp));
                     deliver_part1 = TRUE;
                 } else {
                     Soundeffect(se_monster_behind_boulder, 50);
-                    You_hear("一只怪物在%s后面.", the(xname(otmp)));
+                    You_hear("有一只怪物在%s后面.", the(xname(otmp)));
                     if (!Deaf)
                         deliver_part1 = TRUE;
                     map_invisible(rx, ry);
@@ -535,7 +535,7 @@ moverock_core(coordxy sx, coordxy sy)
                        if this is one among multiple boulders */
                     if (!Blind)
                         gv.viz_array[ry][rx] |= IN_SIGHT;
-                    if (!flooreffects(otmp, rx, ry, "落")) {
+                    if (!flooreffects(otmp, rx, ry, "掉")) {
                         place_object(otmp, rx, ry);
                     }
                     if (mtmp && !Blind)
@@ -555,7 +555,7 @@ moverock_core(coordxy sx, coordxy sy)
                               (ttmp->ttyp == TRAPDOOR) ? "" : "进",
                               otense(otmp, "堵住"),
                               surface(rx, ry),
-                              (ttmp->ttyp == TRAPDOOR) ? "活板门" : "洞"); /*修改语序:最楼两个反过来*/
+                              (ttmp->ttyp == TRAPDOOR) ? "活板门" : "洞"); /*修改语序:最后两个反过来*/
                     deltrap(ttmp);
                     useupf(otmp, 1L);
                     bury_objs(rx, ry);
@@ -785,9 +785,9 @@ still_chewing(coordxy x, coordxy y)
     } else if (lev->typ == SDOOR) {
         if (lev->doormask & D_TRAPPED) {
             lev->doormask = D_NODOOR;
-            b_trapped("隐藏门", NO_PART);
+            b_trapped("暗门", NO_PART);
         } else {
-            digtxt = "啃穿了隐藏门.";
+            digtxt = "啃穿了暗门.";
             lev->doormask = D_BROKEN;
         }
         lev->typ = DOOR;
@@ -1651,7 +1651,7 @@ trapmove(
         if (--u.utrap) {
             if (flags.verbose) {
                 if (anchored) {
-                    predicament = "被连在";
+                    predicament = "被系在";
                     culprit = "埋着的球上";
                 } else {
                     predicament = "卡在";
@@ -1823,7 +1823,7 @@ u_locomotion(const char *def)
        its is_flyer() and is_floater() tests wouldn't work on hero except
        when hero is polymorphed and not wearing an amulet of flying
        or boots/ring/spell of levitation */
-    return Levitation ? (capitalize ? "漂浮" : "漂浮")
+    return Levitation ? (capitalize ? "飘浮" : "飘浮")
            : Flying ? (capitalize ? "飞行" : "飞行")
              : locomotion(gy.youmonst.data, def);
 }
@@ -2172,7 +2172,7 @@ domove_swap_with_pet(
                      : (!has_mgivenname(mtmp)
                         && !type_is_pname(mtmp->data)) ? ARTICLE_THE
                      : ARTICLE_NONE,
-                     (mtmp->mpeaceful && !mtmp->mtame) ? "驯服的" : 0,
+                     (mtmp->mpeaceful && !mtmp->mtame) ? "和平的" : 0,
                      has_mgivenname(mtmp) ? SUPPRESS_SADDLE : 0, FALSE));
 
         /* check for displacing it into pools and traps */
@@ -2317,7 +2317,7 @@ domove_fight_empty(coordxy x, coordxy y)
 
  futile:
         You("%s%s%s.",
-            !(boulder || solid) ? "" : !explo ? "无害地 " : "徒劳地 ",
+            !(boulder || solid) ? "" : !explo ? "无害地" : "徒劳地",
             explo ? "爆炸攻击" : "攻击", buf);
 
         nomul(0);
@@ -2565,9 +2565,9 @@ avoid_trap_andor_region(coordxy x, coordxy y)
         int traptype = (Hallucination ? rnd(TRAPNUM - 1) : (int) trap->ttyp);
         boolean into = into_vs_onto(traptype);
 
-        Snprintf(qbuf, sizeof qbuf, "真的要%s%s那个%s?",
-                 u_locomotion("走"), into ? "进" : "上",
-                 defsyms[trap_to_defsym(traptype)].explanation);
+        Snprintf(qbuf, sizeof qbuf, "真的要%s到那个%s%s?", /*修改语序:Snprintf(qbuf, sizeof qbuf, "真的要%s%s那个%s?",*/
+                 u_locomotion("走"), /*修改语序:u_locomotion("走"), into ? "进" : "上",*/
+                 defsyms[trap_to_defsym(traptype)].explanation, "上" /*冗余into ? "里" : "上"*/); /*修改语序:defsyms[trap_to_defsym(traptype)].explanation);*/
         /* handled like paranoid_confirm:pray; when paranoid_confirm:trap
            isn't set, don't ask at all but if it is set (checked above),
            ask via y/n if parnoid_confirm:confirm isn't also set or via
@@ -3810,7 +3810,7 @@ pickup_checks(void)
                 hliquid("水"));
             return 0;
         } else if (!Underwater) {
-            You("甚至看不到底部, 更别说捡起什么了."); /*危险:You_cant、something*/
+            You("甚至看不到底部, 更别说捡起什么了."); /*换pline:You_cant、something*/
             return 0;
         }
     }

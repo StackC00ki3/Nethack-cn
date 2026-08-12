@@ -222,8 +222,10 @@ more(void)
     ttyDisplay->inmore++;
 
     if (ttyDisplay->toplin) {
+        int morecols = (int) utf8str_width(defmorestr);
+
         tty_curs(BASE_WINDOW, cw->curx + 1, cw->cury);
-        if (cw->curx >= CO - 8)
+        if (cw->curx >= CO - morecols)
             topl_putsym('\n');
     }
 
@@ -267,7 +269,8 @@ update_topl(const char *bp)
     n0 = strlen(bp);
     if ((ttyDisplay->toplin == TOPLINE_NEED_MORE || skip)
         && cw->cury == 0
-        && n0 + (int) strlen(gt.toplines) + 3 < CO - 8 /* room for --More-- */
+        && (int) utf8str_width(gt.toplines) + (int) utf8str_width(bp) + 3
+               < CO - (int) utf8str_width(defmorestr)
         && (notdied = strncmp(bp, "You die", 7)) != 0) {
         Strcat(gt.toplines, "  ");
         Strcat(gt.toplines, bp);
@@ -312,8 +315,33 @@ topl_putsym(char c)
 {
     struct WinDesc *cw = wins[WIN_MESSAGE];
 
-    if (cw == (struct WinDesc *) 0)
-        panic("Putsym window MESSAGE nonexistent");
+    /* If MESSAGE window was already destroyed (e.g. during done()/really_done()
+     * shutdown sequence), still output the character via ttyDisplay directly.
+     * We only need cw for tracking curx/cury in the window descriptor; actual
+     * output goes through putchar(). */
+    if (cw == (struct WinDesc *) 0) {
+        switch (c) {
+        case '\b':
+            if (ttyDisplay->curx == 0 && ttyDisplay->cury > 0)
+                tty_curs(BASE_WINDOW, CO, (int) ttyDisplay->cury - 1);
+            backsp();
+            nhassert(ttyDisplay->curx > 0);
+            ttyDisplay->curx--;
+            return;
+        case '\n':
+            cl_end();
+            ttyDisplay->curx = 0;
+            ttyDisplay->cury++;
+            putchar(c);
+            return;
+        default:
+            if (ttyDisplay->curx == CO - 1)
+                topl_putsym('\n');
+            putchar(c);
+            ttyDisplay->curx++;
+            return;
+        }
+    }
 
     switch (c) {
     case '\b':
@@ -355,8 +383,39 @@ topl_putsymw(unsigned short c)
 {
     struct WinDesc *cw = wins[WIN_MESSAGE];
 
-    if (cw == (struct WinDesc *) 0)
-        panic("Putsymw window MESSAGE nonexistent");
+    /* If MESSAGE window was already destroyed (e.g. during done()/really_done()
+     * shutdown sequence), still output the character via ttyDisplay directly.
+     * We only need cw for tracking curx/cury in the window descriptor; actual
+     * output goes through putchar(). */
+    if (cw == (struct WinDesc *) 0) {
+        /* handle backspace for wide character */
+        if (c == '\b') {
+            if (ttyDisplay->curx == 0 && ttyDisplay->cury > 0)
+                tty_curs(BASE_WINDOW, CO, (int) ttyDisplay->cury - 1);
+            backsp();
+            nhassert(ttyDisplay->curx > 0);
+            ttyDisplay->curx--;
+            return;
+        }
+
+        /* handle newline for wide character */
+        if (c == '\n') {
+            cl_end();
+            ttyDisplay->curx = 0;
+            ttyDisplay->cury++;
+            putchar('\n');
+            return;
+        }
+
+        /* normal wide character output */
+        if (ttyDisplay->curx == CO - 1)
+            topl_putsymw('\n'); /* wrap to next line if at end */
+
+        /* putchar supports wide characters, just pass the wchar_t */
+        putchar(c);
+        ttyDisplay->curx += c > 0xff ? 2 : 1;
+        return;
+    }
 
     /* handle backspace for wide character */
     if (c == '\b') {

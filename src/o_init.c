@@ -635,7 +635,7 @@ choose_disco_sort(
            chosen sort will stick and also apply to '\' usage */
         add_menu_str(tmpwin, "");
         add_menu_str(tmpwin,
-                     "注:按完整字母顺序排序和按类内字母顺序");
+                     "注: 按完整字母顺序排序和按类内字母顺序");
         add_menu_str(tmpwin,
                      "  排序在单类检索中是等效的, 但在将来进");
         add_menu_str(tmpwin,
@@ -676,13 +676,13 @@ disco_typename(int otyp)
         if (!actualn) { /* won't happen; used to pacify static analyzer */
             ;
         } else if (strstri(result, " called")) {
-            Sprintf(buf, " [%s] 称为", actualn);
+            Sprintf(buf, " [%s] called", actualn);
             (void) strsubst(result, " called", buf);
         } else if (strstri(result, " (")) {
             Sprintf(buf, " [%s] (", actualn);
             (void) strsubst(result, " (", buf);
         } else {
-            Sprintf(eos(result), " [ %s]", actualn);
+            Sprintf(eos(result), " [%s]", actualn);
         }
     }
     return result;
@@ -785,7 +785,7 @@ dodiscovered(void) /* free after Robert Viduya */
     sortindx = strchr(disco_order_let, flags.discosort) - disco_order_let;
 
     tmpwin = create_nhwindow(NHW_TEXT);
-    Sprintf(buf, "发现物, %s", disco_orders_descr[sortindx]);
+    Sprintf(buf, "已发现的物品, %s", disco_orders_descr[sortindx]);
     putstr(tmpwin, 0, buf);
     putstr(tmpwin, 0, "");
 

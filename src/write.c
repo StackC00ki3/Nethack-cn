@@ -204,7 +204,7 @@ dowrite(struct obj *pen)
         goto found;
     }
 
-    There("没有这种%s!", typeword);
+    pline("没有这种%s!", typeword); /*换pline:There*/
     return ECMD_TIME;
  found:
 

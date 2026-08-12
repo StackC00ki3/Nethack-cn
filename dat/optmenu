@@ -1,43 +1,31 @@
- How dynamically setting options works:
+动态设置选项的工作原理: 
 
- The simple options menu shows a relatively small subset of options
- and operates on each choice you make immediately, then is put back
- up to allow further changes.
+简易选项菜单仅显示相对较少的一部分选项, 并会立即应用你所做的每项选择, 
+随后重新显示, 以便你进行进一步修改. 
 
- The full options menu shows the current value for all options and
- lets you pick ones that you'd like to change.  Picking them doesn't
- make any changes though.  That will take place once you close the
- menu.  For most of NetHack's interfaces, closing the menu is done
- by pressing the <enter> key or <return> key; others might require
- clicking on [ok].  Pressing the <escape> key or clicking on [cancel]
- will close the menu and discard any pending changes.
+完整选项菜单会显示所有选项的当前值, 并允许你选择需要修改的选项. 不过, 
+选择它们并不会立即生效. 只有在你关闭菜单后, 这些更改才会生效. 对于
+NetHack的大多数界面, 关闭菜单的方法是按下<enter>键或<return>键; 其他界
+面可能需要点击[ok]. 按下<escape>键或点击[cancel]将关闭菜单并放弃所有待
+处理的更改. 
 
- The options menu is too long to fit on one screen.  Some interfaces
- paginate menus; use the '>' key to advance a page or '<' to back
- up.  They typically re-use selection letters (a-z) on each page.
- Others use one long page and you need to use a scrollbar; once past
- a-z and A-Z they'll have entries without selection letters.  Those
- can be selected by clicking on them.
+选项菜单过长, 无法显示在单个屏幕上. 某些界面会将菜单分页显示; 使用'>'
+键翻页或'<'键返回上一页. 它们通常在每页上重复使用选择字母(a-z). 其他界
+面则采用单页长列表, 需要使用滚动条; 当滚动到a-z和A-Z之后, 将出现没有选
+择字母的条目. 这些选项可通过点击进行选择. 
 
- For toggling boolean (True/False or On/Off) options, selecting them
- is all that is needed.  For compound options (which take a number,
- a choice of several particular values, or something more complex,
- and are listed in a second section after the boolean ones), you will
- be prompted to supply a new value.
+对于布尔型(True/False或On/Off)选项, 只需选中即可. 对于复杂选项(需要输
+入数字, 从多个特定值中选择, 或更复杂的设置, 且列在布尔选项之后的第二个
+部分中), 系统会提示你输入新值. 
 
- At the start of each of the two sections are the values of some
- unselectable options which can only be set before the game starts.
- After the compound section are some "other" options which take a set
- of multiple values and tend to be more complicated to deal with.
+这两个部分的开头分别列出了某些不可选选项的值, 这些选项只能在游戏开始前
+设置. 复杂选项部分之后还有一些"其他"选项, 这些选项需要设置一组多重值, 
+处理起来通常更为复杂. 
 
- Some changes will only last until you save (or quit) the current
- game.  Usually those are for things that might not be appropriate
- if you were to restore the saved game on another computer with
- different capabilities.  Other options will be included in this
- game's save file and retain their settings after restore.  None set
- in the options menu will affect other games, either already saved or
- new ones.  For that, you need to update your run-time configuration
- file and specify the desired options settings there.  Even then,
- restoring existing games that contain saved option values will use
- those saved ones.
+某些更改仅在你保存(或退出)当前游戏前有效. 通常这些设置涉及的内容, 若在
+配置不同的另一台计算机上恢复存档, 可能并不合适. 其他选项将被包含在该游
+戏的存档文件中, 并在恢复后保留其设置. 选项菜单中未设置的任何选项都不会
+影响其他游戏, 无论是已保存的还是新的. 为此, 你需要更新运行时配置文件, 
+并在其中指定所需的选项设置. 即使如此, 恢复包含已保存选项值的现有游戏
+时, 系统仍会使用这些已保存的设置. 
 

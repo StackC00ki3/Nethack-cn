@@ -71,6 +71,13 @@ letter(char c)
     return (boolean) ('@' <= c && c <= 'Z') || ('a' <= c && c <= 'z');
 }
 
+/* Francium-223: sounds.c:167 */
+boolean
+letter1(char c)
+{
+    return (boolean) (c != '#' && c != '*');
+}
+
 /* force 'c' into uppercase */
 char
 highc(char c)

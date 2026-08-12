@@ -56,14 +56,14 @@ moveloop_preamble(boolean resuming)
     /* side-effects from the real world */
     flags.moonphase = phase_of_the_moon();
     if (flags.moonphase == FULL_MOON) {
-        You("很幸运!  今晚满月.");
+        You("很幸运! 今晚满月.");
         change_luck(1);
     } else if (flags.moonphase == NEW_MOON) {
-        pline("要小心!  今晚新月.");
+        pline("要小心! 今晚新月.");
     }
     flags.friday13 = friday_13th();
     if (flags.friday13) {
-        pline("注意!  坏的事情会发生在13 号星期五.");
+        pline("注意! 13号星期五会有坏事发生.");
         change_luck(-1);
     }
 
@@ -575,7 +575,7 @@ maybe_do_tutorial(void)
         assign_level(&u.ucamefrom, &u.uz);
         iflags.nofollowers = TRUE;
         schedule_goto(&sp->dlevel, UTOTYPE_NONE,
-                      "Entering the tutorial.", (char *) 0);
+                      "进入教程.", (char *) 0);
         deferred_goto();
         vision_recalc(0);
         docrt();
@@ -691,7 +691,7 @@ stop_occupation(void)
 {
     if (go.occupation) {
         if (!maybe_finished_meal(TRUE))
-            You("你停止了%s。", go.occtxt);
+            You("停止了%s.", go.occtxt);
         go.occupation = (int (*)(void)) 0;
         disp.botl = TRUE; /* in case u.uhs changed */
         nomul(0);
@@ -873,7 +873,7 @@ welcome(boolean new_game) /* false => restoring an old game */
     }
 
     if (Hallucination)
-        pline("NetHack 是在一帮不死的演播室观众面前拍摄的。");
+        pline("NetHack是在一帮不死的演播室观众面前拍摄的.");
 
     /*
      * The "welcome back" message always describes your innate form
@@ -903,7 +903,7 @@ welcome(boolean new_game) /* false => restoring an old game */
      *  message."
      */
     if (new_game || u.ualignbase[A_ORIGINAL] != u.ualignbase[A_CURRENT] || adrift)
-        Sprintf(eos(buf), " %s%s",
+        Sprintf(eos(buf), "%s%s",
                 adrift ? "漂泊的" : "",
                 adrift ? align_str(u.ualign.type)
                        : align_str(u.ualignbase[A_CURRENT]));
@@ -912,8 +912,8 @@ welcome(boolean new_game) /* false => restoring an old game */
         && (new_game
             ? (gu.urole.allow & ROLE_GENDMASK) == (ROLE_MALE | ROLE_FEMALE)
             : currentgend != flags.initgend))
-        Sprintf(eos(buf), " %s", genders[currentgend].adj);
-    Sprintf(eos(buf), " %s %s", gu.urace.adj,
+        Sprintf(eos(buf), "%s", genders[currentgend].adj);
+    Sprintf(eos(buf), "%s%s", gu.urace.adj,
             (currentgend && gu.urole.name.f) ? gu.urole.name.f
                                              : gu.urole.name.m);
 
@@ -923,8 +923,8 @@ welcome(boolean new_game) /* false => restoring an old game */
 
     if (new_game) {
         /* guarantee that 'major' event category is never empty */
-        livelog_printf(LL_ACHIEVE, "%s the%s entered the dungeon",
-                       svp.plname, buf);
+        livelog_printf(LL_ACHIEVE, "%s%s进入了地牢",
+                       buf, svp.plname); /*修改语序:svp.plname, buf);*/
     } else {
         /* if restoring in Gehennom, give same hot/smoky message as when
            first entering it */

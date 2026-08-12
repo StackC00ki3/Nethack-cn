@@ -543,7 +543,7 @@ mon_adjust_speed(
         && !(mon->mfrozen || mon->msleeping) && canseemon(mon)) {
         /* fast to slow (skipping intermediate state) or vice versa */
         const char *howmuch =
-            (mon->mspeed + oldspeed == MFAST + MSLOW) ? "多 " : "些";
+            (mon->mspeed + oldspeed == MFAST + MSLOW) ? "多" : "些";
 
         if (petrify) {
             /* mimic the player's petrification countdown; "slowing down"

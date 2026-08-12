@@ -738,7 +738,6 @@ typedef unsigned char uchar;
 #endif /* DUMPLOG_MSG_COUNT */
 #endif
 
-/*复制自https://github.com/SunnyYuer/NetHack-cn/wiki，用于含汉字字符串检验*/
 #define cnstrcmpi(bp, str, l) strncmpi(bp, str, l = strlen(str))
 #define cnstrcmp(bp, str) strncmp(bp, str, strlen(str))
 #define cnbstrcmp(bp, p, str) BSTRCMPI(bp, p - strlen(str), str)

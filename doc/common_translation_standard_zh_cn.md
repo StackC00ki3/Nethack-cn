@@ -172,7 +172,7 @@
 |sleepy|困倦|
 |teleporting|传送|
 |polymorphing|变形|
-|levitating|悬浮|
+|levitating|飘浮|
 |very fast|加速|
 |clairvoyant|超视|
 |monster detection|感知怪物|
@@ -247,7 +247,7 @@
 
 |英文|中文|
 |----|----|
-|float|漂|
+|float|飘浮|
 |fly|飞|
 |slither(移动)|滑|
 |ooze(移动)|渗|

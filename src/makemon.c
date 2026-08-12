@@ -331,7 +331,7 @@ m_initweap(struct monst *mtmp)
         if (humanoid(ptr)) {
             /* create minion stuff; bypass mongets */
             int typ = rn2(3) ? LONG_SWORD : SILVER_MACE;
-            const char *nam = (typ == LONG_SWORD) ? "Sunsword" : "Demonbane";
+            const char *nam = (typ == LONG_SWORD) ? "旭日剑" : "神魔克星"; /*危险:Sunsword, Demonbane*/
 
             otmp = mksobj(typ, FALSE, FALSE);
             /* maybe promote weapon to an artifact */

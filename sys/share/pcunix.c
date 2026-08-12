@@ -98,13 +98,13 @@ getlock(void)
 
     if (iflags.window_inited) {
 #ifdef SELF_RECOVER
-        c = y_n("There are files from a game in progress under your name. "
-               "Recover?");
+        c = y_n("在你的名下有一些正在进行的游戏文件. "
+               "恢复?");
 #else
-        pline("There is already a game in progress under your name.");
-        pline("You may be able to use \"recover %s\" to get it back.\n",
+        pline("在你的名下已经有一个正在进行的游戏了.");
+        pline("你可以使用\"recover %s\"来恢复它.\n",
               tbuf);
-        c = y_n("Do you want to destroy the old game?");
+        c = y_n("你想摧毁旧的游戏吗?");
 #endif
     } else {
 #if defined(MSDOS) && defined(NO_TERMS)
@@ -115,13 +115,13 @@ getlock(void)
         c = 'n';
         ct = 0;
 #ifdef SELF_RECOVER
-        msmsg("There are files from a game in progress under your name. "
-              "Recover? [yn]");
+        msmsg("在你的名下有一些正在进行的游戏文件. "
+              "恢复? [yn]");
 #else
-        msmsg("\nThere is already a game in progress under your name.\n");
-        msmsg("If this is unexpected, you may be able to use \n");
-        msmsg("\"recover %s\" to get it back.", tbuf);
-        msmsg("\nDo you want to destroy the old game? [yn] ");
+        msmsg("\n在你的名下已经有一个正在进行的游戏了.\n");
+        msmsg("如果这出乎你的意料, 你可以使用\n");
+        msmsg("\"recover %s\"来恢复它.", tbuf);
+        msmsg("\n你想摧毁旧的游戏吗? [yn] ");
 #endif
         while ((ci = nhgetch()) != '\n') {
             if (ct > 0) {
