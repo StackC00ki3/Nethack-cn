@@ -585,149 +585,123 @@
 %e passage
 # pp. 119-120 (next passage is a direct continuation of this one)
 %passage 7
-The town was smaller than Ohulan, and very different because it lay on the
-junction of three trade routes quite apart from the river itself.  It was
-built around one enormous square which was a cross between a permanent
-exotic traffic jam and a tent village.  Camels kicked mules, mules kicked
-horses, horses kicked camels and they all kicked humans; there was a riot
-of colours, a din of noise, a nasal orchestration of smells and the steady,
-heady sound of hundreds of people working hard at making money.
+这座城镇比奥胡兰小, 却别具一格, 因为
+它坐落在三条商道的交汇处, 与河流本身相隔甚远. 整个城镇围绕着
+一个巨大的广场而建, 那地方既是永远拥挤嘈杂的异域集贸市场, 又像个
+帐篷村落. 骆驼踢骡子, 骡子踢马, 马踢骆驼, 而它们全都踢人; 这里
+色彩缤纷, 喧闹震天, 气味在鼻腔里交响成一支管弦乐, 还有数百人拼命赚钱时
+那持续不断令人亢奋的声响.
 
-One reason for the bustle was that over large parts of the continent other
-people preferred to make money without working at all, and since the Disc
-had yet to develop a music recording industry they were forced to fall back
-on older, more traditional forms of banditry.
+这番忙碌景象的缘由之一, 是这片大陆的
+大部分地区, 其他人更愿意不费吹灰之力地赚钱; 而
+由于碟形世界尚未发展出唱片工业, 他们便只好重操那些古老而更"传统"的劫掠行当.
 
-Strangely enough these often involved considerable effort.  Rolling heavy
-rocks to the top of cliffs for a decent ambush, cutting down trees to
-block the road, and digging a pit lined with spikes while still keeping a
-wicked edge on a dagger probably involved a much greater expenditure of
-thought and muscle than more socially-acceptable professions but,
-nevertheless, there were still people misguided enough to endure all this,
-plus long nights in uncomfortable surroundings, merely to get their hands
-on perfectly ordinary large boxes of jewels.
+说来也怪, 这些行当往往颇费力气. 把沉重的石块滚上悬崖顶端
+好设一场像样的埋伏, 砍倒树木堵塞道路, 还要挖个布满尖刺的深坑, 同时
+还得把匕首磨得锋利无比--这些恐怕比那些更受社会认可的职业, 要耗费
+多得多的心思和力气. 尽管如此. 仍有人执迷不悟, 甘愿忍受这一切, 外加
+在恶劣环境里度过漫漫长夜, 只为了把那些普普通通装满宝石的大箱子弄到手.
 
-  [Equal Rites, by Terry Pratchett]
+  [平等权利, 特里·普拉切特 著]
 %e passage
 # pp. 120-121 (this passage is a direct continuation of preceding one;
 #              "I said, what is happening here?" actually omits "is"
 #              but must be a typo--fixed here to avoid bug reports;
 #              'broomstick' is Esk's disguised wizard's staff)
 %passage 8
-So a town like Zemphis was the place where caravans split, mingled and
-came together again, as dozens of merchants and travellers banded together
-for protection against the socially disadvantaged on the trails ahead.
-Esk, wandering unregarded amidst the bustle, learned all this by the simple
-method of finding someone who looked important and tugging on the hem of
-his coat.
+于是, 像泽姆菲斯这样的城镇, 便是商队分流, 交汇,再聚合的地方--几十个商人
+和旅者结伴而行, 以求在接下来的路途上防范
+那些"社会弱势群体".艾斯克在喧嚣中无人注意地闲逛, 她了解这一切的方法
+很简单: 找个看起来重要的人, 拽一拽他的衣角.
 
-This particular man was counting bales of tobacco and would have succeeded
-but for the interruption.
+这人当时正在数烟叶包, 若不是被打断, 本该顺利数完.
 
-"What?"
+"什么?"
 
-"I said, what is happening here?"
+"我说, 这里在干什么?"
 
-The man meant to say:  "Push off and bother someone else."  He meant to
-give her a light cuff about the head.  So he was astonished to find himself
-bending down and talking seriously to a small, grubby-faced child holding
-a large broomstick (which also, it seemed to him later, was in some
-indefinable way /paying attention/).
+那人本想回一句:"走开, 烦别人去."他本想朝她
+脑袋上轻拍一下. 然而他却惊异地发现自己弯下腰来, 认真地
+跟一个脸蛋脏兮兮的小不点儿说起话来--这小孩
+还抱着一把大扫帚(他后来才觉得, 那把扫帚也在某种难以言说的意义上"留神听着").
 
-He explained about the caravans.  The child nodded.
+他解释了商队的事. 小孩点点头.
 
-"People all get together to travel?"
+"人们都结伴旅行?"
 
-"Precisely."
+"正是."
 
-"Where to?"
+"去哪儿?"
 
-"All sorts of places.  Sto Lat, Pseudopolis... Ankh-Morpork, of course...."
+"各种地方. 斯托拉特, 普塞多波利斯...当然, 还有安卡-莫波克..."
 
-"But the river goes there," said Esk, reasonably.  "Barges.  The Zoons."
+"可那条河也通到那儿呀,"艾斯克有理有据地说,"有驳船嘛, 还有祖恩人."
 
-"Ah, yes," said the merchant, "but they charge high prices and they can't
-carry everything and, anyway, no one trusts them much."
+"啊, 对,"商人说,"但他们要价高, 又不能什么都运, 再说, 大家也不太信任他们."
 
-"But they're very honest!"
+"可他们非常诚实呀!"
 
-"Huh, yes," he said.  "But you know what they say:  never trust an honest
-man."  He smiled knowingly.
+"哼, 是啊,"他说,"可你知道大家怎么说吗, 永远别信一个诚实的人."他心照不宣地笑了笑.
 
-"Who says that?"
+"谁说的?"
 
-"They do.  You know.  People," he said, a certain uneasiness entering his
-voice.
+"他们呗. 你知道的, 大家."他说, 语气里带上了一丝不安.
 
-"Oh," said Esk.  She thought about it.  "They must be very silly," she said
-primly.  "Thank you, anyway."
-
-  [Equal Rites, by Terry Pratchett]
+"哦,"艾斯克说. 她想了想, 一本正经地说: "他们一定很傻. 不过, 还是谢谢您."
+  [平等权利, 特里·普拉切特 著]
 %e passage
 # pp. 127-128 (this time broomstick is Granny's defective witch's broomstick)
 %passage 9
-The broomstick lay between two trestles.  Granny Weatherwax sat on a rock
-outcrop while a dwarf half her height, wearing an apron that was a mass of
-pockets, walked around the broom and occasionally poked it.
+扫帚横搁在两个支架之间. 威瑟瓦克斯奶奶坐在一处岩石露头上, 而
+一个身高只有她一半的矮人, 系着一条满是口袋的围裙, 绕着扫帚走来走去, 时不时戳它一下.
 
-Eventually he kicked the bristles and gave a long intake of breath, a sort
-of reverse whistle, which is the secret sign of craftsman across the
-universe and means that something expensive is about to happen.
+终于, 他踢了踢扫帚头, 长长地倒吸了一口气--那是
+一种反向的口哨声, 是宇宙间工匠心照不宣的秘密信号, 意味着要花大钱了.
 
-"Weellll," he said.  "I could get the apprentices in to look at this, I
-could.  It's an education in itself.  And you say it actually managed to
-get airborne?"
+"唔--"他说, "我可以叫学徒们来看看这东西, 真的可以. 光这本身就算
+一堂课了. 你说它居然真能飞起来?"
 
-"It flew like a bird," said Granny.
+"它飞得像鸟儿一样."奶奶说.
 
-The dwarf lit a pipe.  "I should very much like to see that bird," he said
-reflectively.  "I should imagine it's quite something to watch, a bird like
-that."
+矮人点了一斗烟."我倒是很想去看看那只鸟儿,"他若有所思
+地说,"我猜, 那样的鸟儿飞起来一定很值得一看."
 
-"Yes, but can you repair it?" said Granny.  "I'm in a hurry."
+"是啊, 可你能修好它吗?"奶奶说, "我赶时间."
 
-The dwarf sat down, slowly and deliberately.
+矮人不紧不慢地坐了下来.
 
-"As for /repair/," he said, "well, I don't know about /repair/.  Rebuild,
-maybe.  Of course, it's hard to get the bristles these days even if you can
-find people to do the proper binding, and the spells need--"
+"至于修嘛,"他说,"呃, 修不敢说. 重新造一个, 也许还行. 当然啦, 如今
+扫帚头可不好找, 就算能找到人做正经的绑扎, 咒语还得--"
 
-"I don't want it rebuilt, I just want it to work properly," said Granny.
+"我不要重新造, 我只要它能好好飞."奶奶说.
 
-"It's an early model, you see," the dwarf plugged on.  "Very tricky, those
-early models.  You can't get the wood--"
+"您瞧, 这是早期型号,"矮人继续絮叨, "那些早期型号可麻烦了. 木材根本弄不到--"
 
-He was picked up bodily until his eyes were level with Granny's.  Dwarves,
-being magical in themselves as it were, are quite resistant to magic but
-her expression looked as though she was trying to weld his eyeballs to the
-back of his skull.
+他整个人被拎了起来, 直到眼睛与奶奶的眼睛平齐. 矮人本身算得上是
+魔法生物, 对魔法有相当的抵抗力, 但奶奶那神情, 简直像是要把他的眼珠子焊到后脑勺上去.
 
-"Just repair it," she hissed.  "Please?"
+"就给我修好它,"她嘶声道,"行吗?"
 
-"What, make a bodge job?" said the dwarf, his pipe clattering to the floor.
+"什么, 凑合着糊弄一下?"矮人说, 烟斗哐当掉在地上.
 
-"Yes."
+"对."
 
-"Patch it up, you mean?  Betray my training by doing half a job?"
+"你是说, 草草补一补? 背叛我的手艺, 干半吊子活儿?"
 
-"Yes," said Granny.  Her pupils were two little black holes.
+"对."奶奶说. 她的瞳孔是两个小黑洞.
 
-"Oh," said the dwarf.  "Right, then."
-
-  [Equal Rites, by Terry Pratchett]
+"哦,"矮人说,"那好吧."
+  [平等权利, 特里·普拉切特 著]
 %e passage
 # p. 185 (actually uses four periods to mark a sentence ending in an ellipsis)
 %passage 10
-There may be universes where librarianship is considered a peaceful sort of
-occupation, and where the risks are limited to large volumes falling off
-the shelves on to one's head, but the keeper of a /magic/ library is no job
-for the unwary.  Spells have power, and merely writing them down and
-shoving them between covers doesn't do anything to reduce it.  The stuff
-leaks.  Books tend to react with one another, creating randomized magic
-with a mind of its own.  Books of magic are usually chained to their
-shelves, but not to prevent them being stolen....
+也许在某个宇宙里, 图书管理员算是一种安稳平和的职业, 风险
+无非是被书架上掉下来的大部头砸到脑袋. 但掌管一座魔法图书馆, 可不是
+粗心大意的人能干的活儿. 咒语自有其力量, 仅仅把它们写下来塞进书页之间, 并不能
+削弱分毫. 那东西会泄漏. 书籍之间会彼此反应, 生出拥有自身意志的随机魔法. 魔法书
+通常被锁链拴在书架上--但锁住它们, 可不是为了防止被偷走...
 
-  [Equal Rites, by Terry Pratchett]
+  [平等权利, 特里·普拉切特 著]
 %e passage
 %e title
 #
@@ -737,223 +711,185 @@ shelves, but not to prevent them being stolen....
 # p. 136 (Signet edition; passage is a footnote;
 #         Vetinari doesn't show up as recurring Patrician until /Sourcery/)
 %passage 1
-Ankh-Morpork had dallied with many forms of government and had ended up
-with that form of democracy known as One Man, One Vote.  The Patrician was
-the Man; he had the Vote.
+安卡-莫波克曾尝试过多种政体, 最终落实为
+一种名为一人一票的民主形式. 执政官便是那一人:他拥有那一票.
 
-  [Mort, by Terry Pratchett]
+  [死神学徒, 特里·普拉切特 著]
 %e passage
 # p. 11
 %passage 2
-Mort was getting interested in the rock.  It had curly shells in it, relics
-of the early days of the world when the Creator had made creatures out of
-stone, no-one knew why.
+莫特开始对那块石头产生了兴趣. 石头里
+嵌着卷曲的贝壳, 那是世界早期的遗存--那时造物主用石头造出各种生物, 没人知道为什么.
 
-Mort was interested in lots of things.  Why people's teeth fitted together
-so neatly, for example.  He'd given that one a lot of thought.  Then there
-was the puzzle of why the sun came out during the day, instead of at night
-when the light would come in useful.  He knew the standard explanation,
-which somehow didn't seem satisfying.
+莫特感兴趣的事情多得很. 比如说, 为什么人们的牙齿能咬合得
+那么整齐? 他在这事儿上花了不少心思. 还有一道难题: 为什么太阳
+偏偏在白昼出来, 而不是在夜晚——夜晚的光线才正派得上用场呢. 他知道
+标准解释, 但不知怎的, 总觉得不够满意.
 
-In short, Mort is one of those people who are more dangerous than a bag
-full of rattlesnakes.  He was determined to discover the underlying logic
-behind the universe.
+简而言之, 莫特就是那种比一袋响尾蛇还要危险的人. 他决心
+要找出宇宙背后隐藏的逻辑.
 
-Which was going to be hard, because there wasn't one.  The Creator had a
-lot of remarkably good ideas when he put the world together, but making it
-understandable hadn't been one of them.
+这恐怕会很难, 因为根本不存在这种东西. 造物主在创造世界时有
+很多绝妙的好主意, 但让世界变得可以理解, 却不在其中.
 
-  [Mort, by Terry Pratchett]
+  [死神学徒, 特里·普拉切特 著]
 %e passage
 # p. 18
 %passage 3
-"But you're Death," said Mort.  "You go around killing people!"
+"可你是死神呀,"莫特说,"你到处去杀人!"
 
-I?  KILL? said Death, obviously offended.  CERTAINLY NOT.  PEOPLE /GET/
-KILLED, BUT THAT'S THEIR BUSINESS.  I JUST TAKE OVER FROM THEN ON.  AFTER
-ALL, IT'D BE A BLOODY STUPID WORLD IF PEOPLE GOT KILLED WITHOUT DYING,
-WOULDN'T IT?
+我? 杀人? 死神显然被冒犯了. 当然不是. 人们被杀, 那是
+他们自己的事, 我只是从那时起接手而已. 毕竟, 要是人被杀却不会死, 那
+这世界岂不是蠢透了, 你说呢?
 
-  [Mort, by Terry Pratchett]
+  [死神学徒, 特里·普拉切特 著]
 %e passage
 # p. 25
 %passage 4
-"Is it magic?" said Mort.
+"这是魔法吗?"莫特问.
 
-WHAT DO YOU THINK? said Death.  AM I REALLY HERE, BOY?
+你觉得呢? 死神说. 我真的在这儿吗, 孩子?
 
-"Yes," said Mort slowly.  "I... I've watched people.  They look at you but
-they don't see you, I think.  You do something to their minds."
+"是的,"莫特慢慢地说,"我...我观察过人们. 他们看着你, 但我想他们并没有真正
+看见你. 你对他们的脑子做了什么."
 
-Death shook his head.
+死神摇了摇头. 
 
-THEY DO IT ALL THEMSELVES, he said.  THERE'S NO MAGIC.  PEOPLE CAN'T SEE ME,
-THEY SIMPLY WON'T ALLOW THEMSELVES TO DO IT.  UNTIL IT'S TIME, OF COURSE.
-WIZARDS CAN SEE ME, AND CATS.  BUT YOUR AVERAGE HUMAN... NO, NEVER.  He blew
-a smoke ring at the sky, and added, STRANGE BUT TRUE.
+那是他们自己做的, 他说. 没有魔法. 人们看不见我, 他们只是不允许
+自己看见. 当然, 直到时辰到了为止. 巫师能看见我, 猫也能. 但普通人类...不, 永远不会. 他向
+天空吐了一个烟圈, 又补了一句: 说来奇怪, 却是事实.
 
-  [Mort, by Terry Pratchett]
+  [死神学徒, 特里·普拉切特 著]
 %e passage
 # pp. 48-49 (Binky is Death's white horse, who was left 'parked' on a
 #            castle's roof; Mort is Death's novice apprentice)
 %passage 5
-They were on the roof before he spoke again.
+他们到了屋顶上, 死神才再次开口.
 
-YOU TRIED TO WARN HIM, he said, removing Binky's nosebag.
+你试图警告过他, 他说, 一边取下宾奇的头罩.
 
-"Yes, sir.  Sorry."
+"是的，先生。抱歉."
 
-YOU CANNOT INTERFERE WITH FATE.  WHO ARE YOU TO JUDGE WHO SHOULD LIVE AND
-WHO SHOULD DIE?
+你不能干涉命运. 你算什么人, 凭什么判断谁该活谁该死?
 
-Death watched Mort's expression carefully.
+死神仔细端详着莫特的表情.
 
-ONLY THE GODS ARE ALLOWED TO DO THAT, he added.  TO TINKER WITH THE FATE OF
-EVEN ONE INDIVIDUAL COULD DESTROY THE WHOLE WORLD.  DO YOU UNDERSTAND?
+只有众神才被允许这么做, 他又补了一句. 哪怕只改动一个人的命运, 都可能毁掉整个世界. 你明白吗?
 
-Mort nodded miserably.
+莫特痛苦地点了点头.
 
-"Are you going to send me home?" he said.
+"你会送我回家吗?"他问.
 
-Death reached down and swung him up behind the saddle.
+死神俯身, 把他拎起来甩到马鞍后面.
 
-BECAUSE YOU SHOWED COMPASSION?  NO.  I MIGHT HAVE DONE IF YOU HAD SHOWN
-PLEASURE.  BUT YOU MUST LEARN THE COMPASSION PROPER TO YOUR TRADE.
+因为你表现出了同情? 不. 若是你表现出愉悦, 我倒可能那么做. 但你必须学会你这一行当应有的同情.
 
-"What's that?"
+"那是什么?"
 
-A /SHARP/ EDGE.
+锋利的刀刃.
 
-  [Mort, by Terry Pratchett]
+  [死神学徒, 特里·普拉切特 著]
 %e passage
 # pp. 59-61 (in Ankh-Morpork, Mort has accidentally walked through a wall
 #            into an immigrant Klatchian family's dining room; 'the creature
 #            who was not there' refers to Death during an earlier event)
 %passage 6
-"I'm no demon!  I'm a human!" he said, and stopped in shock as his words
-emerged in perfect Klatch.
+"我不是恶魔! 我是人!"他说, 却震惊地顿住了--因为他嘴里冒出的竟是完美的克拉奇语.
 
-"You're a thief?" said the father.  "A murderer?  To creep in thus, are you
-a /tax-gatherer/?"  His hand slipped under the table and came up holding a
-meat cleaver honed to paper thinness.  His wife screamed and dropped the
-plate and clutched the youngest children to her.
+"你是贼?"那父亲说,"凶手?这样偷偷摸摸进来, 你是收税官吧?"他的手滑到桌下, 再抬起来时, 握着一把磨得纸一样薄的切肉刀. 妻子尖叫着扔下盘子, 把最小的孩子搂进怀里.
 
-Mort watched the blade weave through the air, and gave in.
+莫特看着刀刃在空中比划, 认命了.
 
-"I bring you greetings from the uttermost circles of hell," he hazarded.
+"我带来地狱最底层的问候."他姑且一试.
 
-The change was remarkable.  The cleaver was lowered and the family broke
-into broad smiles.
+变化立竿见影. 切肉刀放下了, 全家人绽开灿烂的笑容.
 
-"There is much luck to us if a demon visits," beamed the father.  "What is
-your wish, O foul spawn of Offler's loins?"
+"若有恶魔来访, 那是我们的福气."父亲眉开眼笑,"你有什么愿望, 奥弗勒胯下邪恶的孽种?"
 
-"Sorry?" said Mort.
+"什么?"莫特说.
 
-"A demon brings blessing and good fortune on the man that helps it," said
-the man.  "How may we be of assistance, O evil dogsbreath of the nether
-pit?"
+"恶魔会给帮助它的人带来祝福和好运,"那男人说,"我们该如何效劳, 深渊里邪恶的恶臭狗肺?"
 
-"Well, I'm not very hungry," said Mort, "but if you know where I can get a
-fast horse, I could be in Sto Lat before sunset."
+"呃, 我不太饿,"莫特说,"但如果你知道哪儿能弄到快马, 我可以在日落前赶到斯托拉特."
 
-The man beamed and bowed.  "I know the very place, noxious extrusion of the
-bowels, if you would be so good as to follow me."
+男人笑着鞠了一躬."我正好知道地方, 肠道的恶臭排泄物, 请随我来."
 
-Mort hurried out after him.  The ancient ancestor watched them go with a
-critical expression, its jowls rhythmically chewing.
+莫特匆匆跟了出去. 那位古老的祖先用挑剔的目光目送他们离去, 双颊有节奏地咀嚼着.
 
-"That was what they call a demon around here?" it said.  "Offler rot this
-country of dampness, even their demons are third-rate, not a patch on the
-demons we had in the Old Country."
+"那就是他们管叫恶魔的东西?"它说,"奥弗勒让这潮湿的国家烂掉吧, 连恶魔都是三流货色, 跟咱们老家那会儿的恶魔根本没法比."
 
-The wife placed a small bowl of rice in the folded middle pair of hands of
-the Offler statue (it would be gone in the morning) and stood back.
+妻子把一小碗米饭放在奥弗勒雕像叠起的中间那双手里(明早就会消失), 然后退后一步.
 
-"Husband did say that last month at the /Curry Gardens/ he served a creature
-who was not there," she said.  "He was impressed."
+"当家的上个月在咖喱花园说过, 他招待过一个不在那儿的玩意儿,"她说,"他印象很深."
 
-Ten minutes later the man returned and, in solemn silence, placed a small
-heap of gold coins on the table.  They represented enough wealth to
-purchase quite a large part of the city.
+十分钟后, 男人回来了, 庄重而沉默地把一小堆金币放在桌上. 那笔钱足够买下城里很大一片地方.
 
-"He had a bag of them," he said.
+"他有一整袋呢."他说.
 
-The family stared at the money for some time.  The wife sighed.
+一家人盯着钱看了好一会儿. 妻子叹了口气.
 
-"Riches bring many problems," she said.  "What are we to do?"
+"钱财带来许多麻烦,"她说,"咱们怎么办?"
 
-"We return to Klatch," said the husband firmly, "where our children can grow
-up in a proper country, true to the glorious traditions of our ancient race
-and men do not need to work as waiters for wicked masters but can stand tall
-and proud.  And we must leave right now, fragrant blossom of the date palm."
+"回克拉奇去,"丈夫坚定地说,"让孩子们在正当的国度长大, 恪守我们先祖的光荣传统, 男人不用给邪恶的主子当跑堂, 而是可以堂堂正正地挺起腰杆. 咱们得马上走, 枣椰树的芬芳花朵."
 
-"Why so soon, O hard-working son of the desert?"
+"为何这么急, 沙漠里勤劳的儿子?"
 
-"Because," said the man, "I have just sold the Patrician's champion
-racehorse."
+"因为,"那男人说,"我刚把执政官的冠军赛马给卖了."
 
-  [Mort, by Terry Pratchett]
+  [死神学徒, 特里·普拉切特 著]
 %e passage
 # pp. 139-140 (passage ends mid-sentence)
 %passage 7
-"You don't know much about monarchy, do you?" said Keli.
+"你对君主制了解不多, 是吧?"凯莉说.
 
-"Um, no?"
+"呃, 不了解?"
 
-"She means better to be a dead queen in your own castle than a live
-commoner somewhere else," said Cutwell, [...]
+"她的意思是, 与其在别处做个活着的平民, 不如在自己的城堡里做个死去的女王,"卡特维尔说, [...]
 
-  [Mort, by Terry Pratchett]
+  [死神学徒, 特里·普拉切特 著]
 %e passage
 # p. 158
 %passage 8
-"You mean you won't help?" said Mort.  "Not even if you can?"
+"你是说你不肯帮忙?"莫特说,"就算你有能力也不帮?"
 
-"Give the boy a prize," growled Albert.  "And it's no good thinking you can
-appeal to my better nature under this here crusty exterior," he added,
-"'cos my interior's pretty damn crusty too."
+“给这小子颁个奖吧,"阿尔伯特嘟囔道,"别以为你可以打动我
+这副硬壳外表底下那点善良本性,"他又补了一句,"因为
+我内里也硬邦邦得很."
 
-  [Mort, by Terry Pratchett]
+  [死神学徒, 特里·普拉切特 著]
 %e passage
 # pp. 159-160 (Death has come to an employment agency--a new concept in
 #              Ankh-Morpork--looking for a job)
 %passage 9
-"And what was your previous position?"
+"那么您之前的职位是?"
 
-I BEG YOUR PARDON?
+您说什么?
 
-"What did you do for a living?" said the thin young man behind the desk.
+"您以什么为生?"桌后那个瘦削的年轻人问道.
 
-I USHERED SOULS INTO THE NEXT WORLD.  I WAS THE GRAVE OF ALL HOPE.  I WAS
-THE ULTIMATE REALITY.  I WAS THE ASSASSIN AGAINST WHOM NO LOCK WOULD HOLD.
+我引领灵魂进入来世. 我是一切希望的坟墓. 我是终极的真实. 我是万锁莫御的刺客.
 
-"Yes, point taken, but do you have any particular skills?"
+"好的, 我明白了, 但您有什么特别的技能吗?"
 
-I SUPPOSE A CERTAIN AMOUNT OF EXPERTISE WITH AGRICULTURAL IMPLEMENTS? he
-ventured after a while.
+我想...我对农具应该还算有些熟练度? 过了一会儿, 他试探着说.
 
-The young man shook his head firmly.
+年轻人坚定地摇了摇头.
 
-NO?
+没有?
 
-  [Mort, by Terry Pratchett]
+  [死神学徒, 特里·普拉切特 著]
 %e passage
 # p. 205
 %passage 10
-Death raised his skull and sniffed the air.
+死神扬起颅骨, 嗅了嗅空气.
 
-The sound cut through all the other noises in the hall and forced them
-into silence.
+那声音穿透大厅里所有的嘈杂, 迫使一切归于寂静.
 
-It is the kind of noise that is heard on the twilight edges of dreams,
-the sort that you wake from in the cold sweat of mortal horror.  It was
-the snuffling under the door of dread.  It was like the snuffling of a
-hedgehog, but if so then it was the kind of hedgehog that crashes out of
-the verges and flattens lorries.  It was the kind of noise you wouldn't
-want to hear twice; you wouldn't want to hear it /once/.
+那是一种你在梦境昏昧边缘才能听到的声音--那种让你浑身冷汗, 在极度恐惧中
+惊醒的声音. 那是恐惧之门下传来的鼻息声. 像刺猬的哼哼, 但若是刺猬, 那便是
+能从路边猛冲而出, 碾平卡车的刺猬, 那种声音, 你绝不会想听第二遍: 甚至一次都不想.
 
-  [Mort, by Terry Pratchett]
+  [死神学徒, 特里·普拉切特 著]
 %e passage
 # p. 207
 %passage 11
