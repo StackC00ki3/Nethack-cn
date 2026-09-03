@@ -2330,7 +2330,7 @@ doname_base(
         if (obj->cursed)
             Strcat(prefix, "被诅咒的");
         else if (obj->blessed)
-            Strcat(prefix, "被祝福的");
+            Strcat(prefix, "受祝福的");
         else if (!flags.implicit_uncursed
             /* For most items with charges or +/-, if you know how many
              * charges are left or what the +/- is, then you must have

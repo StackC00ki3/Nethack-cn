@@ -933,6 +933,8 @@ checkfile(
         dbase_str += 8;
     if (!strncmp(dbase_str, "被祝福的", strlen("被祝福的")))
         dbase_str += strlen("被祝福的");
+    if (!strncmp(dbase_str, "受祝福的", strlen("受祝福的")))
+        dbase_str += strlen("受祝福的");
     if (!strncmp(dbase_str, "uncursed ", 9))
         dbase_str += 9;
     if (!strncmp(dbase_str, "无祖咒的", strlen("无祖咒的")))

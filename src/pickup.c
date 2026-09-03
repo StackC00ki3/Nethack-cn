@@ -1411,7 +1411,7 @@ query_category(
         any = cg.zeroany;
         any.a_int = 'B';
         add_menu(win, &nul_glyphinfo, &any, invlet, 0, ATR_NONE, clr,
-                 "已知被祝福的物品", MENU_ITEMFLAGS_SKIPINVERT);
+                 "已知受祝福的物品", MENU_ITEMFLAGS_SKIPINVERT);
     }
     if (do_cursed) {
         invlet = 'C';
