@@ -486,7 +486,7 @@ use_whistle(struct obj *obj)
         if (Deaf)
             You_feel("急促的空气使你的%s发痒.", body_part(NOSE));
         else
-            You(whistle_str, obj->cursed ? "尖锐" : "响亮");
+            You(whistle_str, obj->cursed ? "尖锐的" : "响亮的");
         Soundeffect(se_shrill_whistle, 50);
         wake_nearby(TRUE);
         if (obj->cursed)
