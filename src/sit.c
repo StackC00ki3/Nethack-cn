@@ -68,7 +68,7 @@ throne_sit_effect(void)
         switch (effect) {
         case 1:
             (void) adjattrib(rn2(A_MAX), -rn1(4, 3), FALSE);
-            losehp(rnd(10), "王座被诅咒", KILLED_BY_AN);
+            losehp(rnd(10), "被诅咒的王座", KILLED_BY_AN);
             break;
         case 2:
             (void) adjattrib(rn2(A_MAX), 1, FALSE);
@@ -76,7 +76,7 @@ throne_sit_effect(void)
         case 3:
             pline("一股%s电流冲击穿透了你的身体!",
                   (Shock_resistance) ? "" : "巨大的");
-            losehp(Shock_resistance ? rnd(6) : rnd(30), "椅子放电",
+            losehp(Shock_resistance ? rnd(6) : rnd(30), "放电的椅子",
                    KILLED_BY_AN);
             exercise(A_CON, FALSE);
             break;
@@ -336,7 +336,7 @@ special_throne_effect(int effect) {
     case 12:
         /* acid damage */
         pline("酸液从王座中渗出来!");
-        losehp(Acid_resistance ? rnd(16) : rnd(80), "椅子喷出酸液",
+        losehp(Acid_resistance ? rnd(16) : rnd(80), "喷出酸液的椅子",
                KILLED_BY_AN);
         exercise(A_CON, FALSE);
         break;

@@ -1549,8 +1549,8 @@ offer_real_amulet(struct obj *otmp, aligntyp altaralign)
         /*[apparently shrug/snarl can be sensed without being seen]*/
         pline("%s耸了耸肩, 仍旧保持着对%s的统治,", Moloch, u_gname());
         pline("然后残忍地扼杀了你的生命.");
-        Sprintf(svk.killer.name, "%s的冷漠", s_suffix(Moloch));
-        svk.killer.format = KILLED_BY;
+        Sprintf(svk.killer.name, "死于%s的冷漠", s_suffix(Moloch));
+        svk.killer.format = NO_KILLER_PREFIX;
         done(DIED);
         /* life-saved (or declined to die in wizard/explore mode) */
         pline("%s怒吼一声并再来了一次...", Moloch);
@@ -2300,7 +2300,7 @@ prayer_done(void) /* M. Stephenson (1.0.3b) */
         /* KMH -- Gods have mastery over unchanging */
         rehumanize();
         /* no Half_physical_damage adjustment here */
-        losehp(rnd(20), "驱赶亡灵效果的余波", KILLED_BY_AN);
+        losehp(rnd(20), "驱赶亡灵效果的余波", KILLED_BY);
         exercise(A_CON, FALSE);
         return 1;
     }

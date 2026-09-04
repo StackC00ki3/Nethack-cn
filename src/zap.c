@@ -2624,7 +2624,7 @@ backfire(struct obj *otmp)
     otmp->in_use = TRUE; /* in case losehp() is fatal */
     pline("%s突然爆炸了!", The(xname(otmp)));
     dmg = d(otmp->spe + 2, 6);
-    losehp(Maybe_Half_Phys(dmg), "魔杖爆炸", KILLED_BY_AN);
+    losehp(Maybe_Half_Phys(dmg), "魔杖爆炸", KILLED_BY);
     useupall(otmp);
 }
 
@@ -3327,7 +3327,7 @@ zap_updown(struct obj *obj) /* wand or spell, nonnull */
             pline("一块岩石被从%s上脱落并掉到你的%s上.",
                   ceiling(x, y), body_part(HEAD));
             dmg = rnd(hard_helmet(uarmh) ? 2 : 6);
-            losehp(Maybe_Half_Phys(dmg), "落石", KILLED_BY_AN);
+            losehp(Maybe_Half_Phys(dmg), "一块落石", KILLED_BY);
             if ((otmp = mksobj_at(ROCK, x, y, FALSE, FALSE)) != 0) {
                 (void) xname(otmp); /* set dknown, maybe bknown */
                 stackobj(otmp);
@@ -5960,7 +5960,7 @@ maybe_destroy_item(
                 if (dmgtyp == AD_FIRE && osym == FOOD_CLASS)
                     how = "黏菌块爆炸";
                 losehp(dmg, one ? how : (const char *) makeplural(how),
-                       one ? KILLED_BY_AN : KILLED_BY);
+                       KILLED_BY);//one ? KILLED_BY_AN : KILLED_BY);
                 exercise(A_STR, FALSE);
             }
         }

@@ -812,7 +812,7 @@ recharge(struct obj *obj, int curse_bless)
                 Ring_gone(obj);
             s = rnd(3 * abs(obj->spe)); /* amount of damage */
             useup(obj), obj = 0;
-            losehp(Maybe_Half_Phys(s), "戒指爆炸", KILLED_BY_AN);
+            losehp(Maybe_Half_Phys(s), "戒指爆炸", KILLED_BY);
         } else {
             long mask = is_on ? (obj == uleft ? LEFT_RING : RIGHT_RING) : 0L;
 
@@ -1885,7 +1885,7 @@ seffect_fire(struct obj **sobjp)
             monstunseesu(M_SEEN_FIRE);
             pline_The("卷轴着火了, 你烧伤了你的%s.",
                       makeplural(body_part(HAND)));
-            losehp(1, "火焰卷轴", KILLED_BY_AN);
+            losehp(1, "一张火焰卷轴", KILLED_BY);
         }
         return;
     }
@@ -2336,7 +2336,7 @@ drop_boulder_on_player(
         newsym(u.ux, u.uy);
     }
     if (dmg)
-        losehp(Maybe_Half_Phys(dmg), "大地卷轴", KILLED_BY_AN);
+        losehp(Maybe_Half_Phys(dmg), "一张大地卷轴", KILLED_BY);
 }
 
 boolean
@@ -2452,7 +2452,7 @@ wand_explode(struct obj *obj, int chg /* recharging */)
     dmg = d(n, k);
     obj->in_use = TRUE; /* in case losehp() is fatal (or --More--^C) */
     pline("%s%s爆炸了!", Yname2(obj), expl);
-    losehp(Maybe_Half_Phys(dmg), "魔杖爆炸", KILLED_BY_AN);
+    losehp(Maybe_Half_Phys(dmg), "魔杖爆炸", KILLED_BY);
     useup(obj);
     /* obscure side-effect */
     exercise(A_STR, FALSE);
@@ -2812,8 +2812,8 @@ do_class_genocide(void)
             }
         }
         if (gameover || u.uhp == -1) {
-            svk.killer.format = KILLED_BY_AN;
-            Strcpy(svk.killer.name, "灭绝卷轴");
+            svk.killer.format = KILLED_BY; //危险:KILLED_BY_AN;
+            Strcpy(svk.killer.name, "一张灭绝卷轴");
             if (gameover)
                 done(GENOCIDED);
         }
@@ -2974,11 +2974,11 @@ do_genocide(
                 Strcpy(svk.killer.name, "混乱的灭绝卷轴");
             } else if (how & ONTHRONE) {
                 /* player selected while on a throne */
-                svk.killer.format = KILLED_BY_AN;
-                Strcpy(svk.killer.name, "专横的命令");
+                svk.killer.format = KILLED_BY;
+                Strcpy(svk.killer.name, "一道专横的命令");
             } else { /* selected player deliberately, not confused */
-                svk.killer.format = KILLED_BY_AN;
-                Strcpy(svk.killer.name, "灭绝卷轴");
+                svk.killer.format = KILLED_BY;
+                Strcpy(svk.killer.name, "一张灭绝卷轴");
             }
 
             /* Polymorphed characters will die as soon as they're rehumanized.

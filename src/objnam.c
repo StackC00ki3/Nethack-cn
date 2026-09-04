@@ -3131,9 +3131,9 @@ killer_xname(struct obj *obj)
         buf = xname(obj);
     }
     /* apply an article if appropriate; caller should always use KILLED_BY */
-    if (obj->quan == 1L && !strstri(buf, "'s ") && !strstri(buf, "s' "))
-        buf = (obj_is_pname(obj) || the_unique_obj(obj)) ? the(buf) : an(buf);
-
+    if (obj->quan == 1L && !strstri(buf, "'s ") && !strstri(buf, "s' ")){
+        Sprintf(buf, "一%s%s", quantifier(obj), buf);//危险:buf = (obj_is_pname(obj) || the_unique_obj(obj)) ? the(buf) : an(buf);
+    }
     objects[obj->otyp].oc_name_known = save_ocknown;
     objects[obj->otyp].oc_uname = save_ocuname;
     *obj = save_obj; /* restore object's core settings */

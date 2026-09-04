@@ -301,7 +301,7 @@ drinkfountain(void)
             if (Poison_resistance) {
                 pline("也许它是从附近的%s农场流过来的.",
                       fruitname(FALSE));
-                losehp(rnd(4), "未冷藏的果汁", KILLED_BY_AN);
+                losehp(rnd(4), "未冷藏的果汁", KILLED_BY);
                 break;
             }
             poison_strdmg(rn1(4, 3), rnd(10), "污染的水",

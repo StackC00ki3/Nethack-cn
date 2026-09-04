@@ -1933,14 +1933,14 @@ eatcorpse(struct obj *otmp)
     } else if (acidic(&mons[mnum]) && !Acid_resistance) {
         tp++;
         You("得了非常严重的胃酸不适.");   /* not body_part() */
-        losehp(rnd(15), !glob ? "酸性尸体" : "酸性团怪",
-               KILLED_BY_AN); /* acid damage */
+        losehp(rnd(15), !glob ? "一具酸性尸体" : "一个酸性团怪",
+               KILLED_BY); /* acid damage */
     } else if (poisonous(&mons[mnum]) && rn2(5)) {
         tp++;
         pline("呃 - 那一定是有毒的!");
         if (!Poison_resistance) {
             poison_strdmg(rnd(4), rnd(15),
-                          !glob ? "有毒的尸体" : "有毒的团怪",
+                          !glob ? "一具有毒的尸体" : "一个有毒的团怪",
                           KILLED_BY_AN);
         } else
             You("似乎不受毒的影响.");
@@ -1949,7 +1949,7 @@ eatcorpse(struct obj *otmp)
     } else if ((rotted > 5L || (rotted > 3L && rn2(5))) && !Sick_resistance) {
         tp++;
         You_feel("%s不适.", (Sick) ? "非常" : "");
-        losehp(rnd(8), !glob ? "尸体" : "腐烂的团怪", KILLED_BY_AN);
+        losehp(rnd(8), !glob ? "一坨尸体" : "一个腐烂的团怪", KILLED_BY);
     }
 
     /* delay is weight dependent */
@@ -2559,8 +2559,8 @@ fpostfx(struct obj *otmp)
                     setuhpmax(u.uhpmax + 1, FALSE);
                 u.uhp = u.uhpmax;
             } else if (u.uhp <= 0) {
-                svk.killer.format = KILLED_BY_AN;
-                Strcpy(svk.killer.name, "腐烂的蜂王浆");
+                svk.killer.format = KILLED_BY;
+                Strcpy(svk.killer.name, "一块腐烂的蜂王浆");
                 done(POISONING);
             }
         }
@@ -2574,9 +2574,9 @@ fpostfx(struct obj *otmp)
                 && !(poly_when_stoned(gy.youmonst.data)
                      && polymon(PM_STONE_GOLEM))) {
                 if (!Stoned) {
-                    Sprintf(svk.killer.name, "%s蛋",
+                    Sprintf(svk.killer.name, "一个%s蛋",
                             mons[otmp->corpsenm].pmnames[NEUTRAL]);
-                    make_stoned(5L, (char *) 0, KILLED_BY_AN,
+                    make_stoned(5L, (char *) 0, KILLED_BY,
                                 svk.killer.name);
                 }
             }
@@ -2805,7 +2805,7 @@ doeat_nonfood(struct obj *otmp)
     if (otmp->oclass == WEAPON_CLASS && otmp->opoisoned) {
         pline("呃 - 那一定是有毒的!");
         if (!Poison_resistance) {
-            poison_strdmg(rnd(4), rnd(15), xname(otmp), KILLED_BY_AN);
+            poison_strdmg(rnd(4), rnd(15), xname(otmp), KILLED_BY);
         } else
             You("似乎不受毒的影响.");
     } else if (!nodelicious) {

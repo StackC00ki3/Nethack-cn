@@ -1122,7 +1122,7 @@ inside_gas_cloud(genericptr_t p1, genericptr_t p2)
             dam = Maybe_Half_Phys(rnd(dam) + 5);
             if (Half_gas_damage) /* worn towel */
                 dam = (dam + 1) / 2;
-            losehp(dam, "毒气云", KILLED_BY_AN);
+            losehp(dam, "一片毒气云", KILLED_BY);
             monstunseesu(M_SEEN_POISON);
             return FALSE;
         } else {

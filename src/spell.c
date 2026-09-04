@@ -163,7 +163,7 @@ cursed_book(struct obj *bp)
         bp->in_use = FALSE;
         poison_strdmg(Poison_resistance ? rn1(2, 1) : rn1(4, 3),
                       rnd(Poison_resistance ? 6 : 10),
-                      "书页涂毒", KILLED_BY_AN);
+                      "涂毒的书页", KILLED_BY);
         bp->in_use = was_in_use;
         break;
     case 6:
@@ -174,7 +174,7 @@ cursed_book(struct obj *bp)
             pline("你打开这本书, 它把%s释放到了你的%s上!", explodes,
                   body_part(FACE));
             dmg = 2 * rnd(10) + 5;
-            losehp(Maybe_Half_Phys(dmg), "爆炸符文", KILLED_BY_AN);
+            losehp(Maybe_Half_Phys(dmg), "一串爆炸符文", KILLED_BY);
         }
         return TRUE;
     default:

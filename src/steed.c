@@ -609,8 +609,8 @@ dismount_steed(
         if (!have_spot)
             have_spot = landing_spot(&cc, reason, 1);
         if (!ulev && !ufly) {
-            losehp(Maybe_Half_Phys(rn1(10, 10)), "骑行事故",
-                   KILLED_BY_AN);
+            losehp(Maybe_Half_Phys(rn1(10, 10)), "死于骑行事故",
+                   NO_KILLER_PREFIX);
             set_wounded_legs(BOTH_SIDES, (int) HWounded_legs + rn1(5, 5));
             repair_leg_damage = FALSE;
         }

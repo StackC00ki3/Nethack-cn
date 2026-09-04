@@ -3219,7 +3219,7 @@ corpse_chance(
                     Sprintf(svk.killer.name, "%s的爆炸",
                             s_suffix(pmname(mdat, Mgender(mon))));
                     losehp(Maybe_Half_Phys(tmp), svk.killer.name,
-                           KILLED_BY_AN);
+                           KILLED_BY);
                 } else {
                     You_hear("爆炸声.");
                     magr->mhp -= tmp;

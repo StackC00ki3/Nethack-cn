@@ -239,7 +239,7 @@ polyman(const char *fmt, const char *arg)
             svk.killer.format = kptr->format;
             Strcpy(svk.killer.name, kptr->name);
         } else {
-            svk.killer.format = KILLED_BY;
+            svk.killer.format = NO_KILLER_PREFIX;
             Strcpy(svk.killer.name, "自我灭绝");
         }
         dealloc_killer(kptr);
@@ -424,8 +424,8 @@ newman(void)
  dead:      /* we come directly here if experience level went to 0 or less */
             urgent_pline(
                      "你的新形态看上去健康状况不那么好, 难以存活.");
-            svk.killer.format = KILLED_BY_AN;
-            Strcpy(svk.killer.name, "不成功的变形");
+            svk.killer.format = NO_KILLER_PREFIX;
+            Strcpy(svk.killer.name, "死于不成功的变形");
             done(DIED);
             /* must have been life-saved to get here */
             newuhs(FALSE);
@@ -489,7 +489,7 @@ polyself(int psflags)
         && !isvamp) {
         if (rn2(20) > ACURR(A_CON)) {
             You1(shudder_for_moment);
-            losehp(rnd(30), "系统休克", KILLED_BY_AN);
+            losehp(rnd(30), "死于系统休克", NO_KILLER_PREFIX);
             exercise(A_CON, FALSE);
             return;
         }
@@ -1399,9 +1399,9 @@ rehumanize(void)
         /* can only happen if some bit of code reduces u.uhp
            instead of u.mh while poly'd */
         Your("旧形态不够健康, 难以存活.");
-        Sprintf(svk.killer.name, "恢复到不健康的%s形态",
+        Sprintf(svk.killer.name, "因恢复到不健康的%s形态而死",
                 gu.urace.adj);
-        svk.killer.format = KILLED_BY;
+        svk.killer.format = NO_KILLER_PREFIX;
         done(DIED);
     }
     nomul(0);
@@ -1760,7 +1760,7 @@ dogaze(void)
                           l_monnam(mtmp));
                     /* as if gazing at a sleeping anything is fruitful... */
                     urgent_pline("你变成了石头...");
-                    svk.killer.format = KILLED_BY;
+                    svk.killer.format = NO_KILLER_PREFIX;
                     Strcpy(svk.killer.name,
                            "故意正视美杜莎的眼睛");
                     done(STONING);

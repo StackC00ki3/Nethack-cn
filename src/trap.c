@@ -1371,7 +1371,7 @@ trapeffect_rocktrap(
             newsym(u.ux, u.uy); /* map the rock */
 
             if (!harmless) {
-                losehp(Maybe_Half_Phys(dmg), "落石", KILLED_BY_AN);
+                losehp(Maybe_Half_Phys(dmg), "一块落石", KILLED_BY);
                 exercise(A_STR, FALSE);
             }
         }
@@ -2304,7 +2304,7 @@ trapeffect_magic_trap(
             deltrap(trap);
             newsym(u.ux, u.uy); /* update position */
             You("被卷入了爆炸的魔力之中!");
-            losehp(rnd(10), "魔法爆炸", KILLED_BY_AN);
+            losehp(rnd(10), "一场魔法爆炸", KILLED_BY);
             Your("身体吸收了一些魔法能量!");
             u.uen = (u.uenmax += 2);
             if (u.uenmax > u.uenpeak)
@@ -2378,7 +2378,7 @@ trapeffect_anti_magic(
                      : (dmgval2 >= hp / 4) ? "非常疲惫."
                        : "呆滞.");
             /* opposite of magical explosion */
-            losehp(dmgval2, "反魔法内爆", KILLED_BY_AN);
+            losehp(dmgval2, "一场反魔法内爆", KILLED_BY);
         }
 
         /* if the drain amount is more than hero's maximum energy then up
@@ -4303,7 +4303,7 @@ dofiretrap(
     if (!num)
         You("未受伤害.");
     else
-        losehp(num, tower_of_flame, KILLED_BY_AN); /* fire damage */
+        losehp(num, tower_of_flame, KILLED_BY); /* fire damage */
     burn_away_slime();
 
     if (burnarmor(&gy.youmonst) || rn2(3)) {
@@ -6398,7 +6398,7 @@ chest_trap(
                 delobj(otmp);
             }
             wake_nearby(FALSE);
-            losehp(Maybe_Half_Phys(d(6, 6)), buf, KILLED_BY_AN);
+            losehp(Maybe_Half_Phys(d(6, 6)), buf, KILLED_BY);
             exercise(A_STR, FALSE);
             if (costly && loss) {
                 if (insider) {
@@ -6456,7 +6456,7 @@ chest_trap(
             }
             (void) destroy_items(&gy.youmonst, AD_ELEC, orig_dmg);
             if (dmg)
-                losehp(dmg, "电流冲击", KILLED_BY_AN);
+                losehp(dmg, "一阵电流冲击", KILLED_BY);
             break;
         } /* case 6 */
         case 5:
@@ -6702,7 +6702,7 @@ b_trapped(const char *item, int bodypart)
     Soundeffect(se_kaboom, 80);
     pline("嘭!! %s里藏了个炸弹!", The(item));
     wake_nearby(FALSE);
-    losehp(Maybe_Half_Phys(dmg), "爆炸", KILLED_BY_AN);
+    losehp(Maybe_Half_Phys(dmg), "一场爆炸", KILLED_BY);
     exercise(A_STR, FALSE);
     if (bodypart != NO_PART)
         exercise(A_CON, FALSE);

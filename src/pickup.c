@@ -2699,7 +2699,7 @@ in_container(struct obj *obj)
         else
             panic("in_container:  bag not found.");
 
-        losehp(d(6, 6), "魔法爆炸", KILLED_BY_AN);
+        losehp(d(6, 6), "一场魔法爆炸", KILLED_BY);
         gc.current_container = 0; /* baggone = TRUE; */
     }
 
@@ -3828,7 +3828,7 @@ tipcontainer(struct obj *box) /* or bag */
                     targetbox = 0; /* it's gone */
                     nobj = 0; /* stop tipping; want loop to exit 'normally' */
 
-                    losehp(d(6, 6), "魔法爆炸", KILLED_BY_AN);
+                    losehp(d(6, 6), "一场魔法爆炸", KILLED_BY);
                 } else {
                     (void) add_to_container(targetbox, otmp);
                 }

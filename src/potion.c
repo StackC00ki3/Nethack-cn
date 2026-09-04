@@ -736,7 +736,7 @@ peffect_water(struct obj *otmp)
                 set_ulycn(NON_PM); /* cure lycanthropy */
             }
             losehp(Maybe_Half_Phys(d(2, 6)), "圣水",
-                   KILLED_BY_AN);
+                   KILLED_BY);
         } else if (otmp->cursed) {
             You_feel("对你自己非常骄傲.");
             healup(d(2, 6), 0, 0, 0);
@@ -757,7 +757,7 @@ peffect_water(struct obj *otmp)
             if (u.ualign.type == A_LAWFUL) {
                 pline("这像%s一样烧!", hliquid("酸"));
                 losehp(Maybe_Half_Phys(d(2, 6)), "邪水",
-                       KILLED_BY_AN);
+                       KILLED_BY);
             } else
                 You_feel("充满恐惧.");
             if (ismnum(u.ulycn) && !Upolyd)
@@ -968,7 +968,7 @@ peffect_sickness(struct obj *otmp)
         pline("(但实际上它是有点不新鲜的%s. )", fruitname(TRUE));
         if (!Role_if(PM_HEALER)) {
             /* NB: blessed otmp->fromsink is not possible */
-            losehp(1, "轻度受污染的药水", KILLED_BY_AN);
+            losehp(1, "轻度受污染的药水", KILLED_BY);
         }
     } else {
         if (Poison_resistance)
@@ -995,11 +995,11 @@ peffect_sickness(struct obj *otmp)
                            KILLED_BY);
                 else
                     losehp(rnd(10) + 5 * !!(otmp->cursed), contaminant,
-                           KILLED_BY_AN);
+                           KILLED_BY);
             } else {
                 /* rnd loss is so that unblessed poorer than blessed */
                 losehp(1 + rn2(2), contaminant,
-                       (otmp->fromsink) ? KILLED_BY : KILLED_BY_AN);
+                       KILLED_BY); //冗余:(otmp->fromsink) ? KILLED_BY : KILLED_BY_AN);
             }
             exercise(A_CON, FALSE);
         }
@@ -1306,7 +1306,7 @@ peffect_acid(struct obj *otmp)
               otmp->blessed ? "有点烧" : otmp->cursed ? "非常烧"
                                                          : "像酸一样烧");
         dmg = d(otmp->cursed ? 2 : 1, otmp->blessed ? 4 : 8);
-        losehp(Maybe_Half_Phys(dmg), "酸液", KILLED_BY_AN);
+        losehp(Maybe_Half_Phys(dmg), "酸液", KILLED_BY);
         exercise(A_CON, FALSE);
     }
     if (Stoned)
@@ -1636,9 +1636,9 @@ potionhit(struct monst *mon, struct obj *obj, int how)
         pline_The("%s砸在你的%s上, 然后破碎了.", botlnam,
                   body_part(HEAD));
         losehp(Maybe_Half_Phys(rnd(2)),
-               (how == POTHIT_OTHER_THROW) ? "洒出的药水" /* scatter */
-                                           : "扔出的药水",
-               KILLED_BY_AN);
+               (how == POTHIT_OTHER_THROW) ? "一瓶洒出的药水" /* scatter */
+                                           : "一瓶扔出的药水",
+               KILLED_BY);
     } else {
         tx = mon->mx, ty = mon->my;
         /* sometimes it hits the saddle */
@@ -1699,7 +1699,7 @@ potionhit(struct monst *mon, struct obj *obj, int how)
                       obj->blessed ? "轻微地"
                                    : obj->cursed ? "严重地" : "");
                 dmg = d(obj->cursed ? 2 : 1, obj->blessed ? 4 : 8);
-                losehp(Maybe_Half_Phys(dmg), "酸液", KILLED_BY_AN);
+                losehp(Maybe_Half_Phys(dmg), "酸液", KILLED_BY);
             }
             break;
         }
@@ -2431,7 +2431,7 @@ dip_potion_explosion(struct obj *obj, int dmg)
             potionbreathe(obj);
         useupall(obj);
         losehp(dmg, /* not physical damage */
-               "化学事故", KILLED_BY_AN);
+               "死于化学事故", NO_KILLER_PREFIX);
         return TRUE;
     }
     return FALSE;

@@ -300,7 +300,7 @@ explode(
            so retain a copy of the current value for this explosion */
         str = strcpy(killr_buf, svk.killer.name);
         do_hallu = (Hallucination
-                    && (strstri(str, "的爆炸")
+                    && (strstri(str, "爆炸")
                         || strstri(str, "的爆炸")));
     }
     if (type == PHYS_EXPL_TYPE) {
@@ -643,11 +643,11 @@ explode(
                 rehumanize();
             } else {
                 if (olet == MON_EXPLODE) {
-                    if (generic) /* explosion was unseen; str=="explosion", */
+                    if (generic) { /* explosion was unseen; str=="explosion", */
                         ; /* svk.killer.name=="gas spore's explosion". */
-                    else if (str != svk.killer.name && str != hallu_buf)
-                        Strcpy(svk.killer.name, str);
-                    svk.killer.format = KILLED_BY_AN;
+                    } else if (str != svk.killer.name && str != hallu_buf){
+                        Sprintf(svk.killer.name, "%s", str); }
+                    svk.killer.format = NO_KILLER_PREFIX;
                 } else if (olet == TRAP_EXPLODE) {
                     svk.killer.format = NO_KILLER_PREFIX;
                     Snprintf(svk.killer.name, sizeof svk.killer.name,
@@ -1057,7 +1057,7 @@ mon_explodes(
      * also, it is used in explode() messages */
     Sprintf(svk.killer.name, "%s的爆炸",
             s_suffix(pmname(mon->data, Mgender(mon))));
-    svk.killer.format = KILLED_BY_AN;
+    svk.killer.format = KILLED_BY;
 
     explode(mon->mx, mon->my, type, dmg, MON_EXPLODE,
             adtyp_to_expltype(mattk->adtyp));

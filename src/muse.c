@@ -1622,7 +1622,7 @@ mbhitm(struct monst *mtmp, struct obj *otmp)
                 tmp = d(2, 12);
                 if (Half_spell_damage)
                     tmp = (tmp + 1) / 2;
-                losehp(tmp, "魔杖", KILLED_BY_AN);
+                losehp(tmp, "一根魔杖", KILLED_BY);
                 learnit = TRUE;
             } else {
                 pline_The("魔杖没有击中你.");
