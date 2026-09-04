@@ -455,6 +455,11 @@ describe_level(
         addbranch = (dflgs & 2) != 0;    /* False: status, True: livelog */
     int ret = 1;
 
+    if (addbranch/* && !(Is_knox(&u.uz)) && !(In_endgame(&u.uz))*/) { //先大单位再小单位
+        Sprintf(buf, "%s", svd.dcname[u.uz.dnum]);
+        /* 冗余: 大小写操作在中文语境下失效，考虑直接删除
+        (void) strsubst(buf, "The ", "the "); */
+    }
     if (Is_knox(&u.uz)) {
         Sprintf(buf, "%s", svd.dcname[u.uz.dnum]);
         addbranch = FALSE;
@@ -472,13 +477,8 @@ describe_level(
             Sprintf(buf, "%s:%-2d", /* "Dlvl:n" (grep fodder) */
                     In_tutorial(&u.uz) ? "教程" : "地牢", depth(&u.uz));
         else
-            Sprintf(buf, "%d层", depth(&u.uz));
+            Sprintf(eos(buf), "%d层", depth(&u.uz));
         ret = 0;
-    }
-    if (addbranch) {
-        Sprintf(eos(buf), ", %s", svd.dcname[u.uz.dnum]);
-        /* 冗余: 大小写操作在中文语境下失效，考虑直接删除
-        (void) strsubst(buf, "The ", "the "); */
     }
     if (addspace)
         Strcat(buf, " ");
