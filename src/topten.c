@@ -126,6 +126,9 @@ formatkiller(
         }
     }
 
+    if (diedof_sfx)
+        how = STARVING;
+
     buf[0] = '\0'; /* lint suppression */
     /* 无助时的具体原因("在...时")放到死亡原因前面 */
     if (incl_helpless && gm.multi < 0 && gm.multi_reason
@@ -167,25 +170,8 @@ formatkiller(
         FALLTHROUGH;
     }
         /*FALLTHRU*/
-    case KILLED_BY: {
-        const char *pfix;
-        boolean be_pfx;
-
-        if (diedof_sfx) {
-            /* "……爆炸/冻裂/沸腾/燃烧" 的死因统一显示为 "死于……" */
-            pfix = "死于";
-            be_pfx = FALSE;
-            /* 名字里可能已带 "死于"(如 "死于水晶球爆炸"), 去掉重复前缀 */
-            if (!strncmp(kname, "死于", strlen("死于")))
-                kname += strlen("死于");
-        } else {
-            pfix = killed_by_prefix[how];
-            be_pfx = (pfix[0] == 'b');
-            if (be_pfx)
-                ++pfix; /* 跳过 'b' 标记, 余下作后缀(如 "杀死") */
-        }
-        if (be_pfx) {
-            /* "被" + 名字 + 后缀, 如 "被小狗杀死" */
+    case KILLED_BY:
+        if (killed_by_prefix[how][0] == 'b') {
             Strcat(buf, "被");
             l = Strlen(buf);
             buf += l, siz -= l;
@@ -213,10 +199,9 @@ formatkiller(
                 *buf++ = c;
             }
             *buf = '\0';
-            Strcat(buf, pfix);
+            Strcat(buf, killed_by_prefix[how] + 1);
         } else {
-            /* 前缀 + 名字, 如 "死于饥饿" 或 "死于水晶球爆炸" */
-            (void) strncat(buf, pfix, siz - 1);
+            (void) strncat(buf, killed_by_prefix[how], siz - 1);
             l = Strlen(buf);
             buf += l, siz -= l;
             while (--siz > 0) {
@@ -236,7 +221,6 @@ formatkiller(
         l = Strlen(buf);
         buf += l, siz -= l;
         break;
-    }
     }
     
 
