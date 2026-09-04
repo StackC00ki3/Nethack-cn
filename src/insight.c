@@ -1886,11 +1886,11 @@ attributes_enlightenment(
         Strcpy(buf, an_pmname(&mons[u.ulycn],
                flags.female ? FEMALE : MALE));
         if (u.umonnum == u.ulycn) {
-            Strcat(buf, "是野兽形态");
+            Strcat(buf, "（野兽形态）");
             if (wizard)
                 Sprintf(eos(buf), " (%d)", u.mtimedone);
         }
-        you_are(buf, "");
+        enl_msg(You_, "是", "曾是", buf, "");
     }
     if (Unchanging && Upolyd) /* !Upolyd handled above */
         you_can("不会从当前形态变形", from_what(UNCHANGING));
