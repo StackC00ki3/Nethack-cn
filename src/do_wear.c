@@ -2256,7 +2256,7 @@ accessory_or_armor_on(struct obj *obj)
                 return ECMD_OK;
             }
             if (uleft && uright) {
-                There("没有多余的%s可以戴戒指.", /*危险:%s%s*/
+                You("没有多余的%s可以戴戒指.", /*危险:%s%s*/ //There
                       humanoid(gy.youmonst.data) ? "无名指" 
                       : fingers_or_gloves(FALSE)); /*修改语序:自己看*/
                 return ECMD_OK;
