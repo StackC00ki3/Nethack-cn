@@ -1402,7 +1402,7 @@ water_prayer(boolean bless_water)
             other = TRUE;
     }
     if (!Blind && changed) {
-        pline("%s药水落在祭坛上的片刻, 发出了%s光.",
+        pline("祭坛上的%s药水发出了片刻的%s光.",
               ((other && changed > 1L) ? "其中一些"
                                        : (other ? "其中一瓶" : "")),
               /*冗余:((other || changed > 1L) ? "" : ""), (changed > 1L ? "" : ""),*/
