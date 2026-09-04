@@ -41,6 +41,7 @@ staticfn void item_resistance_message(int, const char *, int);
 extern const char *const hu_stat[];     /* hunger status from eat.c */
 extern const char *const hu_stat_ui[];   /* hunger status display */
 extern const char *const enc_stat[]; /* encumbrance status from botl.c */
+extern const char *const enc_stat_ui[];
 
 static const char You_[] = "你", are[] = "", were[] = "曾",
                   have[] = "", had[] = "曾", can[] = "",
@@ -1213,7 +1214,7 @@ status_enlightenment(int mode, int final)
     if ((cap = near_capacity()) > UNENCUMBERED) {
         const char *adj = "?_?"; /* (should always get overridden) */
 
-        Strcpy(buf, enc_stat[cap]);
+        Strcpy(buf, enc_stat_ui[cap]);
         *buf = lowc(*buf);
         switch (cap) {
         case SLT_ENCUMBER:
