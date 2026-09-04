@@ -2613,7 +2613,7 @@ glibr(void)
             /* preceding msg was about non-dominant hand */
             which = URIGHTY ? "右" : "左";
         }
-        pline("%s%s%s%s%s%s从你的%s%s.", /*修改语序:pline("%s%s%s%s%s从你的%s%s.",*/
+        pline("%s%s%s%s%s%s从你的%s中%s.", /*修改语序:pline("%s%s%s%s%s从你的%s%s.",*/
               !strncmp(thiswep, "尸体", 6) ? "" : "你的",
               otherwep ? "另一" : "", xfl ? quantifier(otmp) : "", thiswep, xfl ? "也" : "",
               which, hand, otense(otmp, "滑落")); /*修改语序:otense(otmp, "滑落"), which, hand);*/
