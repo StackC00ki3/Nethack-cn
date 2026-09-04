@@ -121,6 +121,19 @@ formatkiller(
         FALLTHROUGH;
         /*FALLTHRU*/
     case NO_KILLER_PREFIX:
+        while (--siz > 0) {
+            c = *kname++;
+            if (!c)
+                break;
+            else if (c == ',')
+                c = ';';
+            else if (c == '=')
+                c = '_';
+            else if (c == '\t')
+                c = ' ';
+            *buf++ = c;
+        }
+        *buf = '\0';
         break;
     case KILLED_BY_AN: {
         char tmpname[BUFSZ];

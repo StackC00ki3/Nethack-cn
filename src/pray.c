@@ -695,8 +695,8 @@ fry_by_god(aligntyp resp_god, boolean via_disintegration)
 {
     You("%s!", !via_disintegration ? "烤得焦脆"
                                    : "分解成一堆灰尘");
-    svk.killer.format = DIED_OF; //危险:KILLED_BY;
-    Sprintf(svk.killer.name, "%s的愤怒", align_gname(resp_god));
+    svk.killer.format = NO_KILLER_PREFIX; //危险:KILLED_BY;
+    Sprintf(svk.killer.name, "死于%s的愤怒", align_gname(resp_god));
     done(DIED);
 }
 
