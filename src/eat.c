@@ -156,10 +156,10 @@ static const struct {
                 { "深油炸的", 60, 0, 1 },
                 { "川味的", 70, 1, 0 },
                 { "烧烤的", 80, 0, 0 },
-                { "炒的", 80, 0, 1 },
+                { "爆炒的", 80, 0, 1 },
                 { "清炒的", 95, 0, 0 },
                 { "糖制的", 100, 1, 0 },
-                { "浓的", 500, 1, 0 },
+                { "做成糊的", 500, 1, 0 },
                 { "", 0, 0, 0 } };
 #define TTSZ SIZE(tintxts)
 
@@ -1649,9 +1649,9 @@ consume_tin(const char *mesg)
             int alreadyglib = (int) (Glib & TIMEOUT);
 
             make_glib(alreadyglib + rn1(11, 5)); /* 5..15 */
-            pline("食用%s的食物让你的%s变得%s滑.",
+            pline("食用%s食物让你的%s变得%s滑.",
                   tintxts[r].txt, fingers_or_gloves(TRUE),
-                  alreadyglib ? "更" : "非常");
+                  alreadyglib ? "更" : "很");
         }
 
     } else { /* spinach... */
