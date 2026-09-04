@@ -1271,7 +1271,7 @@ trapeffect_dart_trap(
         }
         trap->once = 1;
         seetrap(trap);
-        pline("一支小飞镖射向你!");
+        pline("一枚小飞镖射向你!");
         otmp = t_missile(DART, trap);
         if (!rn2(6))
             otmp->opoisoned = 1;
