@@ -1685,11 +1685,11 @@ rloc_to_core(struct monst *mtmp, coordxy x, coordxy y, unsigned rlocflags)
                   : (du < olddu)                        ? "更近处"
                                                         : "更远处");
         } else {
-            pline("%s%s%s%s!", appearmsg ? Amonnam(mtmp) : Monnam(mtmp),
-                  appearmsg ? "突然" : "", !Blind ? "出现在" : "到达",
+            pline("%s%s%s%s%s!", appearmsg ? Amonnam(mtmp) : Monnam(mtmp),
+                  appearmsg ? "突然" : "", !Blind ? "出现" : "到达", (next ? "在" : nearu ? "在" : "")
                   next    ? next
                   : nearu ? nearu
-                          : "");
+                          : "了");
         }
         /* wand discovery only happens if a messaage is delivered (bug?);
            if spell or q.mechanic attack or artifact #invoke for banish
