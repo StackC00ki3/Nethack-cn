@@ -941,7 +941,7 @@ return_from_mtoss(
         if (notcaught) {
             (void) snuff_candle(otmp);
             if (!ship_object(otmp, x, y, FALSE)) {
-                if (flooreffects(otmp, x, y, "掉")) {
+                if (flooreffects(otmp, x, y, "被丢")) {
                     if (cansee(x, y))
                         newsym(x, y);
                     return;

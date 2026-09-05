@@ -248,7 +248,7 @@ flooreffects(
                             : "填上了坑");
             } else {
                 Soundeffect(se_boulder_drop, 100);
-                You_hear("一块巨石%s了.", verb);
+                You_hear("一块巨石%s了下去.", verb);
             }
         }
         /*
@@ -824,7 +824,7 @@ dropz(struct obj *obj, boolean with_impact)
                 (void) mpickobj(u.ustuck, obj);
         }
     } else {
-        if (flooreffects(obj, u.ux, u.uy, "丢"))
+        if (flooreffects(obj, u.ux, u.uy, "被丢"))
             return;
         place_object(obj, u.ux, u.uy);
         if (with_impact)

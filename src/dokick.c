@@ -638,7 +638,7 @@ really_kick_object(coordxy x, coordxy y)
             else /* don't leave no_charge set when outside shop */
                 gk.kickedobj->no_charge = 0;
         }
-        if (!flooreffects(gk.kickedobj, u.ux, u.uy, "掉落")) {
+        if (!flooreffects(gk.kickedobj, u.ux, u.uy, "掉")) {
             place_object(gk.kickedobj, u.ux, u.uy);
             impact_disturbs_zombies(gk.kickedobj, TRUE);
             stackobj(gk.kickedobj);
@@ -769,7 +769,7 @@ really_kick_object(coordxy x, coordxy y)
         costly = FALSE; /* already billed */
     }
 
-    if (flooreffects(gk.kickedobj, gb.bhitpos.x, gb.bhitpos.y, "掉落"))
+    if (flooreffects(gk.kickedobj, gb.bhitpos.x, gb.bhitpos.y, "掉"))
         return 1;
     if (costly) {
         long gtg = 0L;
