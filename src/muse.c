@@ -2941,7 +2941,7 @@ mon_consume_unstone(
     if (acid && !tinned && !resists_acid(mon)) {
         mon->mhp -= rnd(15);
         if (vis)
-            pline_mon(mon, "%s得了非常严重的胃酸不适.", Monnam(mon));
+            pline_mon(mon, "%s被酸得剧烈反胃.", Monnam(mon));
         if (DEADMONSTER(mon)) {
             pline_mon(mon, "%s死了!", Monnam(mon));
             if (by_you)

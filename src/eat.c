@@ -1932,7 +1932,7 @@ eatcorpse(struct obj *otmp)
         return 2;
     } else if (acidic(&mons[mnum]) && !Acid_resistance) {
         tp++;
-        You("得了非常严重的胃酸不适.");   /* not body_part() */
+        You("被酸得剧烈反胃.");   /* not body_part() */
         losehp(rnd(15), !glob ? "一具酸性尸体" : "一个酸性团怪",
                KILLED_BY); /* acid damage */
     } else if (poisonous(&mons[mnum]) && rn2(5)) {
