@@ -1438,7 +1438,7 @@ menu_display_page(
     if (menu->num_pages > 1) {
         int footer_x, footwidth, shoesize = menu->num_pages;
 
-        footwidth = (int) (2 + utf8str_width("(页数 X/Y)") + 2);
+        footwidth = (int) (2 + utf8str_width(" (页数 X/Y) ") + 2);
         while (shoesize >= 10) { /* possible for pickup from big piles... */
              /* room for wider feet; extra digit for both X and Y */
             footwidth += 2;
