@@ -6063,18 +6063,18 @@ readobjnam_preparse(struct _readobjnam_data *d)
             d->fake = 1, d->real = 0;
             /* ['real' isn't actually needed (unless we someday add
                "real gem" for random non-glass, non-stone)] */
-        } else if (!strncmpi(d->bp, "female ", l = 7) ||
+        } else if (cnstrcmpi(d->bp, "女武神", l) && (!strncmpi(d->bp, "female ", l = 7) ||
                 !cnstrcmpi(d->bp, "女性的", l) || !cnstrcmpi(d->bp, "雌性的", l) ||
                 !cnstrcmpi(d->bp, "女的", l)  || !cnstrcmpi(d->bp, "雌性", l)  || !cnstrcmpi(d->bp, "母的", l) ||
-                !cnstrcmpi(d->bp, "女", l) || !cnstrcmpi(d->bp, "雌", l) || !cnstrcmpi(d->bp, "母", l)) {
+                !cnstrcmpi(d->bp, "女", l) || !cnstrcmpi(d->bp, "雌", l) || !cnstrcmpi(d->bp, "母", l))) {
             d->mgend = FEMALE;
             /* if after "corpse/statue/figurine of", remove from string */
             if (save_bp)
                 strsubst(d->bp, "female ", ""), l = 0;
-        } else if (!strncmpi(d->bp, "male ", l = 5) ||
+        } else if (cnstrcmpi(d->bp, "公家", l) && (!strncmpi(d->bp, "male ", l = 5) ||
                 !cnstrcmpi(d->bp, "男性的", l) || !cnstrcmpi(d->bp, "雄性的", l) ||
                 !cnstrcmpi(d->bp, "男的", l)  || !cnstrcmpi(d->bp, "雄性", l)  || !cnstrcmpi(d->bp, "公的", l) ||
-                !cnstrcmpi(d->bp, "男", l) || !cnstrcmpi(d->bp, "雄", l) || !cnstrcmpi(d->bp, "公", l)) {
+                !cnstrcmpi(d->bp, "男", l) || !cnstrcmpi(d->bp, "雄", l) || !cnstrcmpi(d->bp, "公", l))) {
             d->mgend = MALE;
             if (save_bp)
                 strsubst(d->bp, "male ", ""), l = 0;
