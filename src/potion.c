@@ -785,7 +785,7 @@ peffect_booze(struct obj *otmp)
     newuhs(FALSE);
     exercise(A_WIS, FALSE);
     if (otmp->cursed) {
-        You("失去知觉.");
+        You("失去了知觉.");
         gm.multi = -rnd(15);
         gn.nomovemsg = "你头疼着醒来了.";
     }
