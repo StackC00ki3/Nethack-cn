@@ -323,8 +323,6 @@ obj_typename(int otyp)
     default:
         if (nn) {
             Strcat(buf, actualn);
-            if (GemStone(otyp))
-                Strcat(buf, "石头");
             if (dn)
                 Sprintf(eos(buf), " (%s)", dn);
         } else {
@@ -1351,9 +1349,6 @@ xname_flags(
             }
         } else {
             Strcat(buf, actualn);
-            if (GemStone(typ)){
-                Strcat(buf, "石头");
-            }
         }
         break;
     } /* gem */

@@ -938,7 +938,7 @@ merged(struct obj **potmp, struct obj **pobj)
         if (discovered && otmp->where == OBJ_INVENT
             && obj->how_lost != LOST_THROWN
             && otmp->how_lost != LOST_THROWN) {
-            pline("你通过比较它们对自己的物品有了更多了解.");
+            pline("你通过比较自己的物品对它们有了更多了解.");
         }
 
         obfree(obj, otmp); /* free(obj), bill->otmp */
