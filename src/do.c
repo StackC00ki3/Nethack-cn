@@ -688,10 +688,10 @@ canletgo(struct obj *obj, const char *word)
         if (*word) {
             /* getobj() ignores a count for throwing since that is
                implicitly forced to be 1; replicate its kludge... */
-            if (!strcmp(word, "throw") && obj->quan > 1L)
+            if ((!strcmp(word, "throw") || !strcmp(word, "投掷")) && obj->quan > 1L)
                 obj->corpsenm = 1;
             pline("出于某种原因, 你无法%s%s石头%s!", word,
-                  obj->corpsenm ? "这些" : "这块", plur(obj->quan));
+                  obj->corpsenm ? "这种" : "这块", plur(obj->quan));
         }
         obj->corpsenm = 0; /* reset */
         set_bknown(obj, 1);
