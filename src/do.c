@@ -691,7 +691,7 @@ canletgo(struct obj *obj, const char *word)
             if (!strcmp(word, "throw") && obj->quan > 1L)
                 obj->corpsenm = 1;
             pline("出于某种原因, 你无法%s%s石头%s!", word,
-                  obj->corpsenm ? "任何" : "", plur(obj->quan));
+                  obj->corpsenm ? "这些" : "这块", plur(obj->quan));
         }
         obj->corpsenm = 0; /* reset */
         set_bknown(obj, 1);
