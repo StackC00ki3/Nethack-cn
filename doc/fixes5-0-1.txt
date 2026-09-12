@@ -267,6 +267,12 @@ X11: implement all text attributes for menus
 X11: fix crash when loading a nonexistent font
 X11: use xft to render fonts
 X11: support tab-separated menu columns
+X11: support BMP, GIF and PNG tiles (pr #1666 by chasonr) 
+X11: remove the limit on the number of widgets managed in winlabel.c; it was
+	possible, though difficult, to exceed the limit; tabify the
+	#wizcustom menu and fix X11's handling of that menu; correctly
+	display tabs produced by the unpaid inventory command
+	(pr #1668 by chasonr)
 Unix: don't complain about MAXPLAYERS with unknown command line param
 
 
@@ -332,3 +338,5 @@ switch to using LUA_VERSION_NUM instead of LUA_VERSION_RELEASE_NUM for Lua
 	version checking
 include a set of decals (petmark and pilemark) in win/share/decals.txt
 	and adjust tile processing to include it
+preserve inactive level timestamps across saving and restoring so that
+	monster catch-up, including tameness loss, retains time spent away
