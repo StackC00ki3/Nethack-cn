@@ -104,6 +104,7 @@ sys/amiga/regex/
 #auto-generated files
 kanjifiles.txt
 
-# parallel-corpus generator output (regenerate with tools/parallel_corpus/run.py)
+#some local files
 corpus/
 tools/
+playground/
