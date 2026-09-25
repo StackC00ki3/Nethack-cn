@@ -1,4 +1,4 @@
-# NetHack 5.0  tribute       $NHDT-Date: 1726809275 2024/09/20 05:14:35 $  $NHDT-Branch: NetHack-5.0 $:$NHDT-Revision: 1.118 $
+# NetHack 5.0  tribute       $NHDT-Date: 1726809275 2024/09/20 05:14:35 $  $NHDT-Branch: NetHack-3.7 $:$NHDT-Revision: 1.118 $
 # Copyright (c) 2017 by Robert Patrick Rankin
 # NetHack may be freely redistributed.  See license for details.
 # A tribute introduced in NetHack 3.6.0 to:
@@ -1670,54 +1670,52 @@
 %e passage
 # p. 205
 %passage 11
-"Might have been just an innocent bystander, sir," said Carrot.
+"可能只是个无辜的旁观者, 长官."胡萝卜说.
 
-"What, in Ankh-Morpork?"
+"什么, 在安卡-莫波克?"
 
-"Yes, sir."
+"是的, 长官."
 
-"We should have grabbed him, then, just for the rarity value," said Vimes.
+"那我们当时就该抓住他, 单凭稀罕劲儿也值了."维姆斯说.
 
-  [Guards! Guards!, by Terry Pratchett]
+  [卫兵! 卫兵!, 特里·普拉切特 著]
 %e passage
 # pp. 262-263 (passage is a footnote; 'practise', 'practised' are accurate)
 %passage 12
-A number of religions in Ankh-Morpork still practised human sacrifice,
-except that they really didn't need to practise any more because they had
-got so good at it.  City law said that only condemned criminals should be
-used, but that was all right because in most of the religions refusing to
-volunteer for sacrifice was an offense punishable by death.
+安卡-莫波克有不少宗教仍在实行活人献祭--不过它们
+其实已经不需要再"练习"了, 因为它们早已技艺纯熟. 城市法律
+规定, 只能使用已被定罪的罪犯, 但这不成问题, 因为在大多数
+这类宗教中, 拒绝自愿献祭本身就是一项可判处死刑的罪行.
 
-  [Guards! Guards!, by Terry Pratchett]
+  [卫兵! 卫兵!, 特里·普拉切特 著]
 %e passage
 # p. 292
 %passage 13
-There were times when an ape had to do what a man had to do...
+有些时候, 一只猩猩必须去做一个人该做的事...
 
-The orangutan threw a complex salute and swung away into the darkness.
+那只猩猩行了一个复杂的礼, 随即荡入黑暗之中.
 
-  [Guards! Guards!, by Terry Pratchett]
+  [卫兵! 卫兵!, 特里·普拉切特 著]
 %e passage
 # pp. 299-300 + 325 (final part comes quite a bit later; Carrot is trying to
 #                    alert oblivious Sergeant Colon that the dragon is coming)
 %passage 14
-"This is what it comes to!" muttered Colon.  "Decent women can't walk down
-the street without being eaten!  Right, you bastards, you're... you're
-/geography/--"
+"事情竟到了这地步!"考林咕哝道, "正经女人走在街上
+都免不了被吃掉! 行吧, 你们这帮混蛋, 你们...你们是'地理'--"
 
-"Sergeant!" Carrot repeated urgently.
+"中士!"胡萝卜再次急促地喊道.
 
-"It's history, not geography," said Nobby.  "That's what you're supposed to
-say.  History.  'You're history!' you say."
+"是历史, 不是地理."诺比说, "你该说的应该
+是那个. 历史. 你得说'你们成了历史!'"
 
-"Well, whatever," snapped Colon.  "Let's see now--"
+"行行, 随便吧."考林没好气地说, "现在看我的--"
 
-[...(quite a while later)...]
+...(过了好一阵子)...
 
-"You heard the Man," he rasped.  "One false move and you're... you're--" he
-took a desperate stab at it--"you're Home Economics!"
+"你们听见那位的话了."他嘶哑地说, "谁要敢轻举妄动, 你们
+就是...你们就是--"他绝望地奋力一搏--"你们就是家政学!"
 
-  [Guards! Guards!, by Terry Pratchett]
+  [卫兵! 卫兵!, 特里·普拉切特 著]
 %e passage
 %e title
 #
@@ -1731,195 +1729,180 @@ took a desperate stab at it--"you're Home Economics!"
 %title Eric (9)
 # pp. 3-4 (Harper Torch edition)
 %passage 1
-No enemies had ever taken Ankh-Morpork.  Well, /technically/ they had,
-quite often; the city welcomed free-spending barbarian invaders, but
-somehow the puzzled raiders always found, after a few days, that they
-didn't own their own horses anymore, and within a couple of months they
-were just another minority group with its own graffiti and food shops.
+没有敌人曾攻占过安卡-莫波克. 好吧, 从技术上来说, 他们
+攻占过, 而且相当频繁; 这座城市欢迎挥金如土的野蛮人
+入侵者, 但不知怎的, 那些困惑的掠夺者总在几天后发现, 他们不再
+拥有自己的马匹了, 而几个月之内, 他们就只是又一个拥有自己的涂鸦
+和食品店的少数族群了.
 
-  [Eric, by Terry Pratchett]
+  [埃里克, 特里·普拉切特 著]
 %e passage
 # p. 195
 %passage 2
-"I can see blue sky!" said Eric.  "Where do you think we'll come out?" he
-added.  "And when?"
+"我看见蓝天了!"埃里克说."你觉得我们会从哪儿
+出去?"他又问,"还有, 什么时候?"
 
-"Anywhere," said Rincewind.  "Anytime."
+"任何地方,"灵思风说,"任何时间."
 
-He looked down at the broad steps they were climbing.  They were something
-of a novelty; each one was built out of large stone letters.  The one he
-was just stepping on to, for example, read: I Meant It For The Best.
+他低头看向他们正在攀登的宽阔台阶. 这些台阶倒是
+新鲜玩意儿; 每一级都是由巨大的石头字母拼成的. 比如他正要
+踩上去的那一级, 上面写着: 我是为你好.
 
-The next one was: I Thought You'd Like It.
+下一级是: 我以为你会喜欢.
 
-Eric was standing on: For The Sake Of The Children.
+埃里克正站在: 为了孩子.
 
-'Weird, isn't it?' he said.  'Why do it like this?'
+"挺古怪的, 是吧?"他说,"为什么要弄成这样?"
 
-'I think they're meant to be good intentions,' said Rincewind.  This was a
-road to Hell, and demons were, after all, traditionalists.
+"我想它们代表的是好意吧,"灵思风说. 这是一条通往
+地狱的路, 而恶魔嘛, 毕竟都是传统主义者.
 
-  [Eric, by Terry Pratchett]
+  [埃里克, 特里·普拉切特 著]
 %e passage
 # pp. 9-10 (passage has an interesting start but not much of a finish...)
 %passage 3
-"It's a haunting," he ventured.  "Some sort of ghost, maybe.  A bell, book
-and candle job."
+"这像是闹鬼,"他试探着说, "也许是某种幽灵. 得用上铃铛, 圣经和
+蜡烛那一套."
 
-The Bursar sighed.  "We tried that, Archchancellor."
+财政官叹了口气."我们试过了, 校长."
 
-The Archchancellor leaned toward him.
+校长朝他凑了过去.
 
-"Eh?" he said.
+"嗯?"他说.
 
-"I /said/, we tried that, Archchancellor," said the Bursar loudly,
-directing his voice at the old man's ear.  "After dinner, you remember?
-We used Humptemper's /Names of the Ants/ and rang Old Tom."(1)
+"我说, 我们试过了, 校长,"财政官提高嗓门, 把声音对准
+老人的耳朵,"晚饭后, 您记得吗? 我们用了汉普坦珀的
+'蚂蚁之名', 还敲了老汤姆钟."(1)
 
-"Did we, indeed.  Worked, did it?"
+"是吗, 我们确实敲了. 管用了吗?"
 
-"/No/, Archchancellor."
+"没, 校长."
 
-"Eh?"
+"嗯?"
 
-(1) Old Tom was the single cracked bronze bell in the University bell
-tower.  The clapper dropped out shortly after it was cast, but the bell
-still tolled out some tremendously sonorous silences every hour.
+(1) 老汤姆钟是大学钟楼里那口独一的有裂纹的铜钟. 铸成后
+不久钟舌就掉了, 但这口钟依然每小時敲响一阵极其洪亮的沉默.
 
-  [Eric, by Terry Pratchett]
+  [埃里克, 特里·普拉切特 著]
 %e passage
 # pp. 14-15 (the top wizards have performed the Rite of AshkEnte)
 %passage 4
-Death pointedly picked invisible particles off the edge of his scythe.
+死神刻意地从他的镰刀边缘拈掉看不见的碎屑.
 
-The Archchancellor cupped a gnarled hand over his ear.
+校长把一只布满老茧的手拢在耳朵上.
 
-"What'd he say?  Who's the fella with the stick?"
+"他说什么? 那个拿棍子的家伙是谁?"
 
-"It's Death, Archchancellor," said the Bursar patiently.
+"是死神, 校长,"财政官耐心地说.
 
-"Eh?"
+"嗯?"
 
-"It's Death, sir.  /You/ know."
+"是死神, 先生. 您知道的."
 
-"Tell him we don't want any," said the old wizard, waving his stick.
+"告诉他我们不需要," 老巫师挥了挥他的棍子说.
 
-The Bursar sighed.  "We summoned him, Archchancellor."
+财政官叹了口气."是我们召唤他来的, 校长."
 
-"Is it?  What'd we go and do that for?  Bloody silly thing to do."
+"是吗? 我们干嘛要那么做? 真是蠢透了."
 
-The Bursar gave Death an embarrassed grin.  He was on the point of asking
-him to excuse the Archchancellor on account of age, but realized that this
-would in the circumstances be a complete waste of breath.
+财政官朝死神露出一个尴尬的笑容. 他正想请
+死神原谅校长年事已高, 但随即意识到在这种情况下那完全是白费口舌.
 
-"Are we talking about the wizard Rincewind?  The one with the--" the Bursar
-gave a shudder-- "horrible Luggage on legs?  But he got blown up when there
-was all that business with the sourcerer, didn't he?"(1)
+"我们是在说那个叫灵思风的巫师吗? 就是那个带着--"财政官打了个
+哆嗦--"可怕的, 长着腿的行李箱的家伙? 但在那次巫术事件中他不是
+被炸死了吗?"(1)
 
-INTO THE DUNGEON DIMENSIONS.  AND NOW HE IS TRYING TO GET BACK HOME.
+被炸进了地牢维度. 现在他正设法回家.
 
-(1) The Bursar was referring obliquely to the difficult occasion when the
-University very nearly caused the end of the world, and would in fact have
-done so had it not been for a chain of events involving Rincewind, a magic
-carpet and a half-brick in a sock.  (See /Sourcery/.)  The whole affair
-was very embarrassing to wizards, as it always is to people who find out
-afterward that they were on the wrong side all along,(2) and it is
-remarkable how many of the University's senior staff were now adamant that
-at the time they had been off sick, visiting their aunt, or doing research
-with the door locked while humming loudly and had had no idea of what was
-going on outside.  There had been some desultory talk about putting up a
-statue to Rincewind but, by the curious alchemy that tends to apply in
-these sensitive issues, this quickly became a plaque, then a note on the
-Role of Honor, and finally a motion of censure for being improperly dressed.
+(1) 财政官隐晦地指的是那次大学差点导致世界末日的
+棘手事件——事实上, 若不是因为一连串涉及灵思风, 一块魔法飞毯和
+一只袜子里装着半块砖头的事件, 世界确实就毁灭了. (参见巫术)
+整件事让巫师们非常难堪, 就像所有事后才发现自己一直
+站在错误一方的人一样(2); 值得注意的是, 大学里有多少高级教员
+现在都坚称, 当时他们要么在请病假, 要么在探望姑妈, 要么锁着门
+哼哼唧唧地做研究, 完全不知道外面发生了什么. 曾经有人三三两两地
+议论过要给灵思风立一座雕像, 但经由那些在敏感问题上惯常出现的
+奇异化学反应, 这很快变成了一块牌匾, 然后变成荣誉榜上的一条
+注记, 最后变成了一项因穿着不当而提出的谴责动议.
 
-(2) ie, the one that lost.
+(2) 也就是, 输了的那一方.
 
-  [Eric, by Terry Pratchett]
+  [埃里克, 特里·普拉切特 著]
 %e passage
 # p. 34
 %passage 5
-"Not that he was particularly successful.  It was all a bit trial and
-wossname."
+"倒也不是说他特别成功. 那一切都有点像瞎试胡搞, 还有那个什么来着."
 
-"I thought you said great big scaly--"
+"我还以为你说的是那种又大又吓人的鳞--"
 
-"Oh, /yes/.  But that wasn't what he was after.  He was trying to conjure
-up a succubus."  It should be impossible to leer when all you've got is a
-beak, but the parrot managed it.  "That's a female demon what comes in the
-night and makes mad passionate wossn--"
+"哦, 是. 但那不是他想要的. 他试图召唤的是一个
+魅魔."按理说, 光有一张鸟喙是没法露出淫笑的, 但这只
+鹦鹉做到了."那是一种女恶魔, 夜里会来找你, 跟你干那种
+干柴烈火的什么--"
 
-"I've heard of them," said Rincewind.  "Bloody dangerous things."
+"我听说过它们,"灵思风说, "该死地危险的东西."
 
-The parrot put its head on one side.  "It never worked.  All he ever got
-was a neuralger."
+鹦鹉歪了歪脑袋. "从来没成功过. 他召来的一直都是个头痛魔."
 
-"What's that?"
+"那是什么?"
 
-"It's a demon that comes and has a headache at you."
+"那是一种恶魔, 它会来找你, 然后冲你发作头痛."
 
-  [Eric, by Terry Pratchett]
+  [埃里克, 特里·普拉切特 著]
 %e passage
 # p. 35 (passage is a footnote)
 %passage 6
-Demons and their Hell are quite different from the Dungeon Dimensions,
-those endless parallel wastelands outside space and time.  The sad, mad
-Things in the Dungeon Dimensions have no understanding of the world but
-simply crave light and shape and try to warm themselves by the fires of
-reality, clustering around it with about the same effect--if they ever
-broke through--as an ocean trying to warm itself around a candle.  Whereas
-demons belong to the same space-time wossname, more or less, as humans,
-and have a deep and abiding interest in humanity's day-to-day affairs.
-Interestingly enough, the gods of the Disc have never bothered much about
-judging the souls of the dead, so people can only go to hell if that's
-where they believe, in their deepest heart, that they deserve to go.
-Which they won't do if they don't know about it.  This explains why it is
-important to shoot missionaries on sight.
+恶魔和他们的地狱, 与地牢维度截然不同--那是
+时空之外无尽而平行的荒原. 地牢维度里那些悲哀而疯狂之物, 对
+世界全无理解, 只是渴求光明与形态, 试图在现实的火焰边取暖: 它们
+簇拥在现实周围, 其效果--倘若它们真能突破进来--大约就像是
+一片汪洋试图围着一根蜡烛取暖. 而恶魔则或多或少与人类同属
+一个时空那什么玩意儿, 并且对人类的日常事务抱有深切而持久的
+兴趣. 有趣的是, 碟形世界的众神向来不怎么费心去审判死者的
+灵魂, 所以人只有在自己内心深处深信自己活该下地狱时, 才会去到
+地狱. 而如果他们根本不知道地狱的存在, 就不会去那里. 这就解释了
+为什么见到传教士就立即射杀是件很重要的事.
 
-  [Eric, by Terry Pratchett]
+  [埃里克, 特里·普拉切特 著]
 %e passage
 # p. 153
 %passage 7
-"Multiple exclamation marks," he went on, shaking his head, "are a sure
-sign of a diseased mind."
+"多个感叹号,"他摇摇头继续说道, "绝对是精神错乱的标志."
 
-  [Eric, by Terry Pratchett]
+  [埃里克, 特里·普拉切特 著]
 %e passage
 # pp. 178-179 (Ponce da Quirm, encountered in hell)
 %passage 8
-"So you didn't find the Fountain of Youth, then," he said, feeling that he
-should make some conversation.
+"这么说, 你没找到青春之泉咯?"他说, 觉得自己该找点话说说.
 
-"Oh, but I did," said da Quirm earnestly.  "A clear spring, deep in the
-jungle.  It was very impressive.  I had a good long drink, too.  Or draft,
-which I think is the more appropriate word.
+"哦, 可我找到了,"达·奎姆诚恳地说, "一泓清澈的泉水, 在丛林
+深处. 那景象非常壮观. 我还痛痛快快地喝了一大口呢. 或者
+说饮了一大口, 我觉得这个词更合适."
 
-"And--?" said Rincewind.
+"然后呢--?"灵思风说.
 
-"It definitely worked.  Yes.  For a while there I could definitely feel
-myself getting younger.
+"确实管用了. 没错. 有那么一阵子, 我能清楚地感觉到自己在变年轻."
 
-"But--" Rincewind waved a vague hand to take in da Quirm, the treadmill,
-the towering circles of the Pit.
+"但是--"灵思风含含糊糊地挥了挥手, 指了指达·奎姆那台踏车, 以及
+深渊地狱那层层高耸的环形圈.
 
-"Ah," said the old man.  "Of course, that's the really annoying bit.  I'd
-read so much about the Fountain, and you'd have thought someone in all
-those books would have mentioned the really vital thing about the water,
-wouldn't you?"
+"啊,"老人说, "当然, 这才是最让人恼火的地方. 我读过那么多关于
+青春之泉的书, 你肯定会觉得, 那么多书里总该有人提到那泉水
+最关键的一点吧, 你不觉得吗?"
 
-"Which was--?"
+"那就是--?"
 
-"/Boil it first./  Says it all, doesn't it?  Terrible shame, really."
+"得先烧开. 这就说明一切了, 不是吗? 真是太可惜了."
 
-  [Eric, by Terry Pratchett]
+  [埃里克, 特里·普拉切特 著]
 %e passage
 # p. 179
 %passage 9
-The Luggage trotted down the great spiral road that linked the circles of
-the Pit.  Even if conditions had been normal it probably would not have
-attracted much attention.  If anything, it was rather less astonishing
-than most of the denizens.
+行李箱沿着那条连接深渊地狱各层环形圈的螺旋大路小跑而下. 即使
+在正常情况下, 它大概也不会引起太多注意. 如果说起来, 它比
+那里大多数居民还要不那么令人吃惊.
 
-  [Eric, by Terry Pratchett]
+  [埃里克, 特里·普拉切特 著]
 %e passage
 %e title
 #
@@ -1928,267 +1911,238 @@ than most of the denizens.
 %title Moving Pictures (16)
 # p. 7 (ROC Edition)
 %passage 1
-This is space.  It's sometimes called the final frontier.
+这是太空. 有时它被称为最后的边疆.
 
-(Except that of course you can't have a /final/ frontier, because there'd
-be nothing for it to be a frontier /to/, but as frontiers go, it's pretty
-penultimate...)
+(当然, 你不可能真的有一个最后的边疆, 因为那就没什么
+可让它作为边疆去通向的地方了, 不过, 作为边疆而言, 它也算
+相当接近终极的了...)
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # pp. 22-23 (very short but happens to span a page boundary...)
 %passage 2
-By and large, the only skill the alchemists of Ankh-Morpork had discovered
-so far was the ability to turn gold into less gold.
+总的来说, 安卡-莫波克的炼金术士们迄今为止
+所掌握的惟一技能, 就是把黄金变成更少的黄金.
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # pp. 44, 45, 46 (multiple paragraphs skipped in the first two gaps;
 #                 the dog is Gaspode, who can talk but conceals that from
 #                 almost everybody; his use of 'bin' for 'been' is accurate)
 %passage 3
-He looked down.  There was a dog sitting by his feet.
+他低头看去. 脚边蹲着一只狗.
 
-It was small, bow-legged and wiry, and basically grey but with patches of
-brown, white, and black in outlying areas, and it was staring.
+那狗个子很小, 罗圈腿, 精瘦结实, 底色大致是灰色, 但在
+边缘处夹杂着棕色, 白色和黑色的斑块, 正目不转睛地盯着他.
 
-It was certainly the most penetrating stare Victor had ever seen.  It
-wasn't menacing, or fawning.  It was just very slow and very thorough, as
-though the dog was memorising details so that it could give a full
-description to the authorities later.
-
-[...]
-
-Victor let his gaze slide downwards.  There was nothing there but the little
-dog, industriously scratching itself.  It looked up slowly, and said "Woof?"
+那无疑是他见过的最具穿透力的凝视. 既不吓人, 也不谄媚. 只是
+非常缓慢, 非常细致, 仿佛狗正在默默记下细节, 好在之后向当局
+提供一份完整的描述. 
 
 [...]
 
-Victor poked an exploratory finger in his ear.  It must have  been a trick
-of an echo, or something.  It wasn't that the dog had gone "woof!", although
-that was practically unique in itself; most dogs in the universe /never/
-went "woof!", they had complicated barks like "whuuugh!" and "hwhoouf!".
-No, it was that it hadn't in fact /barked/ at all.  It had /said/ "woof".
+维克多的目光往下滑去. 那里什么也没有, 只有那只小狗正起劲地
+挠着自己. 它慢慢抬起头, 叫了一声: "汪?"
 
 [...]
 
-One of the last things Victor remembered was a voice beside his knee saying,
-"Could have bin worse, mister.  I could have said 'miaow'."
+维克多试探性地把一根手指伸进耳朵掏了掏. 那一定是回声的把戏, 或是
+什么别的东西. 倒不是说那狗叫了一声"汪!"--尽管这本身就已经近乎
+独一无二了; 宇宙中的大多数狗从来不会叫"汪!", 它们发出的
+是像"呜嗷!"和"呼嗷!"这样复杂的吠声. 不, 问题在于, 它事实上
+根本没有吠叫. 它说了一声汪.
 
-  [Moving Pictures, by Terry Pratchett]
+[...]
+
+维克多记得的最后一件事, 是膝盖旁传来一个声音说:"本来还能
+更糟的, 先生. 我本来可以说喵的."
+
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # p. 322
 %passage 4
-"'Twas beauty killed the beast," said the Dean, who liked to say things
-like that.
+"是美人杀死了野兽,"院长说, 他就喜欢说这类话.
 
-"No it wasn't," said the Chair.  "It was it splatting into the ground like
-that."
+"不是的,"主席说, "是它那样啪地砸在地上摔死的."
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # p. 12
 %passage 5
-There's a saying that all roads lead to Ankh-Morpork, greatest of Discworld
-cities.
+有句俗话说, 条条大路通安卡-莫波克--碟形世界最伟大的城市.
 
-At least, there's a /saying/ that there's a saying that all roads lead to
-Ankh-Morpork.
+至少, 有句俗话说, 有这么一句俗话, 说条条大路都通向安卡-莫波克.
 
-And it's wrong.  All roads lead /away/ from Ankh-Morpork, but sometimes
-people just walk along them the wrong way.
+但这话不对. 条条大路都远离安卡-莫波克, 只不过有时候人们是反着走的.
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # p. 34 (Victor Tugelbend and Ponder Stibbons are students at Unseen Uni.)
 %passage 6
-"Rain's stopped.  Let's go over the wall," he said.  "We deserve a drink."
+"雨停了. 我们翻墙出去吧,"他说,"我们该喝一杯."
 
-Victor waggled a finger.  "Just one drink, then.  Got to keep sober," he
-said.  "It's Finals tomorrow.  Got to keep a clear head!"
+维克多摇了摇手指. "那就只喝一杯. 得保持清醒,"他说,"明天
+期末考. 头脑必须清醒!"
 
-"Huh!", said Ponder.
+"哼!"庞德说.
 
-Of course, it's very important to be sober when you take an exam.  Many
-worthwhile careers in the street-cleansing, fruit-picking and subway-guitar-
-playing industries have been founded on a lack of understanding of this
-simple fact.
+当然, 考试时保持清醒非常重要. 街头清洁, 摘水果, 还有地铁弹吉他
+这些行业里, 许多颇有前途的职业生涯, 都是因为不了解这个简单事实才
+建立起来的.
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # p. 37
 %passage 7
-In a sense which his tutors couldn't quite define, much to their annoyance,
-Victor Tugelbend was also the laziest person in the history of the world.
+在一种他的导师们无法确切定义, 令他们颇为恼火的意义上, 维克多·图格尔本德还是世界历史上最懒的人.
 
-Not simply, ordinarily lazy.  Ordinary laziness was merely the absence of
-effort.  Victor had passed through there a long time ago, had gone straight
-through commonplace idleness and out on the far side.  He put more effort
-into avoiding work than most people put into hard labour.
+不是简单的, 普通的懒. 普通的懒惰只不过是不付出努力. 维克多很久以前
+就已经经过那个阶段, 径直穿过平庸的懒散, 到了另一头. 他为了避免
+工作所付出的努力, 比大多数人在苦干中付出的还要多.
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # p. 60
 %passage 8
-Cut-me-own-Throat Dibbler was one of those rare people with the ability to
-think in straight lines.
+割喉迪布勒是那种少有的能直线思考的人.
 
-Most people think in curves and zig-zags.  For example, they start with a
-thought like:  I wonder how I can become very rich, and then proceed along
-an uncertain course which includes thoughts like:  I wonder what's for
-supper, and:  I wonder who I know that can lend me five dollars?
+大多数人思考时走的是曲线和之字形. 比方说, 他们从一个念头
+开始, 比如: 我在想怎么才能变得非常富有, 然后沿着一条不确定的
+路线前进, 中间夹杂着这样的念头: 我在想晚饭吃什么, 以及: 我在想
+我认识谁能借我五块钱?
 
-Whereas Throat was one of those people who could identify the thought at the
-other end of the process, in this case /I am now very rich/, draw a line
-between the two, and then think his way along it, slowly and patiently,
-until he got to the other end.
+而割喉则是那种能辨认出这个过程另一端的念头的人--在这个例子里
+就是我现在非常富有--在两者之间画一条直线, 然后沿着这条线一路
+想下去, 缓慢而耐心, 直到抵达另一端.
 
-Not that it worked.  There was always, he found, some small but vital flaw
-in the process.  It generally involved a strange reluctance on the part of
-people to buy what he had to sell.
+倒不是说这办法真管用. 他发现, 过程中总会有某个微小但致命的缺陷. 通常
+都涉及人们莫名其妙地不愿意买他要卖的东西.
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # pp. 71-72
 %passage 9
-"Tell me, Mr Dibbler." said Silverfish, "what exactly is your profession?"
+"告诉我, 迪布勒先生,"银鱼说,"你的职业究竟是什么?"
 
-"I sell merchandise," said Dibbler.
+"我卖商品,"迪布勒说.
 
-"Mostly sausages," Victor volunteered.
+"主要是香肠,"维克多主动补充道.
 
-"/And/ merchandise," said Dibbler, sharply.  "I only sell sausages when the
-merchandising trade is a bit slow."
+"还兼营商品,"迪布勒尖锐地说,"只有在商品生意有点冷清的时候, 我才卖香肠."
 
-"And the sale of sausages leads you to believe you can make better moving
-pictures?" said Silverfish.  "Anyone can sell sausages!  Isn't that so,
-Victor?"
+"而卖香肠让你觉得自己能拍出更好的电影?"银鱼说,"香肠谁都会卖! 是不是这样, 维克多?"
 
-"Well..." said Victor, reluctantly.  No-one except Dibbler could possibly
-sell Dibbler's sausages.
+"这个嘛..."维克多不情愿地说. 除了迪布勒, 根本不可能有人卖掉迪布勒的香肠.
 
-"There you are then," said Silverfish.
+"这不就结了,"银鱼说.
 
-"The thing is," said Victor, "that Mr Dibbler can even sell sausages to
-people who have bought them off him /before/."
+"问题在于,"维克多说,"迪布勒先生甚至能把香肠卖给以前买过他香肠的人."
 
-"That's right!" said Dibbler.  He beamed at Victor.
+"没错!"迪布勒说. 他冲维克多眉开眼笑.
 
-"And a man who could sell Mr Dibbler's sausages twice could sell anything,"
-said Victor.
+"而一个能把迪布勒先生的香肠卖出去两次的人, 什么都能卖出去,"维克多说.
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # pp. 111-112 ('dis', 'ort', 'yore', 'finking', 'mayonnaisey', 'specialitay',
 #              'de lar mayson' all accurate)
 %passage 10
-Borgle's commissary had decided to experiment with salads tonight.  The
-nearest salad growing district was thirty slow miles away.
+博格尔食堂今晚决定尝试做沙拉. 最近的沙拉种植区在三十英里慢路之外.
 
-"What dis?" demanded a troll, holding up something limp and brown.
+"这啥?"一个巨魔举起一坨软塌塌的棕色东西质问道.
 
-Fruntkin the short-order chef hazarded a guess.
+快餐厨师弗兰特金壮着胆子猜了猜.
 
-"Celery?" he said.  He peered closer.  "Yeah, celery."
+"芹菜?"他说. 他凑近细看."对, 芹菜."
 
-"It /brown/."
+"它是棕的."
 
-"'S'right.  'S'right!  Ripe celery ort to be brown," said Fruntkin, quickly.
-"Shows it's ripe," he added.
+"没错儿. 没错儿! 熟芹菜就该是棕的,"弗兰特金赶紧说."这说明它熟了,"他补了一句.
 
-"It should be /green/."
+"它应该是绿的."
 
-"Nah.  Yore finking about the tomatoes," said Fruntkin.
+"不. 你记成西红柿了,"弗兰特金说.
 
-"Yeah, and what's this runny stuff?" said a man in the queue.
+"是啊, 那这稀糊糊的是啥?"队伍里一个男人说.
 
-Fruntkin drew himself up to his full height.
+弗兰特金挺直了身子, 摆出最高大的架势.
 
-"That," he said, "is the mayonnaisey.  Made it myself.  Out of a /book/, he
-added proudly.
+"那个,"他说,"是蛋黄酱. 我自己做的. 照着书做的,"他自豪地补充道.
 
-"Yead, I expect you did," said the man, prodding it.  "Clearly oil, eggs
-and vinegar were not involved, right?"
+"是啊, 我猜也是,"那人边说边戳了戳它."显然里面没放油, 鸡蛋和醋, 对吧?"
 
-"Specialitay de lar mayson," said Fruntkin.
+"法式招牌菜, 德·拉·梅森,"弗兰特金说.
 
-"Right, right," said the man.  "Only it's attacking my lettuce."
+"行, 行,"那人说."只不过它在攻击我的生菜."
 
-Fruntkin grasped his ladle angrily.
+弗兰特金愤怒地抓起他的汤勺.
 
-"Look--" he began.
+"你看--"他刚开口.
 
-"No, it's all right," said the prospective diner.  "The slugs have formed a
-defensive ring."
+"不, 没事,"这位潜在食客说."鼻涕虫已经结成防御圈了."
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # p. 137 (CMOT Dibbler has become a director, Rock is a troll actor)
 %passage 11
-"Er, I was just wondering, Mr Dibbler... what is my motivation for this
-scene?"
+"呃, 我只是在想, 迪布勒先生...我在这场戏里的动机是什么?"
 
-"Motivation?"
+"动机?"
 
-"Yes.  Er.  I got to know, see," said Rock.
+"对. 呃. 我得知道啊, 你瞧,"洛克说.
 
-"How about:  I'll fire you if you don't do it properly?"
+"要不这样: 你要是不好好演, 我就炒了你?"
 
-Rock grinned.  "Right you are, Mr Dibbler," he said.
+洛克咧嘴一笑."好嘞, 迪布勒先生,"他说.
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # p. 189
 %passage 12
-Magic wasn't difficult.  That was the big secret that the whole baroque
-edifice of wizardry had been set up to conceal.  Anyone with a bit of
-intelligence and enough perseverance could do magic, which was why the
-wizards cloaked it with rituals and the whole pointy-hat business.
+魔法并不难. 这就是整个巴洛克式的巫师体系被建立起来所要
+掩盖的大秘密. 任何有点头脑并且足够执着的人都能施展魔法, 所以巫师们
+才用各种仪式和那套尖帽子把戏把它遮掩起来.
 
-The trick was to do magic and /get away with it/.
+诀窍在于施展魔法并且安然脱身.
 
-Because it was as if the human race was a field of corn and magic helped
-the users grow just that bit taller, so that they stood out.  That
-attracted the attention of gods and--Victor hesitated--other Things outside
-this world.  People who used magic without knowing what they were doing
-usually came to a sticky end.
+因为这就像人类是一片玉米地. 魔法帮助使用者长得稍微高
+那么一点, 让他们显眼起来. 这会引来众神, 以及--维克多迟疑了
+一下--这个世界之外的其它东西. 那些不知道自己在于什么就使用
+魔法的人, 通常都会落得个粘乎乎的下场.
 
-All over the entire room, sometimes.
+有时候, 是整个房间都粘乎乎的.
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # p. 204 (passage ends mid-paragraph; musings are by Gaspode the dog;
 #         'sunnink', 'fings', 'wot' are accurate, as is 'finds' for 'find')
 %passage 13
-Sunnink dreadful in there, he thought.  Prob'ly tentacled fings that rips
-your face off.  I mean, when you finds mysterious doors in old hills, it
-stands to reason wot comes out ain't going to be pleased to see you.  Evil
-creatures wot Man shouldn't wot of, and here's one dog wot don't want to
-wot of them either.
+里头准有啥可怕的东西, 他心想. 多半是些长触手的玩意儿, 能把
+你的脸整个撕下来. 我是说, 你在老山里发现神秘的门, 按道理讲, 出来的
+东西肯定不会乐意见到你. 人类不该晓得的邪恶生灵, 而这儿有只狗也
+不想晓得它们.
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # pp. 206-207 (passage starts mid-paragraph; Dibbler now controls Silverfish's
 #              moving pictures studio;  Detritus isn't part of the Watch yet)
 %passage 14
-"[...]  Detritus, throw this bum out!"
+"[...] 德崔特斯, 把这个废物扔出去!"
 
-"Right you are, Mr Dibbler," rumbled the troll, gripping Silverfish's
-collar.
+"好嘞, 迪布勒先生,"巨魔瓮声瓮气地说, 一把抓住银鱼的衣领.
 
-"You haven't heard the last of this, you--you scheming, devious
-megalomaniac!"
+"这事还没完, 你--你这个诡计多端, 阴险狡诈的自大狂!"
 
-Dibbler removed his cigar.
+迪布勒取下嘴里的雪茄.
 
-"That's /Mister/ Megalomaniac to you," he said.
+"对你来说, 得叫自大狂先生."他说.
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 # p. 274 (passage starts mid-sentence; senior wizards of the University are
 #         attending a 'click' and have decided to take their hats off...)
 %passage 15
-[...] inside every old person is a young person wondering what happened.
+[...] 每个老人体内, 都住着一个年轻人, 正纳闷究竟发生了什么.
 
   [Moving Pictures, by Terry Pratchett]
 %e passage
@@ -2197,7 +2151,7 @@ Dibbler removed his cigar.
 %passage 16
 [...] whatever piece of music she was playing, it was definitely losing.
 
-  [Moving Pictures, by Terry Pratchett]
+  [搬电影, 特里·普拉切特 著]
 %e passage
 #
 # New for 5.0 - these are worthy but 16 passages are already more than enough.
@@ -2237,215 +2191,190 @@ Dibbler removed his cigar.
 %title Reaper Man (15)
 # pp. 301-302 (ROC edition)
 %passage 1
-It was later that the story of Windle Poons really came to an end, if
-"story" means all that he did and caused and set in motion.  In the Ramtop
-villages where they dance the real Morris dance, for example, they believe
-that no one is finally dead until the ripples they cause in the world die
-away--until the clock he wound up winds down, until the wine she made has
-finished its ferment, until the crop they planted is harvested.  The span
-of someone's life, they say, is only the core of their actual existence.
+温德尔·普恩斯的故事真正结束, 是在后来--如果"故事"意味着
+他所做, 所引发, 所推动的一切的话. 比如, 在拉姆托普那些
+跳正宗莫里斯舞的村庄里, 人们相信, 一个人直到他在世间激起的
+涟漪完全消散, 才算真正死去--直到他上紧的那座钟走完最后一秒, 直到
+她酿的那坛酒彻底发酵完毕, 直到他们种下的那茬庄稼收割入仓. 他们
+说, 一个人的寿命, 不过是他真正存在的核心而已.
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # p. 251 (passage starts mid-paragraph)
 %passage 2
-Five exclamation marks, the sure sign of an insane mind.
+五个感叹号, 绝对是精神错乱的标志.
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # p. 305 (passage starts mid-paragraph)
 %passage 3
-Light thinks it travels faster than anything but it is wrong.  No matter
-how fast light travels it finds the darkness has always got there first,
-and is waiting for it.
+光以为自己比任何东西跑得都快, 但它错了. 无论
+光跑得多快, 它都会发现黑暗早已先到一步, 正等着它.
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # p. 245
 %passage 4
-"That's not fair, you know.  If we knew when we were going to die, people
-would lead better lives."
+"这不公平, 你知道吧. 要是我们知道自己什么时候会死, 人们会活得更好."
 
-IF PEOPLE KNEW WHEN THEY WERE GOING TO DIE, I THINK THEY PROBABLY WOULDN'T
-LIVE AT ALL.
+要是人们知道自己什么时候会死, 我想他们大概根本就不会活了.
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # p. 19
 %passage 5
-YOU FEAR TO DIE?
+你怕死?
 
-"It's not that I don't want... I mean, I've always... it's just that life
-is a habit that's hard to break..."
+"倒不是我不想...我是说, 我一直...只是生命是一种很难戒掉的习惯..."
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # pp. 30-31
 %passage 6
-Wizards don't believe in gods in the same way that most people don't find it
-necessary to believe in, say, tables.  They know they're there, they know
-they're there for a purpose, they'd probably agree that they have a place in
-a well-organized universe, but they wouldn't see the point of /believing/,
-of going around saying, "O great table, without whom we are as naught".
-Anyway, either the gods are there whether you believe or not, or exist only
-as a function of the belief, so either way you might as well ignore the
-whole business and, as it were, eat off your knees.
+巫师不信神, 就像大多数人并不觉得有必要去"相信"桌子之类的
+东西一样. 他们知道桌子就在那儿, 知道它存在自有其用处, 大概
+也会同意它在一个井然有序的宇宙中占有一席之地, 但他们
+看不出"相信"有什么意义, 更不会到处说:"哦, 伟大的桌子, 没有
+您我们便什么也不是."反正, 要么众神存在与否不取决于你信不信, 要么
+它们只是信仰的产物, 所以无论哪种情况, 你都不妨把这一整套事情
+抛到脑后, 可以说, 就当是把饭搁在膝盖上吃算了.
 
-Nevertheless, there is a small chapel off the University's Great Hall,
-because while the wizards stand right behind the philosophy as outlined
-above, you don't become a successful wizard by getting up gods' noses even
-if those noses only exist in an ethereal or metaphorical sense.  Because
-while wizards don't believe in gods they know for a fact that /gods/ believe
-in gods.
+尽管如此, 无形大学的大礼堂旁边还是有一座小礼拜堂, 因为虽然巫师们
+完全支持上述那套哲学, 但就算众神的鼻子只存在于空灵或隐喻的
+意义上, 惹恼它们也成不了成功的巫师. 因为巫师们虽然不信神, 却
+确知一个事实: 众神 相信众神.
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # p. 50 (Dibbler is so low because he's on steps leading down to a cellar;
 #        'favour' and 'pedlar' are the spelling used)
 %passage 7
-"Sergeant!"
+"中士!"
 
-Colon froze.  Then he looked down.  A face was staring up at him from ground
-level.  When he'd got a grip on himself, he made out the sharp features of
-his old friend Cut-Me-Own-Throat Dibbler, the Discworld's walking, talking
-argument in favour of the theory that mankind had descended from a species
-of rodent.  C. M. O. T. Dibbler like to describe himself as a merchant
-adventurer; everyone else liked to describe him as itinerant pedlar whose
-moneymaking schemes were always let down by some small but vital flaw, such
-as trying to sell things he didn't own or which didn't work or, sometimes,
-didn't even exist.  Fairy gold is well known to evaporate by morning, but
-it was a reinforced concrete slab by comparison to some of Dibbler's
-merchandise.
+考林僵住了. 然后他低头看去. 一张脸正从地面高度仰头
+盯着他. 等他镇定下来, 才辨认出老友割喉迪布勒那尖削的
+面孔--碟形世界一个活生生的, 会走会说的论据, 支持人类
+是从某种啮齿动物进化而来的理论. C.M.O.T. 迪布勒喜欢自称
+商业冒险家: 其他人则喜欢把他描述成一个流动小贩, 他的赚钱计划
+总是因为某个微小却致命的缺陷而告吹, 比如试图出售他并不拥有的
+东西, 或是根本不管用的东西, 有时候甚至是压根不存在的
+东西. 众所周知, 仙女的黄金到早上就会蒸发, 可跟迪布勒的
+某些货物比起来, 那简直算得上是一块钢筋混凝土板.
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # pp. 58-59
 %passage 8
-Over the fireplace was an ornamental candlestick, fixed to a bracket on the
-wall.  It was such a familiar piece of furniture that Windle hadn't really
-seen it for fifty years.
+壁炉上方有一个装饰性的烛台, 固定在墙上的支架上. 它是如此
+熟悉的一件家具, 温德尔已经五十年没真正看过它一眼了.
 
-It was coming unscrewed.  It spun around slowly, squeaking once a turn.
-After half a dozen turns it fell off and clattered to the floor.
+它正在松脱. 它缓缓旋转, 每转一圈吱呀响一声. 转了
+六七圈后, 它掉了下来, 哐当一声落在地板上.
 
-Inexplicable phenomena were not in themselves unusual on the Discworld.(1)
-It was just that they normally had more point, or at least were a bit more
-interesting.
+在碟形世界, 无法解释的现象本身并不稀奇. (1) 只是它们
+通常更有意义, 或者至少更有趣一些.
 
-(1) Rains of fish, for example, were so common in the little land-locked
-village of Pine Dressers that it had a flourishing smoking, canning and
-kipper filleting industry.  And in the mountain regions of Syrrit many
-sheep, left out in the fields all night, would be found in the morning to
-/be facing the other way/, without the apparent intervention of any human
-agency.
+(1) 例如, 在内陆小村庄派恩德雷瑟斯, 鱼雨是如此常见, 以至于
+那里有着兴旺的熏制, 罐装和鲱鱼去骨产业. 而在西里特的山区, 许多
+绵羊在田野里过夜后, 第二天早上会被发现竟然面朝另一个方向, 显然
+没有任何人力干预.
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # pp. 68-69 (130 year old wizard Windle Poon has become a zombie after dying)
 %passage 9
-"And now let's put the lid on and go and have some lunch," said Ridcully.
-"Don't worry, Windle.  It's bound to work.  Today is the last day of the
-rest of your life."
+"现在把盖子盖上, 咱们去吃午饭吧,"里德卡利说. "别担心,
+温德尔. 肯定能成. 今天就是你余生的最后一天."
 
-Windle lay in the darkness, listening to the hammering.  There was a thump
-and a muffled imprecation against the Dean for not holding the end properly.
-And then the patter of soil on the lid, getting fainter and more distant.
+温德尔躺在黑暗里, 听着锤击声. 咚的一声, 接着传来一句
+含混的咒骂, 骂院长没把另一头扶好. 然后泥土噼里啪啦落在
+棺盖上, 声音越来越轻, 越来越远.
 
-After a while a distant rumbling suggested that the commerce of the city
-was being resumed.  He could even hear muffled voices.
+过了一会儿, 远处传来一阵隆隆声, 说明城里的营生又开张了. 他
+甚至能听到模糊的人声.
 
-He banged on the coffin lid.
+他敲了敲棺材盖.
 
-"Can you keep it down?" he demanded.  "There's people down here trying to
-be dead!"
+"你们能不能小声点?"他要求道."底下有人正努力死着呢!"
 
-He heard the voices stop.  There was the sound of feet hurrying away.
+他听见说话声停了. 然后是脚步匆匆离去的声音.
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # pp. 81-82 (things have stopped dying because Death is no longer on the job)
 %passage 10
-Everything that exists, yearns to live.  That's what the cycle of life is
-all about.  That's the engine that drives the great biological pumps of
-evolution.  Everything tries to inch its way up the tree, clawing or
-tentacling or sliming its way up to the next niche until it gets to the
-very top--which, on the whole, never seems to have been worth all the
-effort.
+一切存在之物, 都渴望活着. 这就是生命循环的全部意义. 这是
+驱动进化那台庞大生物泵的引擎. 万物都试图一寸一寸爬上
+生命之树, 用爪子, 用触手, 或用黏液, 攀向更高一层的生态位, 直到
+登上顶端——而总体而言, 那个顶端似乎从来都不值得费这么大劲.
 
-Everything that exists, yearns to live.  Even things that are not alive.
-Things that have a kind of sub-life, a metaphorical life, an /almost/ life.
-And now, in the same way that a sudden hot spell brings forth unnatural and
-exotic blooms...
+一切存在之物, 都渴望活着. 就连没有生命的东西也一样. 那些拥有
+某种次生命, 一种隐喻意义上的生命, 一种近乎生命的东西. 而
+现在, 就像突如其来的热浪催生出反常而奇异的花朵...
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # p. 101
 %passage 11
-Dead.  That was the point.  All the religions had very strong views about
-talking to the dead.  And so did Mrs Cake.  They held that it was sinful.
-Mrs Cake held that it was only common courtesy.
+死了. 关键就在这儿. 所有宗教对于与死者交谈都持有
+非常强烈的看法. 凯克太太也是. 他们坚持认为那是罪过. 凯克太太
+则坚持认为那不过是起码的礼貌.
 
-This usually led to a fierce ecclesiastical debate which resulted in Mrs
-Cake giving the chief priest what she called "a piece of her mind".  There
-were so many pieces of Mrs Cake's mind left around the city now that it
-was quite surprising that there was enough left to power Mrs Cake but,
-strangely enough, the more pieces of her mind she gave away the more there
-seemed to be left.
+这通常引发一场激烈的教会辩论, 结果就是凯克太太把被她
+称作"一点心里话"的东西送给首席祭司. 如今城里到处都散落着
+凯克太太的"心里话", 数量之多, 居然还剩下足够的部分来驱动
+凯克太太本人, 实在令人惊讶: 但奇怪的是, 她分送
+出去的"心里话"越多, 剩下的似乎就越多.
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # p. 222
 %passage 12
-"No--" Ridcully began, and realised that it was hopeless.  And he was losing
-the initiative.  He carefully formulated the most genteel battle cry in the
-history of bowdlerism,
+"不--"里德卡利刚开口, 就意识到没指望了. 而且他正失去
+主动权. 他仔细推敲, 拟出了净化史上最文雅的战斗口号;
 
-"Darn them to Heck!" he yelled, and ran after the Dean.
+"叫他们见鬼去吧!"他吼道, 然后追着院长跑了.
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # p. 226
 %passage 13
-Miss Flitworth disappeared into the scullery.  There was the creaking of a
-pump.  She returned with a damp flannel and a glass of water.
+弗利特沃斯小姐消失在洗碗间里. 传来水泵吱吱嘎嘎的
+响声. 她回来时, 拿着一块湿法兰绒布和一杯水.
 
-THERE'S A NEWT IN IT!
+里面有一只蝾螈!
 
-"Shows it's fresh," said Miss Flitworth,(1) fishing the amphibian out and
-releasing it on the flagstones, where it scuttled away into a crack.
+"这说明水是新鲜的,"弗利特沃斯小姐(1)说着, 把那只两栖动物
+捞出来, 放到石板地上, 它便匆匆钻进一条裂缝里去了.
 
-(1) People have believed for hundreds of years that newts in a well mean
-that the water's fresh and drinkable, and /in all that time/ never asked
-themselves whether the newts got out to go to the lavatory.
+(1) 几百年来, 人们一直相信井里有蝾螈就说明井水新鲜可饮, 却在这
+整整几百年里从未问过自己, 那些蝾螈是怎么出去上厕所的.
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # p. 247
 %passage 14
-"Have you got any last words?"
+"你有什么遗言吗?"
 
-YES.  I DON'T WANT TO GO.
+有. 我不想走.
 
-"Well.  Succinct, anyway."
+"好吧. 至少够简洁."
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 # pp. 249-250
 %passage 15
-"Where's everyone gone, Librarian?"
+"大家都上哪儿去了, 图书管理员?"
 
-"Oook oook."
+"呜克, 呜克."
 
-"Just like them.  I'd have done that.  Rush off without thinking.  May the
-gods bless them and help them, if they can find the time from their family
-squabbles."
+"跟他们一个样. 我也会那么干. 想都不想就冲出去. 愿众神保佑他们, 帮助他们, 要是他们能从家庭争吵里抽出空来的话."
 
-And then he thought:  well, what now?  I've thought, and what am I going to
-do?
+然后他想: 好吧, 现在呢? 我想过了, 我打算怎么办?
 
-Rush off, or course,  But slowly.
+当然是冲出去. 但要慢慢地.
 
-  [Reaper Man, by Terry Pratchett]
+  [灵魂收割者, 特里·普拉切特 著]
 %e passage
 %e title
 #
@@ -2454,269 +2383,240 @@ Rush off, or course,  But slowly.
 %title Witches Abroad (14)
 # p. 92 (ROC edition)
 %passage 1
-Vampires have risen from the dead, the grave and the crypt, but have never
-managed it from the cat.
+吸血鬼从死, 从坟墓里, 从墓穴中复活过, 但从未能从猫身上复活.
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 # pp. 12-13
 %passage 2
-Desiderata Hollow was making her will.
+德西德拉塔·霍洛正在立遗嘱.
 
-When Desiderata Hollow was a girl, her grandmother had given her four
-important pieces of advice to guide her young footsteps on the unexpectedly
-twisting pathway of life.
+当德西德拉塔·霍洛还是个小姑娘时, 她的祖母给过她四条
+重要建议, 用来指引她年轻的双脚, 走上人生那条意想不到的曲折道路.
 
-They were:
+它们是:
 
-Never trust a dog with orange eyebrows,
+永远别信长着橙色眉毛的狗,
 
-Always get the young man's name and address,
+一定要问清年轻男子的姓名和地址,
 
-Never get between two mirrors,
+绝不要站在两面镜子之间,
 
-And always wear completely clean underwear every day because you never knew
-when you were going to be knocked down and killed by a runaway horse and if
-people found you had unsatisfactory underwear on, you'd die of shame.
+以及每天都要穿完全干净的内衣, 因为你永远不知道什么时候
+会被一匹脱缰的马撞倒撞死, 而要是人们发现你穿着不像样的内衣, 你会
+羞死的.
 
-And then Desiderata grew up to become a witch.  And one of the minor
-benefits of being a witch is that you know exactly when you're going to die
-and can wear what underwear you like.(1)
+后来, 德西德拉塔长大了, 成了一位女巫. 而做女巫的次要好处之一, 就是
+你能准确知道自己什么时候会死, 于是可以想穿什么内衣就穿什么内衣. (1)
 
-That had been eighty years earlier, when the idea of knowing exactly when
-you were going to die had seemed quite attractive because secretly, of
-course, you knew you were going to live forever.
+那已是八十年前的事了. 当时, 能确切知道自己的死期这个想法还
+相当吸引人, 因为当然啦, 你暗自知道自己会永远活下去.
 
-That was then.
+那是当年.
 
-And this was now.
+而这是如今.
 
-Forever didn't seem to last as long these days as once it did.
+如今, "永远"似乎不像从前那样长久了.
 
-(1) Which explains a lot about witches.
+(1) 这很大程度上解释了女巫们的许多事.
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 # p. 64 (passage ends mid-paragraph)
 %passage 3
-"You know," said Nanny, investigating the recesses of the basket, "whenever
-I deals with dwarfs, the phrase 'Duck's arse' swims across my mind."
+"你知道,"欧格奶奶一边翻检着篮子深处, 一边说, "每次我
+跟矮人打交道, '鸭屁股'这个词就会在我脑子里打转."
 
-"Mean little devils.  You should see the prices they tries to charge me
-when I takes my broom to be repaired," said Granny.
+"刻薄的小气鬼. 你该看看我拿扫帚去修的时候, 他们想
+收我什么价,"威瑟瓦克斯奶奶说.
 
-"Yes, but you never pay," said Magrat.
+"是啊, 可你从来不付钱,"麦格莱特说.
 
-"That's not the point," said Granny Weatherwax.  "They shouldn't be allowed
-to charge that sort of money.  That's thievin', that is."
+"这不是重点,"威瑟瓦克斯奶奶说, "就不该允许他们收
+那种价钱. 那是偷, 就是偷."
 
-"I don't see how it can be thieving if you don't pay anyway," said Magrat.
+"既然你反正不付钱, 我看不出这怎么还能算偷,"麦格莱特说.
 
-"I never pay for anything," said Granny.  [...]
+"我从来什么都不付钱,"奶奶说.[...]
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 # p. 93 (passage is a footnote)
 %passage 4
-Nanny Ogg sent a number of cards home to her family, not a single one of
-which got back before she did.  This is traditional, and happens everywhere
-in the universe.
+欧格奶奶往家里寄了好些明信片, 结果没有一张比
+她本人先到. 这是传统, 宇宙中到处都如此.
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 # pp. 118-119 (Magrat has been teaching herself martial arts via books)
 %passage 5
-"Lobsang Dibbler says sometimes you have to lose in order to win," said
-Magrat.
+"洛桑·迪布勒说, 有时候你得先输才能赢,"麦格莱特说.
 
-"Sounds daft to me," said Nanny.  "That's Yen Buddhism, is it?"
+"听着就傻,"欧格奶奶说. "那是日元佛教, 是吧?"
 
-"No.  They're the ones who say you have to have lots of money to win," said
-Magrat.(1)  "In the Path of the Scorpion, the way to win is to lose every
-fight except the last one.  You use the enemy's strength against himself."
+"不是. 他们才是那种说必须有很多钱才能赢的人,"
+麦格莱特说. (1) "在蝎子之道里, 赢的方法就是输掉除最后一场之外的
+每一场战斗. 你要借敌人的力量来对付他自己."
 
-"What, you get him to hit himself, sort of thing?" said Nanny.  "Sounds
-daft."
+"什么, 就是让他自己打自己那类?"欧格奶奶说. "听着就傻."
 
-(1) The Yen Buddhists are the richest religious sect in the universe.  They
-hold that the accumulation of money is a great evil and burden to the soul.
-They therefore, regardless of personal hazard, see it as their unpleasant
-duty to acquire as much as possible to reduce the risk to innocent people.
+(1) 充满欲望的佛教徒是宇宙中最富有的宗教派别. 他们认为积累钱财是
+巨大的邪恶, 是灵魂的负担. 因此, 他们不顾个人危险, 把尽可能多地
+敛财视为自己不愉快的责任, 以减少无辜人们面临的风险.
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 # p. 131
 %passage 6
-They had breakfast in a forest clearing.  It was grilled pumpkin.  The dwarf
-bread was brought out for inspection.  But it was miraculous, the dwarf
-bread.  No one ever went hungry when they had some dwarf bread to avoid.
-You only had to look at it for a moment, and instantly you could think of
-dozens of things you'd rather eat.  Your boots for example.  Mountains.  Raw
-sheep.  Your own foot.
+他们在林间空地上吃早饭. 吃的是烤南瓜. 矮人面包
+也被拿出来供大家过目. 可那矮人面包真是奇迹. 只要
+手边有矮人面包可躲, 就没人会挨饿. 你只需看它一眼, 立刻就能想出
+几十种你更愿意吃的东西. 比如你的靴子. 山. 生羊. 你自己的脚.
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 # pp. 194-195 ("he just" is accurate; cockerel == adolescent rooster)
 %passage 7
-"This is Legba, a dark and dangerous spirit," said Mrs. Gogol.  She leaned
-closer and spoke out of the corner of her mouth.  "Between you and me, he
-just a big black cockerel.  But you know how it is."
+"这位是莱格巴, 一个阴暗而危险的灵体,"戈戈尔太太说. 她凑近些, 从嘴角挤出话来. "咱俩私下说, 他其实就是一只大黑公鸡. 可你也知道, 事情就是这样."
 
-"It pays to advertise," Nanny agreed.  "This is Greebo.  Between you and me,
-he's a fiend from hell."
+"做做广告还是值得的,"欧格奶奶附和道. "这位是格里博. 咱俩私下说, 他是从地狱来的恶魔."
 
-"Well, he's a cat," said Mrs. Gogol, generously.  "It's only to be expected."
+"嗯, 他毕竟是只猫,"戈戈尔太太宽厚地说. "这也在所难免."
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 # p. 218
 %passage 8
-"/And/ still a bit of the wedding cake," said the first coachman.  "Ain't
-you et that up yet?"
+"而且还剩着一点婚礼蛋糕呢,"头一个车夫说. "你还没把它吃光啊?"
 
-"We have it every night," said the undercoachman.
+"我们每天晚上都吃."副车夫说.
 
-The shed shook with the ensuing laughter.  It is a universal fact that any
-innocent comment made by any recently married young member of any workforce
-is an instant trigger for coarse merriment among his or her older and more
-cynical colleagues.  This happens even if everyone concerned has nine legs
-and lives at the bottom of an ocean of ammonia on a huge cold planet.  It's
-just one of those things.
+棚屋被随之而来的笑声震得直晃. 这是一个普遍事实: 任何行业里, 任何
+刚结婚的年轻成员, 随口说出任何一句天真话, 都会立刻引来
+他或她那些更年长, 更愤世嫉俗的同事一阵粗野的哄笑. 哪怕相关人员
+全都长着九条腿, 住在一个巨大寒冷星球上氨海的海底, 也照样如此.
+这种事就是这样.
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 # p. 228
 %passage 9
-"You ought to be more adventurous, Granny," said Magrat.
+"你该多冒点险, 奶奶,"麦格莱特说.
 
-"I ain't against adventure, in moderation," said Granny, "but not when I'm
-eatin'."
+"适度的话, 我不反对冒险,"奶奶说, "但我吃饭的时候不行."
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 # pp. 263-264 (Nanny is trying to stop an elaborate clock; despite damage
 #              inflicted on it, it goes on to announce midnight [early])
 %passage 10
-Let's see thought Nanny.  This bit is connected to that bit, this one turns,
-that one turns /faster/, this spiky bit wobbles backwards and forwards...
+"让我想想,"欧格奶奶想. "这个零件连着那个
+零件, 这个转, 那个转更快, 这个带尖的零件前后晃..."
 
-Oh, well.  Just twist the first thing you can grab, as the High Priest said
-to the vestal virgin.(1)
+哦, 好吧. 抓住第一个能抓的东西一拧, 就像大祭司
+对维斯塔贞女说的那样.(1)
 
-Nanny Ogg spat on her hands, gripped the largest cog-wheel, and twisted.
+欧格奶奶往手上吐了口唾沫, 抓住最大的齿轮, 一拧.
 
-It carried on turning, pulling her with it.
+它继续转, 把她也带着转.
 
-Blimey.  Oh, well...
+天哪. 哦, 好吧...
 
-Then she did what neither Granny Weatherwax nor Magrat would have dreamed
-of doing in the circumstances.  But Nanny Ogg's voyages on the sea of
-intersexual dalliance had gone rather further than twice around the
-lighthouse, and she saw nothing demeaning in getting a man to help her.
+接着她做了威瑟瓦克斯奶奶和麦格莱特在那种情况下做梦
+也不会做的事. 但欧格奶奶在跨性别调情之海上航行, 可不只绕过
+灯塔两圈, 她并不觉得请男人帮忙有什么丢脸的.
 
-She simpered at Casanunda.
+她朝卡萨努达媚笑.
 
-"Things would be a lot more comfortable in our little /pie-de-terre/ if you
-could just push this little wheel around a bit," she said.  "I'm sure /you/
-could manage it," she added.
+"要是你能把这小轮子推一推, 咱们的
+小公寓里就会舒服多了,"她说. "我敢说
+你肯定行,"她又补了一句.
 
-"Oh, no problem, good lady," said Casanunda.  He reached up with one hand.
-Dwarfs are immensely strong for their size.  The wheel seemed to offer him
-no resistance at all.
+"哦, 没问题, 好太太."卡萨努达说. 他伸出一只手. 矮人
+虽然个子小, 力气却大得惊人. 那轮子似乎对他毫无抵抗.
 
-Somewhere in the mechanism something resisted for a moment and then went
-/clonk/.  Big wheels turned reluctantly.  Little wheels screamed on their
-axles.  A small important piece flew out and pinged off of Casanunda's
-small bullet head.
+机械装置里某处卡了一下, 然后发出咔嗒一声. 大轮子
+不情愿地转动起来. 小轮子在轴上尖叫. 一个小而重要的零件
+飞了出来, 叮的一声弹在卡萨努达那颗小小的圆脑袋上.
 
-And, much faster than nature had ever intended, the hands sped around the
-face.
+于是, 指针以大自然从未设想过的速度在表盘上飞转.
 
-(1) This is the last line to a Discworld joke lost, alas, to posterity.
+(1) 这是普拉切特一个笑话的最后一句, 可惜已失传于后世.
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 # p. 265 ('pate' has a couple of accent marks which can't be rendered in ascii)
 %passage 11
-There are various forms of voodoo in the multiverse, because it's a
-religion that can be put together from any ingredients that happen to be
-lying around.  And all of them try, in some way, to call a god into the body
-of a human being.
+多元宇宙中有各种形式的伏都教, 因为这是一种
+可以用手边碰巧有的任何材料拼凑起来的宗教. 而所有形式
+都试图以某种方式把神召唤进人的身体里.
 
-That was stupid, Mrs. Gogol thought.  That was dangerous.
+那很蠢, 戈戈尔太太想. 那很危险.
 
-Mrs. Gogol's voodoo worked the other way about.  What was a god?  A focus of
-belief.  If people believed, a god began to grow.  Feebly at first, but if
-the swamp taught anything, it taught patience.  Anything could be the focus
-of a god.  A handful of feathers with a red ribbon around them, a hat and
-coat on a couple of sticks... anything.  Because when all people had was
-practically nothing, then anything could be almost everything.  And then you
-fed it, and lulled it, like a goose heading for pate, and let the power grow
-very slowly, and when the time was ripe you opened the path... backwards.
-A human could ride the god, rather than the other way around.  There would
-be a price to pay later, but there always was.  In Mrs. Gogol's experience,
-everyone ended up dying.
+戈戈尔太太的伏都教反其道而行. 神是什么? 信仰的焦点. 如果人们
+相信, 神就开始生长. 起初很微弱, 但如果说沼泽教会了什么, 那就是
+耐心. 任何东西都可以成为神的焦点. 一把羽毛, 系着红丝带, 一顶帽子
+和外套架在两根棍子上...任何东西. 因为当人们几乎一无所有时, 任何东西
+都几乎可以成为一切. 然后你喂养它, 安抚它, 像一只正被填肥并准备做成
+肉酱的鹅, 让那力量非常缓慢地增长, 等到时机成熟, 你就把
+那条路打开...不过是反着来的. 人类可以驾驭神, 而不是反过来. 以后
+会付出代价, 但总有代价. 以戈戈尔太太的经验, 所有人最终都难逃一死.
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 # p. 270 (Greebo has been temporarily transformed--polymorphed?--into a human)
 %passage 12
-Greebo wasn't a happy cat.  [...]
+格里博不是一只快乐的猫. [...]
 
-Then he'd smelled the kitchen.  Cats gravitate to kitchens like rocks
-gravitate to gravity.
+随后他闻到了厨房的气味. 猫会被厨房吸引, 就像石头会被重力吸引一样.
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 # p. 282 (Casanunda the dwarf is Discworld's Casanova; he appears again in
 #         /Lords and Ladies/)
 %passage 13
-"How come you're in the palace guard, Casanunda?"
+"你怎么会在宫殿卫队里, 卡萨努达?"
 
-"Soldier of fortune takes whatever jobs are going, Mrs. Ogg," said Casanunda
-earnestly.
+"雇佣兵什么活儿都接, 欧格奶奶,"卡萨努达认真地说.
 
-"But all the rest of 'em are six foot tall and you're--of the shorter
-persuasion."
+"可他们其他人都六英尺高, 而你--属于比较矮的那一类."
 
-"I lied about my height, Mrs. Ogg.  I'm a world-famous liar."
+"我谎报了自己的身高, 欧格奶奶. 我是世界闻名的大骗子."
 
-"Is that true?"
+"真的?"
 
-"No."
+"不是."
 
-"What about you being the world's greatest lover?"
+"那你自称世界上最伟大的情人, 又怎么说?"
 
-There was silence for a while.
+沉默了一阵.
 
-"Well, maybe I'm only No. 2," said Casanunda.  "But I try harder."
+"好吧, 也许我只是第二名,"卡萨努达说. "但我更努力."
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 # pp. 285-286 (Greebo is still in human form; 'rationalise' is accurate)
 %passage 14
-Greebo leapt.
+格里博一跃而起.
 
-Cats are like witches.  They don't fight to kill, but to win.  There is a
-difference.  There's no point in killing an opponent.  That way, they won't
-know they've lost, and to be a real winner you have to have an opponent who
-is beaten and knows it.  There's no triumph over a corpse, but a beaten
-opponent, who will remain beaten every day for the remainder of their sad
-and wretched life, is something to treasure.
+猫和女巫很像. 它们打斗不是为了杀死对方, 而是为了赢. 这
+有区别. 杀死对手没有意义. 那样一来, 对方就不知道自己输了; 而要做
+一个真正的赢家, 你必须有一个被打败并且心知肚明的对手. 战胜尸体
+毫无荣耀可言, 但一个被打败的对手, 在他们那悲惨不幸的余生里每一天
+都仍然是败者, 这才是值得珍藏的东西.
 
-Cats do not, of course, rationalise this far.  They just like to send
-someone limping off minus a tail and a few square inches of fur.
+当然, 猫不会推理到这一步. 它们只是喜欢把对方弄得
+一瘸一拐地逃走, 少一条尾巴和几平方英寸的毛.
 
-Greebo's technique was unscientific and wouldn't have stood a chance against
-any decent swordsmanship, but on his side was the fact that it is almost
-impossible to develop decent swordsmanship when you seem to have run into a
-food mixer that is biting your ear off.
+格里博的招法毫无章法, 若遇上任何像样的剑术都毫无胜算, 但他
+这边有个优势: 当你似乎撞上了一台正在咬掉你耳朵的食品搅拌机时, 几乎
+不可能施展出像样的剑术.
 
-The witches watched with interest.
+女巫们饶有兴趣地看着.
 
-"I think we can leave him now," said Nanny.  "I think he's having fun."
+"我想我们现在可以把他留在这儿了,"欧格奶奶说. "我看他玩得挺开心."
 
-  [Witches Abroad, by Terry Pratchett]
+  [女巫出国, 特里·普拉切特 著]
 %e passage
 %e title
 #
@@ -2729,212 +2629,162 @@ The witches watched with interest.
 #         Didactylos mentions that Old 'Charcoal' Abraxas had been hit by
 #         lightning 15 times)
 %passage 1
-"[...]  He says gods like to see an atheist around.  Gives them something
-to aim at."
+[...] 他说, 诸神喜欢身边有个无神论者. 这样他们就有个瞄准的靶子了.
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 # p. 79 (passage starts mid-paragraph; speaker is Cut-Me-Own-Hand-Off Dhblah)
 %passage 2
-[...]  "Pets are always a great help in times of stress.  And in times of
-starvation too, o'course."
+[...] "宠物在压力大的时候总能帮上大忙. 当然啦, 挨饿的时候也一样."
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 # p. 3 (Harper Torch edition)
 %passage 3
-So history has its caretakers.
+所以说, 历史自有其看管者.
 
-They live ... well, in the nature of things they live wherever they are
-sent, but their /spiritual/ home is in a hidden valley in the high Ramtops
-of the Discworld, where the books of history are kept.
+他们住在...嗯, 按照事理, 他们被派到哪儿就住在哪儿, 但他们精神上的家园, 在碟形世界高耸的拉姆托普山脉中一个隐秘的山谷里, 历史的书籍就存放在那里.
 
-These aren't books in which the events of the past are pinned like so many
-butterflies to a cork.  These are the books from which history is derived.
-There are more than twenty thousand of them, each one is ten feet high,
-bound in lead, and the letters are so small that they have to be read with
-a magnifying glass.
+这些书并不是把过去的事件像一只只蝴蝶那样钉在软木板上. 这些书是历史由之而来的源头. 这样的书有两万多本, 每本十英尺高, 用铅装订, 字小得必须拿放大镜才看得清.
 
-When people say "It is written ..." it is written /here/.
+当人们说"这是命里写定的..."时, 它就是写在这里的.
 
-There are fewer metaphors than people think.
+隐喻比人们以为的要少.
 
-Every month the abbot and two senior monks go into the cave where the
-books are kept.  It used to be the duty of the abbot alone, but two other
-reliable monks were included after the unfortunate case of the 59th Abbot,
-who made a million dollars in small bets before his fellow monks caught up
-with him.
+每个月, 院长和两位资深僧侣都会进入存放这些书的洞穴. 过去这本该是院长一人的职责, 但在第59任院长那桩不幸事件之后, 又加进了两位可靠的僧侣--那位院长在同伴们逮住他之前, 靠小额赌注赚了一百万美元.
 
-Besides, it's dangerous to go in alone.  The sheer concentratedness of
-History, sleeting past soundlessly out into the world, can be overwhelming.
-Time is a drug.  Too much of it kills you.
+再说, 独自进去很危险. 历史极度浓缩, 无声地如冻雨般倾泻进世界, 那种分量足以让人崩溃. 时间是一种药物. 用多了会要命.
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 # pp. 4-5
 %passage 4
-It was the Year of the Notional Serpent, or two hundred years after the
-Declaration of the Prophet Abbys.
+那是名义上的蛇年, 也就是先知阿比斯发表宣言两百年之后.
 
-Which meant that the time of the 8th Prophet was imminent.
+这意味着, 第八位先知的时代即将来临.
 
-That was the reliable thing about the Church of the Great God Om.  It had
-very punctual prophets.  You could set your calendar by them, if you had
-one big enough.
+大神欧姆教会可靠就可靠在这里. 它的先知非常准时. 只要你的历法够大, 完全可以拿他们来校准. 
 
-And, as is generally the case around the time a prophet is expected, the
-Church redoubled its efforts to be holy.  This was very much like the
-bustle you get in any large concern when the auditors are expected, but
-tended towards taking people suspected of being less holy and putting them
-to death in a hundred ingenious ways.  This is considered a reliable
-barometer of the state of one's piety in most of the really popular
-religions.  There's a tendency to declare that there is more backsliding
-around than in the national toboggan championships, that heresy must be
-torn out root and branch, and even arm and leg and eye and tongue, and
-that it's time to wipe the slate clean.  Blood is generally considered
-very efficient for this purpose.
+而正如每逢先知将临之际通常会发生的那样, 教会加倍努力地要让自己显得圣洁. 这很像
+任何大机构在审计员要来时的忙乱景象, 只不过更倾向于把那些被怀疑不够圣洁的人抓起来, 用
+一百种巧妙方法处死. 在大多数真正流行的宗教里, 这被视为衡量虔诚程度的可靠晴雨表. 人们往往会
+宣称, 如今世风倒退得比全国雪橇锦标赛还厉害, 异端必须连根带枝地铲除, 连胳膊, 腿, 眼睛和舌头也
+一并除掉, 是时候把石板擦干净了. 一般认为, 血用在这个目的上非常高效.
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 # p. 60 ("he" is a tortoise, unnoticed among a large crowd of people)
 %passage 5
-He walked off slowly, keeping close to the wall to avoid the feet.  He had
-no alternative to walking slowly in any case, but now he was walking slowly
-because he was thinking.  Most gods find it hard to walk and think at the
-same time.
+他慢慢走开了, 紧贴着墙根, 以免被那些脚踩到. 反正他除了慢慢走也别无选择, 但此刻
+他走得慢, 是因为他在思考. 大多数神都觉得, 一边走路一边思考是件难事.
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 # p. 60 (same page as preceding passage)
 %passage 6
-There were all sorts of ways to petition the Great God, but they depended
-largely on how much you could afford, which was right and proper and
-exactly how things should be.  After all, those who had achieved success
-in the world clearly had done it with the approval of the Great God,
-because it was impossible to believe that they had managed it with His
-/disapproval/.  In the same way, the Quisition could act without
-possibility of flaw.  Suspicion was proof.  How could it be anything else?
-The Great God would not have seen fit to put the suspicion in the minds
-of His exquisitors unless it was /right/ that it should be there.  Life
-could be very simple, if you believed in the Great God Om.  And sometimes
-quite short, too.
+向大神请愿的方式多种多样, 但主要取决于你出得起多少钱, 这
+合情合理, 天经地义. 毕竟, 那些在世上取得成功的人, 显然都是
+在大神的赞许下才成功的, 因为无法相信他们是背着祂的不赞许做到的. 同样, 审判
+所行事不可能有错. 怀疑即证据. 还能是别的什么呢? 大神不会把怀疑放进祂的
+审判官们的脑子里, 除非那怀疑理应存在. 如果你信仰大神欧姆, 生活可以非常简单, 有时
+也相当短暂.
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 # p. 92 ([sic] first paragraph ought to have fourth '.' to end sentence)
 %passage 7
-The memory stole over him:  a desert is what you think it is.  And now,
-you can think clearly ...
+记忆悄然涌上心头: 沙漠是什么样, 取决于你怎么想. 而现在, 你可以清晰地思考了...
 
-There were no lies here.  All fancies fled away.  That's what happened in
-all deserts.  It was just you, and what you believed.
+这里没有谎言. 一切幻想都消散了. 所有沙漠都会这样. 剩下的只有你, 以及你所相信的东西.
 
-What have I always believed?
+我一直相信的是什么?
 
-That on the whole, and by and large, if a man lived properly, not
-according to what any priests said, but according to what seemed decent
-and honest /inside/, then it would, in the end, more or less, turn out
-all right.
+总的来说, 大体而言, 如果一个人活得正派, 不是按照任何祭司所说的, 而是按照
+内心觉得体面诚实的方式去活, 那么最终, 或多或少, 一切都会好起来.
 
-You couldn't get that on a banner.  But the desert looked better already.
+这话没法印在旗帜上. 但沙漠看起来已经好多了.
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 # p. 114
 %passage 8
-Vorbis had a cabin somewhere near the bilges, where the air was as thick
-as thin soup.  Brutha knocked.
+沃比斯在靠近舱底的地方有间小屋, 那里的空气浓稠得像稀汤. 布鲁塔敲了敲门.
 
-"Enter."(1)
+"进来."(1)
 
-(1) Words are the litmus paper of the mind.  If you find yourself in the
-power of someone who will use the word "commence" in cold blood, go
-somewhere else very quickly.  But if they say "Enter," don't stop to pack.
+(1) 言语是心灵的石蕊试纸. 如果你发现自己落在某人手里, 而那人会冷血地
+说出"开始"这种字眼, 那就赶紧另谋去处. 但如果对方说的是"进来",那就别停下来
+收拾行李.
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 # p. 141 (at the end, Xeno is almost certainly agreeing with Ibid, but
 #         he /might/ be answering Brutha's last question)
 %passage 9
-"Are you all philosophers?" said Brutha.
+"你们都是哲学家吗?"布鲁塔说.
 
-The one called Xeno stepped forward, adjusting the hang of his toga.
+那个叫泽诺的走上前来, 整了整托加袍的下摆.
 
-"That's right," he said.  "We're philosophers.  We think, therefore we am."
+"没,"他说, "我们是哲学家. 我们思考, 故我们 am."
 
-"Are," said the luckless paradox manufacturer automatically.
+"are,"那个倒霉的悖论制造者自动纠正道.
 
-Xeno spun around.  "I've just about had it up to /here/ with you, Ibid!" he
-roared.  He turned back to Brutha.  "We /are/, therefore we am," he said
-confidently.  "That's it."
+泽诺猛地转过身."伊比德, 我受够你了, 受够到这儿了!"他吼道. 他转回
+布鲁塔. "我们 are, 故我们 am,"他自信地说, "就是这样."
 
-Several of the philosophers looked at one another with interest.
+几位哲学家饶有兴趣地互相看了看.
 
-"That's actually quite interesting," one said.  "The evidence of our
-existence is the /fact/ of our existence, is that what you're saying?"
+"这其实挺有意思的,"一个人说, "我们存在的证据就是我们存在这一事实, 你是这个意思吗?"
 
-"Shut up," said Xeno, without looking around.
+"闭嘴,"泽诺头也不回地说.
 
-"Have you been fighting?" said Brutha.
+"你们打架了?"布鲁塔说.
 
-The assembled philosophers assumed various expressions of shock and horror.
+聚集的哲学家们纷纷露出震惊和恐惧的表情.
 
-"Fighting?  Us?  We're /philosophers/," said Ibid, shocked.
+"打架? 我们? 我们是哲学家,"伊比德震惊地说.
 
-"My word, yes," said Xeno.
+"哎呀, 没错,"泽诺说.
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 # p. 151
 %passage 10
-All over the world there were rulers with titles like the Exalted, the
-Supreme, and Lord High Something or Other.  Only in one small country was
-the ruler elected by the people, who could remove him whenever they
-wanted--and they called him the Tyrant.
+世界各地都有统治者, 头衔诸如"尊贵者""至高者"以及"某某大老爷"之类. 只有一个小国, 其统治者
+由人民选举产生, 人民随时可以把他赶下台--他们管他叫"暴君".
 
-The Ephebians believed that every man should have the vote.(1)  Every five
-years someone was elected to be Tyrant, provided he could prove that he
-was honest, intelligent, sensible, and trustworthy.  Immediately after he
-was elected, of course, it was obvious to everyone that he was a criminal
-madman and totally out of touch with the view of the ordinary philosopher
-in the street looking for a towel.  And then five years later they elected
-another one just like him, and really it was amazing how intelligent
-people kept on making the same mistakes.
+以弗比人相信, 人人都应有投票权. (1) 每五年, 人们会选出一人担任暴君, 前提是他能证明
+自己诚实, 聪明, 明理, 可靠. 当然, 他刚一当选, 所有人就立刻看清他是个疯狂的罪犯, 而且
+与街上那位正在找毛巾的普通哲学家的看法完全脱节. 然后五年之后, 他们又选出一个跟他
+一模一样的人, 说真的, 聪明人竟然一而再再而三地犯同样的错误, 实在令人惊叹.
 
-(1) Provided that he wasn't poor, foreign, nor disqualified by reason of
-being mad, frivolous, or a woman.
+(1) 前提是他不穷, 不是外邦人, 也没有因疯狂或者轻浮或身为女人而被取消资格.
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 # p. 239
 %passage 11
-"I still don't see how one god can be a hundred different thunder gods.
-They all look different ..."
+"我还是不明白, 一个神怎么能是一百个不同的雷神. 他们看起来都不一样..."
 
-"False noses."
+"假鼻子."
 
-"What?"
+"什么?"
 
-"And different voices.  I happen to know Io's got seventy different hammers.
-Not common knowledge, that.  And it's just the same with mother goddesses.
-There's only one of 'em.  She just got a lot of wigs and of course it's
-amazing what you can do with a padded bra."
+"还有不同的嗓音. 我碰巧知道艾欧有七十把不同的锤子. 这可不是
+人人都知道的. 母神们也是一样. 她们只有一个. 她只是有一大堆假发, 当然啦, 戴上
+垫胸的胸罩能折腾出什么效果, 那可真是惊人."
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 # p. 265
 %passage 12
-An hour later the lion, who was limping after Brutha, also arrived at the
-grave.  It had lived in the desert for sixteen years, and the reason it had
-lived so long was that it had not died, and it had not died because it
-never wasted handy protein.  It dug.
+一小时后, 那只一瘸一拐跟在布鲁塔后面的狮子, 也来到了坟前. 它在沙漠里活了十六年, 能
+活这么久, 原因就是它没死; 而它没死, 是因为它从不浪费唾手可得的蛋白质. 它开始刨.
 
-Humans have always wasted handy protein ever since they started wondering
-who had lived in it.
+人类自从开始琢磨这蛋白质生前是谁, 就一直在浪费唾手可得的蛋白质.
 
-But, on the whole, there are worse places to be buried than inside a lion.
-
-  [Small Gods, by Terry Pratchett]
+不过总的来说, 被埋在狮子肚子里, 比埋在不少别的地方都强.
+  [小神, 特里·普拉切特 著]
 %e passage
 #
 # 3 more passages added for 5.0
@@ -2942,28 +2792,27 @@ But, on the whole, there are worse places to be buried than inside a lion.
 # p. 7 (Brother Nhumrod is in charge of a group of novices; he's thinking
 #       about one of them, Brutha, the main character of the story)
 %passage 13
-There was something creepy about the boy, Nhumrod thought.  It was the way
-he looked at you when you were talking, as if he was /listening/.
+那男孩身上有种瘆人的东西, 恩哈姆罗德心想. 就是你说话时
+他看你的那副样子, 仿佛他真的在听.
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 # p. 11 (musing by the Great God Om)
 %passage 14
-The trouble with being a god is that you've got no one to pray to.
+当神有个麻烦, 你没有人可以祈祷.
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 # p. 210 (speaker is Didactylos the Ephebian philosopher)
 %passage 15
-"Life in this world," he said, "is, as it were, a sojourn in a cave.  What
-can we know of reality?  For all we see of the true nature of existence
-is, shall we say, no more than bewildering and amusing shadows cast upon
-the inner wall of the cave by the unseen blinding light of absolute truth,
-from which we may or may not deduce some glimmer of veracity, and we as
-troglodyte seekers of wisdom can only lift our voices to the unseen and
-say, humbly, 'Go on, do Deformed Rabbit... it's my favorite.'"
+"这个世界上的生活,"他说, "可以说就是在洞穴里暂住一阵. 关于现实, 我们
+能知道什么呢? 因为我们所看到的存在的真正本质, 不妨说, 不过是
+绝对真理那看不见的, 令人目眩的光芒投在洞穴内壁上的, 令人困惑又逗乐的影子
+罢了. 我们或许能从中推出一丝半缕的真实, 或许不能: 而我们这些穴居的
+智慧追寻者, 只能向那看不见的存在提高嗓门, 谦卑地说: '接着来, 来个"畸形兔"...我
+最喜欢这个了.'"
 
-  [Small Gods, by Terry Pratchett]
+  [小神, 特里·普拉切特 著]
 %e passage
 %e title
 #
@@ -2972,231 +2821,190 @@ say, humbly, 'Go on, do Deformed Rabbit... it's my favorite.'"
 %title Lords and Ladies (13)
 # p. 122 (Harper Torch edition)
 %passage 1
-Elves are wonderful.  They provoke wonder.
-Elves are marvellous.  They cause marvels.
-Elves are fantastic.  They create fantasies.
-Elves are glamorous.  They project glamour.
-Elves are enchanting.  They weave enchantment.
-Elves are terrific.  They beget terror.
+精灵很奇妙. 它们引人赞叹.
+精灵很非凡. 它们制造奇迹.
+精灵很梦幻. 它们创造幻象.
+精灵很迷人. 它们散发魅力.
+精灵很蛊惑. 它们编织魔咒.
+精灵很可怖. 它们孕育恐惧.
 
-The thing about words is that meanings can twist just like a snake,
-and if you want to find snakes look for them behind words that have
-changed their meaning.
+关于词语, 有一点在于, 词义会像蛇一样扭曲,
+而如果你想找蛇, 就去那些已经改变了含义的词语背后找.
 
-No one ever said elves are nice.
+从来没有人说过精灵是善良的.
 
-Elves are bad.
+精灵是邪恶的.
 
-  [Lords and Ladies, by Terry Pratchett]
+  [贵族与淑女, 特里·普拉切特 著]
 %e passage
 # p. 32 (Magrat has given up being a witch to marry Verence II, Lancre's king)
 %passage 2
-"Hope she does all right as queen," said Nanny.
+“希望她当王后能顺顺当当,"欧格奶奶说.
 
-"We taught her everything she knows," said Granny Weatherwax.
+"她会的那些, 都是我们教的."威瑟瓦克斯奶奶说.
 
-"Yeah," said Nanny Ogg, as they disappeared into the bracken.  "D'you
-think... maybe... ?"
+"是啊,"欧格奶奶说着, 两人消失在蕨丛中. "你觉得...也许...?"
 
-"What?"
+"什么?"
 
-"D'you think maybe we ought to have taught her everything /we/ know?"
+"你觉得, 也许咱们该把咱们知道的一切也教给她?"
 
-  [Lords and Ladies, by Terry Pratchett]
+  [贵族与淑女, 特里·普拉切特 著]
 %e passage
 # p. 36
 %passage 3
-It was very hard, being a reader in Invisible Writings.(1)
+做一名无形文字学读者, 真是非常艰难.(1)
 
-(1) The study of invisible writings was a new discipline made available by
-the discovery of the bi-directional nature of Library-Space.  The thaumic
-mathematics are complex, but boil down to the fact that all books,
-everywhere, affect all other books.  This is obvious:  books inspire
-other books written in the future, and cite books written in the past.
-But the General Theory(2) of L-Space suggests that, in that case, the
-contents of books /as yet unwritten/ can be deduced from books now in
-existence.
+(1) 无形文字研究是一门新学科, 之所以可能出现, 是因为发现了
+图书馆空间(L-Space)具有双向性. 其魔法数学很复杂, 但归根结底就是: 世上
+所有的书, 无论在哪里, 都会影响其他所有的书. 这一点很明显: 书会
+启发未来写出的书, 也会引用过去写出的书. 但 L 空间的广义理论(2)表明, 若
+果真如此, 那么尚未写出的书的内容, 就可以从现存的书里推断出来.
 
-(2) There's a Special Theory as well, but no one bothers with it much
-because it's self-evidently a load of marsh gas.
+(2) 还有一个狭义理论, 但没人太把它当回事, 因为它明摆着就是一堆沼气.
 
-  [Lords and Ladies, by Terry Pratchett]
+  [贵族与淑女, 特里·普拉切特 著]
 %e passage
 # p. 51
 %passage 4
-"Don't hold with schools," said Granny Weatherwax.  "They get in the way
-of education.  All them books.  Books?  What good are they?  There's too
-much reading these days.  We never had time to read when we was young, I
-know that."
+"我可不待见学校,"威瑟瓦克斯奶奶说. "学校碍着教育了. 净是些书. 书? 书
+有什么用? 如今这世道, 书读得太多啦. 我们年轻那会儿可没工夫读书, 这我清楚."
 
-  [Lords and Ladies, by Terry Pratchett]
+  [贵族与淑女, 特里·普拉切特 著]
 %e passage
 # pp. 79-80
 %passage 5
-The highwayman stepped over the groaning body of the driver and marched
-toward the door of the coach, dragging his stepladder behind him.
+拦路强盗跨过车夫呻吟的身躯, 拖着折叠梯, 大步朝马车门走去.
 
-He opened the door.
+他打开车门.
 
-"Your money or, I'm sorry to say, your--"
+"要钱还是要, 很抱歉地说, 要你的--"
 
-A blast of octarine fire blew his hat off.
+一道奥克塔林火焰把他的帽子轰掉了.
 
-The dwarf's expression did not change.
+矮人的表情纹丝不变.
 
-"I wonder if I might be allowed to rephrase my demands?"
+"不知我能否重新措辞一下我的要求?"
 
-Ridcully looked the elegantly dressed stranger up and down, or rather
-down and further down.
+里德卡利把那衣着优雅的陌生人上下打量了一番, 或者说, 往下, 再往下.
 
-"You don't look like a dwarf," he said, "apart from the height, that is."
+"你看起来不像个矮人,"他说, "除了身高这一点."
 
-"Don't look like a dwarf apart from the height?"
+"除了身高就不像矮人?"
 
-"I mean, the helmet and iron boots department is among those you are lacking
-in," said Ridcully.
+"我是说, 头盔和铁靴那一块, 正是你所欠缺的."里德卡利说.
 
-  [Lords and Ladies, by Terry Pratchett]
+  [贵族与淑女, 特里·普拉切特 著]
 %e passage
 # p. 95
 %passage 6
-What is magic?
+什么是魔法？
 
-There is the wizards' explanation, which comes in two forms, depending on
-the age of the wizard.  Older wizards talk about candles, circles, planets,
-stars, bananas, chants, runes, and the importance of having at least four
-good meals every day.  Younger wizards, particularly the pale ones who
-spend most of their time in the High Energy Magic building,(1) chatter at
-length about fluxes in the morphic nature of the universe, the essentially
-impermanent quality of even the most apparently rigid time-space framework,
-the impossibility of reality, and so on:  what this means is that they have
-got hold of something hot and are gabbling the physics as they go along.
+有一种是巫师们的解释，分为两种版本，取决于巫师的年纪。老巫师们谈论蜡烛、法阵、行星、星辰、香蕉、吟唱、符文，以及每天至少吃上四顿好饭的重要性。年轻巫师们，尤其是那些面色苍白、大部分时间都泡在高能魔法楼里的，(1) 会滔滔不绝地讲宇宙形态本质中的流变、即使最看似刚性的时空框架本质上也是无常的、现实的不可能性，等等：这意味着他们逮住了一个烫手的新玩意儿，一边琢磨一边满嘴咕哝着物理术语。
 
-(1) It was here that the thaum, hitherto believed to be the smallest
-possible particle of magic, was successfully demonstrated to be made up of
-/resons/(2) or reality fragments.  Currently research indicates that each
-reson is itself made up of a combination of at least five "flavors,"
-known as "up," "down," "sideways," "sex appeal," and "peppermint."
+(1) 正是在那里，魔素（thaum）——此前一直被认为是魔法的最小可能粒子——被成功证明是
+由 reson(2) 或现实碎片组成的.目前研究表明, 每个现实碎片本身又由至少五种"味"组合
+而成, 分别称为"上", "下", "侧", "性感"和"薄荷'.
 
-(2) Lit: "Thing-ies."
+(2) 字面意思:"小东西."
 
-  [Lords and Ladies, by Terry Pratchett]
+  [贵族与淑女, 特里·普拉切特 著]
 %e passage
 # p. 107
 %passage 7
-What is magic?
+什么是魔法?
 
-Then there is the witches' explanation, which comes in two forms, depending
-on the age of the witch.  Older witches hardly put words to it at all, but
-may suspect in their hearts that the universe really doesn't know what the
-hell is going on and consists of a zillion trillion billion possibilities,
-and could become any of them if a trained mind rigid with quantum certainty
-was inserted in the crack and /twisted/; that, if you really had to make
-someone's hat explode, all you needed to do was /twist/ into the universe
-where a large number of hat molecules all decide at the same time to bounce
-off in different directions.
+有一种是巫师们的解释, 分为两种版本, 取决于巫师的年纪. 老巫师们
+谈论蜡烛, 法阵, 行星, 星辰, 香蕉, 吟唱, 符文, 以及每天至少
+吃上四顿好饭的重要性. 年轻巫师们, 尤其是那些面色苍白, 大部分时间都
+泡在高能魔法楼里的, (1) 会滔滔不绝地讲宇宙形态本质中的流变, 即使最看似
+刚性的时空框架本质上也是无常的, 现实的不可能性, 等等: 这意味着他们
+逮住了一个烫手的新玩意儿, 一边琢磨一边满嘴咕哝着物理术语.
 
-Younger witches, on the other hand, talk about it all the time and believe
-it involves crystals, mystic forces, and dancing about without yer drawers
-on.
+(1) 正是在那里, 魔素--此前一直被认为是魔法的最小可能粒子--被成功证明是
+由现实碎片组成的. 目前研究表明, 每个现实碎片本身又由至少五种"味"组合
+而成, 分别称为"上", "下", "侧", "性感和"薄荷".
 
-Everyone may be right, all at the same time.  That's the thing about
-quantum.
+(2) 字面意思:"小东西."
 
-  [Lords and Ladies, by Terry Pratchett]
+  [贵族与淑女, 特里·普拉切特 著]
 %e passage
 # p. 114; 'colorful' & 'humor' are spelled the American way, 'or' not 'our'
 %passage 8
-He knocked on the coach door.  The window slid down.
+他敲了敲马车车门. 车窗滑了下来.
 
-"I wouldn't like you to think of this as a robbery," he said.  "I'd like
-you to think of it more as a colorful anecdote you might enjoy telling your
-grandchildren about."
+"我可不想让您把这当成抢劫,"他说, "我更希望您把它当成一段有趣的轶事, 您以后
+会乐意讲给孙辈听."
 
-A voice from within said, "That's him!  He stole my horse!"
+车里有个声音说: "就是他! 他偷了我的马!"
 
-A wizard's staff poked out.  The chieftain saw the knob on the end.
+一根巫师法杖捅了出来. 首领看见了杖头的圆球.
 
-"Now then," he said pleasantly.  "I know the rules.  Wizards aren't allowed
-to use magic against civilians except in genuine life-threatening situa--"
+"那么,"他愉快地说, "我懂规矩. 巫师不许对平民使用魔法, 除非确实有生命危险--"
 
-There was a burst of octarine light.
+一道奥克塔林光芒炸开.
 
-"Actually, it's not a rule," said Ridcully.  "It's more a guideline."  He
-turned to Ponder Stibbons.  "Interestin' use of Stacklady's Morphic
-Resonator here, I hoped you noticed."
+"其实, 这不是规矩,"里德卡利说,"更像是一条指导原则."他转向庞德·斯蒂本斯, "这里
+对斯塔克女士的形态共振器的用法很有意思, 我希望你注意到了."
 
-Ponder looked down.
+庞德低头看去.
 
-The chieftain had been turned into a pumpkin, although, in accordance with
-the rules of universal humor, he still had his hat on.
+首领已经变成了一只南瓜, 不过, 按照宇宙幽默的规则, 他的帽子还戴在头上.
 
-  [Lords and Ladies, by Terry Pratchett]
+  [贵族与淑女, 特里·普拉切特 著]
 %e passage
 # p. 149 (second half of a paragraph)
 %passage 9
-Things had to balance.  You couldn't set out to be a good witch or a bad
-witch.  It never worked for long.  All you could try to be was a /witch/,
-as hard as you could.
+凡事都得平衡. 你没法一开始就打定主意去当个好女巫或坏女巫. 那样从来都
+维持不了多久. 你唯一能努力去做的, 就是做一个女巫--竭尽全力地做一个女巫.
 
-  [Lords and Ladies, by Terry Pratchett]
+  [贵族与淑女, 特里·普拉切特 著]
 %e passage
 # p. 162 (mid-paragraph)
 %passage 10
-"I'm the head wizard now.  I've only got to give an order and a thousand
-wizards will... uh... disobey, come to think of it, or say 'What?', or
-start to argue.  But they have to take notice.
+"我现在是大巫师了. 我只要下个命令, 一千个巫师就会...呃...违抗, 仔细想想, 要么
+说'什么?', 要么开始争辩. 可他们还是得注意到."
 
-"I've been to that University a few times," said Granny.  "A bunch of fat
-old men in beards."
+"我去过那所大学几次,"奶奶说. "一帮留着胡子的胖老头."
 
-"That's right!  That's /them/!"
+"没错! 就是他们!"
 
-  [Lords and Ladies, by Terry Pratchett]
+  [贵族与淑女, 特里·普拉切特 著]
 %e passage
 # p. 190
 %passage 11
-The window was no escape this time.  There was the bed to hide under, and
-that'd work for all of two seconds, wouldn't it?
+窗户这次可不是逃生之路. 床底下倒是能躲, 可那顶多管用两秒钟, 对吧?
 
-Her eye was drawn by some kind of horrible magic back to the room's
-garderobe, lurking behind its curtain.
+某种可怕的魔法把她的目光又拽了回去, 落向房间里的便厕——它正鬼鬼祟祟地藏在帘子后面.
 
-Magrat lifted the lid.  The shaft was definitely wide enough to admit a
-body.  Garderobes were notorious in that respect.  Several unpopular kings
-met their end, as it were, in the garderobe, at the hands of an assassin
-with good climbing ability, a spear, and a fundamental approach to politics.
+麦格莱特掀开盖子. 竖井肯定够宽, 能容下一具身体. 便厕在这方面可是臭名昭著, 好几位
+不得人心的国王, 可以说, 就是在便厕里送了命, 死在一个攀爬本领高强, 手持长矛, 对政治
+秉持根本性态度的刺客手里.
 
-  [Lords and Ladies, by Terry Pratchett]
+  [贵族与淑女, 特里·普拉切特 著]
 %e passage
 # p. 191 ('a' historian, not 'an'; 'Ynci' is correct)
 %passage 12
-Some shape, some trick of moonlight, some expression on a painted face
-somehow cut through her terror and caught her eye.
+某种轮廓, 月光玩的某种把戏, 画中人脸上的某种神情, 不知怎的穿透了她的恐惧, 抓住了她的目光.
 
-That was a portrait she'd never seen before.  She'd never walked down this
-far.  The idiot vapidity of the assembled queens had depressed her.  But
-this one...
+那是她以前从未见过的一幅肖像. 她从没走到这么里面过. 那一排排陈列的王后, 个个
+愚蠢空洞, 让她沮丧. 但这一幅...
 
-This one, somehow, reached out to her.
+这一幅, 不知怎的, 打动了她.
 
-She stopped.
+她停下了脚步.
 
-It couldn't have been done from life.  In the days of /this/ queen, the
-only paint known locally was a sort of blue, and generally used on the body.
-But a few generations ago King Lully I had been a bit of a historian and a
-romantic.  He'd researched what was known of the early days of Lancre, and
-where actual evidence had been a bit sparse he had, in the best traditions
-of the keen ethnic historian, inferred from revealed self-evident wisdom(1)
-and extrapolated from associated sources(2).  He'd commissioned the
-portrait of Queen Ynci the Short-Tempered, one of the founders of the
-kingdom.
+这不可能是一幅写生像. 在这位女王的时代, 本地已知的唯一颜料是一种蓝色, 而且
+通常用来涂身体. 但几代人之前, 卢利一世国王算是个历史学家兼浪漫派. 他研究过关于兰克雷
+早期历史的所有已知材料; 在实际证据略显稀少的地方, 他便本着热忱民族史学家的
+最佳传统, 从被揭示出来的自明智慧(1)中加以推断, 并从相关来源(2)中加以外推. 他
+命人绘制了急性子英茜女王的肖像, 她是王国的奠基人之一.
 
-(1) Made it up.
+(1) 自己编的。
 
-(2) Had read a lot of stuff that other people had made up, too.
+(2) 还读了许多别人编出来的东西。
 
-  [Lords and Ladies, by Terry Pratchett]
+  [贵族与淑女, 特里·普拉切特 著]
 %e passage
 #
 # passage added for 5.0
@@ -3205,20 +3013,17 @@ kingdom.
 #        "ooh-jar" is accurate for ouija after having been butchered by
 #        Nanny Ogg's previously established 'mastery' of foreign languages)
 %passage 13
-"[...]  Playing at witches.  You know, ooh-jar boards and cards and wearing
-black lace gloves with no fingers to 'em and paddlin' with the occult."
+"[...] 玩女巫游戏. 你知道的, 通灵板啊卡牌啊, 戴着没有指头的黑色蕾丝手套, 跟神秘学瞎掺和."
 
-"I don't hold with paddlin' with the occult," said Granny firmly.  "Once
-you start paddlin' with the occult you start believing in spirits, and
-when you start believing in spirits you start believing in demons, and then
-before you know where you are you're believing in gods.  And then you're
-in /trouble/."
+"我不赞成跟神秘学瞎掺和,"威瑟瓦克斯奶奶坚定地说. "一旦你开始
+跟神秘学瞎掺和, 你就会开始相信鬼魂, 而当你开始相信鬼魂, 你就会
+开始相信恶魔, 接着不知不觉你就信起神来了. 然后你就麻烦了."
 
-"But all them things exist," said Nanny Ogg.
+"可那些东西都是存在的呀,"欧格奶奶说.
 
-"That's no call to go around believing in them.  It only encourages 'em."
+"那也不等于就该到处去信它们. 那只会助长它们."
 
-  [Lords and Ladies, by Terry Pratchett]
+  [贵族与淑女, 特里·普拉切特 著]
 %e passage
 %e title
 #
@@ -3229,7 +3034,7 @@ in /trouble/."
 %passage 1
 The maze was so small that people got lost looking /for/ it.
 
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, by Terry Pratchett]
 %e passage
 # pp. 6-7 (Harper Torch edition)
 %passage 2
