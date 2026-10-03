@@ -3032,248 +3032,200 @@
 %title Men at Arms (14)
 # p. 72 (Harper Torch edition)
 %passage 1
-The maze was so small that people got lost looking /for/ it.
+迷宫小得让人连找它都会迷路.
 
-  [武装人员, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 # pp. 6-7 (Harper Torch edition)
 %passage 2
-Ankh-Morpork had a king again.
+安卡-莫波克又有国王了.
 
-And this was /right/.  And it was /fate/ that had let Edward recognize this
-/just/ when he'd got his Plan.  And it was /right/ that it was /Fate/,
-and the city would be /Saved/ from its ignoble present by its /glorius/
-past.  He had the /Means/, and he had the /end/.  And so on ...  Edward's
-thoughts often ran like this.
+而这理应如此. 是命运让爱德华恰好在
+刚有了自己的计划时认出了这一点. 而这正是命运, 理应如此; 这座城市将
+凭借它光荣的过去, 从可耻的现状中被拯救. 他有了手段, 也有了
+目的. 诸如此类...爱德华的思绪常常这样运转.
 
-He could think in /italics/.  Such people need watching.
+他能用斜体思考. 这种人得有人看着.
 
-Preferably from a safe distance.
+最好从安全距离之外看着.
 
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 # pp. 76-77
 %passage 3
-There were such things as dwarf gods.  Dwarfs were not a naturally
-religious species, but in a world where pit props could crack without
-warning and pockets of fire damp could suddenly explode they'd seen the
-need for gods as the sort of supernatural equivalent of a hard hat.
-Besides, when you hit your thumb with an eight-pound hammer it's nice
-to be able to blaspheme.  It takes a very special and strong-minded
-kind of atheist to jump up and down with their hand clasped under their
-other armpit and shout, "Oh, random fluctuations-in-the-space-time-
-continuum!" or "Aaargh, primitive-and-outmoded-concept on a crutch!"
+矮人也有神. 矮人并非天生信教的种族, 但在这个坑木
+可能毫无征兆地断裂, 瓦斯包可能突然爆炸的世界里, 他们觉得需要神, 就像
+需要一顶超自然的安全帽. 再说, 当你用八磅锤砸到拇指时, 能骂骂神总是件好事. 只有
+极其特别, 意志坚定的无神论者, 才会把受伤的手紧夹在另一侧腋窝下, 蹦上蹦下地喊: "哦, 
+时空连续统中的随机涨落!"或者"啊啊啊, 拄着拐杖的原始过时概念!"
 
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 # p. 119 (perhaps a bit subtle; it would be clearer if 'they' was italicized)
 %passage 4
-"It's an ancient tradition," said Carrot.
+"这是古老的传统,"胡萝卜说.
 
-"I thought dwarfs didn't believe in devils and demons and stuff like
-that."
+"我以为矮人不信魔鬼恶魔之类的东西."
 
-"That's true, but ... we're not sure if they know."
+"没错, 不过...我们不确定它们知不知道."
 
-"Oh."
+"哦."
 
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 # pp. 168-169 (treacle == molasses)
 %passage 5
-"I'd like a couple of eggs," said Vimes, "with the yolks real hard but
-the whites so runny that they drip like treacle.  And I want bacon, that
-special bacon all covered with bony nodules and dangling bits of fat.
-And a slice of fried bread.  The kind that makes your arteries go clang
-just by looking at it."
+"我想要两个鸡蛋,"维姆斯说, "蛋黄要煎得硬邦邦的, 蛋白却要稀得能像糖蜜一样
+往下滴. 还要培根, 那种特别的培根, 上面全是骨节和晃荡的肥肉块. 再来一片
+炸面包. 就是那种看一眼就能让血管叮当作响的."
 
-"Tough order," said Harga.
+"要求挺苛刻啊,"哈加说.
 
-"You managed it yesterday.  And give me some more coffee.  Black as
-midnight on a moonless night."
+"你昨天就做到了. 再给我来点咖啡. 黑得像无月之夜的午夜." 
 
-Harga looked surprised.  That wasn't like Vimes.
+哈加看上去很惊讶. 这可不像维姆斯.
 
-"How black's that, then?" he said.
+"那到底有多黑?"他说.
 
-"Oh pretty damn black, I should think."
+"哦, 我想是黑得不得了."
 
-"Not necessarily."
+"不一定."
 
-"What?"
+"什么?"
 
-"You get more stars on a moonless night.  Stands to reason.  They show up
-more.  It can be quite bright on a moonless night."
+"无月之夜星星更多. 这是明摆着的. 它们更显眼. 无月之夜可以相当亮."
 
-Vimes sighed.
+维姆斯叹了口气.
 
-"An /overcast/ moonless night?" he said.
+"阴天的无月之夜?"他说.
 
-Harga looked carefully at his coffee pot.
+哈加仔细看了看他的咖啡壶.
 
-"Cumulous or cirro-nimbus?"
+"积云还是卷雨云?"
 
-"I'm sorry.  What did you say?"
+"抱歉, 你说什么?"
 
-"You gets city lights reflected off cumulous, because it's low lying, see.
-Mind you, you can get high-altitude scatter off the ice crystals in--"
+"积云能把城市灯光反射下来, 因为它位置低, 明白吧. 不过, 高空的冰晶也能散射--"
 
-"A moonless night," said Vimes, in a hollow voice, "that is as black as
-that coffee."
+"一个无月之夜,"维姆斯用空洞的声音说, "黑得就像那壶咖啡."
 
-"Right!"
+"对!"
 
-"And a doughnut."  Vimes grabbed Harga's stained vest and pulled him
-until they were nose to nose.  "A doughnut as doughnutty as a doughnut
-made of flour, water, one large egg, sugar, a pinch of yeast, cinnamon
-to taste and a jam, jelly, or rat filling depending on national or
-species preference, OK?  Not as doughnutty as something in any way
-metaphorical.  Just a doughnut.  One doughnut."
+"再来个甜甜圈. "维姆斯抓住哈加脏兮兮的背心, 把他拽得两人鼻子对鼻子. "一个甜甜圈, 
+要像用面粉, 水, 一个大鸡蛋, 糖, 一小撮酵母, 适量肉桂, 再加上根据国家或种族偏好选择的
+果酱, 果冻或老鼠馅做成的甜甜圈那样, 有甜甜圈味, 明白吗? 不要任何意义上隐喻的
+甜甜圈味. 就是一个甜甜圈. 一个甜甜圈."
 
-"A doughnut."
+"一个甜甜圈."
 
-"Yes."
+"对."
 
-"You only had to say."
+"你早说不就得了."
 
-Harga brushed off his vest, gave Vimes a hurt look, and went back into
-the kitchen.
+哈加掸了掸背心, 委屈地看了维姆斯一眼, 回厨房去了.
 
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 # p. 174 (clumsy wording; 'they' in 2nd sentence != 'they' in 1st sentence)
 %passage 6
-Why had they chased someone halfway across the city?  Because they'd
-run away.  /No one/ ran away from the Watch.  Thieves just flashed their
-licenses.  Unlicensed thieves had nothing to fear from the Watch, since
-they'd saved up all their fear for the Thieves' Guild.  Assassins always
-obeyed the letter of the law.  And honest men didn't run away from the
-Watch.(1)  Running away from the Watch was downright suspicious.
+他们为什么要追一个人追过半个城? 因为他跑了. 没人会从城市卫队面前逃跑. 盗贼只需
+亮出执照. 无照盗贼没什么好怕城市卫队的, 因为他们把所有恐惧都攒着留给盗贼公会了. 刺客
+总是遵守法律条文. 而老实人不会从城市卫队面前逃跑. (1) 从城市卫队面前逃跑, 简直可疑透顶.
 
-(1) The axiom "Honest men have nothing to fear from the police" is
-currently under review by the Axioms Appeal Board.
+(1) "老实人没什么好怕警察的"这条公理, 目前正由公理上诉委员会复核.
 
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 # pp. 176-177 ("this [sic; no 'is'] the pork futures warehouse")
 %passage 7
-"Oh, my," said Detritus.  "I think this the pork futures warehouse in
-Morpork Road."
+"哦, 天哪,"德崔特斯说. "我想这儿就是莫波克路的猪肉期货仓库."
 
-"What?"
+"什么?"
 
-"Used to work here," said the troll.  "Used to work everywhere.  Go away,
-you stupid troll, you too thick," he added, gloomily.
+"以前在这儿干过,"巨魔说. "以前到处都干过, 滚开, 你这蠢巨魔, 你太笨了,"他闷闷地补了一句.
 
-"Is there any way out?"
+"有路出去吗?"
 
-"The main door is in Morpork Street.  But no one comes in here for months.
-Till pork exists."(1)
+"正门在莫波克街. 但这里好几个月都没人进来. 要等到猪肉存在."(1)
 
-Cuddy shivered.
+卡迪打了个寒战.
 
-(1) Probably no other world in the multiverse has warehouses for things
-which only exist /in potentia/, but the pork futures warehouse in Ankh-
-Morpork is a product of the Patrician's rules about baseless metaphors,
-the literal-mindedness of citizens who assume that everything must
-exist somewhere, and the general thinness of the fabric of reality
-around Ankh, which is so thin that it's as thin as a very thin thing.
-The net result is that trading in pork futures--in pork /that doesn't
-exist yet/--led to the building of the warehouse to store it until it
-does.  The extremely low temperatures are caused by the imbalance in
-the temporal energy flow.  At least, that's what the wizards in the
-High Energy Magic building say.  And they've got proper pointy hats and
-letters after their name, so they know what they're talking about.
+(1) 多元宇宙中大概没有别的世界会为仅潜在存在的东西建仓库, 但安卡-莫波克的猪肉期货仓库
+是执政官关于无根据隐喻的规矩, 市民们认定万物必存于某处的死板头脑, 以及安卡周围普遍稀薄的
+现实织构--薄得跟非常薄的东西一样薄--共同催生的产物. 最终结果是, 猪肉期货交易--交易的是
+尚不存在的猪肉--促使人们建起这座仓库, 把它储存到存在为止. 极低的温度由时间能量流失衡
+造成. 至少, 高能魔法楼的巫师们是这么说的. 他们戴着像样的尖帽子, 名字后面还缀着一串字母, 所以
+肯定知道自己在说什么.
 
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 # p. 212
 %passage 8
-Black mud, more or less dry, made a path at the bottom of the tunnel.
-There was slime on the walls, too, indicating that at some point in the
-recent past the tunnel had been full of water.  Here and there huge
-patches of fungi, luminous with decay, cast a faint glow over the
-ancient stonework.(1)
+黑泥, 差不多已经干了, 在隧道底部形成一条小径. 墙上也有黏液, 说明
+不久前某个时候, 隧道里曾灌满了水. 这里那里, 大片真菌因腐烂而发出微光, 为古老的
+石砌投下一层淡淡的光晕. (1)
 
-(1) It didn't need to.  Cuddy, belonging to a race that worked underground
-for preference, and Detritus, a member of a race notoriously nocturnal,
-had excellent vision in the dark.  But mysterious caves and tunnels
-always have luminous fungi, strangely bright crystals or at a pinch
-merely an eldritch glow in the air, just in case a human hero comes in
-and needs to see in the dark.  Strange but true.
+(1) 其实根本没必要. 卡迪属于一个偏好在地下工作的种族, 德崔特斯则属于出了名的
+夜行种族, 他们在黑暗中视力都极佳. 但神秘洞穴和隧道里总会有发光真菌, 亮得古怪的晶体, 实在
+不行也总有一抹诡异幽光悬浮空中, 以防哪个人类英雄闯进来, 需要在黑暗中视物. 怪事一桩, 却是事实.
 
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 # p. 218
 %passage 9
-"He's bound to have done /something/," Nobby repeated.
+"他肯定干过某事,"诺比重复道.
 
-In this he was echoing the Patrician's view of crime and punishment.  If
-there was a crime, there should be punishment.  If the specific criminal
-should be involved in the punishment process then this was a happy
-accident, but if not then any criminal would do, and since everyone was
-undoubtedly guilty of something, the net result was that, /in general
-terms/, justice was done.
+他这话其实是在附和执政官对罪与罚的看法. 只要有罪案, 就该有惩罚. 如果受罚的
+恰好是那个具体的罪犯, 那算是意外之喜; 如果不是, 那随便哪个罪犯都行. 既然每个人毫无疑问
+都犯过点什么, 最终结果就是, 大体而言, 正义得到了伸张.
 
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 # p. 226
 %passage 10
-The librarian considered matters for a while.  So ... a dwarf and a troll.
-He preferred both species to humans.  For one thing, neither of them were
-great readers.  The Librarian was, of course, very much in favor of
-reading in general, but readers in particular got on his nerves.  There
-was something, well, /sacrilegious/ about the way they kept taking books
-off the shelves and wearing out the words by reading them.  He liked
-people who loved and respected books, and the best way to do that, in
-the Librarian's opinion, was to leave them on the shelves where Nature
-intended them to be.
+图书管理员琢磨了一会儿. 这么说... 一个矮人和一个巨魔. 这两个种族
+他都更喜欢, 胜过人类. 原因之一: 他们都不怎么爱读书. 图书管理员当然总体上非常
+支持阅读, 但偏偏对"读者"这类人很头疼. 他们老是把书从书架上拿下来, 靠阅读把字都磨秃了, 这里面
+有种, 怎么说呢, 亵渎神圣的意味. 他喜欢热爱并尊重书的人; 而在图书管理员看来, 尊重书的
+最好方式, 就是让它们待在书架上, 待在大自然本来要它们待的地方.
 
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 # p. 253
 %passage 11
-Sometimes it's better to light a flamethrower than curse the darkness.
+有时候, 与其诅咒黑暗, 不如点着一台火焰喷射器.
 
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 # p. 265 (fyi, they're decorated chicken eggs)
 %passage 12
-"All those little heads ... "
+"所有这些小脑袋..."
 
-They stretched away in the candlelight, shelf on shelf of them, tiny
-little clown faces--as if a tribe of headhunters had suddenly developed
-a sophisticated sense of humor and a desire to make the world a better
-place.
+它们在烛光中一路延伸, 一架叠着一架, 全是小小的丑角面孔--仿佛某个猎头族部落
+突然发展出了高雅的幽默感, 还生出了让世界变得更美好的愿望.
 
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 # pp. 300-301
 %passage 13
-"You know what I mean!"
+"说不上懂. 真说不上懂. 衣服从来就不是你们所谓的狗--那什么--
+玩意儿."加斯波德挠了挠耳朵. "刚才那句里塞了两个元句法变量. 抱歉."
 
-"Can't say I do.  Can't say I do.  Clothing has never been what you might
-call a thingy of dog wossname."  Gaspode scratched his ear.  "Two meta-
-syntactic variables there.  Sorry."
-
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 # p. 320
 %passage 14
-"Hahaha, a nice day for it!" leered the Bursar.
+"哈哈哈, 这天气正适合干这个!"财务官不怀好意地笑道.
 
-"Oh dear," said Ridcully, "he's off again.  Can't understand the man.
-Anyone got the dried frog pills?"
+"哦, 天哪,"里德卡利说, "他又犯病了. 真搞不懂这人. 谁带了干青蛙药丸?"
 
-It was a complete mystery to Mustrum Ridcully, a man designed by nature to
-live outdoors and happily slaughter anything that coughed in the bushes,
-why the Bursar (a man designed by Nature to sit in a small room somewhere,
-adding up figures) was so nervous.  He'd tried all sorts of things to, as
-he put it, buck him up.  These included practical jokes, surprise early
-morning runs, and leaping out at him from behind doors while wearing
-Willie the Vampire masks in order, he said, to take him out of himself.
+对穆斯特鲁姆·里德卡利来说, 这完全是个谜: 他天生就该待在户外, 乐呵呵地
+宰掉灌木丛里任何咳嗽的东西; 而财务官(一个天生就该坐在某个小房间里算账的人)怎么会
+这么神经紧张. 他曾试过各种各样的办法, 用他的话说, 给财务官打气. 这些办法包括
+恶作剧, 大清早搞突然袭击拉他去跑步, 以及戴着吸血鬼威利的面具从门后跳出来
+吓他--他说, 这是为了让财务官从自己的小世界里走出来.
 
-  [Men at Arms, by Terry Pratchett]
+  [武装人员, 特里·普拉切特 著]
 %e passage
 %e title
 #
@@ -3282,238 +3234,183 @@ Willie the Vampire masks in order, he said, to take him out of himself.
 %title Soul Music (13)
 # p. 121 (Harper Torch edition; passage starts mid-paragraph)
 %passage 1
-But this didn't /feel/ like magic.  It felt a lot older than that.  It felt
-like music.
+但这感觉不像魔法. 它感觉比魔法古老得多. 它感觉像音乐.
 
-  [Soul Music, by Terry Pratchett]
+  [灵魂音乐, 特里·普拉切特 著]
 %e passage
 # p. 49 (the skull is a traditional decoration for a wizard's abode; this one
 #        is the usual perch for, and is conversing with, a talking raven that
 #        has been translating the Death of Rats' SQUEAKs for Susan Sto Helit)
 %passage 2
-"Yes," said the skull.  "Quit while you're a head, that's what I say."
+"是的."骷髅说, "要我说啊, 趁你还有个脑袋, 见好就收吧."
 
-  [Soul Music, by Terry Pratchett]
+  [灵魂音乐, 特里·普拉切特 著]
 %e passage
 # p. 2
 %passage 3
-But if it is true that the act of observing changes the thing which is
-observed,(1) it's even more true that it changes the observer.
+但如果说观察这一行为会改变被观察之物, (1) 那么它改变观察者这一点就更是不假.
 
-(1) Because of Quantum.
+(1) 因为量子.
 
-  [Soul Music, by Terry Pratchett]
+  [灵魂音乐, 特里·普拉切特 著]
 %e passage
 # p. 8
 %passage 4
-It is said that whomsoever the gods wish to destroy, they first make mad.
-In fact, whomsoever the gods wish to destroy, they first hand the
-equivalent of a stick with a fizzing fuse and Acme Dynamite Company
-written on the side.  It's more interesting, and doesn't take so long.
+据说, 诸神欲毁掉谁, 必先使其发疯.  
+事实上, 诸神欲毁掉谁, 会先递给他一根引信嘶嘶冒烟, 侧面印着"Acme 炸药公司"字样的
+炸药棒. 这样更有趣, 也用不了那么长时间.
 
-  [Soul Music, by Terry Pratchett]
+  [灵魂音乐, 特里·普拉切特 著]
 %e passage
 # pp. 63-64
 %passage 5
-Then the skull said:  "Kids today, eh?"
+然后骷髅说: "如今的孩子们, 唉?"
 
-"I blame education," said the raven.
+"都怪教育,"渡鸦说.
 
-"A lot of knowledge is a dangerous thing," said the skull.  "A lot more
-dangerous than just a little.  I always used to say that, when I was
-alive."
+"知识太多是件危险的事,"骷髅说, "比只有一丁点儿知识危险得多. 我活着的时候总这么说."
 
-"When was that, exactly?"
+"那到底是什么时候?"
 
-"Can't remember.  I think I was pretty knowledgeable.  Probably a teacher
-or philosopher, something of that kidney.  And now I'm on a bench with a
-bird crapping on my head."
+"记不清了. 我想我当年挺有学问的. 大概是个教师或者哲学家, 那一类人物吧. 而现在
+我坐在长椅上, 一只鸟在我头上拉屎."
 
-"Very allegorical," said the raven.
+"非常寓言化,"渡鸦说.
 
-  [Soul Music, by Terry Pratchett]
+  [灵魂音乐, 特里·普拉切特 著]
 %e passage
 # p. 87 (Stabbing: "in the" both capitalized; "and" not so)
 %passage 6
-The Mended Drum had traditionally gone in for, well, traditional pub games,
-such as dominoes, darts, and Stabbing People In The Back and Taking All
-Their Money.  The new owner had decided to go up-market.  This was the
-only available direction.
+破鼓酒吧历来搞的是--怎么说呢--传统酒馆游戏, 比如多米诺骨牌, 飞镖, 以及
+"从背后捅人并抢光他们所有钱". 新老板决定走高端路线. 这是唯一可走的方向.
 
-  [Soul Music, by Terry Pratchett]
+  [灵魂音乐, 特里·普拉切特 著]
 %e passage
 # pp. 125-126 ("him"==Librarian;
 #              Leonard of Quirm==Discworld analog of Leonardo da Vinci)
 %passage 7
-The Library didn't only contain magical books, the ones which are chained
-to their shelves and are very dangerous.  It also contained perfectly
-ordinary books, printed on commonplace paper in mundane ink.  It would be
-a mistake to think that they weren't also dangerous, just because reading
-them didn't make fireworks go off in the sky.  Reading them sometimes did
-the more dangerous trick of making fireworks go off in the privacy of the
-reader's brain.
+图书馆里不仅有魔法书--那些被锁链拴在书架上, 非常危险的书. 它还藏有
+完全普通的书, 用普通纸张, 普通墨水印成. 若以为它们不危险, 只因为读它们
+不会让天空中烟花绽放, 那就错了. 读它们有时会耍出更危险的把戏: 在读者大脑的
+私密空间里引爆烟花.
 
-For example, the big volume open in front of him contained some of the
-collected drawings of Leonard of Quirm, skilled artist and certified
-genius, with a mind that wandered so much it came back with souvenirs.
+比如, 他面前摊开的那本大书里, 收录了奎姆的伦纳德的一些画作集. 伦纳德是
+技艺高超的艺术家, 公认的天才, 他的思绪游荡得太远, 回来时还带着纪念品.
 
-Leonard's books were full of sketches--of kittens, of the way water flows,
-of the wives of influential Ankh-Morporkian merchants whose portraits had
-provided his means of making a living.  But Leonard had been a genius and
-was deeply sensitive to the wonders of the world, so the margins were full
-of detailed doodles of whatever was on this mind at the moment--vast
-water-powered engines for bringing down city walls on the heads of the
-enemy, new types of siege guns for pumping flaming oil over the enemy,
-gunpowder rockets that showered the enemy with burning phosphorous, and
-other manufactures of the Age of Reason.
+伦纳德的书里满是速写--小猫, 水流的样子, 安卡-莫波克有权有势的商人们的
+妻子们的肖像, 这些肖像曾是他的谋生手段. 但伦纳德是个天才,对世间奇观极为敏感, 所以
+页边空白处满是当时他脑中想到之物的详细涂鸦--把城墙砸到敌人头上的巨大水力发动机, 向
+敌人喷射燃烧石油的新式攻城炮, 向敌人洒下燃烧磷的火药火箭, 以及其他理性时代的制品.
 
-And there had been something else.  The Librarian had noticed it in
-passing once before, and had been slightly puzzled by it.  It seemed out
-of place.(1)
+还有别的东西. 图书管理员之前曾不经意间注意到它, 并略微感到困惑. 它显得格格不入.(1)
 
-(1) And didn't appear to do anything to the enemy /at all/.
+(1) 而且似乎对敌人根本不起任何作用.
 
-  [Soul Music, by Terry Pratchett]
+  [灵魂音乐, 特里·普拉切特 著]
 %e passage
 # p. 152 (much of the story concerns "Music With Rocks In")
 %passage 8
-Some religions say that the universe was started with a word, a song,
-a dance, a piece of music.  The Listening Monks of the Ramtops have
-trained their hearing until they can tell the value of a playing card by
-listening to it, and have made it their task to listen intently to the
-subtle sounds of the universe to piece together, from the fossil echoes,
-the very first noises.
+有些宗教说, 宇宙始于一个词, 一首歌, 一支舞, 一段音乐. 拉姆托普山脉的聆听僧侣们
+训练自己的听觉, 直到他们能靠听一张扑克牌来判断它的点数, 而他们把自己的任务
+定为凝神倾听宇宙的微妙声响, 从化石般的回声里拼凑出最原初的噪音.
 
-There was certainly, they say, a very strange noise at the beginning of
-everything.
+他们说, 万物开端处当然曾有一声非常奇怪的响动.
 
-But the keenest ears (the ones who win most at poker), who listen to the
-frozen echoes in the ammonites and amber, swear they can detect some tiny
-sounds before that.
+但听觉最敏锐的那些人(也是在扑克牌局里赢最多的那些人), 倾听菊石和琥珀中冻结的
+回声, 发誓说他们能在那之前探测到一些极其微小的声音.
 
-It sounded, they say, like someone counting:  One, Two, Three, Four.
+他们说, 那听起来像是有人在数数: 一二三四.
 
-The very best one, who listened to basalt, said he thought he could make
-out, very faintly, some numbers that came even earlier.
+最厉害的那一位, 听的是玄武岩, 说他想自己能极微弱地辨认出一些更早的数字.
 
-When they asked him what it was, he said:  "It sounds like One, Two."
-
-  [Soul Music, by Terry Pratchett]
+他们问他那是什么, 他说: "听起来像一二."
+  [灵魂音乐, 特里·普拉切特 著]
 %e passage
 # p. 227
 %passage 9
-The Death of Rats put his nose in his paws.  It was a lot easier with
-rats.(1)
+老鼠死神把鼻子埋进两只前爪里. 对付老鼠要容易得多. (1)
 
-(1) Rats had featured largely in the history of Ankh-Morpork.  Shortly
-before the Patrician came to power there was a terrible plague of rats.
-The city council countered it by offering twenty pence for every rat
-tail.  This did, for a week or two, reduce the number of rats--and then
-people were suddenly queueing up with tails, the city treasury was being
-drained, and no one seemed to be doing much work.  And there /still/
-seemed to be a lot of rats around.  Lord Vetinari had listened carefully
-while the problem was explained, and had solved the thing with one
-memorable phrase which said a lot about him, about the folly of bounty
-offers, and about the natural instinct of Ankh-Morporkians in any
-situation involving money:  "Tax the rat farms."
+(1) 老鼠在安卡-莫波克的历史上扮演过重要角色. 就在执政官上台前不久, 城里爆发了
+一场可怕的鼠患. 市议会为了应对, 悬赏每条老鼠尾巴二十便士. 这一招在一两周内
+确实减少了老鼠的数量--可接着人们突然排起队来交尾巴, 市库被掏空, 而且似乎没人
+干多少正事了. 而周围似乎仍然有很多老鼠. 维提纳里勋爵在问题被解释时仔细听着, 然后用
+一句令人难忘的话解决了这件事: 这句话很能说明他这个人, 说明悬赏的愚蠢, 也说明安卡-莫波克
+人在任何涉及金钱的情况下的天性: "向老鼠养殖场征税."
 
-  [Soul Music, by Terry Pratchett]
+  [灵魂音乐, 特里·普拉切特 著]
 %e passage
 # pp. 313-314 (Drongo and Big Mad Adrian are students)
 %passage 10
-The Archchancellor polished this staff as he walked along.  It was a
-particularly good one, six feet long and quite magical.  Not that he used
-magic very much.  In his experience, anything that couldn't be disposed of
-with a couple of whacks from six feet of oak was probably immune to magic
-as well.
+大校长一边走, 一边擦亮手里的法杖. 这是特别好的一根, 六英尺长, 相当有魔力. 倒不是
+他常用魔法. 依他的经验, 凡是六英尺橡木棍抡两下解决不了的东西, 多半也对魔法免疫.
 
-"Don't you think we should have brought the senior wizards, sir?" said
-Ponder, struggling to keep up.
+"您不觉得我们该把那些资深巫师也带上吗, 先生?"庞德说, 努力跟上.
 
-"I'm afraid that taking them along in their present state of mind would
-only make what happens"--Ridcully sought for a useful phrase, and settled
-for--"happen worse.  I've insisted they stay in college."
+"恐怕带他们去, 以他们现在的心智状态, 只会让发生的事--"里德卡利想找个有用的说法, 最后
+选定--"发生得更糟. 我已经坚持让他们留在学院里了."
 
-"How about Drongo and the others?" said Ponder hopefully.
+"德龙戈他们呢?"庞德满怀希望地说.
 
-"Would they be any good in the event of a thaumaturgical dimension rip of
-enormous proportions?" said Ridcully.  "I remember poor Mr. Hong.  One
-minute he was dishing up an order of double cod and mushy peas, the
-next ..."
+"万一发生规模巨大的魔法维度撕裂, 他们能派上用场吗?"里德卡利说. "我记得可怜的
+洪先生. 前一分钟他还在盛一份双份鳕鱼和豌豆泥, 下一分钟..."
 
-"Kaboom?" said Ponder.
+"轰隆?"庞德说.
 
-"Kaboom?" said Ridcully, forcing his way up the crowded street.  "Not
-that I heard tell.  More like 'Aaaaerrrr-scream-gristle- gristle-gristle-
-crack' and a shower of fried food.  Big Mad Adrian and his friends any
-good when the chips are down?"
+"轰隆?"里德卡利说, 一边在拥挤的街道上挤出一条路. "我倒没听说. 更像'啊啊呃呃--
+尖叫--软骨--软骨--软骨--咔嚓', 外加一阵油炸食物雨. 大疯阿德里安和他的朋友们在
+紧要关头管用吗."
 
-"Um.  Probably not, Archchancellor."
+"呃, 大概不管用, 大校长."
 
-"Correct.  People shout and run about.  That never did any good.  A pocket
-full of decent spells and a well-charged staff will get you out of trouble
-nine times out of ten."
+"没错. 人们大喊大叫, 四处乱跑. 那从来没什么用. 口袋里装满像样的咒语, 再加一根
+充能良好的法杖, 十有八九能让你摆脱麻烦."
 
-"Nine times out of ten?"
+"十次里有九次?"
 
-"Correct."
+"没错."
 
-"How many times have you had to rely on them, sir?"
+"您不得不靠它们多少次了, 先生?"
 
-"Well ... there was Mr. Hong ... that business with the thing in the
-Bursar's wardrobe ... that dragon, you remember ..."  Ridcully's lips
-moved silently as he counted on his fingers.  "Nine times, so far."
+"嗯...有洪先生那回...财务官衣柜里那玩意儿那件事...还有那条龙, 你记得吧..."里德卡利的嘴唇
+无声翕动, 掰着手指算. "到目前为止, 九次."
 
-"It worked every time, sir?"
+"每次都管用吗, 先生?"
 
-"Absolutely!  So there's no need to worry.  Gangway!  Wizard comin'
-through."
+"绝对管用! 所以没必要担. 让开! 巫师过路."
 
-  [Soul Music, by Terry Pratchett]
+  [灵魂音乐, 特里·普拉切特 著]
 %e passage
 # p. 339
 %passage 11
-The wizards went rigid as the howl rang through the building.  It was
-slightly animal but also mineral, metallic, edged like a saw.
+巫师们僵住了, 嚎叫声响彻整座大楼. 那声音略带
+动物气息, 却又透着矿物, 金属的质感, 边缘像锯齿一样锋利.
 
-Eventually the Lecturer in Recent Runes said, "Of course, just because
-we've heard a spine-chilling blood-curdling scream of the sort to make
-your very marrow freeze in your bones doesn't automatically mean there's
-anything wrong."
+最后, 近期符文讲师说: "当然, 仅仅因为我们听到了一声令人脊背发凉, 血液凝固的尖叫, 那种
+能让骨髓在骨头里冻结的尖叫, 并不自动意味着出了什么差错."
 
-The wizards looked out into the corridor.
+巫师们朝走廊外望去.
 
-"It came from downstairs somewhere," said the Chair of Indefinite Studies,
-heading for the staircase.
+"是从楼下什么地方传来的,"不定研究主席说, 朝楼梯走去.
 
-"So why are you going /upstairs/?"
+"那你为什么往楼上走?"
 
-"Because I'm not daft!"
+"因为我不傻!"
 
-"But it might be some terrible emanation!"
+"可那可能是某种可怕的散发物!"
 
-"You don't say?" said the Chair, still accelerating.
+"真的吗?"主席说, 仍在加速.
 
-"All right, please yourself.  That's the students floor up there."
+"好吧, 随你便. 那上面是学生楼层."
 
-"Ah, Er--"
+"啊, 呃--"
 
-The Chair came down slowly, occasionally glancing fearfully up the stairs.
+主席慢慢走了下来, 偶尔恐惧地朝楼梯上瞥一眼. 
 
-  [Soul Music, by Terry Pratchett]
-%e passage
-#
-# 2 more passages added for 5.0
-#
-# p. 242 (passage starts and ends mid-paragraph; "the Old" rather than "the
-#         Old <some language>" is accurate)
-%passage 12
-Wizards were rumored to be wise--in fact, that's where the word came
-from.(1)
+据传巫师们很有智慧——事实上, 这个词就是这么来的. (1)
 
-(1) From the Old /wys-ars/, lit: one who, at bottom, is very smart.
+(1) 源自古语 wys-ars, 字面义: 一个在底部(屁股)非常聪明的人.
 
-  [Soul Music, by Terry Pratchett]
+  [灵魂音乐, 特里·普拉切特 著]
 %e passage
 # p. 351 (passage starts mid-paragraph; Death normally isn't bound by time
 #         and space so can be everywhere at once, more or less, but in this
@@ -3522,9 +3419,9 @@ from.(1)
 #         at such high speed that the vehicle has steadily disintegrated out
 #         from under him, progress is slow by his usual standard)
 %passage 13
-The fastest way to travel is to be there already.
+最快的旅行方式, 就是已经在那里了.
 
-  [Soul Music, by Terry Pratchett]
+  [灵魂音乐, 特里·普拉切特 著]
 %e passage
 %e title
 #
@@ -3533,117 +3430,100 @@ The fastest way to travel is to be there already.
 %title Interesting Times (13)
 # p. 1 (Harper Torch edition; passage is a footnote)
 %passage 1
-Whatever happens, they say afterwards, it must have been fate.  People are
-always a little confused about this, as they are in the case of miracles.
-When someone is saved from certain death by a strange concatenation of
-circumstances, they say that's a miracle.  But of course if someone is
-/killed/ by a freak chain of events--the oil spilled just /there/, the
-safety fence broken just /there/--that must /also/ be a miracle.  Just
-because it's not nice doesn't mean it's not miraculous.
+无论发生什么, 事后他们都会说, 那一定是命运. 人们对此
+总是有些困惑, 就像面对奇迹时一样. 当某人因一连串离奇巧合而
+从必死之境获救时, 他们就说那是奇迹. 但当然, 如果某人被一连串反常事件
+杀死--油恰好洒在那里, 安全围栏恰好断在那里--那也必定是奇迹. 仅仅因为它
+不美好, 并不意味着它就不是奇迹.
 
-  [Interesting Times, by Terry Pratchett]
+  [异域时光, 特里·普拉切特 著]
 %e passage
 # p. 18
 %passage 2
-"Oh, no," said the Lecturer in Recent Runes, pushing his chair back.  "Not
-that.  That's meddling with things you don't understand."
+"哦, 不行,"近期符文讲师说着, 把椅子往后一推. "别来那个. 那是在瞎掺和你们根本不懂的事."
 
-"Well, we /are/ wizards," said Ridcully.  "We're supposed to meddle with
-things we don't understand.  If we hung around waitin' till we understood
-things we'd never get anything done."
+"可我们就是巫师啊,"里德卡利说. "我们本来就该去掺和那些我们不懂的事. 要是我们
+一直干等着, 非等弄明白了才动手, 那就什么都干不成了."
 
-  [Interesting Times, by Terry Pratchett]
+  [异域时光, 特里·普拉切特 著]
 %e passage
 # p. 4
 %passage 3
-According to the philosopher Ly Tin Wheedle, chaos is found in greatest
-abundance wherever order is being sought.  It always defeats order, because
-it is better organized.
+根据哲学家莱·廷·威德尔的说法, 哪里在寻求秩序, 哪里就有最丰富的混乱. 混乱
+总能战胜秩序, 因为它组织得更好.
 
-  [Interesting Times, by Terry Pratchett]
+  [异域时光, 特里·普拉切特 著]
 %e passage
 # p. 14
 %passage 4
-Many things went on at Unseen University and, regrettably, teaching had to
-be one of them.  The faculty had long ago confronted this fact and had
-perfected various devices for avoiding it.  But this was perfectly all
-right because, to be fair, so had the students.
+无形大学里进行着许多事情, 而遗憾的是, 教学也得算其中之一. 教职员们很久以前就直面了
+这个事实, 并完善了各种避开它的手段. 不过这也完全没问题, 因为平心而论, 学生们也同样如此.
 
-The system worked quite well and, as happens in such cases, had taken on
-the status of a tradition.  Lectures clearly took place, because they
-were down there on the timetable in black and white.  The fact that no one
-attended was an irrelevant detail.  It was occasionally maintained that
-this meant that the lectures did not in fact happen at all, but no one ever
-attended them to find out if this was true.  Anyway, it was argued (by the
-Reader in Woolly Thinking(1)) that lectures had taken place /in essence/,
-so that was all right, too.
+这套体系运转得相当好, 而且, 正如这类情形下常有的那样, 渐渐取得了传统的地位. 讲座显然
+是在举行的, 因为白纸黑字写在课表上. 无人出席这一事实, 只是个无关紧要的细节. 偶尔有人
+主张, 这意味着讲座实际上根本没发生, 但从来没人去听讲座, 以查明这是不是真的. 无论如何,
+有人--那位模糊思维高级讲师(1)--辩称, 讲座已经在本质上发生过了, 所以那也没问题.
 
-And therefore education at the University mostly worked by the age-old
-method of putting a lot of young people in the vicinity of a lot of books
-and hoping that something would pass from one to the other, while the
-actual young people put themselves in the vicinity of inns and taverns
-for exactly the same reason.
+因此, 大学里的教育主要遵循古老的方法: 把许多年轻人放在许多书附近, 希望有什么东西
+能从一边传到另一边; 而实际的年轻人则出于完全相同的原因, 把自己放在客栈和酒馆附近.
 
-(1) Which is like Fuzzy Logic, only less so.
+(1) 这有点像模糊逻辑, 只不过更不靠谱.
 
-  [Interesting Times, by Terry Pratchett]
+  [异域时光, 特里·普拉切特 著]
 %e passage
 # p. 20 (speaker is Archchancellor Ridcully; sad, hopeless person is Rincewind)
 %passage 5
-"Wizzard?" he said.  "What kind of sad, hopeless person needs to write
-WIZZARD on their hat?"
+"Wizzard?"他说, "什么样可悲又没救的人, 才会非在自己帽子上写'WIZZARD'不可?"
 
-  [Interesting Times, by Terry Pratchett]
+  [异域时光, 特里·普拉切特 著]
 %e passage
 # p. 113
 %passage 6
-Self-doubt was something not regularly entertained within the Cohen cranium.
-When you're trying to carry a struggling temple maiden and a sack of looted
-temple goods in one hand and fight off half a dozen angry priests with the
-other there is little time for reflection.  Natural selection saw to it
-that professional heroes who at a crucial moment tended to ask themselves
-questions like "What is the purpose of life?" very quickly lacked both.
+自我怀疑可不是科恩头脑里常有的东西. 当你一只手要抱着一个挣扎不休的庙宇少女和一袋
+从神庙里抢来的财物, 另一只手还要打退半打怒气冲冲的祭司时, 实在没多少时间
+反省. 自然选择早已确保, 那些在关键时刻倾向于问自己"人生的意义是什么?"之类问题的
+职业英雄, 很快就会连那两样都缺--人生, 以及意义.
 
-  [Interesting Times, by Terry Pratchett]
+  [异域时光, 特里·普拉切特 著]
 %e passage
 # p. 113 (same page as previous passage...)
 %passage 7
-Cohen's father had taken him to a mountain top, when he was no more than a
-lad, and explained to him the hero's creed and told him that there was no
-greater joy than to die in battle.
+科恩的父亲曾在他还是个少年时, 带他上到一座山顶, 向他讲解英雄的信条, 并告诉他, 最大的快乐
+莫过于战死沙场.
 
-Cohen had seen the flaw in this straight away, and a lifetime's experience
-had reinforced his belief that in fact a greater joy was to kill the /other/
-bugger in battle and end up sitting on a heap of gold higher than your
-horse.  It was an observation that had served him well.
+科恩立刻就看出了其中的破绽, 而一辈子的经验更坚定了他的信念: 事实上, 更大的快乐是
+在战斗中干掉另一个混蛋, 然后最终坐在一堆比你的马还高的金子上. 这个观察结论一直
+让他受益匪浅.
 
-  [Interesting Times, by Terry Pratchett]
+  [异域时光, 特里·普拉切特 著]
 %e passage
 # p. 144
 %passage 8
-"'Dang'?" he said.  "Wassat mean?  And what's this 'darn' and 'heck'?"
+"'Dang'?"他说, "那是什么意思?还有这个'darn'和'heck'又是什么?"
 
-"They are ... /civilised/ swearwords." said Mr. Saveloy.
+"它们是--文明的脏话."萨弗洛伊先生说.
 
-"Well, you can take 'em and--"
+"好吧, 你可以把它们拿去--"
 
-"Ah?" said Mr. Saveloy, raising a cautionary finger.
+"嗯?"萨弗洛伊先生抬起一根手指, 警告道.
 
-"You can shove them up--"
+"你可以把它们塞到--"
 
-"Ah?"
+"嗯?"
 
-"You can--"
+"你可以--"
 
-"Ah?"
+"嗯?"
 
-Truckle shut his eyes and clenched his fists.
+特克尔闭上眼睛, 攥紧拳头.
 
-"Darn it all to heck!" he shouted.
+"Darn it all to heck!"他喊道.
 
-"Good," said Mr. Saveloy.  "That's much better."
+"很好,"萨弗洛伊先生说, "这好多了."
 
-  [Interesting Times, by Terry Pratchett]
+(1)意思是, 真是见鬼.
+
+  [异域时光, 特里·普拉切特 著]
 %e passage
 # p. 219 (sic: "Dedd")
 %passage 9
