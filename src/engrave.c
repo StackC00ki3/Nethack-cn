@@ -1236,7 +1236,7 @@ doengrave(void)
 
     /* Tell adventurer what is going on */
     if (de->otmp != &hands_obj)
-        You("用%s%s%s在%s%s字.", (de->type == ENGRAVE && de->otmp->quan > 1L) ? "一个" : "", (de->type == ENGRAVE && de->otmp->quan > 1L) ? classifier(de->otmp) : "", doname(de->otmp), /*修改语序:You("%s在%s上用%s%s。", de->everb, de->eloc,*/
+        You("用%s%s%s在%s%s字.", (de->type == ENGRAVE && de->otmp->quan > 1L) ? "一" : "", (de->type == ENGRAVE && de->otmp->quan > 1L) ? classifier(de->otmp) : "", doname(de->otmp), /*修改语序:You("%s在%s上用%s%s。", de->everb, de->eloc,*/
             /* since doname() yields "N items" when quantity is more than
                one, match that by using "1 of" rather than "one of" when
                informing the player that the stack will be split */
