@@ -2615,7 +2615,7 @@ glibr(void)
         }
         pline("%s%s%s%s%s%s从你的%s中%s.", /*修改语序:pline("%s%s%s%s%s从你的%s%s.",*/
               !strncmp(thiswep, "尸体", 6) ? "" : "你的",
-              otherwep ? "另一" : "", xfl ? classifier(otmp) : "", thiswep, xfl ? "也" : "",
+              otherwep ? "另一" : "", otherwep ? classifier(otmp) : "", thiswep, xfl ? "也" : "",
               which, hand, otense(otmp, "滑落")); /*修改语序:otense(otmp, "滑落"), which, hand);*/
         /* xfl++; */
         otmp->quan = savequan;
