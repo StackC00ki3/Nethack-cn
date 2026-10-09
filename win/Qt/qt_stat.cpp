@@ -863,7 +863,7 @@ void NetHackQtStatusWindow::updateStats()
     QString buf2;
     char buf3[BUFSZ];
     buf2 = nh_qsprintf("%s the %s", upstart(strcpy(buf3, svp.plname)),
-                       buf.toLatin1().constData());
+                       buf.toUtf8().constData()); //危险:toLatin1
     name.setLabel(buf2, NetHackQtLabelledIcon::NoNum, u.ulevel);
 
     if (!describe_level(buf3, 0)) {

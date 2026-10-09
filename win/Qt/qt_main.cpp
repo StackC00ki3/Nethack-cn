@@ -1111,7 +1111,7 @@ void NetHackQtMainWindow::doKeys(const QString& k)
 {
     /* [this should probably be using toLocal8Bit();
        toAscii() is not offered as an alternative...] */
-    doKeys(k.toLatin1().constData());
+    doKeys(k.toUtf8().constData()); //危险:toLatin1
 }
 
 // queue up the command name for a function, as if user had typed it

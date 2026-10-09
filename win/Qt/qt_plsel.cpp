@@ -571,7 +571,7 @@ void NetHackQtPlayerSelector::selectName(const QString& n)
 {
     // the QByteArray has to outlive name_str; calling constData() on
     // the temporary returned by toLatin1() leaves it dangling
-    QByteArray name_bytes = n.toLatin1();
+    QByteArray name_bytes = n.toUtf8(); //危险:toLatin1
     const char *name_str = name_bytes.constData();
     // skip any leading spaces
     // (it would be better to set up a validator that rejects leading spaces)

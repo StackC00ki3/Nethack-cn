@@ -100,8 +100,8 @@ const char * NetHackQtMessageWindow::GetStr(bool init)
     QListWidgetItem *item = list->item(currgetmsg++);
     if (item) {
         QString str = item->text();
-	if (str.toLatin1().length() < (int) sizeof historybuf) {
-            return strcpy(historybuf, str.toLatin1().constData());
+	if (str.toUtf8().length() < (int) sizeof historybuf) {
+            return strcpy(historybuf, str.toUtf8().constData()); //危险:toLatin1
             //raw_printf("getstr[%d]='%s'", currgetmsg, result);
 	}
     }

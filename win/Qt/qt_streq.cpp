@@ -27,7 +27,7 @@ void centerOnMain(QWidget *);
 NetHackQtStringRequestor::NetHackQtStringRequestor(QWidget *parent,
         const char *p, const char *cancelstr, const char *okaystr) :
     QDialog(parent),
-    prompt(QString::fromLatin1(p),this),
+    prompt(QString::fromUtf8(p),this), //危险:toLatin1
     input(this,"input")
 {
     if (qt_settings)
@@ -102,7 +102,7 @@ bool NetHackQtStringRequestor::Get(char *buffer, int maxchar, int minchar)
     exec();
 
     if (result()) {
-        str_copy(buffer, input.text().toLatin1().constData(), maxchar);
+        str_copy(buffer, input.text().toUtf8().constData(), maxchar); //危险:toLatin1
 	return true;
     } else {
 	return false;
