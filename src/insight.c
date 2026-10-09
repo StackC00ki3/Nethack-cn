@@ -2838,7 +2838,7 @@ list_vanquished(char defquery, boolean ask)
                 Strcpy(allow_yn, ynaqchars);
             } else {
                 Strcpy(allow_yn, ynqchars); /* don't include 'a', but */
-                Strcat(allow_yn, "\\033a");  /* allow user to answer 'a' */
+                Strcat(allow_yn, "\033a");  /* allow user to answer 'a' */
                 if (defquery == 'a') /* potential default from 'disclose' */
                     defquery = 'y';
             }

@@ -2916,7 +2916,7 @@ docontact(void)
     putstr(cwin, 0, "(译者注: 中文版请访问");
     Sprintf(buf, "\"https://nethack-cn.github.io/\". )");
     putstr(cwin, 0, buf);
-    Sprintf(buf, "\"仓库: https://github.com/StackC00ki3/Nethack-cn\". )");
+    Sprintf(buf, "仓库: https://github.com/StackC00ki3/Nethack-cn. )");
     putstr(cwin, 0, buf);
     display_nhwindow(cwin, FALSE);
     destroy_nhwindow(cwin);

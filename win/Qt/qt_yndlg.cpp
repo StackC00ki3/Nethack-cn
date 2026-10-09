@@ -113,7 +113,9 @@ char NetHackQtYnDialog::Exec()
 		}
 	    }
 	}
-	if ( question.indexOf("what direction") >= 0 || question.indexOf("哪个方向") >= 0 ) { //危险:又硬编码,,,
+	if ( question.indexOf("what direction") >= 0
+	    || question.indexOf("方向") >= 0
+	    || question.indexOf("哪里") >= 0 ) { //危险:又硬编码,,,
 	    // We replace this regardless, since sometimes you get choices.
 	    const char* d = gc.Cmd.dirchars;
 	    enable=ch;
@@ -210,7 +212,9 @@ char NetHackQtYnDialog::Exec()
                     // convenience, where 'a' requests a sort-by menu;
                     // show "sort" instead of "all" and allow player to
                     // type either 'a' or 's' when not clicking on button
-                    if (question.contains(QString("vanquished?")) || question.contains(QString("击败的生物")))
+                    if (question.contains(QString("vanquished?"))
+                        || question.contains(QString("击败的生物"))
+                        || question.contains(QString("物种列表")))
                         button_name = "排序", AltChoice('s', 'a');
                     else
                         button_name = "全部";
@@ -221,7 +225,8 @@ char NetHackQtYnDialog::Exec()
                     // and for end of game disclosure it really is "quit"
                     if (question.left(10) == QString("Dump core?")
                         || (::program_state.gameover
-                            && (question.left(11) == QString("Do you want") || question.contains(QString("你想")))))
+                            && (question.left(11) == QString("Do you want")
+                                || question.startsWith(QString("你想")))))
                         button_name = "退出";
                     else if (is_ynaq)
                         button_name = "停止", AltChoice('s', 'q');
