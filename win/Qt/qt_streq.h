@@ -21,7 +21,7 @@ private:
 public:
         NetHackQtStringRequestor(QWidget *parent, const char *p,
                                  const char *cancelstr = "取消",
-                                 const char *okaystr = "完成");
+                                 const char *okaystr = "确认");
         void SetDefault(const char *);
         // maxchar is size of buffer[], minchar is size of line edit widget
         bool Get(char *buffer, int maxchar = 80, int minchar = 20);

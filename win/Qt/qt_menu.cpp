@@ -181,7 +181,7 @@ NetHackQtMenuWindow::NetHackQtMenuWindow(QWidget *parent) :
     table->horizontalHeader()->hide();
     table->verticalHeader()->hide();
 
-    ok=new QPushButton("完成");
+    ok=new QPushButton("确认");
     connect(ok,SIGNAL(clicked()),this,SLOT(accept()));
 
     cancel=new QPushButton("取消");
