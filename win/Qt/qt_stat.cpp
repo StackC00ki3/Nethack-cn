@@ -83,7 +83,9 @@ extern "C" {
 #include "hack.h"
 
 extern const char *const enc_stat[]; /* from botl.c */
+extern const char *const enc_stat_ui[]; /* from botl.c */
 extern const char *const hu_stat[]; /* from eat.c */
+extern const char *const hu_stat_ui[]; /* from eat.c */
 }
 
 #include "qt_pre.h"
@@ -770,8 +772,8 @@ void NetHackQtStatusWindow::updateStats()
     int k = 0; // number of conditions shown
 
     long qt_uhs = 0L;
-    const char *hung = hu_stat[u.uhs];
-    QString qhung = QString(hung).trimmed();
+    const char *hung = hu_stat[u.uhs]; const char *chung = hu_stat_ui[u.uhs]; //危险:见934行
+    QString qhung = QString(hung).trimmed(); QString cqhung = QString(chung).trimmed();
     if (hung[0]==' ') {
         if (!hunger.isHidden()) {
             hunger.setLabel("", NetHackQtLabelledIcon::NoNum, qt_uhs);
@@ -791,12 +793,12 @@ void NetHackQtStatusWindow::updateStats()
         default:         qt_uhs = 5L; break; // fainted, starved
         }
         hunger.setIcon(u.uhs ? p_hungry : p_satiated, qhung.toLower());
-        hunger.setLabel(qhung, NetHackQtLabelledIcon::NoNum, qt_uhs);
+        hunger.setLabel(cqhung, NetHackQtLabelledIcon::NoNum, qt_uhs);
         hunger.ForceResize();
 	++k, hunger.show();
     }
     long encindx = (long) near_capacity();
-    const char *enc = enc_stat[encindx];
+    const char *enc = enc_stat[encindx]; const char *cenc = enc_stat_ui[encindx]; //危险:同上
     if (enc[0]==' ' || !enc[0]) {
         if (!encumber.isHidden()) {
             encumber.setLabel("", NetHackQtLabelledIcon::NoNum, encindx);
@@ -804,7 +806,7 @@ void NetHackQtStatusWindow::updateStats()
         }
     } else {
         encumber.setIcon(p_encumber[encindx - 1], QString(enc).toLower());
-        encumber.setLabel(enc, NetHackQtLabelledIcon::NoNum, encindx);
+        encumber.setLabel(cenc, NetHackQtLabelledIcon::NoNum, encindx);
         encumber.ForceResize();
 	++k, encumber.show();
     }

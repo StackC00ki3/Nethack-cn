@@ -72,7 +72,7 @@ NetHackQtSavedGameSelector::NetHackQtSavedGameSelector(const char** saved) :
     logo->setPixmap(QPixmap("nhsplash.xpm"));
     vbl->addWidget(logo);
 
-    QLabel *attr = new QLabel("by the NetHack DevTeam", this);
+    QLabel *attr = new QLabel("NetHack DevTeam出品", this);
     attr->setAlignment(Qt::AlignCenter);
     vbl->addWidget(attr);
     vbl->addStretch(2);
@@ -84,15 +84,15 @@ QLayout: Attempting to add QLayout "" to QDialog "", which already has a layout
     hb = new QHBoxLayout((QWidget *) NULL);
     vbl->addLayout(hb, Qt::AlignCenter);
 
-    QPushButton *q = new QPushButton("Quit", this);
+    QPushButton *q = new QPushButton("退出", this);
     hb->addWidget(q);
     connect(q, SIGNAL(clicked()), this, SLOT(reject()));
-    QPushButton *c = new QPushButton("New Game", this);
+    QPushButton *c = new QPushButton("新游戏", this);
     hb->addWidget(c);
     connect(c, SIGNAL(clicked()), this, SLOT(accept()));
     c->setDefault(true);
 
-    QGroupBox *box = new QGroupBox("Saved Characters", this);
+    QGroupBox *box = new QGroupBox("保存的角色", this);
     QVBoxLayout *bgl = new QVBoxLayout();
     QButtonGroup *bg = new QButtonGroup();
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)

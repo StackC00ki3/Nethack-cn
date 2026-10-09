@@ -66,17 +66,17 @@ namespace nethack_qt_ {
 
 NetHackQtSettings::NetHackQtSettings() :
     settings(),
-    whichsize("&Zoomed", this),
+    whichsize("缩放(&Z)", this),
     tilewidth(this),
     tileheight(this),
-    widthlbl("Tile &width:", this),
-    heightlbl("Tile &height:", this),
+    widthlbl("贴图宽度(&W):", this),
+    heightlbl("贴图高度(&H):", this),
 #ifdef ENHANCED_PAPERDOLL
-    dollshown("&Shown", this),
+    dollshown("显示(&S)", this),
     dollwidth(this),
     dollheight(this),
-    dollwidthlbl("&Doll width:", this),  // should "Doll tile width"...
-    dollheightlbl("Doll height:", this), // ...but that's too verbose
+    dollwidthlbl("纸娃娃宽度(&D):", this),  // should "Doll tile width"...
+    dollheightlbl("纸娃娃高度:", this), // ...but that's too verbose
 #endif
     fontsize(this),
     normal("times"),
@@ -175,11 +175,11 @@ NetHackQtSettings::NetHackQtSettings() :
     int row = 0; // used like X11-style XtSetArg(), ++argc
      QGridLayout *grid = new QGridLayout(this);
     // dialog box label, spans first two rows and all three columns
-    QLabel *settings_label = new QLabel("Qt NetHack Settings\n", this);
+    QLabel *settings_label = new QLabel("Qt NetHack选项\n", this);
     grid->addWidget(settings_label, row, 0, 2, 3), row += 2; // uses extra row
     settings_label->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
-    QLabel *map_label = new QLabel("&Map:", this);
+    QLabel *map_label = new QLabel("&地图:", this);
     map_label->setBuddy(&whichsize);
     grid->addWidget(map_label, row, 0), // "Map: [ ]Zoomed"
         grid->addWidget(&whichsize, row, 1), ++row;
@@ -190,7 +190,7 @@ NetHackQtSettings::NetHackQtSettings() :
 
 #ifdef ENHANCED_PAPERDOLL
     dollshown.QAbstractButton::setChecked(doll_is_shown);
-    QLabel *doll_label = new QLabel("&Invent:", this);
+    QLabel *doll_label = new QLabel("&物品栏:", this);
     doll_label->setBuddy(&dollshown);
     grid->addWidget(doll_label, row, 0), // "Invent: [ ]Shown"
         grid->addWidget(&dollshown, row, 1), ++row;
@@ -200,12 +200,12 @@ NetHackQtSettings::NetHackQtSettings() :
         grid->addWidget(&dollheight, row, 2), ++row;
 #endif
 
-    QLabel *flabel = new QLabel("&Font:", this);
+    QLabel *flabel = new QLabel("&字体:", this);
     flabel->setBuddy(&fontsize);
     grid->addWidget(flabel, row, 0),
         grid->addWidget(&fontsize, row, 1), ++row;
 
-    QPushButton *dismiss = new QPushButton("Dismiss", this);
+    QPushButton *dismiss = new QPushButton("关闭", this);
     dismiss->setDefault(true);
     grid->addWidget(dismiss, row, 0, 1, 3), ++row;
     grid->setRowStretch(row - 1, 0);

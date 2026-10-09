@@ -136,7 +136,7 @@ NetHackQtBind::qt_Splash()
         lsplash->setPixmap(pm);
         lsplash->setFixedSize(pm.size());
         //lsplash->setMask(pm.mask());
-        QLabel *capt = new QLabel("Loading...", splash);
+        QLabel *capt = new QLabel("加载中...", splash);
         vb->addWidget(capt);
         capt->setAlignment(Qt::AlignCenter);
 
@@ -475,8 +475,8 @@ void NetHackQtBind::qt_display_file(const char *filename, boolean must_exist)
     }
 
     if (complain) {
-        QString message = nh_qsprintf("File not found: %s\n",filename);
-        QMessageBox::warning(NULL, "File Error", message, QMessageBox::Ignore);
+        QString message = nh_qsprintf("未找到文件: %s\n",filename);
+        QMessageBox::warning(NULL, "文件错误", message, QMessageBox::Ignore);
     }
 }
 
@@ -787,7 +787,7 @@ char NetHackQtBind::qt_more()
 
     if (mesgwin && !::iflags.wc_popup_dialog && WIN_MESSAGE != WIN_ERR) {
 
-        mesgwin->AddToStr("--More--");
+        mesgwin->AddToStr("--更多--");
         bool retry = false;
         int complain = 0;
         do {
@@ -825,7 +825,7 @@ char NetHackQtBind::qt_more()
     } else {
         // use a popup dialog box; unlike yn_function(), we don't show
         // the prompt+response in the message window
-        NetHackQtYnDialog dialog(main, "--More--", " \033\n\r", ' ');
+        NetHackQtYnDialog dialog(main, "--更多--", " \033\n\r", ' ');
         ch = dialog.Exec();
         if (ch == '\0') {
             ch = '\033';

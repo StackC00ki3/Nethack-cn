@@ -139,7 +139,7 @@ interesting_command(unsigned indx, int cmds)
 NetHackQtExtCmdRequestor::NetHackQtExtCmdRequestor(QWidget *parent) :
     QDialog(parent),
     prompt(new QLabel("#", this)),
-    cancel_btn(new QPushButton("Cancel", this)),
+    cancel_btn(new QPushButton("取消", this)),
     byRow(qt_settings->xcmd_by_row),
     set(qt_settings->xcmd_set),
     butoffset(0),
@@ -185,12 +185,12 @@ NetHackQtExtCmdRequestor::NetHackQtExtCmdRequestor(QWidget *parent) :
     butw = std::max(butw, filter_btn->width());
     ctrls->addWidget(filter_btn);
     // Layout: switch from by-column grid to by-row grid or vice versa
-    QPushButton *layout_btn = new QPushButton("Layout", this);
+    QPushButton *layout_btn = new QPushButton("布局", this);
     layout_btn->setMinimumSize(layout_btn->sizeHint());
     butw = std::max(butw, layout_btn->width());
     ctrls->addWidget(layout_btn);
     // Reset: switch filter back to all commands and layout back to by-column
-    QPushButton *reset__btn = new QPushButton("Reset", this);
+    QPushButton *reset__btn = new QPushButton("重置", this);
     reset__btn->setMinimumSize(reset__btn->sizeHint());
     butw = std::max(butw, reset__btn->width());
     ctrls->addWidget(reset__btn);
@@ -203,14 +203,14 @@ NetHackQtExtCmdRequestor::NetHackQtExtCmdRequestor(QWidget *parent) :
 
     // grid title rather than overall popup title
     const char *ctitle = ((set == all_cmds) // implies wizard mode
-                          ? "All commands"
+                          ? "所有命令"
                           : (set == normal_cmds)
-                            ? (WizardMode ? "Normal mode commands"
-                                          : "Available commands")
+                            ? (WizardMode ? "普通模式命令"
+                                          : "可用命令")
                             : (set == autocomplete_cmds)
-                              ? "Traditional extended commands"
+                              ? "传统扩展命令"
                               : (set == wizard_cmds)
-                                ? "Debug mode commands"
+                                ? "调试模式命令"
                                 : "(unknown)"); // won't happen
     const QString &qtitle = QString(ctitle);
     // rectangular grid to hold a button for each extended command name

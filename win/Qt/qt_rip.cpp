@@ -36,8 +36,8 @@ tryload(QPixmap& pm, const char* fn)
 {
     if (!pm.load(fn)) {
 	QString msg;
-	msg = nh_qsprintf("Cannot load \"%s\"", fn);
-	QMessageBox::warning(NetHackQtBind::mainWidget(), "IO Error", msg);
+	msg = nh_qsprintf("无法载入\"%s\"", fn);
+	QMessageBox::warning(NetHackQtBind::mainWidget(), "IO错误", msg);
     }
 }
 

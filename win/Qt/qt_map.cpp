@@ -520,7 +520,7 @@ void NetHackQtMapViewport::Display(bool block)
     change.clear();
 
     if (block) {
-	yn_function("Press a key when done viewing", NULL, '\0', TRUE);
+	yn_function("按任意键以退出远景浏览", NULL, '\0', TRUE);
     }
 }
 
