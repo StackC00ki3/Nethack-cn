@@ -131,10 +131,10 @@ NetHackQtStatusWindow::NetHackQtStatusWindow() :
     hunger(this,""),
     encumber(this,""),
     stoned(this,"石化"),     // major conditions
-    slimed(this,"黏液化"),
+    slimed(this,"黏液"),
     strngld(this,"窒息"),
-    sick_fp(this,"食物中毒"),
-    sick_il(this,"不治之症"),
+    sick_fp(this,"中毒"),
+    sick_il(this,"绝症"),
     stunned(this,"眩晕"),     // minor conditions
     confused(this,"混乱"),
     hallu(this,"幻觉"),
