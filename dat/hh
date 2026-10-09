@@ -96,7 +96,7 @@ $     showgold  显示金币
 `     knownclass  显示某类物品的已发现类型
 _     travel    使用最短路径算法移动到地图上的某个位置
 ^_    retravel  旅行到上一个选择的旅行目的地
-.     wait      停下
+.     wait      停下一回合
 ,     pickup    拾取所有可以拾取的物品
 @               开关"pickup"(自动拾取)选项
 :     look      查看这里的物品

@@ -554,7 +554,7 @@ itemactions(struct obj *otmp)
 
     /* R: remove accessory or rub item */
     if (otmp->owornmask & W_ACCESSORY) {
-        Sprintf(buf, "拿下这%s%s", classifier(otmp),
+        Sprintf(buf, "摘下这%s%s", classifier(otmp),
                 (otmp->owornmask & W_AMUL) ? "护身符"
                 : (otmp->owornmask & W_RING) ? "戒指"
                   : (otmp->owornmask & W_TOOL) ? "眼镜"

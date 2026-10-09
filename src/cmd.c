@@ -1893,7 +1893,7 @@ struct ext_func_tab extcmdlist[] = {
               dotakeoff, 0, NULL },
     { 'A',    "takeoffall", "脱下所有防具",
               doddoremarm, 0, NULL },
-    { C('t'), "teleport", "层间传送",
+    { C('t'), "teleport", "传送",
               dotelecmd, IFBURIED | CMD_M_PREFIX, NULL },
     /* \177 == <del> aka <delete> aka <rubout>; some terminals have an
        option to swap it with <backspace> so if there's a key labeled
