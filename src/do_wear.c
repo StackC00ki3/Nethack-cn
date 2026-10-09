@@ -3132,7 +3132,7 @@ menu_remarm(int retry)
             (void) select_off(pick_list[i].item.a_obj);
         free((genericptr_t) pick_list);
     } else if (n < 0 && flags.menu_style != MENU_COMBINATION) {
-        There("没有别的能脱下的东西.");
+        You("没有别的能脱下的东西."); //换pline:There
     }
     return 0;
 }

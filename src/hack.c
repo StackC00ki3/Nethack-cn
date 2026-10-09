@@ -3842,7 +3842,7 @@ pickup_checks(void)
         else if (lev->typ == STAIRS)
             pline_The("楼梯被牢牢固定住了.");
         else
-            There("没有什么可捡起的.");
+            There("没有东西可以捡起.");
         return 0;
     }
     traphere = t_at(u.ux, u.uy);
