@@ -666,7 +666,7 @@ staticfn char *anything_to_s(char *, anything *, int);
 staticfn int percentage(struct istat_s *, struct istat_s *);
 staticfn int exp_percentage(void);
 staticfn int QSORTCALLBACK cond_cmp(const genericptr, const genericptr);
-staticfn int QSORTCALLBACK menualpha_cmp(const genericptr, const genericptr);
+/*冗余:staticfn int QSORTCALLBACK menualpha_cmp(const genericptr, const genericptr);*/
 // 修改: 增加一个回调用于实现拼音排序
 staticfn int QSORTCALLBACK pinyin_cmp(const genericptr, const genericptr);
 
@@ -1528,6 +1528,7 @@ cond_cmp(const genericptr vptr1, const genericptr vptr2)
 }
 
 /* qsort callback routine for alphabetical sorting of index */
+#if 0 /*冗余:未使用*/
 staticfn int QSORTCALLBACK
 menualpha_cmp(const genericptr vptr1, const genericptr vptr2)
 {
@@ -1535,6 +1536,7 @@ menualpha_cmp(const genericptr vptr1, const genericptr vptr2)
 
     return strcmpi(condtests[indx1].useroption, condtests[indx2].useroption);
 }
+#endif /*冗余*/
 
 /* qsort 回调，用于拼音排序 */
 staticfn int QSORTCALLBACK

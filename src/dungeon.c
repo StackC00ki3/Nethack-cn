@@ -3375,6 +3375,7 @@ staticfn const char *
 seen_string(xint16 x, const char *obj)
 {
     /* players are computer scientists: 0, 1, 2, n */
+    nhUse(obj);
     switch (x) {
     case 0:
         return "没有";

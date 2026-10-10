@@ -1002,7 +1002,7 @@ hmon_hitmon_weapon_melee(
                monster detection will name mon but not its weapon */
             Sprintf(buf, "%s的武器%s%s", s_suffix(Monnam(mon)),
                     plur(monwep->quan), otense(monwep, from_your_blow));
-        /*冗余:buf[sizeof buf - sizeof from_your_blow] = '\0';/ /*Francium-223:写的什么傻逼代码？？？*/
+        /*冗余:buf[sizeof buf - sizeof from_your_blow] = '\0';/ Francium-223:写的什么傻逼代码？？？*/
         pline("%s", buf); /*修改语序:pline("%s%s", buf, from_your_blow);*/
         m_useupall(mon, monwep);
         /* If someone just shattered MY weapon, I'd flee! */ /*你还知道要跑呢(ˉ▽ˉ；)...*/

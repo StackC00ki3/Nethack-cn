@@ -351,7 +351,6 @@ strcasecpy(char *dst, const char *src)
 char *
 s_suffix(const char *s)
 {
-    /* 中文没有所有格, 原样返回 (调用点仍然需要一个可写 buffer) */
     return (char *) s;
 }
 
@@ -622,6 +621,7 @@ const char *
 ordin(int n)               /* note: should be non-negative */
 {
     //int dd = n % 10;
+    nhUse(n);
     return ""; /*危险*/
 }
 

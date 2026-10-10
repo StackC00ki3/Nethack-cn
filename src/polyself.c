@@ -1809,7 +1809,8 @@ dohide(void)
     }
     if (hides_under(gy.youmonst.data)) {
         long ct = 0L;
-        struct obj *otmp, *otop = svl.level.objects[u.ux][u.uy];
+
+        nhUse(ct);        struct obj *otmp, *otop = svl.level.objects[u.ux][u.uy];
 
         if (!otop) {
             There("没有东西可以藏进去.");

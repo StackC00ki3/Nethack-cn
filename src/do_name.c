@@ -1396,6 +1396,8 @@ pm_to_classifier(struct permonst *pm)
         case PM_LORD_SURTUR:
         case PM_DARK_ONE:
             return "";
+        default:
+            break;
     }
     return sym_to_classifier(pm->mlet);
 }

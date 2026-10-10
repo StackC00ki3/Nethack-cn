@@ -57,29 +57,16 @@ staticfn void set_wallprop_from_str(char *) NONNULLARG1;
 staticfn struct obj *wizterrainwish(struct _readobjnam_data *);
 staticfn void dbterrainmesg(const char *, coordxy, coordxy) NONNULLARG1;
 staticfn void readobjnam_init(char *, struct _readobjnam_data *);
-/* 中文/英文名辅助函数 (affix helpers added by the Chinese translation) */
-staticfn const char *Japanese_item_ename(int, const char *);
-staticfn char *obj_etypename(int);
-staticfn char *simple_etypename(int);
-staticfn char *safe_etypename(int);
-staticfn char *xename(struct obj *);
-staticfn char *mshot_xename(struct obj *);
-staticfn void add_erosion_ewords(struct obj *, char *);
-staticfn char *simpleoenames(struct obj *);
-staticfn char *ansimpleoename(struct obj *);
-staticfn char *thesimpleoename(struct obj *);
-staticfn char *actualoename(struct obj *);
-staticfn char *bare_artifactename(struct obj *);
 staticfn int readobjnam_preparse(struct _readobjnam_data *);
-staticfn int readobjenam_preparse(struct _readobjnam_data *);
+/*冗余:staticfn int readobjenam_preparse(struct _readobjnam_data *);*/
 staticfn void readobjnam_parse_charges(struct _readobjnam_data *);
-staticfn void readobjenam_parse_charges(struct _readobjnam_data *);
+/*冗余:staticfn void readobjenam_parse_charges(struct _readobjnam_data *);*/
 staticfn int readobjnam_postparse1(struct _readobjnam_data *);
-staticfn int readobjenam_postparse1(struct _readobjnam_data *);
+/*冗余:staticfn int readobjenam_postparse1(struct _readobjnam_data *);*/
 staticfn int readobjnam_postparse2(struct _readobjnam_data *);
-staticfn int readobjenam_postparse2(struct _readobjnam_data *);
+/*冗余:staticfn int readobjenam_postparse2(struct _readobjnam_data *);*/
 staticfn int readobjnam_postparse3(struct _readobjnam_data *);
-staticfn int readobjenam_postparse3(struct _readobjnam_data *);
+/*冗余:staticfn int readobjenam_postparse3(struct _readobjnam_data *);*/
 
 struct Jitem {
     int item;
@@ -172,7 +159,7 @@ Japanese_item_name(int i, const char *ordinaryname)
     return ordinaryname;
 }
 
-staticfn const char *
+const char *
 Japanese_item_ename(int i, const char *ordinaryname)
 {
     const struct Jitem *j = eJapanese_items;
@@ -357,7 +344,7 @@ obj_typename(int otyp)
     return buf;
 }
 
-staticfn char *
+char *
 obj_etypename(int otyp)
 {
     char *buf = nextobuf();
@@ -467,7 +454,7 @@ simple_typename(int otyp)
     return bufp;
 }
 
-staticfn char *
+char *
 simple_etypename(int otyp)
 {
     char *bufp, *pp, *save_uname = objects[otyp].oc_uname;
@@ -502,7 +489,7 @@ safe_typename(int otyp)
     return res;
 }
 
-staticfn char *
+char *
 safe_etypename(int otyp)
 {
     unsigned save_nameknown;
@@ -946,7 +933,7 @@ xname(struct obj *obj)
     return xname_flags(obj, CXN_NORMAL);
 }
 
-staticfn char *
+char *
 xename(struct obj *obj)
 {
     return xename_flags(obj, CXN_NORMAL);
@@ -2034,7 +2021,7 @@ mshot_xname(struct obj *obj)
     return onm;
 }
 
-staticfn char *
+char *
 mshot_xename(struct obj *obj)
 {
     char tmpbuf[BUFSZ];
@@ -2138,7 +2125,7 @@ add_erosion_words(struct obj *obj, char *prefix)
                                  : "");
 }
 
-staticfn void
+void
 add_erosion_ewords(struct obj *obj, char *prefix)
 {
     boolean iscrys = (obj->otyp == CRYSKNIFE);
@@ -3152,8 +3139,6 @@ killer_xname(struct obj *obj)
     if (obj->quan == 1L && !strstri(buf, "'s ") && !strstri(buf, "s' ")) {
         char tmpbuf[BUFSZ];
 
-        /* 危险:sprintf 的目标不能同时作为参数, 先拼到临时缓冲区
-           (英文原版是 buf = ... ? the(buf) : an(buf) 直接换指针) */
         Snprintf(tmpbuf, sizeof tmpbuf, "一%s%s", classifier(obj), buf);
         Strcpy(buf, tmpbuf);
     }
@@ -3270,6 +3255,7 @@ singular(struct obj *otmp, char *(*func)(OBJ_P))
 char *
 just_an(char *outbuf, const char *str)
 {
+    nhUse(str);
     *outbuf = '\0';
     Strcpy(outbuf, "一个");
     return outbuf;
@@ -3278,6 +3264,7 @@ just_an(char *outbuf, const char *str)
 char *
 just_one(char *outbuf, const char *str)
 {
+    nhUse(str);
     *outbuf = '\0';
     Strcpy(outbuf, "1 ");
     return outbuf;
@@ -3596,7 +3583,7 @@ simpleonames(struct obj *obj)
     return simpleoname;
 }
 
-staticfn char *
+char *
 simpleoenames(struct obj *obj)
 {
     char *obufp, *simpleoname = minimal_xename(obj);
@@ -3640,7 +3627,7 @@ ansimpleoname(struct obj *obj)
     return simpleoname;
 }
 
-staticfn char *
+char *
 ansimpleoename(struct obj *obj)
 {
     char *obufp, *simpleoname = simpleoenames(obj);
@@ -3680,7 +3667,7 @@ thesimpleoname(struct obj *obj)
     return simpleoname;
 }
 
-staticfn char *
+char *
 thesimpleoename(struct obj *obj)
 {
     char *obufp, *simpleoname = simpleoenames(obj);
@@ -3707,7 +3694,7 @@ actualoname(struct obj *obj)
     return res;
 }
 
-staticfn char *
+char *
 actualoename(struct obj *obj)
 {
     char *res;
@@ -3735,7 +3722,7 @@ bare_artifactname(struct obj *obj)
     return outbuf;
 }
 
-staticfn char *
+char *
 bare_artifactename(struct obj *obj)
 {
     char *outbuf;
@@ -6128,6 +6115,7 @@ readobjnam_preparse(struct _readobjnam_data *d)
     return res;
 }
 
+#if 0 /*冗余:未使用*/
 staticfn int
 readobjenam_preparse(struct _readobjnam_data *d)
 {
@@ -6339,6 +6327,7 @@ readobjenam_preparse(struct _readobjnam_data *d)
         d->bp = save_bp;
     return res;
 }
+#endif /*冗余*/
 
 staticfn void
 readobjnam_parse_charges(struct _readobjnam_data *d)
@@ -6405,6 +6394,7 @@ readobjnam_parse_charges(struct _readobjnam_data *d)
         d->rechrg = 7; /* recharge_limit */
 }
 
+#if 0 /*冗余:未使用*/
 staticfn void
 readobjenam_parse_charges(struct _readobjnam_data *d)
 {
@@ -6466,6 +6456,7 @@ readobjenam_parse_charges(struct _readobjnam_data *d)
     if (d->rechrg < 0 || d->rechrg > 7)
         d->rechrg = 7; /* recharge_limit */
 }
+#endif /*冗余*/
 
 staticfn int
 readobjnam_postparse1(struct _readobjnam_data *d)
@@ -7274,6 +7265,7 @@ readobjnam_postparse1(struct _readobjnam_data *d)
 }
 
 
+#if 0 /*冗余:未使用*/
 staticfn int
 readobjenam_postparse1(struct _readobjnam_data *d)
 {
@@ -7699,6 +7691,7 @@ readobjenam_postparse1(struct _readobjnam_data *d)
 
     return 0;
 }
+#endif /*冗余*/
 
 staticfn int
 readobjnam_postparse2(struct _readobjnam_data *d)
@@ -7784,6 +7777,7 @@ readobjnam_postparse2(struct _readobjnam_data *d)
 }
 
 
+#if 0 /*冗余:未使用*/
 staticfn int
 readobjenam_postparse2(struct _readobjnam_data *d) /*AAAAAA*/
 {
@@ -7844,6 +7838,7 @@ readobjenam_postparse2(struct _readobjnam_data *d) /*AAAAAA*/
 
     return 0;
 }
+#endif /*冗余*/
 
 
 staticfn int
@@ -8078,6 +8073,7 @@ readobjnam_postparse3(struct _readobjnam_data *d)
     return 0;
 }
 
+#if 0 /*冗余:未使用*/
 staticfn int
 readobjenam_postparse3(struct _readobjnam_data *d)
 {
@@ -8252,6 +8248,7 @@ readobjenam_postparse3(struct _readobjnam_data *d)
 
     return 0;
 }
+#endif /*冗余*/
 
 
 /*

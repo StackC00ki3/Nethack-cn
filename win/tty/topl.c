@@ -379,8 +379,7 @@ topl_putsym(char c)
 }
 
 #ifdef WIN32CON
-/* output a wide character (UTF-16-LE) to the topline message window;
-   only the WIN32CON code paths use this (see putsyms()) */
+/* output a wide character (UTF-16-LE) to the topline message window */
 static void
 topl_putsymw(unsigned short c)
 {

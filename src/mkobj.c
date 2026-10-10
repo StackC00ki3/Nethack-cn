@@ -740,13 +740,15 @@ bill_dummy_object(struct obj *otmp)
     return;
 }
 
-/* alteration types; must match COST_xxx macros in hack.h */
+/*冗余:英文量词
 static const char *const alteration_verbs[] = {
     "cancel", "drain", "uncharge", "unbless", "uncurse", "disenchant",
     "degrade", "dilute", "erase", "burn", "neutralize", "destroy", "splatter",
     "bite", "open", "break the lock on", "rust", "rot", "tarnish", "crack",
 };
+*/
 
+/* alteration types; must match COST_xxx macros in hack.h */
 static const char *const calteration_verbs[] = {
     "取消", "吸干", "消耗", "诅咒", "去诅咒", "祛魔",
     "降解", "稀释", "抹掉", "烧掉", "中和", "摧毁", "溅出",
@@ -763,7 +765,7 @@ costly_alteration(struct obj *obj, int alter_type)
     const char *those, *them;
     struct monst *shkp = 0;
 
-    if (alter_type < 0 || alter_type >= SIZE(alteration_verbs)) {
+    if (alter_type < 0 || alter_type >= SIZE(calteration_verbs)) {
         impossible("invalid alteration type (%d)", alter_type);
         alter_type = 0;
     }
