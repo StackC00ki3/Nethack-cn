@@ -1852,7 +1852,7 @@ build_english_list(char *in)
                 Strcat(out, ", ");
             } while (--words > 1);
         }
-        Strcat(out, "或 ");
+        Strcat(out, "或");
         bel_copy1(&p, out);
         break;
     }

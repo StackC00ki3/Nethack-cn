@@ -57,6 +57,19 @@ staticfn void set_wallprop_from_str(char *) NONNULLARG1;
 staticfn struct obj *wizterrainwish(struct _readobjnam_data *);
 staticfn void dbterrainmesg(const char *, coordxy, coordxy) NONNULLARG1;
 staticfn void readobjnam_init(char *, struct _readobjnam_data *);
+/* 中文/英文名辅助函数 (affix helpers added by the Chinese translation) */
+staticfn const char *Japanese_item_ename(int, const char *);
+staticfn char *obj_etypename(int);
+staticfn char *simple_etypename(int);
+staticfn char *safe_etypename(int);
+staticfn char *xename(struct obj *);
+staticfn char *mshot_xename(struct obj *);
+staticfn void add_erosion_ewords(struct obj *, char *);
+staticfn char *simpleoenames(struct obj *);
+staticfn char *ansimpleoename(struct obj *);
+staticfn char *thesimpleoename(struct obj *);
+staticfn char *actualoename(struct obj *);
+staticfn char *bare_artifactename(struct obj *);
 staticfn int readobjnam_preparse(struct _readobjnam_data *);
 staticfn int readobjenam_preparse(struct _readobjnam_data *);
 staticfn void readobjnam_parse_charges(struct _readobjnam_data *);
@@ -159,7 +172,7 @@ Japanese_item_name(int i, const char *ordinaryname)
     return ordinaryname;
 }
 
-const char *
+staticfn const char *
 Japanese_item_ename(int i, const char *ordinaryname)
 {
     const struct Jitem *j = eJapanese_items;
@@ -344,7 +357,7 @@ obj_typename(int otyp)
     return buf;
 }
 
-char *
+staticfn char *
 obj_etypename(int otyp)
 {
     char *buf = nextobuf();
@@ -454,7 +467,7 @@ simple_typename(int otyp)
     return bufp;
 }
 
-char *
+staticfn char *
 simple_etypename(int otyp)
 {
     char *bufp, *pp, *save_uname = objects[otyp].oc_uname;
@@ -489,7 +502,7 @@ safe_typename(int otyp)
     return res;
 }
 
-char *
+staticfn char *
 safe_etypename(int otyp)
 {
     unsigned save_nameknown;
@@ -667,9 +680,6 @@ classifier(struct obj *obj)
     }
     return "个";
 }
-
-static const char* classifiers[] = {"块", "双", "柄", "片", "根", "把", "个", "件", "盏", "卷", "枝", "本", "面", "座", "枚", "只", "套", "副", "团", "份", "具", "支", "瓶", "瓣", "张", "顶", "条", "\0"};
-static const char* one_classifiers[] = {"一块", "一双", "一柄", "一片", "一根", "一把", "一个", "一件", "一盏", "一卷", "一枝", "一本", "一面", "一座", "一枚", "一只", "一套", "一副", "一团", "一份", "一具", "一支", "一瓶", "一瓣", "一张", "一顶", "一条", "\0"};
 
 boolean
 obj_is_pname(struct obj *obj)
@@ -936,7 +946,7 @@ xname(struct obj *obj)
     return xname_flags(obj, CXN_NORMAL);
 }
 
-char *
+staticfn char *
 xename(struct obj *obj)
 {
     return xename_flags(obj, CXN_NORMAL);
@@ -1065,7 +1075,8 @@ xname_flags(
             xcalled(buf, BUFSZ - PREFIX, "护身符", un);
         }
         else{
-            Sprintf(buf, "%s%s护身符", buf, dn);
+            Strcat(buf, dn);
+            Strcat(buf, "护身符");
         }
         break;
     case WEAPON_CLASS:
@@ -1232,8 +1243,8 @@ xname_flags(
         }
         break;
     case BALL_CLASS:
-        Sprintf(buf, "%s%s沉重的铁球", buf,
-                (obj->owt > ocl->oc_weight) ? "非常 " : "");
+        Strcat(buf, (obj->owt > ocl->oc_weight) ? "非常 " : "");
+        Strcat(buf, "沉重的铁球");
         break;
     case POTION_CLASS:
         if (dknown && obj->odiluted){
@@ -1284,13 +1295,15 @@ xname_flags(
             Strcpy(buf, "魔杖");
         }
         else if (nn){
-            Sprintf(buf, "%s%s魔杖", buf, actualn);
+            Strcat(buf, actualn);
+            Strcat(buf, "魔杖");
         }
         else if (un){
             xcalled(buf, BUFSZ - PREFIX, "魔杖", un);
         }
         else{
-            Sprintf(buf, "%s%s魔杖", buf, dn);
+            Strcat(buf, dn);
+            Strcat(buf, "魔杖");
         }
         break;
     case SPBOOK_CLASS:
@@ -1313,26 +1326,28 @@ xname_flags(
             Strcpy(buf, "魔法书");
         } else if (nn) {
             if (typ != SPE_BOOK_OF_THE_DEAD)
-                Sprintf(buf, "%s%s魔法书", buf, actualn);
+                Strcat(buf, actualn), Strcat(buf, "魔法书");
             else
                 Strcat(buf, actualn);
         } else if (un) {
             xcalled(buf, BUFSZ - PREFIX, "魔法书", un);
         } else
-            Sprintf(buf, "%s%s魔法书", buf, dn);
+            Strcat(buf, dn), Strcat(buf, "魔法书");
         break;
     case RING_CLASS:
         if (!dknown){
             Strcpy(buf, "戒指");
         }
         else if (nn){
-            Sprintf(buf, "%s%s戒指", buf, actualn);
+            Strcat(buf, actualn);
+            Strcat(buf, "戒指");
         }
         else if (un){
             xcalled(buf, BUFSZ - PREFIX, "戒指", un);
         }
         else{
-            Sprintf(buf, "%s%s戒指", buf, dn);
+            Strcat(buf, dn);
+            Strcat(buf, "戒指");
         }
         break;
     case GEM_CLASS: {
@@ -1345,7 +1360,8 @@ xname_flags(
                 xcalled(buf, BUFSZ - PREFIX, rock, un);
             }
             else{
-                Sprintf(buf, "%s%s%s", buf, dn, rock);
+                Strcat(buf, dn);
+                Strcat(buf, rock);
             }
         } else {
             Strcat(buf, actualn);
@@ -2018,7 +2034,7 @@ mshot_xname(struct obj *obj)
     return onm;
 }
 
-char *
+staticfn char *
 mshot_xename(struct obj *obj)
 {
     char tmpbuf[BUFSZ];
@@ -3133,8 +3149,13 @@ killer_xname(struct obj *obj)
         buf = xname(obj);
     }
     /* apply an article if appropriate; caller should always use KILLED_BY */
-    if (obj->quan == 1L && !strstri(buf, "'s ") && !strstri(buf, "s' ")){
-        Sprintf(buf, "一%s%s", classifier(obj), buf);//危险:buf = (obj_is_pname(obj) || the_unique_obj(obj)) ? the(buf) : an(buf);
+    if (obj->quan == 1L && !strstri(buf, "'s ") && !strstri(buf, "s' ")) {
+        char tmpbuf[BUFSZ];
+
+        /* 危险:sprintf 的目标不能同时作为参数, 先拼到临时缓冲区
+           (英文原版是 buf = ... ? the(buf) : an(buf) 直接换指针) */
+        Snprintf(tmpbuf, sizeof tmpbuf, "一%s%s", classifier(obj), buf);
+        Strcpy(buf, tmpbuf);
     }
     objects[obj->otyp].oc_name_known = save_ocknown;
     objects[obj->otyp].oc_uname = save_ocuname;
@@ -3575,7 +3596,7 @@ simpleonames(struct obj *obj)
     return simpleoname;
 }
 
-char *
+staticfn char *
 simpleoenames(struct obj *obj)
 {
     char *obufp, *simpleoname = minimal_xename(obj);
@@ -3619,7 +3640,7 @@ ansimpleoname(struct obj *obj)
     return simpleoname;
 }
 
-char *
+staticfn char *
 ansimpleoename(struct obj *obj)
 {
     char *obufp, *simpleoname = simpleoenames(obj);
@@ -3659,7 +3680,7 @@ thesimpleoname(struct obj *obj)
     return simpleoname;
 }
 
-char *
+staticfn char *
 thesimpleoename(struct obj *obj)
 {
     char *obufp, *simpleoname = simpleoenames(obj);
@@ -3686,7 +3707,7 @@ actualoname(struct obj *obj)
     return res;
 }
 
-char *
+staticfn char *
 actualoename(struct obj *obj)
 {
     char *res;
@@ -3714,7 +3735,7 @@ bare_artifactname(struct obj *obj)
     return outbuf;
 }
 
-char *
+staticfn char *
 bare_artifactename(struct obj *obj)
 {
     char *outbuf;

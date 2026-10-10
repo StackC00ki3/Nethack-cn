@@ -1278,7 +1278,7 @@ hmon_hitmon_misc_obj(
                           mon_nam(mon)); /*修改语序:  mon->mcansee ? "" : "进一步");*/
             } else {
                 char *whom = mon_nam(mon);
-                char *what = The(xname(obj));
+                const char *what = The(xname(obj));
 
                 if (!hmd->thrown && obj->quan > 1L)
                     what = singular(obj, xname);//冗余:An(singular(obj, xname));

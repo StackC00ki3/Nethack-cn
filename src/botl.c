@@ -1,4 +1,4 @@
-﻿/* NetHack 5.0	botl.c	$NHDT-Date: 1781973042 2026/06/20 16:30:42 $  $NHDT-Branch: NetHack-5.0 $:$NHDT-Revision: 1.286 $ */
+/* NetHack 5.0	botl.c	$NHDT-Date: 1781973042 2026/06/20 16:30:42 $  $NHDT-Branch: NetHack-5.0 $:$NHDT-Revision: 1.286 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
 /*-Copyright (c) Michael Allison, 2006. */
 /* NetHack may be freely redistributed.  See license for details. */
@@ -3615,7 +3615,7 @@ static int status_hilite_str_id = 0;
 
 staticfn void
 status_hilite_linestr_add(int fld, struct hilite_s *hl, unsigned long mask,
-                          unsigned int color_attr, const char *str)
+                          unsigned int attr, const char *str)
 {
     struct _status_hilite_line_str *tmp, *nxt;
 
@@ -3627,7 +3627,7 @@ status_hilite_linestr_add(int fld, struct hilite_s *hl, unsigned long mask,
     tmp->fld = fld;
     tmp->hl = hl;
     tmp->mask = mask;
-    tmp->color_attr = color_attr;
+    tmp->color_attr = attr;
     if (fld == BL_TITLE)
         Strcpy(tmp->str, str);
     else

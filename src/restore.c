@@ -22,6 +22,7 @@ staticfn struct fruit *loadfruitchn(NHFILE *);
 staticfn void freefruitchn(struct fruit *);
 staticfn void rest_levl(NHFILE *);
 staticfn void rest_stairs(NHFILE *);
+staticfn void savedgame_to_cfilecode(char *);
 #ifndef SFCTOOL
 staticfn void ghostfruit(struct obj *);
 staticfn boolean restgamestate(NHFILE *);

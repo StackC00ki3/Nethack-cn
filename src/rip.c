@@ -80,44 +80,44 @@ static const char *const rip_txt[] = {
 staticfn int
 rip_utf8_decode(const char *s, unsigned long *ucp)
 {
-    const unsigned char *u = (const unsigned char *) s;
+    const unsigned char *p = (const unsigned char *) s;
     unsigned long cp, mincp;
     int i, len;
 
-    if (!u[0]) {
+    if (!p[0]) {
         *ucp = 0L;
         return 0;
     }
-    if (u[0] < 0x80) {
-        *ucp = (unsigned long) u[0];
+    if (p[0] < 0x80) {
+        *ucp = (unsigned long) p[0];
         return 1;
-    } else if ((u[0] & 0xE0) == 0xC0) {
+    } else if ((p[0] & 0xE0) == 0xC0) {
         len = 2;
-        cp = (unsigned long) (u[0] & 0x1F);
+        cp = (unsigned long) (p[0] & 0x1F);
         mincp = 0x80L;
-    } else if ((u[0] & 0xF0) == 0xE0) {
+    } else if ((p[0] & 0xF0) == 0xE0) {
         len = 3;
-        cp = (unsigned long) (u[0] & 0x0F);
+        cp = (unsigned long) (p[0] & 0x0F);
         mincp = 0x800L;
-    } else if ((u[0] & 0xF8) == 0xF0) {
+    } else if ((p[0] & 0xF8) == 0xF0) {
         len = 4;
-        cp = (unsigned long) (u[0] & 0x07);
+        cp = (unsigned long) (p[0] & 0x07);
         mincp = 0x10000L;
     } else {
-        *ucp = (unsigned long) u[0];
+        *ucp = (unsigned long) p[0];
         return 1;
     }
 
     for (i = 1; i < len; ++i) {
-        if (!u[i] || (u[i] & 0xC0) != 0x80) {
-            *ucp = (unsigned long) u[0];
+        if (!p[i] || (p[i] & 0xC0) != 0x80) {
+            *ucp = (unsigned long) p[0];
             return 1;
         }
-        cp = (cp << 6) | (unsigned long) (u[i] & 0x3F);
+        cp = (cp << 6) | (unsigned long) (p[i] & 0x3F);
     }
     if (cp < mincp || (cp >= 0xD800L && cp <= 0xDFFFL)
         || cp > 0x10FFFFL) {
-        *ucp = (unsigned long) u[0];
+        *ucp = (unsigned long) p[0];
         return 1;
     }
     *ucp = cp;

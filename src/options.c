@@ -359,6 +359,7 @@ staticfn char *string_for_env_opt(const char *, char *, boolean);
 staticfn void bad_negation(const char *, boolean);
 staticfn void set_menuobjsyms_flags(int);
 staticfn int change_inv_order(char *);
+staticfn int utf8_char_len(unsigned char);
 staticfn boolean warning_opts(char *, const char *);
 staticfn int feature_alert_opts(char *, const char *);
 staticfn boolean duplicate_opt_detection(int);

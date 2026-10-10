@@ -165,7 +165,8 @@ formatkiller(
         /* 按凶手名字反查怪物, 拼"一+量词+名字", 如"一条小狗" */
         Strcpy(tmpname, kname);
         if ((kndx = name_to_mon(tmpname, (int *) 0)) != NON_PM)
-            Sprintf(kname, "一%s%s", pm_to_classifier(&mons[kndx]), tmpname);
+            Snprintf(kname, sizeof svk.killer.name, "一%s%s",
+                     pm_to_classifier(&mons[kndx]), tmpname);
         /* 查不到怪物(如噎死的食物): 保留原名, 不加"一" */
         FALLTHROUGH;
     }
