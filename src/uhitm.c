@@ -106,7 +106,7 @@ dynamic_multi_reason(struct monst *mon, const char *verb, boolean by_gaze)
     /* combination of noname_monnam() and m_monnam(), more or less;
        accurate regardless of visibility or hallucination (only seen
        if game ends) and without personal name (M2_PNAME excepted) */
-    char *who = x_monnam(mon, ARTICLE_A, (char *) 0,
+    char *who = x_monnam(mon, ARTICLE_NONE, (char *) 0,
                          (SUPPRESS_IT | SUPPRESS_INVISIBLE
                           | SUPPRESS_HALLUCINATION | SUPPRESS_SADDLE
                           | SUPPRESS_NAME),
