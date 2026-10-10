@@ -1,4 +1,4 @@
-﻿/* NetHack 5.0	wintty.c	$NHDT-Date: 1781973100 2026/06/20 16:31:40 $  $NHDT-Branch: NetHack-5.0 $:$NHDT-Revision: 1.438 $ */
+/* NetHack 5.0	wintty.c	$NHDT-Date: 1781973100 2026/06/20 16:31:40 $  $NHDT-Branch: NetHack-5.0 $:$NHDT-Revision: 1.438 $ */
 /* Copyright (c) David Cohrs, 1991                                */
 /* NetHack may be freely redistributed.  See license for details. */
 
@@ -1397,6 +1397,7 @@ toggle_menu_attr(boolean on, int color, int attr)
     }
 }
 
+#ifdef WIN32CON
 /* detect if a string contains UTF-8 encoded characters */
 static int
 is_utf8(const char *str)
@@ -1414,6 +1415,7 @@ is_utf8(const char *str)
     }
     return 0;
 }
+#endif /* WIN32CON */
 
 #ifdef WIN32CON
 static int
@@ -5598,7 +5600,7 @@ render_status(void)
                     /* when a field's value shrinks (e.g. AC 10->9),
                        fill the gap with spaces so that stale bytes
                        from the previous rendering are cleared */
-                    if (tlth < tty_status[BEFORE][idx].lth
+                    if ((size_t) tlth < tty_status[BEFORE][idx].lth
                         && tty_status[NOW][idx].x
                            == tty_status[BEFORE][idx].x) {
                         int gap = tty_status[BEFORE][idx].lth - tlth;

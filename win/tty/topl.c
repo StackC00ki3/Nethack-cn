@@ -16,8 +16,10 @@
 
 static void redotoplin(const char *);
 static void topl_putsym(char);
+#ifdef WIN32CON
 static void topl_putsymw(unsigned short c);
 static int is_utf8(const char *str);
+#endif
 static void removetopl(int);
 static void msghistory_snapshot(boolean);
 static void free_msghistory_snapshot(boolean);
@@ -376,7 +378,9 @@ topl_putsym(char c)
 #endif
 }
 
-/* output a wide character (UTF-16-LE) to the topline message window */
+#ifdef WIN32CON
+/* output a wide character (UTF-16-LE) to the topline message window;
+   only the WIN32CON code paths use this (see putsyms()) */
 static void
 topl_putsymw(unsigned short c)
 {
@@ -480,6 +484,7 @@ is_utf8(const char *str)
     }
     return 0;
 }
+#endif /* WIN32CON */
 
 void
 putsyms(const char *str)
