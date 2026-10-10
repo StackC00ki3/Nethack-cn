@@ -954,8 +954,8 @@ welcome(boolean new_game) /* false => restoring an old game */
             (currentgend && gu.urole.name.f) ? gu.urole.name.f
                                              : gu.urole.name.m);
 
-    pline(new_game ? "%s %s, 欢迎来到NetHack! 你是%s."
-                   : "%s %s, %s, 欢迎回到NetHack!",
+    pline(new_game ? "%s, %s, 欢迎来到NetHack! 你是%s."
+                   : "%s, %s, %s, 欢迎回到NetHack!",
           Hello((struct monst *) 0), svp.plname, buf);
 
     if (new_game) {
