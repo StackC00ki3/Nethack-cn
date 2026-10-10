@@ -104,7 +104,7 @@ getlock(void)
 {
 #ifndef SELF_RECOVER
     static const char destroy_old_game_prompt[] =
-    "There is already a game in progress under your name.  Destroy old game?";
+    "在你的名下有一些正在进行的游戏文件. 摧毁旧的游戏?";
 #endif
     int i = 0, fd, c, too_old;
     const char *fq_lock;
@@ -119,7 +119,7 @@ getlock(void)
     /* added check for window-system type -dlc */
     if (!strcmp(windowprocs.name, "tty"))
         if (!isatty(0))
-            error("You must play from a terminal.");
+            error("你必须从终端启动.");
 #endif
 
     /* we ignore QUIT and INT at this point */
@@ -150,7 +150,7 @@ getlock(void)
                     goto gotlock; /* no such file */
                 perror(fq_lock);
                 unlock_file(HLOCK);
-                error("Cannot open %s", fq_lock);
+                error("无法打开%s", fq_lock);
             }
 
             /* veryold() no longer conditionally closes fd */
@@ -161,7 +161,7 @@ getlock(void)
         } while (i < gl.locknum);
 
         unlock_file(HLOCK);
-        error("Too many hacks running now.");
+        error("有别的nethack在运行.");
     } else {
         fq_lock = fqname(gl.lock, LEVELPREFIX, 0);
         if ((fd = open(fq_lock, 0)) == -1) {
@@ -169,7 +169,7 @@ getlock(void)
                 goto gotlock; /* no such file */
             perror(fq_lock);
             unlock_file(HLOCK);
-            error("Cannot open %s", fq_lock);
+            error("无法打开%s", fq_lock);
         }
 
         /* veryold() no longer conditionally closes fd */
@@ -183,7 +183,7 @@ getlock(void)
         if (iflags.window_inited) {
 #ifdef SELF_RECOVER
             c = yn_function(
-             "Old game in progress. Destroy [y], Recover [r], or Cancel [n]?",
+             "有旧的游戏. 摧毁[y], 恢复[r], 还是取消[n]?",
                             "ynr", 'n', FALSE);
 #else
             /* this is a candidate for paranoid_confirmation */
@@ -192,10 +192,10 @@ getlock(void)
         } else {
 #ifdef SELF_RECOVER
             (void) raw_printf(
-        "\nThere is already a game in progress under your name.  Do what?\n");
-            (void) raw_printf("\n  y - Destroy old game");
-            (void) raw_printf("\n  r - Try to recover it");
-            (void) raw_printf("\n  n - Cancel");
+        "\n你名下已经有一个游戏正在进行. 怎么做?\n");
+            (void) raw_printf("\n  y - 摧毁旧的游戏");
+            (void) raw_printf("\n  r - 尝试恢复");
+            (void) raw_printf("\n  n - 取消");
             (void) raw_printf("\n\n  => ");
             (void) fflush(stdout);
             do {
@@ -222,7 +222,7 @@ getlock(void)
                 goto gotlock;
             } else {
                 unlock_file(HLOCK);
-                error("Couldn't recover old game.");
+                error("无法恢复旧的游戏.");
             }
         } else
 #endif
@@ -231,7 +231,7 @@ getlock(void)
                 goto gotlock;
             } else {
                 unlock_file(HLOCK);
-                error("Couldn't destroy old game.");
+                error("无法摧毁旧的游戏.");
             }
         } else {
             unlock_file(HLOCK);
@@ -243,16 +243,16 @@ getlock(void)
     fd = creat(fq_lock, FCMASK);
     unlock_file(HLOCK);
     if (fd == -1) {
-        error("cannot creat lock file (%s).", fq_lock);
+        error("无法creat锁文件 (%s).", fq_lock);
         /*NOTREACHED*/
     } else {
         if (write(fd, (genericptr_t) &svh.hackpid, sizeof svh.hackpid)
             != sizeof svh.hackpid) {
-            error("cannot write lock (%s)", fq_lock);
+            error("无法写入锁 (%s)", fq_lock);
             /*NOTREACHED*/
         }
         if (close(fd) == -1) {
-            error("cannot close lock (%s)", fq_lock);
+            error("无法关闭锁 (%s)", fq_lock);
             /*NOTREACHED*/
         }
     }
@@ -263,11 +263,11 @@ void
 ask_about_panic_save(void)
 {
 #ifdef CHECK_PANIC_SAVE
-    static const char Instead_prompt[] = "Start a new game instead?";
+    static const char Instead_prompt[] = "要不还是开始新游戏?";
     int c = '\0';
 
-    pline("There is no regular save file but there is a panic one.");
-    pline("It might be recoverable with demi-divine intervention.");
+    pline("没有常规的存档, 但有一个panic的.");
+    pline("或许请半神显灵才有可能恢复.");
     if (iflags.window_inited) {
         c = yn_function(Instead_prompt, "yn\033q", 'n', FALSE);
     } else {
@@ -349,7 +349,7 @@ dosh(void)
     if (!sysopt.shellers || !sysopt.shellers[0]
         || !check_user_string(sysopt.shellers)) {
         /* FIXME: should no longer assume a particular command keystroke */
-        Norep("Unavailable command '!'.");
+        Norep("无效命令'!'.");
         return 0;
     }
 #endif
@@ -358,7 +358,7 @@ dosh(void)
             (void) execl(str, str, (char *) 0);
         else
             (void) execl("/bin/sh", "sh", (char *) 0);
-        raw_print("sh: cannot execute.");
+        raw_print("sh: 无法执行.");
         exit(EXIT_FAILURE);
     }
     return 0;
@@ -391,7 +391,7 @@ child(int wt)
         return 1;
     }
     if (f == -1) { /* cannot fork */
-        pline("Fork failed.  Try again.");
+        pline("fork失败. 再试一次.");
         return 0;
     }
     /* fork succeeded; wait for child to exit */
