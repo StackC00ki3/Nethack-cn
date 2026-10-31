@@ -2090,8 +2090,13 @@ role_init(void)
         gu.urole.ngod = roles[flags.pantheon].ngod;
         gu.urole.cgod = roles[flags.pantheon].cgod;
     }
-    /* 0 or 1; no gods are neuter, nor is gender randomized */
-    svq.quest_status.godgend = !strcmpi(align_gtitle(alignmnt), "goddess");
+    {
+        const char *gnm = (alignmnt == A_LAWFUL) ? gu.urole.lgod
+                          : (alignmnt == A_NEUTRAL) ? gu.urole.ngod
+                          : (alignmnt == A_CHAOTIC) ? gu.urole.cgod : NULL;
+
+        svq.quest_status.godgend = (gnm && *gnm == '_') ? 1 : 0;
+    }
 
     if (Role_if(PM_CLERIC))
         objects[SPE_LIGHT].oc_skill = P_CLERIC_SPELL;
