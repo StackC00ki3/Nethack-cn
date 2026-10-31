@@ -307,7 +307,9 @@ des.trap({ type = "magic portal", coord = { 66,2 }, seen = true });
 
 -- squeezing through small gaps
 
+
 des.engraving({ coord = { 69,12 }, type = "burn", text = "过不来? 你带的东西太多了.", degrade = false });
+des.engraving({ coord = { 70,13 }, type = "burn", text = "按'" .. tut_key("droptype") .. "'批量丢下物品", degrade = false });
 
 -- try to squeeze over boulders, find a trap door
 
