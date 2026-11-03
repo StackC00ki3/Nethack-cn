@@ -52,7 +52,6 @@ staticfn void dofiretrap(struct obj *);
 staticfn void domagictrap(void);
 staticfn void pot_acid_damage(struct obj *, boolean, boolean);
 staticfn boolean emergency_disrobe(boolean *);
-staticfn boolean lava_protected(unsigned, unsigned *, int);
 staticfn int untrap_prob(struct trap *);
 staticfn void move_into_trap(struct trap *);
 staticfn int try_disarm(struct trap *, boolean);
@@ -6316,7 +6315,7 @@ chest_trap(
     boolean disarm)
 {
     struct obj *otmp = obj, *otmp2;
-    char buf[80];
+    char buf[BUFSZ];
     const char *msg;
     coord cc;
 
@@ -6381,7 +6380,7 @@ chest_trap(
                        && *in_rooms(ox, oy, SHOPBASE) == *u.ushops);
 
             pline("%s!", Tobjnam(obj, "爆炸了"));
-            Sprintf(buf, "%s爆炸", xname(obj));
+            Snprintf(buf, sizeof buf, "%s爆炸", xname(obj));
 
             if (costly)
                 loss += stolen_value(obj, ox, oy, (boolean) shkp->mpeaceful,
@@ -6806,19 +6805,6 @@ unconscious(void)
 
 static const char lava_killer[] = "熔岩";
 
-/* lava_effects(): is oid one of the items a caller had in use when the
-   hero fell in, which it expects to still hold afterwards? */
-staticfn boolean
-lava_protected(unsigned oid, unsigned *oids, int n)
-{
-    int i;
-
-    for (i = 0; i < n; ++i)
-        if (oids[i] == oid)
-            return TRUE;
-    return FALSE;
-}
-
 /* hero enters pool of molten lava; returns True if hero is killed and
    then life-saved (with teleport to safe spot), False for other survival;
    no return at all if hero dies and isn't life-saved */
@@ -6898,7 +6884,7 @@ lava_effects(void)
         ++burnmesgcount;
         iflags.in_lava_effects++; /* (see above) */
         (void) Boots_off();
-        if (!lava_protected(obj->o_id, protect_oid, nprotect))
+        if (!is_in_usignarr(obj->o_id, protect_oid, nprotect))
             useup(obj);
         iflags.in_lava_effects--;
         ++burncount;
@@ -6927,7 +6913,7 @@ lava_effects(void)
 
         for (obj = gi.invent; obj; obj = obj2) {
             obj2 = obj->nobj;
-            if (lava_protected(obj->o_id, protect_oid, nprotect)) {
+            if (is_in_usignarr(obj->o_id, protect_oid, nprotect)) {
                 /* skip protected item; caller expects to retain access */
                 obj->in_use = 1; /* was cleared when recording protect_oid */
             } else if (obj->otyp == SPE_BOOK_OF_THE_DEAD) {
