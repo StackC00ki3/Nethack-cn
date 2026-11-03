@@ -617,14 +617,11 @@ pick_lock(
             }
 
             if (autounlock) {
-                Sprintf(qbuf, "%s它?",
-                        (door->doormask & D_LOCKED) ? "解锁" : "锁定");
-                /* a long key name gets shortened to fit */
-                (void) safe_qbuf(qbuf, "用", qbuf, pick, yname, ysimple_name, //危险: 我不知道怎么弄...
-                                 "那个");
+                (void) safe_qbuf(qbuf, "用",
+                                 (door->doormask & D_LOCKED) ? "解锁它?" : "锁定它?",
+                                 pick, yname, ysimple_name, "那个");
             } else {
-                Sprintf(qbuf, "%s它?",
-                        (door->doormask & D_LOCKED) ? "解锁" : "锁定");
+                Sprintf(qbuf, "%s它?", (door->doormask & D_LOCKED) ? "解锁" : "锁定");
             }
             c = ynq(qbuf);
             if (c != 'y')
