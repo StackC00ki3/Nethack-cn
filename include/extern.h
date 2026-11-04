@@ -1,4 +1,4 @@
-/* NetHack 5.0	extern.h	$NHDT-Date: 1778886716 2026/05/15 15:11:56 $  $NHDT-Branch: NetHack-5.0 $:$NHDT-Revision: 1.1558 $ */
+/* $NHDT-Header: NetHack 5.0 extern.h 2026/10/17_14:49:13 NetHack-5.0:1.1583 $ */
 /* Copyright (c) Steve Creps, 1988.                               */
 /* NetHack may be freely redistributed.  See license for details. */
 
@@ -2792,7 +2792,8 @@ extern int dorecover(NHFILE *) NONNULLARG1;
 extern void restcemetery(NHFILE *, struct cemetery **) NONNULLARG12;
 extern void trickery(char *) NO_NNARGS;
 extern void getlev(NHFILE *, int, xint8) NONNULLARG1;
-extern void get_plname_from_file(NHFILE *, char *, boolean) NONNULLARG12;
+extern int get_plname_from_file(NHFILE *, char *, size_t, boolean) NONNULLARG12;
+ATTRNORETURN extern void plnabort(int) NORETURN;
 #ifdef SELECTSAVED
 extern int restore_menu(winid);
 #endif

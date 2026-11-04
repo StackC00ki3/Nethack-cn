@@ -1,4 +1,5 @@
         Microsoft Windows specific help file for NetHack 5.0
+        Copyright (c) Michael Allison, 2026
         Copyright (c) NetHack PC Development Team 1993-2026.
         NetHack may be freely distributed.  See license for details.
                    (Last Revision: June 20, 2026)
@@ -224,5 +225,4 @@ Help - 提供有关NetHack各个部分的帮助。
         Ctrl-Shift-End   (1)     将(整个)地图滚到最右处
         Ctrl-Shift-PgUp  (9)     将(整个)地图滚到最上处
         Ctrl-Shift-PgDn  (3)     将(整个)地图滚到最下处
-
 

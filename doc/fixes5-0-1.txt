@@ -1,4 +1,4 @@
-NHDT-Branch: NetHack-5.0 $:$NHDT-Revision: 1.36 $ $NHDT-Date: 1781062909 2026/06/09 19:41:49 $
+$NHDT-Header: NetHack 5.0 fixes5-0-1.txt 2026/11/02_21:05:17 NetHack-5.0:1.105 $
 	
 General Fixes and Modified Features
 -----------------------------------
@@ -110,6 +110,9 @@ fix checking if dungeon has too many dungeons or levels
 fix long key name overflowing unlock prompt buffer
 fix exploding named box buffer overflow
 fix aobjnam buffer overflow when adding a verb
+menu for interactively setting status fields to highlight listed
+	weapons/armor/terrain in the menu display than was used internally;
+	picking one affected the others
 
 
 Platform- and/or Interface-Specific Fixes

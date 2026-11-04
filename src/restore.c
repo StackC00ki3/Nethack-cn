@@ -1,4 +1,4 @@
-/* NetHack 5.0	restore.c	$NHDT-Date: 1781973064 2026/06/20 16:31:04 $  $NHDT-Branch: NetHack-5.0 $:$NHDT-Revision: 1.265 $ */
+/* $NHDT-Header: NetHack 5.0 restore.c 2026/09/26_15:47:20 NetHack-5.0:1.274 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
 /*-Copyright (c) Michael Allison, 2009. */
 /* NetHack may be freely redistributed.  See license for details. */
@@ -807,13 +807,15 @@ int
 dorecover(NHFILE *nhfp)
 {
     xint8 ltmp = 0;
-    int rtmp;
+    int rtmp, plnres = 0;
     char plname[PL_NSIZ_PLUS];
 
     /* suppress map display if some part of the code tries to update that */
     program_state.restoring = REST_GSTATE;
 
-    get_plname_from_file(nhfp, plname, TRUE);
+    plnres = get_plname_from_file(nhfp, plname, sizeof plname, TRUE);
+    if (plnres < 0)
+        plnabort(plnres);
     Snprintf(svp.plname, sizeof(svp.plname), "%s", plname);
     /*
      * The position in the save file is now here:
@@ -908,7 +910,9 @@ dorecover(NHFILE *nhfp)
 
     rewind_nhfile(nhfp);        /* return to beginning of file */
     (void) validate(nhfp, (char *) 0, FALSE, 0);
-    get_plname_from_file(nhfp, plname, TRUE);
+    plnres = get_plname_from_file(nhfp, plname, sizeof plname, TRUE);
+    if (plnres < 0)
+        plnabort(plnres);
     Snprintf(svp.plname, sizeof(svp.plname), "%s", plname);
 
     /* not 0 nor REST_GSTATE nor REST_LEVELS */
@@ -1402,22 +1406,31 @@ bones_time_adjust(long *timestamp)
 
 /* "name-role-race-gend-algn" occurs very early in a save file; sometimes we
    want the whole thing, other times just "name" (for svp.plname[]) */
-void
+int
 get_plname_from_file(
     NHFILE *nhfp,
     char *outbuf, /* size must be at least [PL_NSIZ_PLUS] even if name_only */
+    size_t bufsz,   /* caller-passed size of outbuf */
     boolean name_only) /* True: just name; False: name-role-race-gend-algn */
 {
-    char plbuf[PL_NSIZ_PLUS];
+    char plbuf[PL_NSIZ_PLUS], *cp;
     int pltmpsiz = 0;
 
     plbuf[0] = '\0';
 
+    if (bufsz != PL_NSIZ_PLUS)
+        return -1;
     Sfi_int(nhfp, &pltmpsiz, "plname-size");
-    /* pltmpsiz should now be PL_NSIZ_PLUS */
+    /* pltmpsiz should now be PL_NSIZ_PLUS; verify */
+    if (pltmpsiz > PL_NSIZ_PLUS || pltmpsiz <= 0)
+        return -2;
     Sfi_char(nhfp, plbuf, "plname", pltmpsiz);
     /* plbuf[PL_NSIZ_PLUS-2] should be '\0';
        plbuf[PL_NSIZ_PLUS-1] should be '-' or 'X' or 'D' */
+    plbuf[PL_NSIZ_PLUS - 2] = '\0';
+    cp = &plbuf[PL_NSIZ_PLUS - 1];
+    if (!(*cp == '-' || *cp == 'X' || *cp == 'D'))
+        return -3;
     /* "-race-role-gend-algn" is already present except that it has been
        hidden by replacing the initial dash with NUL; if we want that
        information, replace the NUL with a dash */
@@ -1425,8 +1438,29 @@ get_plname_from_file(
         *eos(plbuf) = '-';
     /* not simple strcpy(); playmode is in the last slot and could (probably
        will) be preceded by NULs */
-    (void) memcpy((genericptr_t) outbuf, (genericptr_t) plbuf, PL_NSIZ_PLUS);
-    return;
+    if (pltmpsiz > (int) bufsz || pltmpsiz < 0)
+        pltmpsiz = (int) bufsz;
+    (void) memcpy((genericptr_t) outbuf, (genericptr_t) plbuf, pltmpsiz);
+    return 0;
+}
+
+ATTRNORETURN void
+plnabort(int errcode)
+{
+    switch (errcode) {
+    case -1:
+        panic("caller of get_plname_from_file() failed to provide "
+              "PL_NSIZ_PLUS buffer");
+        break;
+    case -2:
+        panic("get_plname_from_file read invalid plname size");
+        break;
+    case -3:
+        panic("read unexpected trailing plname indicator from file");
+        break;
+    }
+    /* this should never happen */
+    panic("unspecified error to plnabort");
 }
 
 /* restore Plane of Water's air bubbles and Plane of Air's clouds */

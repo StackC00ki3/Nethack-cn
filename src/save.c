@@ -1,4 +1,4 @@
-/* NetHack 5.0	save.c	$NHDT-Date: 1781973065 2026/06/20 16:31:05 $  $NHDT-Branch: NetHack-5.0 $:$NHDT-Revision: 1.263 $ */
+/* $NHDT-Header: NetHack 5.0 save.c 2026/10/27_11:20:36 NetHack-5.0:1.274 $ */
 /* Copyright (c) Stichting Mathematisch Centrum, Amsterdam, 1985. */
 /*-Copyright (c) Michael Allison, 2009. */
 /* NetHack may be freely redistributed.  See license for details. */
@@ -936,6 +936,8 @@ savemonchn(NHFILE *nhfp, struct monst *mtmp)
                so we need to skip the writing of any dead monsters */
             && !(program_state.in_idlecheckpoint && DEADMONSTER(mtmp))) {
             mtmp->mnum = monsndx(mtmp->data);
+            if (DEADMONSTER(mtmp) && mtmp->minvent)
+                impossible("Dead monster still has minvent");
             if (mtmp->ispriest)
                 forget_temple_entry(mtmp); /* EPRI() */
             savemon(nhfp, mtmp);

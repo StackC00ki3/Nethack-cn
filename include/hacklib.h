@@ -1,4 +1,4 @@
-/* NetHack 5.0	hacklib.h	$NHDT-Date: 1781973081 2026/06/20 16:31:21 $  $NHDT-Branch: NetHack-5.0 $:$NHDT-Revision: 1.5 $ */
+/* $NHDT-Header: NetHack 5.0 hacklib.h 2026/06/20_22:26:43 NetHack-5.0:1.7 $ */
 /* Copyright (c) Steve Creps, 1988.                               */
 /* NetHack may be freely redistributed.  See license for details. */
 
