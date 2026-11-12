@@ -892,6 +892,7 @@ extern void insert_branch(branch *, boolean) NONNULLARG1;
 extern void init_dungeons(void);
 extern void init_dungeon_cnames(void);
 extern s_level *find_level(const char *) NONNULLARG1;
+extern s_level *find_level_substr(const char *) NONNULLARG1;
 extern s_level *Is_special(d_level *) NONNULLARG1;
 extern branch *Is_branchlev(d_level *) NONNULLARG1;
 extern boolean builds_up(d_level *) NONNULLARG1;
@@ -2039,7 +2040,8 @@ extern int dosuspend(void);
 extern void nt_regularize(char *);
 extern int(*nt_kbhit)(void);
 extern void Delay(int);
-boolean get_user_home_folder(char *, size_t);
+extern boolean get_user_home_folder(char *, size_t);
+extern boolean WindowsTerminalActive(void);
 # ifdef CRASHREPORT
 struct CRctxt;
 extern struct CRctxt *ctxp;
@@ -2208,6 +2210,10 @@ extern int set_keyhandling_via_option(void);
 extern void tty_utf8graphics_fixup(void);
 extern void tty_ibmgraphics_fixup(void);
 #endif /* ENHANCED_SYMBOLS */
+#ifdef WIN32CON
+extern const char *win32con_topl_fixup(const char *);
+#endif
+extern boolean wincon_WindowsTerminalActive(void);
 #endif /* WIN32 */
 
 /* ### o_init.c ### */

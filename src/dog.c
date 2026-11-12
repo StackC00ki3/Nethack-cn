@@ -1019,6 +1019,8 @@ dogfood(struct monst *mon, struct obj *obj)
 
         if (obj->otyp == CORPSE && is_rider(fptr))
             return TABU;
+        if (obj->otyp == CORPSE && obj_has_timer(obj, ZOMBIFY_MON))
+            return POISON;
         if ((obj->otyp == CORPSE || obj->otyp == EGG)
             && flesh_petrifies(fptr) /* c*ckatrice or Medusa */
             && !resists_ston(mon))

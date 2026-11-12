@@ -538,7 +538,7 @@ restgamestate(NHFILE *nhfp)
     struct flag newgameflags;
     struct context_info newgamecontext; /* all 0, but has some pointers */
     struct obj *bc_obj;
-    char timebuf[15];
+    char timebuf[NHDATELEN + 1];
     unsigned long uid = 0;
 #ifndef SFCTOOL
     boolean defer_perm_invent, restoring_special;
@@ -622,12 +622,12 @@ restgamestate(NHFILE *nhfp)
     }
 #endif
 
-    Sfi_char(nhfp, timebuf, "gamestate-ubirthday", 14);
-    timebuf[14] = '\0';
+    Sfi_char(nhfp, timebuf, "gamestate-ubirthday", NHDATELEN);
+    timebuf[NHDATELEN] = '\0';
     ubirthday = time_from_yyyymmddhhmmss(timebuf);
     Sfi_long(nhfp, &urealtime.realtime, "gamestate-realtime");
-    Sfi_char(nhfp, timebuf, "gamestate-start_timing", 14);
-    timebuf[14] = '\0';
+    Sfi_char(nhfp, timebuf, "gamestate-start_timing", NHDATELEN);
+    timebuf[NHDATELEN] = '\0';
 #ifndef SFCTOOL
     urealtime.start_timing = time_from_yyyymmddhhmmss(timebuf);
 
@@ -1434,8 +1434,12 @@ get_plname_from_file(
     /* "-race-role-gend-algn" is already present except that it has been
        hidden by replacing the initial dash with NUL; if we want that
        information, replace the NUL with a dash */
-    if (!name_only)
-        *eos(plbuf) = '-';
+    if (!name_only) {
+        cp = eos(plbuf);
+        if (cp == &plbuf[PL_NSIZ_PLUS - 2])
+            return -4;
+        *cp = '-';
+    }
     /* not simple strcpy(); playmode is in the last slot and could (probably
        will) be preceded by NULs */
     if (pltmpsiz > (int) bufsz || pltmpsiz < 0)
@@ -1447,16 +1451,24 @@ get_plname_from_file(
 ATTRNORETURN void
 plnabort(int errcode)
 {
+    const char *plfunc = "get_plname_from_file()";
+
     switch (errcode) {
     case -1:
-        panic("caller of get_plname_from_file() failed to provide "
-              "PL_NSIZ_PLUS buffer");
+        panic("%s caller failed to provide PL_NSIZ_PLUS buffer",
+              plfunc);
         break;
     case -2:
-        panic("get_plname_from_file read invalid plname size");
+        panic("%s invalid plname size read",
+              plfunc);
         break;
     case -3:
-        panic("read unexpected trailing plname indicator from file");
+        panic("%s unexpected trailing plname indicator read",
+              plfunc);
+        break;
+    case -4:
+        panic("%s badly-formed plname read",
+              plfunc);
         break;
     }
     /* this should never happen */
