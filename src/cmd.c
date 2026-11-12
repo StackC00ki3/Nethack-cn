@@ -4636,7 +4636,7 @@ there_cmd_menu_next2u(
         /* attacking overrides any other automatic action */
         *act = MCMD_ATTACK_NEXT2U;
     } else if (test_move(u.ux, u.uy, x-u.ux, y-u.uy, TEST_MOVE)) {
-        mcmd_addmenu(win, MCMD_MOVE_DIR, "Move here"); ++K;
+        mcmd_addmenu(win, MCMD_MOVE_DIR, "移动到这里"); ++K;
         *act = MCMD_MOVE_DIR;
     }
     return K;

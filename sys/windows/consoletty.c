@@ -108,6 +108,8 @@ cell_t undefined_cell = {
 
 /* Special marker cell for the second column of double-width (CJK) characters */
 cell_t wide_char_follower_cell = {
+    CONSOLE_UNDEFINED_CHARACTER,
+    CONSOLE_UNDEFINED_ATTRIBUTE,
                 { 0, 0, 0, 0, 0, 0, 0 },        /* empty utf8str */
                 0,                               /* wcharacter = 0 (no display) */
                 0,                               /* attr */
@@ -120,7 +122,6 @@ cell_t wide_char_follower_cell = {
 #if 0
 static const uint8 empty_utf8str[MAX_UTF8_SEQUENCE] = { 0 };
 #endif
-#endif /* VIRTUAL_TERMINAL_SEQUENCES */
 
 /*
  * The following WIN32 Console API routines are used in this file.
@@ -141,6 +142,8 @@ static const uint8 empty_utf8str[MAX_UTF8_SEQUENCE] = { 0 };
 static BOOL CtrlHandler(DWORD);
 static void xputc_core_ConsoleAPI(char);
 static void xputc_core(int);
+static void consoleapi_put_cell(WCHAR);
+static void consoleapi_putchar(int, boolean);
 void cmov(int, int);
 void nocmov(int, int);
 int process_keystroke(INPUT_RECORD *, boolean *, uchar numberpad,
@@ -149,7 +152,6 @@ static void init_ttycolor(void);
 static void really_move_cursor(void);
 static void check_and_set_font(void);
 static boolean is_wide_character(WCHAR wch);
-#ifndef VIRTUAL_TERMINAL_SEQUENCES
 static boolean check_font_widths(void);
 static void set_known_good_console_font(void);
 static void restore_original_console_font(void);
@@ -396,7 +398,7 @@ colortable_to_bgr_int32(const struct nethack_color *tbl)
 
 /* Decode one UTF-8 character from s, returning the Unicode codepoint
    and advancing *idx by the number of bytes consumed (1..4).
-   Invalid sequences return -1. */
+   Invalid sequences return -1 and leave *idx alone. */
 static int
 xputs_decode_utf8(const char *s, int *idx, int slen)
 {
@@ -408,7 +410,7 @@ xputs_decode_utf8(const char *s, int *idx, int slen)
         return codepoint;
     }
     if (c < 0xC0) {
-        (*idx)++;
+        /* stray continuation byte: let the caller emit it unchanged */
         return -1;
     } else if (c < 0xE0) {
         len = 2;
@@ -992,8 +994,11 @@ void buffer_write(cell_t * buffer, cell_t * cell, COORD pos)
     /* For CJK (Chinese, Japanese, Korean) double-width characters,
        mark the following column as a wide-character follower cell.
        This prevents display corruption when the window is closed or redrawn.
+       Only the WindowsTerminal path writes one cell per display column;
+       the old ConsoleAPI path lets the console itself handle double width.
     */
-    if (is_wide_character(cell->wcharacter)) {
+    if (console.WindowsTerminal && cell->wcharacter != 0
+        && is_wide_character(cell->wcharacter)) {
         if (pos.X + 1 < console.width) {
             /* Mark the next column as a follower of the wide character */
             cell_t * next_cell = dst + 1;
@@ -1738,25 +1743,44 @@ xputs(const char *s)
         set_console_cursor(ttyDisplay->curx, ttyDisplay->cury);
 
     if (s) {
-#ifdef VIRTUAL_TERMINAL_SEQUENCES  //根本不知道怎么改。。。哭了。。。
-        if (console.has_unicode) {
-            for (k = 0; k < slen && s[k]; ++k) {
+        if (console.WindowsTerminal) {
+            /* WindowsTerminal: decode UTF-8 so that CJK and enhanced
+               symbols reach xputc_core() as code points */
+            if (console.has_unicode) {
+                for (k = 0; k < slen && s[k]; ) {
+                    int codepoint = xputs_decode_utf8(s, &k, slen);
+
+                    if (codepoint >= 0) {
+                        xputc_core(codepoint);
+                    } else {
+                        xputc_core((unsigned char) s[k]);
+                        ++k;
+                    }
+                }
+            } else {
+                for (k = 0; k < slen && s[k]; ++k)
+                    xputc_core((int) s[k]);
+            }
+        } else if (console.has_unicode) {
+            /* The Console API path writes WCHAR values, so the UTF-8 text of
+               the translated strings has to be decoded here as well;
+               otherwise every CJK character shows up as its 2 or 3 bytes.
+               A byte that is not valid UTF-8 is passed through unchanged. */
+            for (k = 0; k < slen && s[k]; ) {
                 int codepoint = xputs_decode_utf8(s, &k, slen);
-                if (codepoint >= 0) {
-                    xputc_core(codepoint);
-                } else {
-                    xputc_core_ConsoleAPI((unsigned char) s[k])
+
+                if (codepoint >= 0)
+                    consoleapi_putchar(codepoint, TRUE);
+                else {
+                    consoleapi_putchar((int) (unsigned char) s[k], FALSE);
+                    ++k;
                 }
             }
-        } else
-#endif
-        {
+        } else {
+            /* console without unicode support: one code page byte at a
+               time is all we can do */
             for (k = 0; k < slen && s[k]; ++k)
-#ifndef VIRTUAL_TERMINAL_SEQUENCES
-                xputc_core(s[k]);
-#else
-                xputc_core((int) s[k]);
-#endif
+                xputc_core_ConsoleAPI((char) s[k]);
         }
     }
 }
@@ -1769,10 +1793,15 @@ xputc(int ch)
     int x = ttyDisplay->curx, y = ttyDisplay->cury;
     if (x < console.width && y < console.height) {
         set_console_cursor(ttyDisplay->curx, ttyDisplay->cury);
-        if (console.WindowsTerminal)
+        if (console.WindowsTerminal) {
             xputc_core(ch);
-        else
+        } else if (console.has_unicode && ch >= 0x100) {
+            /* a real code point, not a byte of the code page (the tty
+               layer passes wide symbols such as CJK glyphs this way) */
+            consoleapi_putchar(ch, TRUE);
+        } else {
             xputc_core_ConsoleAPI((char) ch);
+        }
     }
     return 0;
 }
@@ -1786,7 +1815,7 @@ xputc_core(int ch)
     nhassert(console.cursor.X >= 0 && console.cursor.X < console.width);
     nhassert(console.cursor.Y >= 0 && console.cursor.Y < console.height);
 
-    cell_t cell;
+    cell_t cell = { 0 };
 
     switch (ch) {
     case '\n':
@@ -1819,18 +1848,16 @@ xputc_core(int ch)
         if (console.has_unicode) {
             wch[0] = (ch >= 0 && ch < SIZE(console.cpMap)) ? console.cpMap[ch]
                                                            : ch;
+            /* store the wide version here also, so we don't slow
+               down back_buffer_flip() with conversions, and so that
+               buffer_write() can tell a double-width (CJK) cell apart */
+            cell.wcharacter = wch[0];
 #ifdef UTF8_FROM_CORE
             if (SYMHANDLING(H_UTF8)) {
                 /* we have to convert it to UTF-8 for cell.utf8str */
                 ccount = WideCharToMultiByte(
                     CP_UTF8, 0, wch, -1, (char *) cell.utf8str,
                     (int) sizeof cell.utf8str, NULL, NULL);
-            } else {
-#endif
-            /* store the wide version here also, so we don't slow
-               down back_buffer_flip() with conversions */
-            cell.wcharacter = wch[0];
-#ifdef UTF8_FROM_CORE
             }
 #endif
         } else {
@@ -1841,13 +1868,22 @@ xputc_core(int ch)
         }
         if (ccount) {
             buffer_write(console.back_buffer, &cell, console.cursor);
-            if (console.cursor.X == console.width - 1) {
+
+            /* For double-width (CJK) characters the terminal advances by
+               two columns; buffer_write() has already marked the second
+               column as a follower cell so it isn't painted twice. */
+            int cursor_advance =
+                (cell.wcharacter != 0 && is_wide_character(cell.wcharacter))
+                    ? 2
+                    : 1;
+
+            if (console.cursor.X + cursor_advance >= console.width) {
                 if (console.cursor.Y < console.height - 1) {
                     console.cursor.X = 1;
                     console.cursor.Y++;
                 }
             } else {
-                console.cursor.X++;
+                console.cursor.X += cursor_advance;
             }
         }
     }
@@ -1858,13 +1894,55 @@ xputc_core(int ch)
 void
 xputc_core_ConsoleAPI(char ch)
 {
+    consoleapi_putchar((int) (unsigned char) ch, FALSE);
+}
+
+/* Place one character into the back buffer and move the cursor past it.
+   Wide (CJK) characters take up two columns. */
+static void
+consoleapi_put_cell(WCHAR wch)
+{
+    cell_t cell = { 0 };
+    boolean inverse = (console.active.nhattr[ATR_INVERSE] && iflags.wc_inverse);
+    int cursor_advance = 1;
+
+    console.active.attribute = (inverse)
+                                   ? ttycolors_inv[console.active.color]
+                                   : ttycolors[console.active.color];
+    if (console.active.nhattr[ATR_BOLD])
+        console.active.attribute |=
+            (inverse) ? BACKGROUND_INTENSITY : FOREGROUND_INTENSITY;
+
+    cell.attribute_consoleAPI = console.active.attribute;
+    cell.character_consoleAPI = wch;
+
+    if (console.has_unicode && is_wide_character(wch))
+        cursor_advance = 2;
+
+    if (ccount) {
+        buffer_write(console.back_buffer, &cell, console.cursor);
+
+        if (console.cursor.X + cursor_advance >= console.width) {
+            if (console.cursor.Y < console.height - 1) {
+                console.cursor.X = 1;
+                console.cursor.Y++;
+            }
+        } else {
+            console.cursor.X += cursor_advance;
+        }
+    }
+}
+
+/* Output one character through the Console API.  'is_codepoint' tells whether
+   'ch' is a Unicode code point decoded from UTF-8 text or a single byte of the
+   active code page, which is mapped through cpMap. */
+static void
+consoleapi_putchar(int ch, boolean is_codepoint)
+{
     ccount = 1; /* default to non-zero */
-    boolean inverse = FALSE;
 
     nhassert(console.cursor.X >= 0 && console.cursor.X < console.width);
     nhassert(console.cursor.Y >= 0 && console.cursor.Y < console.height);
-
-    cell_t cell;
 
     switch (ch) {
     case '\n':
@@ -1884,37 +1962,19 @@ xputc_core_ConsoleAPI(char ch)
         }
         break;
     default:
-        inverse = (console.active.nhattr[ATR_INVERSE] && iflags.wc_inverse);
-        console.active.attribute = (inverse)
-                                       ? ttycolors_inv[console.active.color]
-                                       : ttycolors[console.active.color];
-        if (console.active.nhattr[ATR_BOLD])
-            console.active.attribute |=
-                (inverse) ? BACKGROUND_INTENSITY : FOREGROUND_INTENSITY;
-
-        cell.attribute_consoleAPI = console.active.attribute;
-        cell.character_consoleAPI = (console.has_unicode ? console.cpMap[ch] : ch);
-        if (ccount) {
-            buffer_write(console.back_buffer, &cell, console.cursor);
-
-            /* For wide characters (CJK), cursor should advance by 2 columns */
-            int cursor_advance = 1;
-            if (console.has_unicode) {
-                /* Check wch[0] which contains the wide character value */
-                if (is_wide_character(wch[0])) {
-                    cursor_advance = 2;
-                }
-            }
-
-            if (console.cursor.X + cursor_advance >= console.width) {
-                if (console.cursor.Y < console.height - 1) {
-                    console.cursor.X = 1;
-                    console.cursor.Y++;
-                }
-            } else {
-                console.cursor.X += cursor_advance;
-            }
+        if (!is_codepoint || ch < 0x80) {
+            /* bytes, including the ASCII bytes of UTF-8 text, keep the code
+               page mapping they have always had */
+            consoleapi_put_cell((console.has_unicode
+                                     ? console.cpMap[(unsigned char) ch]
+                                     : (WCHAR) (unsigned char) ch));
+        } else if (ch > 0xFFFF) {
+            /* not representable in a single UTF-16 code unit */
+            consoleapi_put_cell((WCHAR) '?');
+        } else {
+            consoleapi_put_cell((WCHAR) ch);
         }
+        break;
     }
     nhassert(console.cursor.X >= 0 && console.cursor.X < console.width);
     nhassert(console.cursor.Y >= 0 && console.cursor.Y < console.height);
@@ -1933,7 +1993,7 @@ void
 console_g_putch(int in_ch)
 {
     unsigned char ch = (unsigned char) in_ch;
-    cell_t cell;
+    cell_t cell = { 0 };
     boolean inverse = FALSE;
     /* console.WindowsTerminal */
     ccount = 0;
@@ -1950,18 +2010,16 @@ console_g_putch(int in_ch)
         wch[1] = 0;
         if (console.has_unicode) {
             wch[0] = (usemap) ? console.cpMap[ch] : ch;
+            /* store the wide version here also, so we don't slow
+               down back_buffer_flip() with conversions, and so that
+               buffer_write() can tell a double-width (CJK) cell apart */
+            cell.wcharacter = wch[0];
 #ifdef UTF8_FROM_CORE
             if (SYMHANDLING(H_UTF8)) {
                 /* we have to convert it to UTF-8 for cell.utf8str */
                 ccount = WideCharToMultiByte(
                     CP_UTF8, 0, wch, -1, (char *) cell.utf8str,
                     (int) sizeof cell.utf8str, NULL, NULL);
-            } else {
-#endif
-                /* store the wide version here also, so we don't slow
-                   down back_buffer_flip() with conversions */
-                cell.wcharacter = wch[0];
-#ifdef UTF8_FROM_CORE
             }
 #endif
         } else {
