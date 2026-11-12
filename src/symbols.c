@@ -1,4 +1,5 @@
-/* $NHDT-Header: NetHack 5.0 symbols.c 2026/06/20_16:31:09 NetHack-5.0:1.133 $ */
+/* $NHDT-Header: NetHack 5.0 symbols.c 2026/11/04_00:49:44 NetHack-5.0:1.136 $ */
+/* Copyright (c) Michael Allison 2024. */
 /* Copyright (c) NetHack Development Team 2020.                   */
 /* NetHack may be freely redistributed.  See license for details. */
 
@@ -1033,6 +1034,10 @@ do_symset(boolean rogueflag)
             if (sl->handling == H_UTF8)
                 continue;
 #endif
+#ifdef WIN32CON
+            if ((sl->handling == H_UTF8) && !WindowsTerminalActive())
+                continue;
+#endif
             setcount++;
             /* find biggest name */
             thissize = sl->name ? (int) strlen(sl->name) : 0;
@@ -1069,6 +1074,10 @@ do_symset(boolean rogueflag)
 #endif
 #ifndef ENHANCED_SYMBOLS
             if (sl->handling == H_UTF8)
+                continue;
+#endif
+#ifdef WIN32CON
+            if ((sl->handling == H_UTF8) && !WindowsTerminalActive())
                 continue;
 #endif
             if (sl->name) {
