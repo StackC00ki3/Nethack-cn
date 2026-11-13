@@ -139,27 +139,40 @@ jobs:
         run: |
           if [ "${{ matrix.orthography }}" = "s" ]; then
             echo "Original, skip converting"
-          elif [ "${{ matrix.orthography }}" = "tg" ]; then
-            echo "Using orthography: ${{ matrix.orthography }}"
-            cat ./kanjifiles.txt
-            cat ./kanjifiles.txt | tr -d '\r' | while read -r file; do
-              echo "Converting: $file"
-              ./opencc/bin/opencc.exe -c "./opencc-tonggui/opencc/s2tg.json" -i "$file" -o "$file" --in-place
-            done
+            exit 0
+          fi
+          if [ "${{ matrix.orthography }}" = "tg" ]; then
+            CONFIG="./opencc-tonggui/opencc/s2tg.json"
           else
-            echo "Using orthography: ${{ matrix.orthography }}"
-            cat ./kanjifiles.txt
-            cat ./kanjifiles.txt | tr -d '\r' | while read -r file; do
-              echo "Converting: $file"
-              ./opencc/bin/opencc.exe -c "s2${{ matrix.orthography }}.json" -i "$file" -o "$file" --in-place
-            done
+            CONFIG="s2${{ matrix.orthography }}.json"
+          fi
+          echo "Using orthography: ${{ matrix.orthography }} ($CONFIG)"
+          cat ./kanjifiles.txt
+          failed=0
+          # 逐个文件转换：先写临时文件再替换，避免中途失败把源文件写坏。
+          # 单个文件失败不中断后面的文件，循环结束后统一报错退出。
+          while IFS= read -r file; do
+            [ -n "$file" ] || continue
+            echo "Converting: $file"
+            if ./opencc/bin/opencc.exe -c "$CONFIG" -i "$file" -o "$file.converted" \
+               && mv -f "$file.converted" "$file"; then
+              :
+            else
+              echo "::error file=$file::opencc 转换失败（配置 $CONFIG）"
+              rm -f "$file.converted"
+              failed=1
+            fi
+          done < ./kanjifiles.txt
+          if [ "$failed" -ne 0 ]; then
+            echo "有文件转换失败，见上面的 error 注释。"
+            exit 1
           fi
 
       - name: Package (Converted) Source Code
         shell: bash
         run: |
           mkdir -p "$PACKAGE_DIR"
-          7z a "$PACKAGE_DIR/NetHack-cn-src-${{ matrix.orthography }}.zip" . '-xr!.git' '-xr!.github' '-xr!opencc' '-xr!opencc-tonggui' '-xr!vspackage'
+          7z a "$PACKAGE_DIR/NetHack-cn-src-${{ matrix.orthography }}.zip" . '-xr!.git' '-xr!.github' '-xr!opencc' '-xr!opencc-tonggui' '-xr!vspackage' '-xr!kanjifiles.txt'
 
       - name: Build Visual Studio solution
         env:
@@ -235,12 +248,25 @@ jobs:
           fi
           echo "Using orthography: ${{ matrix.orthography }} ($CONFIG)"
           cat ./kanjifiles.txt
-          cat ./kanjifiles.txt | tr -d '\r' | while read -r file; do
+          failed=0
+          # distro opencc 没有 --in-place：先写临时文件，成功后再替换。
+          # 单个文件失败不中断后面的文件，循环结束后统一报错退出。
+          while IFS= read -r file; do
+            [ -n "$file" ] || continue
             echo "Converting: $file"
-            # distro opencc has no --in-place; write to a temp file first
-            opencc -c "$CONFIG" -i "$file" -o "$file.converted" \
-              && mv -f "$file.converted" "$file"
-          done
+            if opencc -c "$CONFIG" -i "$file" -o "$file.converted" \
+               && mv -f "$file.converted" "$file"; then
+              :
+            else
+              echo "::error file=$file::opencc 转换失败（配置 $CONFIG）"
+              rm -f "$file.converted"
+              failed=1
+            fi
+          done < ./kanjifiles.txt
+          if [ "$failed" -ne 0 ]; then
+            echo "有文件转换失败，见上面的 error 注释。"
+            exit 1
+          fi
 
       - name: Build NetHack in debian:12 container
         run: |
