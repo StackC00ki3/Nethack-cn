@@ -5159,6 +5159,12 @@ optfn_boolean(int optidx, int req, boolean negated, char *opts, char *op)
             give_opt_msg = FALSE;
             break;
 #endif
+#ifdef WIN32CON
+        case opt_windowsterminal:
+            iflags.wt_how =
+                (negated) ? wt_in_config_negated : wt_in_config_not_negated;
+            break;
+#endif
         default:
             break;
         }
