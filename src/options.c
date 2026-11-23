@@ -3935,9 +3935,9 @@ optfn_statushilites(int optidx UNUSED, int req, boolean negated, char *opts,
     if (req == get_val) {
 #ifdef STATUS_HILITES
         if (!iflags.hilite_delta)
-            Strcpy(opts, "0 (off: don't highlight status fields)");
+            Strcpy(opts, "0 (关: 不高亮状态栏)");
         else
-            Sprintf(opts, "%ld (on: highlight status for %ld turns)",
+            Sprintf(opts, "%ld (开: 高亮状态栏持续%ld回合)",
                     iflags.hilite_delta, iflags.hilite_delta);
 #else
         Strcpy(opts, "unsupported");

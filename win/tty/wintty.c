@@ -3303,11 +3303,11 @@ ttyinv_create_window(int newid, struct WinDesc *newwin)
         Snprintf(buf, sizeof buf, "tty perm_invent无法启用");
         pline("%s.", buf);
         Snprintf(buf, sizeof buf,
-                 "tty perm_invent需要的最小终端尺寸为 ");
+                 "tty perm_invent需要的最小终端尺寸为");
         for (alt = 0; alt < SIZE(alternatives); ++alt) {
             Snprintf(
                 eos(buf), sizeof buf - strlen(buf), "%s%dx%d",
-                !alt ? "" : " 或 ",
+                !alt ? "" : "或",
                 (int) (alternatives[alt].cc.y + 1 + ROWNO + StatusRows()),
                 alternatives[alt].cc.x + COLNO + 1);
         }

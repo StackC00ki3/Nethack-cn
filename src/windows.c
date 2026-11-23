@@ -1729,14 +1729,14 @@ choose_classes_menu(const char *prompt,
            de-selected in order to select anything else */
         add_menu(win, &nul_glyphinfo, &any, 'A', 0,
                  ATR_NONE, clr, buf, MENU_ITEMFLAGS_SKIPINVERT);
-        if (!strcmp(prompt, "Autopickup what?")) {
+        if (!strcmp(prompt, "自动拾取什么?")) {
             add_menu_str(win,
-                   "Note: when no choices are selected, \"all\" is implied.");
+                   "注意: 如果没有选择, 实际上会执行\"所有\".");
             /* for 'O', "toggle" should be intuitive; for 'm O', it would
                probably be better to say "Set 'autopickup' to true|false" */
             add_menu_str(win, flags.pickup
-                        ? "Toggle off 'autopickup' to not pick up anything."
-           : "Toggle on 'autopickup' to automatically pick these things up.");
+                        ? "如果不想自动捡起所有物品, 请关掉'autopickup'."
+           : "如果想自动捡起所有物品, 请打开'autopickup'.");
         }
     }
     end_menu(win, prompt);

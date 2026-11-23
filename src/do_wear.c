@@ -3002,8 +3002,8 @@ better_not_take_that_off(struct obj *otmp)
     if (corpse
         && !u_safe_from_fatal_corpse(corpse, st_corpse | st_petrifies)) {
         Snprintf(buf, sizeof buf,
-            "Take off your %s despite carrying a dead %s?",
-                 gloves_simple_name(otmp), obj_pmname(corpse));
+            "你拿着一个%s尸体, 真的要脱下你的%s吗?",
+                obj_pmname(corpse), gloves_simple_name(otmp));
         return (paranoid_ynq(TRUE, buf, FALSE) != 'y');
     }
     return FALSE;

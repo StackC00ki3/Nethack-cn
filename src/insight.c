@@ -3154,7 +3154,7 @@ doborn(void)
     char buf[BUFSZ];
     int nborn = 0, ndied = 0;
 
-    putstr(datawin, 0, "died born");
+    putstr(datawin, 0, "死亡 出生");
     for (i = LOW_PM; i < NUMMONS; i++)
         if (svm.mvitals[i].born || svm.mvitals[i].died
             || (svm.mvitals[i].mvflags & G_GONE) != 0) {

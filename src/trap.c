@@ -5845,7 +5845,7 @@ untrap_box(
     boolean confused)
 {
     if (box->tknown && !box->otrapped) {
-        You("know %s is not trapped.", the(xname(box)));
+        You("知道这个%s没有陷阱.", the(xname(box)));
         return;
     }
 

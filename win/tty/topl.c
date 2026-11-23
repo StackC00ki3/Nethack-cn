@@ -35,7 +35,7 @@ tty_doprev_message(void)
         && !ttyDisplay->inread) {           /* not single */
         if (iflags.prevmsg_window == 'f') { /* full */
             prevmsg_win = create_nhwindow(NHW_MENU);
-            putstr(prevmsg_win, 0, "Message History");
+            putstr(prevmsg_win, 0, "消息历史");
             putstr(prevmsg_win, 0, "");
             cw->maxcol = cw->maxrow;
             i = cw->maxcol;

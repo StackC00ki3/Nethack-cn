@@ -175,8 +175,8 @@ curs_scroll_invt(WINDOW *win UNUSED)
         scrlmask |= 8U; /* include scroll right: } */
     (void) collect_menu_keys(menukeys, scrlmask, TRUE);
 
-    Snprintf(qbuf, sizeof qbuf, "Inventory scroll: [%s%s%s] ",
-             menukeys, *menukeys ? " " : "", "Ret Esc");
+    Snprintf(qbuf, sizeof qbuf, "物品栏滚动条: [%s%s%s] ",
+             menukeys, *menukeys ? " " : "", "返回 Esc");
 
     curses_count_window(qbuf);
     ch = getch();

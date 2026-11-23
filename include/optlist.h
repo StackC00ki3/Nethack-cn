@@ -82,7 +82,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #define NHOPTP(a, sec, b, c, s, n, v, d, h, al, z) \
     { #a, OptS_##sec, 0, b, pfx_##a, s, CompOpt, n, v, d, Yes, 0, c, \
       (boolean *) 0, &pfxfn_##a, al, z, #a, Off, h, 0, 0 },
-#define NHOPTO(m, sec, a, b, c, s, n, v, d, al, z) \
+#define NHOPTO(m, a, b, c, s, n, v, d, al, z) \
     { m, OptS_##sec, 0, b, opt_##a, s, OthrOpt, n, v, d, No, 0, c,   \
       (boolean *) 0, &optfn_##a, al, z, (const char *) 0, On, On, 0, 0 },
 
@@ -95,9 +95,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #define ascii_map_Def On
 #define tiled_map_Def Off
 #endif
-#endif
-
-/* B:nm, sec, ln, opt_*, setwhere?, on?, negat?, val?, dup?, hndlr? Alias,
+#endif自动拾取例外/* B:nm, sec, ln, opt_*, setwhere?, on?, negat?, val?, dup?, hndlr? Alias,
             bool_p, term */
 /* C:nm, sec, ln, opt_*, setwhere?, negateok?, valok?, dupok?, hndlr? Alias,
             desc */
@@ -177,7 +175,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
     NHOPTB(ascii_map, Advanced, 0, ascii_map_Def, set_in_game,
                 ascii_map_Def, Yes, No, No, NoAlias, &iflags.wc_ascii_map,
                 Term_False, "以文本显示地图")
-    NHOPTO("autocompletions", Advanced, o_autocomplete, BUFSZ, opt_in,
+    NHOPTO("自动补全", Advanced, o_autocomplete, BUFSZ, opt_in,
                 set_in_game, No, Yes, No, NoAlias, "编辑自动补全")
     NHOPTB(autodescribe, Advanced, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &iflags.autodescribe, Term_False,
@@ -191,7 +189,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
     NHOPTB(autopickup, Behavior, 0, opt_in, set_in_game,
            Off, Yes, No, No, NoAlias, &flags.pickup, Term_False,
            "自动捡起物品")
-    NHOPTO("autopickup exceptions", Behavior, o_autopickup_exceptions, BUFSZ,
+    NHOPTO("自动拾取例外", Behavior, o_autopickup_exceptions, BUFSZ,
                 opt_in, set_in_game,
                 No, Yes, No, NoAlias, "编辑自动拾取例外")
     NHOPTB(autoquiver, Behavior, 0, opt_in, set_in_game,
@@ -203,7 +201,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
     NHOPTB(bgcolors, Map, 0, opt_out, set_in_game,
            On, Yes, No, No, NoAlias, &iflags.bgcolors, Term_Off,
            "将背景色用于某些地图高亮")
-    NHOPTO("bind keys", Advanced, o_bind_keys, BUFSZ, opt_in, set_in_game,
+    NHOPTO("键绑定", Advanced, o_bind_keys, BUFSZ, opt_in, set_in_game,
                 No, Yes, No, NoAlias, "编辑键绑定")
 #if defined(MICRO) && !defined(AMIGA)
     NHOPTB(BIOS, Advanced, 0, opt_in, set_in_config,
@@ -498,7 +496,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
     NHOPTC(menustyle, Advanced, MENUTYPELEN, opt_in, set_in_game,
                 Yes, Yes, No, Yes, NoAlias,
                 "选择物品的用户接口")
-    NHOPTO("message types", Advanced, o_message_types, BUFSZ,
+    NHOPTO("消息类型", Advanced, o_message_types, BUFSZ,
                 opt_in, set_in_game,
                 No, Yes, No, NoAlias, "编辑消息类型")
     NHOPTB(mon_movement, Advanced, 0, opt_in, set_in_game,
@@ -728,14 +726,14 @@ static int optfn_##a(int, int, boolean, char *, char *);
     NHOPTB(status_updates, Advanced, 0, opt_out, set_in_config,
            On, Yes, No, No, NoAlias, &iflags.status_updates, Term_False,
            "允许状态行更新")
-    NHOPTO("status condition fields", Status, o_status_cond, BUFSZ,
+    NHOPTO("状态条件栏", Status, o_status_cond, BUFSZ,
                 opt_in, set_in_game,
-                No, Yes, No, NoAlias, "更改状态条件的高亮显示")
+                No, Yes, No, NoAlias, "编辑状态条件栏")
 #ifdef STATUS_HILITES
     NHOPTC(statushilites, Advanced, 20, opt_in, set_in_game,
                 Yes, Yes, Yes, No, NoAlias,
                 "0=无状态条件高亮, N=状态条件高亮N回合")
-    NHOPTO("status highlight rules", Status, o_status_hilites, BUFSZ,
+    NHOPTO("状态高亮规则", Status, o_status_hilites, BUFSZ,
                 opt_in, set_in_game,
                 No, Yes, No, NoAlias, "更改状态行高亮显示")
 #else

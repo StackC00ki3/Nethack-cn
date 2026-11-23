@@ -5713,9 +5713,9 @@ sync_perminvent(void)
                         destroy_nhwindow(WIN_INVEN), WIN_INVEN = WIN_ERR;
                     wport_id = WINDOWPORT(tty) ? "tty perm_invent"
                                                : "perm_invent";
-                    pline("%s could not be enabled.", wport_id);
-                    pline("%s needs a terminal that is at least %dx%d, yours "
-                          "is %dx%d.",
+                    pline("%s无法启用.", wport_id);
+                    pline("%s需要的最小终端尺寸为%dx%d, 你的是"
+                          "%dx%d.",
                           wport_id, wri->tocore.needrows,
                           wri->tocore.needcols, wri->tocore.haverows,
                           wri->tocore.havecols);

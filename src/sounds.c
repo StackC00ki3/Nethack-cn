@@ -690,8 +690,8 @@ domonnoise(struct monst *mtmp)
         return ECMD_OK;
     /* shk_chat can handle nonverbal monsters */
     if (is_silent(ptr) && !mtmp->isshk) {
-        pline("%s %s", Monnam(mtmp),
-              Hallucination ? walltalkmsg() : "makes no sound.");
+        pline("%s%s", Monnam(mtmp),
+              Hallucination ? walltalkmsg() : "没有发出声音.");
         return ECMD_OK;
     }
 
