@@ -82,7 +82,7 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #define NHOPTP(a, sec, b, c, s, n, v, d, h, al, z) \
     { #a, OptS_##sec, 0, b, pfx_##a, s, CompOpt, n, v, d, Yes, 0, c, \
       (boolean *) 0, &pfxfn_##a, al, z, #a, Off, h, 0, 0 },
-#define NHOPTO(m, a, b, c, s, n, v, d, al, z) \
+#define NHOPTO(m, sec, a, b, c, s, n, v, d, al, z) \
     { m, OptS_##sec, 0, b, opt_##a, s, OthrOpt, n, v, d, No, 0, c,   \
       (boolean *) 0, &optfn_##a, al, z, (const char *) 0, On, On, 0, 0 },
 
@@ -95,7 +95,9 @@ static int optfn_##a(int, int, boolean, char *, char *);
 #define ascii_map_Def On
 #define tiled_map_Def Off
 #endif
-#endif自动拾取例外/* B:nm, sec, ln, opt_*, setwhere?, on?, negat?, val?, dup?, hndlr? Alias,
+#endif
+
+/* B:nm, sec, ln, opt_*, setwhere?, on?, negat?, val?, dup?, hndlr? Alias,
             bool_p, term */
 /* C:nm, sec, ln, opt_*, setwhere?, negateok?, valok?, dupok?, hndlr? Alias,
             desc */
