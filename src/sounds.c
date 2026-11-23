@@ -689,8 +689,11 @@ domonnoise(struct monst *mtmp)
     if (Deaf)
         return ECMD_OK;
     /* shk_chat can handle nonverbal monsters */
-    if (is_silent(ptr) && !mtmp->isshk)
+    if (is_silent(ptr) && !mtmp->isshk) {
+        pline("%s %s", Monnam(mtmp),
+              Hallucination ? walltalkmsg() : "makes no sound.");
         return ECMD_OK;
+    }
 
     /* leader might be poly'd; if he can still speak, give leader speech */
     if (mtmp->m_id == svq.quest_status.leader_m_id && msound > MS_ANIMAL)
@@ -1255,6 +1258,27 @@ dotalk(void)
     return result;
 }
 
+/* suffix message for when talking to a non-responsive whatever */
+const char *
+walltalkmsg(void)
+{
+    static const char *const walltalk[] = {
+        "向你抱怨工作.",
+        "给你讲了个好笑的笑话!",
+        "贬低了你的文化传承!",
+        "在咯咯笑.",
+        "开怀大笑!",
+        "贬低了你对探索的努力.",
+        "建议你去做一下康复治疗...",
+        "似乎不感兴趣.",
+    };
+    int idx = rn2(10);
+
+    if (idx >= SIZE(walltalk))
+        idx = SIZE(walltalk) - 1;
+    return walltalk[idx];
+}
+
 staticfn int
 dochat(void)
 {
@@ -1353,21 +1377,7 @@ dochat(void)
             } else if (!Hallucination) {
                 pline("就像跟墙说话一样.");
             } else {
-                static const char *const walltalk[] = {
-                    "向你抱怨工作.",
-                    "给你讲了个好笑的笑话!",
-                    "贬低了你的文化传承!",
-                    "在咯咯笑.",
-                    "开怀大笑!",
-                    "贬低了你对探索的努力.",
-                    "建议你去做一下康复治疗...",
-                    "似乎不感兴趣.",
-                };
-                int idx = rn2(10);
-
-                if (idx >= SIZE(walltalk))
-                    idx = SIZE(walltalk) - 1;
-                pline_The("这堵墙%s", walltalk[idx]);
+                pline_The("这堵墙%s", walltalkmsg());
             }
             return ECMD_OK;
         }

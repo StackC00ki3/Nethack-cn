@@ -316,6 +316,7 @@ struct _create_particular_data {
     int which;
     int fem;        /* -1, MALE, FEMALE, NEUTRAL */
     int genderconf;    /* conflicting gender */
+    int worm_segs;
     char monclass;
     boolean randmonst;
     boolean maketame, makepeaceful, makehostile;
@@ -878,6 +879,13 @@ enum stoning_checks {
     st_all = (st_gloves | st_corpse | st_petrifies | st_resists)
 };
 
+enum toss_types {
+    no_toss,
+    hand_tossed_obj,
+    hand_tossed_ammo,
+    launcher_fired_ammo,
+};
+
 struct throw_and_return_weapon {
     short otyp;
     int range;
@@ -1246,7 +1254,7 @@ typedef uint32_t mmflags_nht;     /* makemon MM_ flags */
  * need to retain the dmg value beyond that call scope.
  * Take care to ensure it doesn't get used more than once in other instances.
  */
-#define Maybe_Half_Phys(dmg) \
+#define Maybe_Adjust_Phys(dmg, otyp) \
     ((Half_physical_damage) ? (((dmg) + 1) / 2) : (dmg))
 
 /* flags for special ggetobj status returns */

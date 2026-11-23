@@ -1247,8 +1247,8 @@ use_crystal_ball(struct obj **optr)
             useup(obj);
             *optr = obj = 0; /* it's gone */
             /* physical damage cause by the shards and force */
-            losehp(Maybe_Half_Phys(rnd(30)), "水晶球爆炸",
-                   KILLED_BY);
+            losehp(Maybe_Adjust_Phys(rnd(30), obj->otyp), "水晶球爆炸",
+                   KILLED_BY_AN);
             break;
         }
         if (obj)

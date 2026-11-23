@@ -136,7 +136,8 @@ boulder_hits_pool(
                     hliquid("熔岩"), Fire_resistance ? '.' : '!');
                 burn_away_slime();
                 dmg = d((Fire_resistance ? 1 : 3), 6);
-                losehp(Maybe_Half_Phys(dmg), /* lava damage */
+                losehp(
+                    Maybe_Adjust_Phys(dmg, STRANGE_OBJECT), /* lava damage */
                        "熔岩", KILLED_BY);
             } else if (!fills_up && flags.verbose
                        && (pushing ? !Blind : cansee(rx, ry))) {
@@ -229,8 +230,8 @@ flooreffects(
                 mtmp->mtrapped = 0;
             } else {
                 if (!Passes_walls && !throws_rocks(gy.youmonst.data)) {
-                    losehp(Maybe_Half_Phys(rnd(15)),
-                           "挤在巨石之下", NO_KILLER_PREFIX);
+                    losehp(Maybe_Adjust_Phys(rnd(15), BOULDER),
+                           "被巨石压扁", NO_KILLER_PREFIX);
                     goto deletedwithboulder;
                 } else
                     reset_utrap(TRUE);
@@ -1265,7 +1266,7 @@ dodown(void)
             if (y_n(qbuf) == 'y') {
                 if (!rn2(3)) {
                     actn = "尝试挤进";
-                    losehp(Maybe_Half_Phys(rnd(4)),
+                    losehp(Maybe_Adjust_Phys(rnd(4), STRANGE_OBJECT),
                            "狭窄通道挫伤", KILLED_BY);
                 } else {
                     You("%s不去.", down_or_thru);
@@ -1807,7 +1808,7 @@ goto_level(
                 if (u.usteed)
                     dismount_steed(DISMOUNT_FELL);
                 else
-                    losehp(Maybe_Half_Phys(rnd(3)),
+                    losehp(Maybe_Adjust_Phys(rnd(3), STRANGE_OBJECT),
                            ga.at_ladder ? "掉下梯子"
                                      : "从楼梯上滚下去",
                            KILLED_BY);
@@ -2007,7 +2008,7 @@ goto_level(
     if (do_fall_dmg) {
         int dmg = d(max(dist, 1), 6);
 
-        dmg = Maybe_Half_Phys(dmg);
+        dmg = Maybe_Adjust_Phys(dmg, 0);
         losehp(dmg, "掉进矿井里", KILLED_BY);
     }
 

@@ -2233,8 +2233,8 @@ genl_player_setup(int screenheight)
     /* Used to avoid "Is this ok?" if player has already specified all
      * four facets of role.
      * Note that rigid_role_checks might force any unspecified facets to
-     * have a specific value, but that will still require confirmation;
-     * player can specify the forced ones if avoiding that is demanded.
+     * have a specific value, but that would still require confirmation,
+     * except later we re-compute this check, after rigid_role_checks.
      */
     picksomething = (ROLE == ROLE_NONE || RACE == ROLE_NONE
                      || GEND == ROLE_NONE || ALGN == ROLE_NONE);
@@ -2255,6 +2255,10 @@ genl_player_setup(int screenheight)
     /* prevent unnecessary prompting if role forces race (samurai) or gender
        (valkyrie) or alignment (rogue), or race forces alignment (orc), &c */
     rigid_role_checks();
+
+    /* re-compute picksomething to avoid confirm on force role combinations. */
+    picksomething = (ROLE == ROLE_NONE || RACE == ROLE_NONE
+                     || GEND == ROLE_NONE || ALGN == ROLE_NONE);
 
     if (ROLE == ROLE_NONE || RACE == ROLE_NONE
         || GEND == ROLE_NONE || ALGN == ROLE_NONE) {

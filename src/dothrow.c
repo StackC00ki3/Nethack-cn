@@ -779,7 +779,7 @@ hurtle_step(genericptr_t arg, coordxy x, coordxy y)
     boolean may_pass = TRUE, via_jumping, stopping_short;
     struct trap *ttmp;
     struct rm *lev;
-    int ltyp, dmg = 0;
+    int ltyp, dmg = 0, otyp = 0;
 
     if (!isok(x, y)) {
         You_feel("一种冥冥中的力量阻碍了你.");
@@ -789,6 +789,7 @@ hurtle_step(genericptr_t arg, coordxy x, coordxy y)
     } else if (*range == 0) {
         return FALSE; /* previous step wants to stop now */
     }
+    nhUse(otyp);
     via_jumping = (EWwalking & I_SPECIAL) != 0L;
     stopping_short = (via_jumping && *range < 2);
     lev = &levl[x][y];
@@ -810,9 +811,11 @@ hurtle_step(genericptr_t arg, coordxy x, coordxy y)
                 You("撞到了门框上!");
             pline("嗷!");
         } else if (ltyp == IRONBARS) {
+            otyp = IRON;
             why = "撞到铁栅栏上";
             You("撞到了铁栅栏上. 嗷!");
         } else if ((obj = sobj_at(BOULDER, x, y)) != 0) {
+            otyp = MINERAL;
             why = "撞到巨石上";
             You("撞到了一%s%s上. 嗷!", obj_classifier(obj), xname(obj));
         }  else if (!may_pass) {
@@ -833,7 +836,7 @@ hurtle_step(genericptr_t arg, coordxy x, coordxy y)
         }
         if (why) {
             dmg = rnd(2 + *range);
-            losehp(Maybe_Half_Phys(dmg), why, KILLED_BY);
+            losehp(Maybe_Adjust_Phys(dmg, otyp), why, KILLED_BY);
             wake_nearto(x, y, 10);
             return FALSE;
         }
@@ -1377,7 +1380,7 @@ toss_up(struct obj *obj, boolean hitsroof)
             dmg += u.udaminc;
         if (dmg < 0)
             dmg = 0; /* beware negative rings of increase damage */
-        dmg = Maybe_Half_Phys(dmg);
+        dmg = Maybe_Adjust_Phys(dmg, otyp);
 
         if (uarmh) {
             /* note: 'harmless' and 'petrifier' are mutually exclusive */
@@ -1506,6 +1509,86 @@ throwit_mon_hit(struct obj *obj, struct monst *mon)
     return FALSE;
 }
 
+void
+calc_othrow_ranges(struct obj *obj, enum toss_types toss_type,
+                  const struct throw_and_return_weapon *arw,
+                  boolean tethered_weapon,
+                  int *range, int *urange)
+{
+    int throw_units;
+    boolean crossbowing =
+        (toss_type == launcher_fired_ammo && weapon_type(uwep) == P_CROSSBOW);
+
+    /* crossbow range is independent of strength */
+    throw_units = (crossbowing ? 18 : (int) ACURRSTR) / 2;
+    if (toss_type == launcher_fired_ammo) {
+        if (crossbowing)
+            throw_units = BOLT_LIM;
+        else
+            throw_units++;
+    } else if (toss_type == hand_tossed_ammo && obj->oclass != GEM_CLASS) {
+        throw_units /= 2;
+    }
+
+    /* balls are easy to throw or at least roll;
+     * also, this insures the maximum range of a ball is greater
+     * than 1, so the effects from throwing attached balls are
+     * actually possible
+     */
+
+    if (obj->otyp == HEAVY_IRON_BALL)
+        *range = throw_units - (int) (obj->owt / 100);
+    else
+        *range = throw_units - (int) (obj->owt / 40);
+    if (obj == uball) {
+        if (u.ustuck)
+            *range = 1;
+        else if (*range >= 5)
+            *range = 5;
+    }
+    if (toss_type == launcher_fired_ammo) {
+        *range = throw_units;
+    }
+    if (*range < 1)
+        *range = 1;
+
+    if (Is_airlevel(&u.uz) || Levitation) {
+        *urange = throw_units;
+        /* action, reaction... */
+        *urange -= *range;
+        if (*urange < 1)
+            *urange = 1;
+        *range -= *urange;
+
+        if (*range < 1)
+            *range = 1;
+    }
+
+    if (obj->otyp == BOULDER) {
+        throw_units = 20;
+        *range = 20;  /* you must be giant */
+        if (Is_airlevel(&u.uz) || Levitation)
+            *range /= 2;
+    } else if (is_art(obj, ART_MJOLLNIR)) {
+        *range = (*range + 1) / 2; /* it's heavy */
+    } else if (tethered_weapon) {  /* primary weapon is aklys */
+        /* range of a tethered_weapon is limited by the
+           length of the attached cord [implicit aspect of item] */
+        *range = min(*range, isqrt(arw->range));
+    } else if (obj == uball && u.utrap && u.utraptype == TT_INFLOOR) {
+        *range = 1;
+    }
+    *urange = throw_units - *range;
+
+    if (Underwater) {
+        *range = 1;
+    }
+    if (*range < 1)
+        *range = 1;
+    if (*urange < 1)
+        *urange = 1;
+}
+
 /* throw an object, NB: obj may be consumed in the process */
 void
 throwit(
@@ -1516,19 +1599,23 @@ throwit(
     struct obj *oldslot) /* for thrown-and-return used with !fixinv */
 {
     struct monst *mon;
-    int range, urange;
+    int range = 0, urange = 0;
     const struct throw_and_return_weapon *arw = autoreturn_weapon(obj);
-    boolean crossbowing,
-            impaired = (Confusion || Stunned || Blind
+    boolean impaired = (Confusion || Stunned || Blind
                         || Hallucination || Fumbling),
             tethered_weapon = (arw && arw->tethered && (wep_mask & W_WEP) != 0),
             tether_released_msg = FALSE;
+    enum toss_types toss_type =
+        (!is_ammo(obj)                    ? hand_tossed_obj
+         : (ammo_and_launcher(obj, uwep)) ? launcher_fired_ammo
+                                          : hand_tossed_ammo);
 
     gn.notonhead = FALSE; /* reset potentially stale value */
+
     if ((obj->cursed || obj->greased) && (u.dx || u.dy) && !rn2(7)) {
         boolean slipok = TRUE;
 
-        if (ammo_and_launcher(obj, uwep)) {
+        if (toss_type == launcher_fired_ammo) {
             pline("%s了!", Tobjnam(obj, "走火"));
         } else {
             /* only slip if it's greased or meant to be thrown */
@@ -1612,66 +1699,16 @@ throwit(
             return;
         }
     } else {
-        /* crossbow range is independent of strength */
-        crossbowing = (ammo_and_launcher(obj, uwep)
-                       && weapon_type(uwep) == P_CROSSBOW);
-        urange = (crossbowing ? 18 : (int) ACURRSTR) / 2;
-        /* balls are easy to throw or at least roll;
-         * also, this insures the maximum range of a ball is greater
-         * than 1, so the effects from throwing attached balls are
-         * actually possible
-         */
-        if (obj->otyp == HEAVY_IRON_BALL)
-            range = urange - (int) (obj->owt / 100);
-        else
-            range = urange - (int) (obj->owt / 40);
-        if (obj == uball) {
-            if (u.ustuck)
-                range = 1;
-            else if (range >= 5)
-                range = 5;
-        }
-        if (range < 1)
-            range = 1;
-
-        if (is_ammo(obj)) {
-            if (ammo_and_launcher(obj, uwep)) {
-                if (crossbowing)
-                    range = BOLT_LIM;
-                else
-                    range++;
-            } else if (obj->oclass != GEM_CLASS) {
-                range /= 2;
-                pline("你没有装备%s, 因此你只能用%s投掷你的%s.",
-                      skill_name(weapon_type(obj)),
-                      weapon_descr(obj),
+        if (toss_type == hand_tossed_ammo) {
+            if (obj->oclass != GEM_CLASS) {
+                pline("你没有装备%s, 所以你只能用%s投掷你的%s.",
+                      weapon_descr(obj), skill_name(weapon_type(obj)),
                       body_part(HAND));
             }
         }
-
-        if (Is_airlevel(&u.uz) || Levitation) {
-            /* action, reaction... */
-            urange -= range;
-            if (urange < 1)
-                urange = 1;
-            range -= urange;
-            if (range < 1)
-                range = 1;
-        }
-
-        if (obj->otyp == BOULDER)
-            range = 20; /* you must be giant */
-        else if (is_art(obj, ART_MJOLLNIR))
-            range = (range + 1) / 2; /* it's heavy */
-        else if (tethered_weapon) /* primary weapon is aklys */
-            /* range of a tethered_weapon is limited by the
-               length of the attached cord [implicit aspect of item] */
-            range = min(range, isqrt(arw->range));
-        else if (obj == uball && u.utrap && u.utraptype == TT_INFLOOR)
-            range = 1;
-
-        if (Underwater)
-            range = 1;
+        calc_othrow_ranges(obj, toss_type,
+                          arw, tethered_weapon,
+                          &range, &urange);
 
         mon = bhit(u.dx, u.dy, range,
                    tethered_weapon ? THROWN_TETHERED_WEAPON : THROWN_WEAPON,
@@ -1689,7 +1726,7 @@ throwit(
                we're about to return */
             if (tethered_weapon) {
                 if (!tether_released_msg) {
-                    pline("The tether comes off your %s.",
+                    pline("系绳从你的%s上解开了.",
                            body_part(ARM));
                     tether_released_msg = TRUE;
                 }
@@ -1709,7 +1746,7 @@ throwit(
         /* missile has already been handled */
         if (tethered_weapon) {
             if (!tether_released_msg) {
-                pline("The tether comes off your %s.",
+                pline("系绳从你的%s上松开了.",
                        body_part(ARM));
                 tether_released_msg = TRUE;
             }
@@ -1778,15 +1815,15 @@ throwit(
                         } else {
                             pline(
                                 Blind
-                                    ? "%s your %s!"
-                                    : "%s back toward you, hitting your %s!",
-                                Tobjnam(obj, Blind ? "hit" : "fly"),
+                                    ? "%s了你的%s!"
+                                    : "%s飞回来, 击中了你的%s!",
+                                Tobjnam(obj, Blind ? "击中" : "飞回"),
                                 body_part(ARM));
                         }
                         if (obj->oartifact)
                             (void) artifact_hit((struct monst *) 0,
                                                 &gy.youmonst, obj, &dmg, 0);
-                        losehp(Maybe_Half_Phys(dmg), killer_xname(obj),
+                        losehp(Maybe_Adjust_Phys(dmg, obj->otyp), killer_xname(obj),
                                KILLED_BY);
                     }
                     if (!tethered_weapon) {
@@ -1798,8 +1835,8 @@ throwit(
                             dropy(obj);
                     } else {
                         if (!tether_released_msg) {
-                            pline_The("%s tether comes off your %s.",
-                                  s_suffix(simpleonames(obj)), body_part(ARM));
+                            pline_The("%s的系绳从你的%s上解开了.",
+                                  simpleonames(obj), body_part(ARM));
                             tether_released_msg = TRUE;
                         }
                     }
@@ -1809,7 +1846,7 @@ throwit(
             } else {
                 if (tethered_weapon) {
                    if (!tether_released_msg) {
-                       pline("The tether comes off your %s.",
+                       pline("系绳从你的%s上解开了.",
                               body_part(ARM));
                        tether_released_msg = TRUE;
                     }

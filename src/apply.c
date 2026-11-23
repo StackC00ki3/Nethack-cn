@@ -2082,7 +2082,7 @@ jump(int magic) /* 0=Physical, otherwise skill level */
             case TT_BEARTRAP:
                 side = rn2(3) ? LEFT_SIDE : RIGHT_SIDE;
                 You("把自己扯出了捕兽夹! 哎哟!");
-                losehp(Maybe_Half_Phys(rnd(10)), "跳出捕兽夹",
+                losehp(Maybe_Adjust_Phys(rnd(10), BEARTRAP), "跳出捕兽夹",
                        KILLED_BY);
                 set_wounded_legs(side, rn1(1000, 500));
                 break;
@@ -3062,7 +3062,7 @@ use_whip(struct obj *obj)
             dam = 1;
         You("用你的牛鞭打中了你的%s.", body_part(FOOT));
         Sprintf(buf, "用%s的牛鞭打中了%s自己", uhim(), uhis());
-        losehp(Maybe_Half_Phys(dam), buf, NO_KILLER_PREFIX);
+        losehp(Maybe_Adjust_Phys(dam, BULLWHIP), buf, NO_KILLER_PREFIX);
         return ECMD_TIME;
 
     } else if ((Fumbling || Glib) && !rn2(5)) {
@@ -3197,7 +3197,7 @@ use_whip(struct obj *obj)
 
                         dam = dmgval(otmp, &gy.youmonst);
                         hitvalu = 8 + otmp->spe;
-                        hitu = thitu(hitvalu, Maybe_Half_Phys(dam),
+                        hitu = thitu(hitvalu, Maybe_Adjust_Phys(dam, otmp->otyp),
                                      &otmp, (char *) 0);
                         if (hitu) {
                             pline_The("%s hits you as you try to snatch it!",
@@ -3863,7 +3863,7 @@ use_grapple(struct obj *obj)
     default: /* Yourself (oops!) */
         if (P_SKILL(typ) <= P_BASIC) {
             You("钩住了你自己!");
-            losehp(Maybe_Half_Phys(rn1(10, 10)), "爪钩",
+            losehp(Maybe_Adjust_Phys(rn1(10, 10), obj->otyp), "爪钩",
                    KILLED_BY);
             return ECMD_TIME;
         }
@@ -4123,7 +4123,8 @@ do_break_wand(struct obj *obj)
             damage = zapyourself(obj, FALSE);
             if (damage) {
                 Sprintf(buf, "因弄断魔杖而杀死了%s自己", uhim());
-                losehp(Maybe_Half_Phys(damage), buf, NO_KILLER_PREFIX);
+                losehp(Maybe_Adjust_Phys(damage, STRANGE_OBJECT), buf,
+                       NO_KILLER_PREFIX);
             }
             if (disp.botl)
                 bot(); /* blindness */

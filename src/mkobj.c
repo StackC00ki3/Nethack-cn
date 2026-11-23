@@ -997,8 +997,7 @@ mksobj_init(struct obj **obj, boolean artif)
         case TALLOW_CANDLE:
         case WAX_CANDLE:
             otmp->spe = 1;
-            otmp->age = 20L * /* 400 or 200 */
-                        (long) objects[otmp->otyp].oc_cost;
+            otmp->age = candle_max_burn_time(otmp);
             otmp->lamplit = 0;
             otmp->quan = 1L + (long) (rn2(2) ? rn2(7) : 0);
             blessorcurse(otmp, 5);
@@ -2806,6 +2805,8 @@ dealloc_obj(struct obj *obj)
         gt.thrownobj = 0;
     if (obj == gk.kickedobj)
         gk.kickedobj = 0;
+    if (obj == gc.current_wand)
+        gc.current_wand = 0;
     if (obj == svc.context.tin.tin) {
         svc.context.tin.tin = (struct obj *) 0;
         svc.context.tin.o_id = 0;

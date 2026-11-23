@@ -311,7 +311,7 @@ do_pit(coordxy x, coordxy y, unsigned tu_pit)
                not in it even if there was */
             You("掉进了裂口!");
             set_utrap(rn1(6, 2), TT_PIT);
-            losehp(Maybe_Half_Phys(rnd(6)),
+            losehp(Maybe_Adjust_Phys(rnd(6), STRANGE_OBJECT),
                    "掉入裂口", NO_KILLER_PREFIX);
             selftouch("掉下去时, 你");
         } else if (u.utrap && u.utraptype == TT_PIT) {
@@ -322,8 +322,9 @@ do_pit(coordxy x, coordxy y, unsigned tu_pit)
 
             You("被猛烈地推来推去!");
             set_utrap(rn1(6, 2), TT_PIT);
-            losehp(Maybe_Half_Phys(rnd(keepfooting ? 2 : 4)),
-                   "裂口的磕碰", NO_KILLER_PREFIX);
+            losehp(
+                Maybe_Adjust_Phys(rnd(keepfooting ? 2 : 4), STRANGE_OBJECT),
+                   "被裂口磕碰伤到", NO_KILLER_PREFIX);
             if (keepfooting)
                 exercise(A_DEX, TRUE);
             else

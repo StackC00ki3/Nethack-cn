@@ -627,7 +627,7 @@ explode(
             damu = 0;
             You("未受伤害!");
         } else if (adtyp == AD_PHYS || adtyp == AD_ACID)
-            damu = Maybe_Half_Phys(damu);
+            damu = Maybe_Adjust_Phys(damu, STRANGE_OBJECT);
         if (adtyp == AD_FIRE) {
             (void) burnarmor(&gy.youmonst);
             ignite_items(gi.invent);
@@ -895,7 +895,8 @@ scatter(
                         hitvalu = 8 + stmp->obj->spe;
                         if (bigmonst(gy.youmonst.data))
                             hitvalu++;
-                        hitu = thitu(hitvalu, Maybe_Half_Phys(dam),
+                        hitu = thitu(hitvalu,
+                                     Maybe_Adjust_Phys(dam, stmp->obj->otyp),
                                      &stmp->obj, (char *) 0);
                         if (!stmp->obj)
                             stmp->stopped = TRUE;

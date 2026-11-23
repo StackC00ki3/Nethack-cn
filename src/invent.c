@@ -1756,7 +1756,7 @@ getobj(
 {
     struct obj *otmp;
     char ilet = 0;
-    char buf[BUFSZ], qbuf[QBUFSZ];
+    char buf[BUFSZ], qbuf[QBUFSZ], contbuf[QBUFSZ];
     char lets[BUFSZ], altlets[BUFSZ];
     int suggested = 0;
     char *bp = buf, *ap = altlets;
@@ -1915,10 +1915,19 @@ getobj(
         You("没有%s可以%s的东西.", inaccess ? "别的" : "", strsubst(wordbuf, "什么", ""));
         return (struct obj *) 0;
     }
+    /* when stashing into a container, name it in the prompt */
+    contbuf[0] = '\0';
+    if (gc.current_container && !strcmp(word, "stash"))
+        (void) safe_qbuf(contbuf, "What do you want to stash in ", "?",
+                         gc.current_container, doname, ansimpleoname,
+                         "it");
     for (;;) {
         cnt = 0L;
         cntgiven = FALSE;
-        Sprintf(qbuf, "你想要%s?", word);
+        if (*contbuf)
+            Strcpy(qbuf, contbuf);
+        else
+            Sprintf(qbuf, "你想要%s?", word);
         if (gi.in_doagain) {
             ilet = readchar();
         } else if (iflags.force_invmenu) {
@@ -1972,9 +1981,13 @@ getobj(
                 allowed_choices = altlets;
 
             menuquery[0] = qbuf[0] = '\0';
-            if (iflags.force_invmenu)
-                Snprintf(menuquery, sizeof menuquery,
-                         "你想要%s?", word);
+            if (iflags.force_invmenu) {
+                if (*contbuf)
+                    Strcpy(menuquery, contbuf);
+                else
+                    Snprintf(menuquery, sizeof menuquery,
+                             "你想要%s?", word);
+            }
             if (!allowed_choices || *allowed_choices == HANDS_SYM
                 || *buf == HANDS_SYM)
                 handsbuf = getobj_hands_txt(word, qbuf);
@@ -3122,7 +3135,7 @@ display_pickinv(
     Loot *sortedinvent, *srtinv;
     int8_t prevorderclass;
     boolean (*filter)(struct obj *) = (boolean (*)(OBJ_P)) 0;
-    boolean wizid = (wizard && iflags.override_ID), gotsomething = FALSE;
+    boolean wizid = (wizard && iflags.override_ID && !program_state.in_docrt), gotsomething = FALSE;
     int clr = NO_COLOR, menu_behavior = MENU_BEHAVE_STANDARD;
     boolean show_gold = TRUE, inuse_only = FALSE, skipped_gold = FALSE,
             doing_perm_invent = FALSE, save_flags_sortpack,

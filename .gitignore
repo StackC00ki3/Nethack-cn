@@ -101,6 +101,8 @@ submodules/CHKSUMS.tmp
 sys/amiga/regex/
 __pycache__/
 .idea/
+nethack-???-src.tar.gz
+nethack-???-src.zip
 
 #auto-generated files
 kanjifiles.txt

@@ -5275,6 +5275,11 @@ optfn_boolean(int optidx, int req, boolean negated, char *opts, char *op)
         case opt_accessiblemsg:
             a11y.msg_loc.x = a11y.msg_loc.y = 0;
             break;
+        case opt_wraptext:
+#if defined(CURSES_GRAPHICS)
+            go.opt_need_redraw = TRUE;
+#endif
+            break;
         default:
             break;
         }

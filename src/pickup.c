@@ -11,7 +11,7 @@
 
 #define CONTAINED_SYM '>' /* from invent.c */
 
-staticfn void simple_look(struct obj *, boolean);
+staticfn boolean simple_look(struct obj *, boolean);
 staticfn boolean query_classes(char *, boolean *, boolean *, const char *,
                              struct obj *, boolean, int *);
 staticfn boolean fatal_corpse_mistake(struct obj *, boolean);
@@ -69,10 +69,8 @@ static const char
     nearloadpfx[] = "非常难",
     overloadpfx[] = "极其难";
 
-/* BUG: this lets you look at cockatrice corpses while blind without
-   touching them */
 /* much simpler version of the look-here code; used by query_classes() */
-staticfn void
+staticfn boolean
 simple_look(struct obj *otmp, /* list of objects */
             boolean here)     /* flag for type of obj list linkage */
 {
@@ -84,17 +82,29 @@ simple_look(struct obj *otmp, /* list of objects */
         impossible("simple_look(null)");
     } else if (!(here ? otmp->nexthere : otmp->nobj)) {
         pline1(doname(otmp));
+        if (otmp->where != OBJ_INVENT && will_feel_cockatrice(otmp, FALSE)) {
+            feel_cockatrice(otmp, FALSE);
+            return FALSE;
+        }
     } else {
         winid tmpwin = create_nhwindow(NHW_MENU);
 
         putstr(tmpwin, 0, "");
         do {
             putstr(tmpwin, 0, doname(otmp));
+            if (otmp->where != OBJ_INVENT
+                && will_feel_cockatrice(otmp, FALSE))
+                break;
             otmp = here ? otmp->nexthere : otmp->nobj;
         } while (otmp);
         display_nhwindow(tmpwin, TRUE);
         destroy_nhwindow(tmpwin);
+        if (otmp) {
+            feel_cockatrice(otmp, FALSE);
+            return FALSE;
+        }
     }
+    return TRUE;
 }
 
 int
@@ -213,7 +223,9 @@ query_classes(
             else if (sym == 'a')
                 *everything = TRUE;
             else if (sym == ':') {
-                simple_look(objs, here); /* dumb if objs==invent */
+                /* Stop after a dangerous touch, even if hero survives. */
+                if (!simple_look(objs, here))
+                    return FALSE;
                 /* if we just scanned the contents of a container
                    then mark it as having known contents */
                 if (objs->where == OBJ_CONTAINED)
@@ -906,6 +918,10 @@ pickup(int what) /* should be a long */
  pickupdone:
     gp.pickup_encumbrance = 0;
     add_valid_menu_class(0); /* reset */
+#ifdef TTY_PERM_INVENT
+    if (WINDOWPORT(tty))
+        docrt();
+#endif
     return (n_tried > 0);
 }
 
@@ -941,6 +957,9 @@ autopick_testobj(struct obj *otmp, boolean calc_costly)
 
     /* first check: reject if an unpaid item in a shop */
     if (costly && !otmp->no_charge)
+        return FALSE;
+    /* or if it's in use, such as a bag of holding blowing up */
+    if (otmp->in_use)
         return FALSE;
 
     /* pickup_thrown/pickup_stolen/nopick_dropped override pickup_types and
@@ -2160,7 +2179,8 @@ do_loot_cont(
         You("小心地打开%s...", the(xname(cobj)));
         pline("它张开一排巨大的牙齿然后咬到了你!");
         tmp = rnd(10);
-        losehp(Maybe_Half_Phys(tmp), "食人包", KILLED_BY_AN);
+        losehp(Maybe_Adjust_Phys(tmp, STRANGE_OBJECT), "食人包",
+               KILLED_BY_AN);
         makeknown(BAG_OF_TRICKS);
         ga.abort_looting = TRUE;
         return ECMD_TIME;
@@ -2674,6 +2694,10 @@ in_container(struct obj *obj)
         /* did not actually insert obj yet */
         if (was_unpaid)
             addtobill(obj, FALSE, FALSE, TRUE);
+        /* keep the bag where it is until it's used up below; things
+           landing at the hero's feet can knock it down a hole, and a
+           change of form can drop it if it's wielded */
+        gc.current_container->in_use = 1;
         if (obj->otyp == BAG_OF_HOLDING) /* one bag of holding into another */
             do_boh_explosion(obj, (boolean) (obj->where == OBJ_FLOOR));
         obfree(obj, (struct obj *) 0);
@@ -2692,9 +2716,10 @@ in_container(struct obj *obj)
         }
         do_boh_explosion(gc.current_container, floor_container);
 
+        /* the blast may have moved the hero off the bag's spot */
         if (!floor_container)
             useup(gc.current_container);
-        else if (obj_here(gc.current_container, u.ux, u.uy))
+        else if (gc.current_container->where == OBJ_FLOOR)
             useupf(gc.current_container, gc.current_container->quan);
         else
             panic("in_container:  bag not found.");
@@ -3242,6 +3267,7 @@ traditional_loot(boolean put_in)
     int (*actionfunc)(OBJ_P), (*checkfunc)(OBJ_P);
     struct obj **objlist;
     char selection[MAXOCLASSES + 10]; /* +10: room for B,U,C,X plus slop */
+    char actbuf[QBUFSZ];
     const char *action;
     boolean one_by_one, allflag;
     int used = ECMD_OK, menu_on_request = 0;
@@ -3259,7 +3285,10 @@ traditional_loot(boolean put_in)
         gp.pickup_encumbrance = 0; /* used to limit verbosity */
     }
 
-    if (query_classes(selection, &one_by_one, &allflag, action, *objlist,
+    /* prompt names the container; per-item prompts keep the short verb */
+    (void) safe_qbuf(actbuf, put_in ? "put into " : "take out of ", "",
+                     gc.current_container, doname, ansimpleoname, "it");
+    if (query_classes(selection, &one_by_one, &allflag, actbuf, *objlist,
                       FALSE, &menu_on_request)) {
         if (askchain(objlist, (one_by_one ? (char *) 0 : selection), allflag,
                      actionfunc, checkfunc, 0, action))
@@ -3278,7 +3307,6 @@ menu_loot(int retry, boolean put_in)
     boolean all_categories = TRUE, loot_everything = FALSE, autopick = FALSE;
     char buf[BUFSZ];
     boolean loot_justpicked = FALSE;
-    const char *action = put_in ? "放入" : "拿出";
     struct obj *otmp, *otmp2;
     menu_item *pick_list;
     int mflags, res;
@@ -3290,7 +3318,11 @@ menu_loot(int retry, boolean put_in)
         all_categories = (retry == -2);
     } else if (flags.menu_style == MENU_FULL) {
         all_categories = FALSE;
-        Sprintf(buf, "%s什么类型的物品?", action);
+        /* name the container so it's clear what is being loaded/unloaded */
+        (void) safe_qbuf(buf, put_in ? "把哪类物品放入"
+                                     : "把哪类物品从",
+                         put_in ? "?" : "里面拿出来?", gc.current_container, doname, ansimpleoname,
+                         "它"); //危险
         mflags = (ALL_TYPES | UNPAID_TYPES | BUCX_TYPES | CHOOSE_ALL
                   | JUSTPICKED );
         n = query_category(buf,
@@ -3368,7 +3400,9 @@ menu_loot(int retry, boolean put_in)
             mflags |= JUSTPICKED;
         if (!put_in)
             gc.current_container->cknown = 1;
-        Sprintf(buf, "%s什么?", action);
+        (void) safe_qbuf(buf, put_in ? "放入什么到" : "从",
+                         put_in ? "里面" : "里面拿出什么?", gc.current_container, doname, ansimpleoname,
+                         "它");
         n = query_objlist(buf,
                           put_in ? &gi.invent : &(gc.current_container->cobj),
                           mflags, &pick_list, PICK_ANY,
@@ -3810,6 +3844,8 @@ tipcontainer(struct obj *box) /* or bag */
                    "你刚把%s%s进去, 就被一场魔法爆炸击中!",
                                  doname(otmp), otense(otmp, "倒"));
 
+                    /* keep the bag until it's used up below */
+                    targetbox->in_use = 1;
                     /* if putting one bag of holding into another, first
                        blow up the one going in, then (below) blow up the
                        one it's going into */

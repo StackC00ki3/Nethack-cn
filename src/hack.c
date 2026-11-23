@@ -861,13 +861,15 @@ dosinkfall(void)
         ELevitation = HLevitation = 0L;
         You("坠落到地板上!");
         dmg = rn1(8, 25 - (int) ACURR(A_CON));
-        losehp(Maybe_Half_Phys(dmg), fell_on_sink, NO_KILLER_PREFIX);
+        losehp(Maybe_Adjust_Phys(dmg, STRANGE_OBJECT), fell_on_sink,
+               NO_KILLER_PREFIX);
         exercise(A_DEX, FALSE);
         selftouch("掉下去时, 你");
         for (obj = svl.level.objects[u.ux][u.uy]; obj; obj = obj->nexthere)
             if (obj->oclass == WEAPON_CLASS || is_weptool(obj)) {
                 You("掉落到%s上.", doname(obj));
-                losehp(Maybe_Half_Phys(rnd(3)), fell_on_sink,
+                losehp(Maybe_Adjust_Phys(rnd(3), STRANGE_OBJECT),
+                       fell_on_sink,
                        NO_KILLER_PREFIX);
                 exercise(A_CON, FALSE);
             }

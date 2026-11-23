@@ -401,7 +401,8 @@ dig(void)
                 You("打到了你的%s.", body_part(FOOT));
                 Sprintf(kbuf, "砍掉%s自己的%s", uhis(),
                         body_part(FOOT));
-                losehp(Maybe_Half_Phys(dmg), kbuf, KILLED_BY);
+                losehp(Maybe_Adjust_Phys(dmg, uwep->otyp),
+                       kbuf, KILLED_BY);
             } else {
                 You("用%s破坏了捕兽夹.",
                     yobjnam(uwep, (const char *) 0));
@@ -1186,7 +1187,7 @@ use_pick_axe2(struct obj *obj)
             dam = 1;
         You("用%s打到了你自己.", yname(uwep));
         Sprintf(buf, "%s自己的%s", uhis(), OBJ_NAME(objects[obj->otyp]));
-        losehp(Maybe_Half_Phys(dam), buf, KILLED_BY);
+        losehp(Maybe_Adjust_Phys(dam, obj->otyp), buf, KILLED_BY);
         disp.botl = TRUE;
         return ECMD_TIME;
     } else if (u.dz == 0) {
@@ -1243,7 +1244,7 @@ use_pick_axe2(struct obj *obj)
                           vibrate ? " 斧柄剧烈振动!"
                                   : "");
                     if (vibrate)
-                        losehp(Maybe_Half_Phys(2), "用斧头砍硬物",
+                        losehp(Maybe_Adjust_Phys(2, STRANGE_OBJECT), "用斧头砍硬物",
                                KILLED_BY);
                     wake_nearby(FALSE);
                 } else {
@@ -1594,7 +1595,7 @@ zap_dig(void)
                 You("从%s上撬下一块岩石.", ceiling(u.ux, u.uy));
                 pline("它掉到了你的%s上!", body_part(HEAD));
                 dmg = rnd(hard_helmet(uarmh) ? 2 : 6);
-                losehp(Maybe_Half_Phys(dmg), "falling rock", KILLED_BY_AN);
+                losehp(Maybe_Adjust_Phys(dmg, ROCK), "falling rock", KILLED_BY_AN);
                 otmp = mksobj_at(ROCK, u.ux, u.uy, FALSE, FALSE);
                 if (otmp) {
                     (void) xname(otmp); /* set dknown, maybe bknown */

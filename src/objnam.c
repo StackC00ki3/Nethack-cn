@@ -2476,8 +2476,7 @@ doname_base(
                    || obj->otyp == BRASS_LANTERN || Is_candle(obj)) {
             if (Is_candle(obj)) {
                 anything timer;
-                long full_burn_time = 20L * (long) objects[obj->otyp].oc_cost,
-                     turns_left = obj->age;
+                long turns_left = obj->age;
 
                 if (obj->lamplit) {
                     timer = cg.zeroany;
@@ -2490,7 +2489,7 @@ doname_base(
                        not partly used after all) */
                     turns_left += peek_timer(BURN_OBJECT, &timer) - svm.moves;
                 }
-                if (turns_left < full_burn_time)
+                if (turns_left < candle_max_burn_time(obj))
                     Strcat(prefix, "烧掉部分的");
             }
             if (obj->lamplit)

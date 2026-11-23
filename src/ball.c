@@ -61,7 +61,7 @@ ballfall(void)
             } else if (flags.verbose)
                 pline("%s无法保护你.", Yname2(uarmh));
         }
-        losehp(Maybe_Half_Phys(dmg), "被一个铁球砸到头",
+        losehp(Maybe_Adjust_Phys(dmg, HEAVY_IRON_BALL), "被一个铁球砸到头",
                NO_KILLER_PREFIX);
     }
 }
@@ -920,7 +920,7 @@ drop_ball(coordxy x, coordxy y)
                     Your("%s%s受到严重伤害.",
                          (side == LEFT_SIDE) ? "左" : "右",
                          body_part(LEG));
-                    losehp(Maybe_Half_Phys(2),
+                    losehp(Maybe_Adjust_Phys(2, BEARTRAP),
                            "被拉出捕兽夹时腿损伤",
                            KILLED_BY);
                 }
@@ -1012,7 +1012,8 @@ drag_down(void)
     if (forward) {
         if (rn2(6)) {
             pline_The("铁球把你拖下了楼梯!");
-            losehp(Maybe_Half_Phys(rnd(6)),
+            /* STRANGE_OBJECT because this is not HEAVY_IRON_BALL contact */
+            losehp(Maybe_Adjust_Phys(rnd(6), STRANGE_OBJECT),
                    "被一个铁球拖下楼梯", NO_KILLER_PREFIX);
             litter();
         }
@@ -1020,14 +1021,15 @@ drag_down(void)
         if (rn2(2)) {
             Soundeffect(se_iron_ball_hits_you, 25);
             pline_The("铁球撞到了你!");
-            losehp(Maybe_Half_Phys(rnd(20)), "撞过来的铁球",
+            losehp(Maybe_Adjust_Phys(rnd(20), HEAVY_IRON_BALL), "撞过来的铁球",
                    KILLED_BY_AN);
             exercise(A_STR, FALSE);
             dragchance -= 2;
         }
         if ((int) dragchance >= rnd(6)) {
             pline_The("铁球把你拖下了楼梯!");
-            losehp(Maybe_Half_Phys(rnd(3)),
+            /* STRANGE_OBJECT because this is not HEAVY_IRON_BALL contact */
+            losehp(Maybe_Adjust_Phys(rnd(3), STRANGE_OBJECT),
                    "被一个铁球拖下楼梯", NO_KILLER_PREFIX);
             exercise(A_STR, FALSE);
             litter();
