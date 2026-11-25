@@ -28,10 +28,22 @@ env:
   LINUX_BUILD_SCRIPT: |
     set -eu
 
-    # 出问题时把容器的解析状态打进日志：resolv.conf 指向的是 Docker 的
-    # 127.0.0.11 还是宿主 DNS，以及 deb.debian.org 到底能不能解析。
-    echo "== resolv.conf =="; cat /etc/resolv.conf || true
-    echo "== getent =="; getent hosts deb.debian.org || echo "DNS 解析 deb.debian.org 失败"
+    # —— 解析器自检（目前只有 i386 容器一直挂在这一步）——
+    echo "== arch =="; uname -m; dpkg --print-architecture 2>/dev/null || true
+    echo "== binfmt =="; ls /proc/sys/fs/binfmt_misc/ 2>/dev/null || echo "(无 binfmt_misc)"
+    echo "== resolv.conf =="; cat /etc/resolv.conf 2>/dev/null || true
+    echo "== nsswitch =="; cat /etc/nsswitch.conf 2>/dev/null || echo "(无 nsswitch.conf)"
+    if getent hosts deb.debian.org; then
+      echo "DNS ok（默认解析器）"
+    else
+      echo "默认解析器不可用，改试公共 DNS"
+      if printf 'nameserver 1.1.1.1\nnameserver 8.8.8.8\n' > /etc/resolv.conf 2>/dev/null; then
+        echo "已改写 /etc/resolv.conf"
+      else
+        echo "/etc/resolv.conf 不可写"
+      fi
+      getent hosts deb.debian.org || echo "公共 DNS 也解析失败"
+    fi
 
     # Docker 的内嵌 DNS（127.0.0.11）偶发解析失败，会让 apt 连索引都拉不到
     # （表现为 "Temporary failure resolving 'deb.debian.org'"，apt 退出码 100）。
