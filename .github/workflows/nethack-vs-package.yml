@@ -28,8 +28,26 @@ env:
   LINUX_BUILD_SCRIPT: |
     set -eu
 
-    apt-get update -qq
-    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
+    # 出问题时把容器的解析状态打进日志：resolv.conf 指向的是 Docker 的
+    # 127.0.0.11 还是宿主 DNS，以及 deb.debian.org 到底能不能解析。
+    echo "== resolv.conf =="; cat /etc/resolv.conf || true
+    echo "== getent =="; getent hosts deb.debian.org || echo "DNS 解析 deb.debian.org 失败"
+
+    # Docker 的内嵌 DNS（127.0.0.11）偶发解析失败，会让 apt 连索引都拉不到
+    # （表现为 "Temporary failure resolving 'deb.debian.org'"，apt 退出码 100）。
+    # 这里重试 3 次，单次下载再加 Acquire::Retries，绕开瞬时抖动。
+    i=0
+    until apt-get -o Acquire::Retries=5 update -qq; do
+      i=$((i + 1))
+      if [ "$i" -ge 3 ]; then
+        echo "apt-get update 连续失败 $i 次，放弃"
+        exit 1
+      fi
+      echo "apt-get update 失败，第 $i 次重试..."
+      sleep $((i * 5))
+    done
+    DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=5 install -y -qq \
+      --no-install-recommends \
       build-essential groff libncurses-dev pkg-config curl ca-certificates git
 
     git config --global --add safe.directory /src
@@ -270,7 +288,9 @@ jobs:
 
       - name: Build NetHack in debian:12 container
         run: |
-          docker run --rm --platform linux/${{ matrix.arch }} \
+          # --network host：绕开 Docker 的嵌入式 DNS（127.0.0.11），直接用 runner 的
+          # resolv.conf；这个构建只需要出站，不发布端口。
+          docker run --rm --network host --platform linux/${{ matrix.arch }} \
             -v "${{ github.workspace }}:/src" -w /src \
             -e VARIANT_ARCH=${{ matrix.arch }} \
             -e VARIANT_LIBC=${{ matrix.libc }} \
